@@ -107,7 +107,6 @@ function create_kernel() {
         }
     }
     $kernel->init();
-    return $kernel;
 }
 
 
@@ -127,3 +126,5 @@ function kernel()
     create_kernel();
     return $kernel;
 }
+
+kernel();

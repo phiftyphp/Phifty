@@ -130,8 +130,8 @@ class LocaleParseCommand extends Command
                 continue;
             }
 
-            $cmd = sprintf("xgettext -j -o %s --from-code=UTF-8 -n -L PHP " . join(" ",$phpFiles)
-                ,$potFile);
+            $cmd = sprintf("xgettext -j --package-name=%s -o %s --from-code=UTF-8 -n -L PHP " . join(" ",$phpFiles)
+                ,kernel()->applicationID, $potFile);
             $this->logger->debug($cmd,1);
             system($cmd, $retval);
             if ( $retval != 0 ) {
@@ -147,11 +147,17 @@ class LocaleParseCommand extends Command
             $shortPathname = $file;
 
             $this->logger->info("Updating $shortPathname");
-            $cmd = sprintf('msgmerge --verbose --no-fuzzy-matching --update %s %s', $shortPathname, $potFile);
+            $cmd = sprintf('msgmerge --previous --verbose --no-fuzzy-matching --update %s %s', $shortPathname, $potFile);
             $this->logger->debug($cmd);
             system($cmd, $retval);
             if ( $retval != 0 )
                 die('xgettext error');
+
+            /*
+            $this->logger->info("Removing obsolete messages for $shortPathname");
+            $msg = sprintf('msgattrib --output-file=%s --no-obsolete %s', $shortPathname, $potFile);
+            $this->logger->debug($cmd);
+            */
 
             $moPathname = futil_replace_extension($shortPathname,'mo');
             $this->logger->info("Compiling messages $shortPathname");
