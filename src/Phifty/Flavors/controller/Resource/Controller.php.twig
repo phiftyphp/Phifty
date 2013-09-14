@@ -1,0 +1,12 @@
+<?php
+namespace {{namespace}}\Controller;
+use Phifty\Controller;
+
+class {{controllerName}} extends Controller
+{
+{% for action in controllerActions %}
+    public function {{action}}() {
+        return $this->render( /* your template file */ );
+    }
+{% endfor %}
+}

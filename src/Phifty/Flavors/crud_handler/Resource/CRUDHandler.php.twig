@@ -1,0 +1,40 @@
+<?php
+namespace {{bundleName}};
+use Phifty\Bundle;
+use AdminUI\CRUDHandler;
+
+class {{handlerClass}} extends CRUDHandler
+{
+    /* CRUD Attributes */
+    public $modelClass = '{{modelClass}}';
+    public $crudId     = '{{crudId}}';
+
+    // public $listColumns = array( 'id', 'thumb', 'name' , 'lang' , 'subtitle' , 'sn' );
+    // public $quicksearchFields = array('name');
+
+    public $canCreate = true;
+    public $canUpdate = true;
+    public $canDelete = true;
+
+    public $canBulkEdit = true;
+    public $canBulkDelete = true;
+    public $canBulkCopy = false;
+    public $canEditInNewWindow = false;
+
+    // public $templatePage = '@CRUD/page.html';
+    // public $actionViewClass = 'AdminUI\\Action\\View\\StackView';
+    // public $pageLimit = 15;
+    // public $defaultOrder = array('id', 'DESC');
+
+    public function init()
+    {
+        $this->plugin = \{{bundleName}}\{{bundleName}}::getInstance();
+        parent::init();
+    }
+
+    public function getCollection()
+    {
+        return parent::getCollection();
+    }
+}
+

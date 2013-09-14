@@ -1,0 +1,18 @@
+<?php
+namespace {{namespace}}\Model;
+use LazyRecord\Schema\SchemaDeclare;
+
+class {{schemaName}} extends SchemaDeclare
+{
+    function schema() {
+{% for column in schemaColumns %}
+{% if column.var %}
+        $this->column('{{ column.name }}')
+            ->{{ column.type }}({{ column.var }});
+{% else %}
+        $this->column('{{ column.name }}')
+            ->{{ column.type }}();
+{% endif %}
+{% endfor %}
+    }
+}
