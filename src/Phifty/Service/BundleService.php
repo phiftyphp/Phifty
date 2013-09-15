@@ -34,8 +34,8 @@ class BundleService
         }
         $manager->registerPluginDir( $kernel->frameworkBundleDir );
 
-        if ( isset($options["Dirs"]) ) {
-            foreach ($options["Dirs"] as $dir) {
+        if ( isset($options["Paths"]) ) {
+            foreach ($options["Paths"] as $dir) {
                 $manager->registerPluginDir($dir);
             }
         }
