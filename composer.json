@@ -19,7 +19,8 @@
         "symfony\/yaml": "~2.2",
         "symfony\/css-selector": "~2.2",
         "michelf\/php-markdown": "~1",
-        "corneltek\/kendo": "~1"
+        "corneltek\/kendo": "~1",
+        "phpexcel\/phpexcel": "*"
     },
     "require-dev": {
         "firephp\/firephp-core": "dev-master",
