@@ -120,9 +120,9 @@ class Email extends Message implements ArrayAccess
 
     public function send() 
     {
-        // processing body
         $view = kernel()->view;
-        $content = $view->render($this->getTemplate(), $this->getData());
+        $view->setArgs( $this->getData() );
+        $content = $view->render($this->getTemplate());
         if ( $this->format ) {
             $this->message->setBody($content,$this->format);
         } else {
