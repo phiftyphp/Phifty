@@ -124,9 +124,9 @@ class Email extends Message implements ArrayAccess
         $view = kernel()->view;
         $content = $view->render($this->getTemplate(), $this->getData());
         if ( $this->format ) {
-            $message->setBody($content,$this->format);
+            $this->message->setBody($content,$this->format);
         } else {
-            $message->setBody($content);
+            $this->message->setBody($content);
         }
         return kernel()->mailer->send($this->message);
     }
