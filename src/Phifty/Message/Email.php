@@ -1,0 +1,97 @@
+<?php
+namespace Phifty\Message;
+use Swift_Message;
+use ArrayAccess;
+
+class Email extends Message implements ArrayAccess
+{
+    public $message;
+
+    public $template;
+
+    public $format;
+
+    public $data = array();
+
+    public function __construct() 
+    {
+        $this->message = Swift_Message::newInstance();
+    }
+
+    public function getTemplate()
+    {
+        return $this->template;
+    }
+
+    public function setTemplate($template) 
+    {
+        $this->template = $template;
+    }
+
+    public function setFormat($format) {
+        $this->format = $format;
+    }
+
+    public function getFormat() {
+        return $this->format;
+    }
+
+    public function getData()
+    {
+        return $this->data;
+    }
+    
+    public function offsetSet($name,$value)
+    {
+        $this->data[ $name ] = $value;
+    }
+    
+    public function offsetExists($name)
+    {
+        return isset($this->data[ $name ]);
+    }
+    
+    public function offsetGet($name)
+    {
+        return $this->data[ $name ];
+    }
+    
+    public function offsetUnset($name)
+    {
+        unset($this->data[$name]);
+    }
+
+    public function __get($n) {
+        if ( isset($this->data[$n]) ) {
+            return $this->data[$n];
+        }
+    }
+
+
+    public function __set($n, $v)
+    {
+        $this->data[$n] = $v;
+    }
+
+    public function __call($m, $a) 
+    {
+        if ( method_exists($this->message, $m) ) {
+            return call_user_func_array( array($this->message, $m) , $a );
+        }
+    }
+
+    public function send() 
+    {
+        $view = kernel()->view;
+        $content = $view->render($this->getTemplate(), $this->getData());
+        if ( $this->format ) {
+            $message->setBody($content,$this->format);
+        } else {
+            $message->setBody($content);
+        }
+        return kernel()->mailer->send($this->message);
+    }
+}
+
+
+
