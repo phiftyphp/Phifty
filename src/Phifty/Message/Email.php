@@ -7,15 +7,53 @@ class Email extends Message implements ArrayAccess
 {
     public $message;
 
+    public $from;
+
+    public $subject;
+
     public $template;
 
+    /**
+     * format can be 'text/html' or 'text/plain'
+     */
     public $format;
 
     public $data = array();
 
+
+
+
     public function __construct() 
     {
         $this->message = Swift_Message::newInstance();
+
+        // processing subject
+        if ( $subject = $this->getSubject() ) {
+            $this->message->setSubject($subject);
+        }
+        if ( $from = $this->getFrom() ) {
+            $this->message->setFrom( (array) $from );
+        }
+    }
+
+    public function getSubject()
+    {
+        return $this->subject;
+    }
+
+    public function setSubject($subject)
+    {
+        $this->subject = $subject;
+        $this->message->setSubject($subject);
+    }
+
+    public function getFrom() {
+        return $this->from;
+    }
+
+    public function setFrom($from) {
+        $this->from = $from;
+        $this->message->setFrom((array) $from);
     }
 
     public function getTemplate()
@@ -82,6 +120,7 @@ class Email extends Message implements ArrayAccess
 
     public function send() 
     {
+        // processing body
         $view = kernel()->view;
         $content = $view->render($this->getTemplate(), $this->getData());
         if ( $this->format ) {
