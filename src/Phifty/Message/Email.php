@@ -122,7 +122,7 @@ class Email extends Message implements ArrayAccess
         $view->setArgs( $this->getData() );
         $content = $view->render($this->getTemplate());
 
-        if ( $this->format == 'text/markdown' ) {
+        if ( $this->format && $this->format === 'text/markdown' ) {
             if ( ! function_exists('Markdown') ) {
                 throw new RuntimeException('Markdown library is not loaded.');
             }
