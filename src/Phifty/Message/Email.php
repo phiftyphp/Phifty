@@ -2,6 +2,15 @@
 namespace Phifty\Message;
 use Swift_Message;
 use ArrayAccess;
+use RuntimeException;
+
+/**
+ * Twig_Extension_Markdown
+    if( class_exists('Twig_Extension_Markdown',true) ) {
+        $twig->addExtension( new \Twig_Extension_Markdown );
+    }
+    Markdown();
+ */
 
 class Email extends Message implements ArrayAccess
 {
@@ -14,14 +23,11 @@ class Email extends Message implements ArrayAccess
     public $template;
 
     /**
-     * format can be 'text/html' or 'text/plain'
+     * format can be 'text/html' or 'text/plain', 'markdown'
      */
     public $format;
 
     public $data = array();
-
-
-
 
     public function __construct() 
     {
@@ -123,6 +129,15 @@ class Email extends Message implements ArrayAccess
         $view = kernel()->view;
         $view->setArgs( $this->getData() );
         $content = $view->render($this->getTemplate());
+
+        if ( $this->format == 'text/markdown' ) {
+            if ( ! function_exists('Markdown') ) {
+                throw new RuntimeException('Markdown library is not loaded.');
+            }
+            $this->format = 'text/html';
+            $content = Markdown($content);
+        }
+
         if ( $this->format ) {
             $this->message->setBody($content,$this->format);
         } else {
