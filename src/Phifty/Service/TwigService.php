@@ -10,6 +10,7 @@ use Twig_Extension_Debug;
 use Twig_Extension_Optimizer;
 use Twig_Extensions_Extension_Text;
 use Twig_Extensions_Extension_I18n;
+use Twig_Extension_Markdown;
 use AssetToolkit\Extension\Twig\AssetExtension;
 
 
@@ -74,6 +75,12 @@ class TwigService
             $env->addExtension( new Twig_Extension_Core );
             $env->addExtension( new Twig_Extensions_Extension_Text );
             $env->addExtension( new Twig_Extensions_Extension_I18n );
+
+            // load markdown twig extension
+            if( class_exists('Twig_Extension_Markdown',true) ) {
+                $env->addExtension( new Twig_Extension_Markdown );
+            }
+
 
             // include assettoolkit extension
             $assetExt = new AssetExtension();

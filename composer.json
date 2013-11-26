@@ -11,6 +11,7 @@
         "corneltek\/lazyrecord": "*",
         "corneltek\/genphp": "~1.2",
         "corneltek\/sessionkit": "~1.0",
+        "corneltek\/twig-markdown": "~0.1",
         "twig\/twig": "~1.12",
         "twig\/extensions": "1.0.*@dev",
         "symfony\/finder": "~2.2",
