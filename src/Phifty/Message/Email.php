@@ -4,15 +4,6 @@ use Swift_Message;
 use ArrayAccess;
 use RuntimeException;
 
-/**
-    Twig_Extension_Markdown
-
-    if( class_exists('Twig_Extension_Markdown',true) ) {
-        $twig->addExtension( new \Twig_Extension_Markdown );
-    }
-    Markdown();
- */
-
 class Email extends Message implements ArrayAccess
 {
     public $message;

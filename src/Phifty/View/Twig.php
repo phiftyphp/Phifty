@@ -4,7 +4,6 @@ use Phifty\View\Engine;
 use Phifty\ClassUtils;
 use Twig_Environment;
 use Twig_Loader_String;
-use AssetToolkit\Extension\Twig\AssetExtension;
 
 /**
  * Rewrite this as an extension.
@@ -16,10 +15,10 @@ function newObject($class)
 {
     $args = func_get_args();
     array_shift($args);
-    return \Phifty\ClassUtils::new_class($class,$args);
+    return ClassUtils::new_class($class,$args);
 }
 
-class Twig extends \Phifty\View\Engine
+class Twig extends Engine
 //    implements \Phifty\View\EngineInterface
 {
     public $loader;
