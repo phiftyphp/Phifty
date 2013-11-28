@@ -1,0 +1,14 @@
+RewriteEngine on
+
+# RewriteRule .* - [E=PHIFTY_XHPROF:on]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-s
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{ENV:PHIFTY_XHPROF} on [OR]
+RewriteCond %{QUERY_STRING} XHPROF
+RewriteRule ^(.*)$ run_xhprof.php/$1 [L,NC]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-s
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php/$1 [NC,L]
