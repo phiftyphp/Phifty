@@ -37,7 +37,11 @@
                     "url": "https:\/\/github.com\/michelf\/php-markdown\/zipball\/extra",
                     "type": "zip"
                 },
-                "autoload": { "files": [ "markdown.php" ] }
+                "autoload": {
+                    "files": [
+                        "markdown.php"
+                    ]
+                }
             }
         }
     ],
@@ -49,5 +53,5 @@
             "Phifty": "src"
         }
     },
-    "version": "2.7.29"
+    "version": "2.7.30"
 }
