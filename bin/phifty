@@ -1,0 +1,17 @@
+#!/usr/bin/env php
+<?php
+if( isset($argv[1]) && $argv[1] == 'build-conf' ) {
+    // remove old php config files
+    $phpfiles = glob('config/*.php');
+    foreach( $phpfiles as $file ) {
+        unlink($file);
+    }
+}
+
+# vim:filetype=php:
+require 'main.php';
+$kernel = kernel();
+$console = Phifty\Console::getInstance();
+$kernel->event->trigger( 'phifty.console.init_commands' , $console );
+$console->runWithTry( $argv );
+$kernel->event->trigger( 'phifty.console.finish' , $console );
