@@ -21,9 +21,9 @@ class AssetInitCommand extends AssetBaseCommand
             $this->registerBundleAssets($application);
         }
 
-        $this->logger->info("Finding assets from plugins...");
-        foreach ($kernel->plugins as $plugin) {
-            $this->registerBundleAssets($plugin);
+        $this->logger->info("Finding assets from bundles...");
+        foreach ($kernel->bundles as $bundle) {
+            $this->registerBundleAssets($bundle);
         }
         $this->getAssetConfig()->save();
     }

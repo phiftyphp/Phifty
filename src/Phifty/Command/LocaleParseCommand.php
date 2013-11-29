@@ -78,11 +78,11 @@ class LocaleParseCommand extends Command
             }
         }
 
-        // Compile templates from plugins
+        // Compile templates from bundles
         $this->logger->info("Compiling bundle templates...");
-        foreach( $kernel->plugins as $plugin ) {
-            $pluginDir = $plugin->locate();
-            $templateDir = $plugin->getTemplateDir();
+        foreach( $kernel->bundles as $bundle ) {
+            $pluginDir = $bundle->locate();
+            $templateDir = $bundle->getTemplateDir();
             if ( ! file_exists($templateDir) ) {
                 continue;
             }

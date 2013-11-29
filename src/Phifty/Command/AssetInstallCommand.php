@@ -41,8 +41,8 @@ class AssetInstallCommand extends AssetBaseCommand
             }
         }
 
-        $this->logger->info("Installing assets from plugins...");
-        foreach ($kernel->plugins as $plugin) {
+        $this->logger->info("Installing assets from bundles...");
+        foreach ($kernel->bundles as $plugin) {
             $assetNames = $plugin->assets();
             $assets = $loader->loadAssets($assetNames);
             foreach ($assets as $asset) {

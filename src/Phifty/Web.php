@@ -34,8 +34,8 @@ class Web
             $app->loadAssets();
         }
         */
-        foreach ($kernel->plugins as $plugin) {
-            $plugin->loadAssets();
+        foreach ($kernel->bundles as $bundle) {
+            $bundle->loadAssets();
         }
 
         // call asset.load trigger to load global assets

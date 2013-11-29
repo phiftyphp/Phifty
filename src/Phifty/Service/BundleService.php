@@ -15,7 +15,7 @@ class BundleService
      */
     public function register($kernel, $options = array() )
     {
-        // here we check plugins stash to decide what to load.
+        // here we check bundles stash to decide what to load.
         $config = $kernel->config->get('framework','Bundles');
         if ( ! $config || $config->isEmpty() ) {
             return;

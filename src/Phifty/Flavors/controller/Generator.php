@@ -9,9 +9,9 @@ class Generator extends BaseGenerator
 
     public function generate($ns,$controllerName)
     {
-        $app = kernel()->app($ns) ?: kernel()->plugin($ns) ?: kernel()->plugins->load($ns);
+        $app = kernel()->app($ns) ?: kernel()->bundle($ns) ?: kernel()->bundles->load($ns);
         if (! $app) {
-            throw new Exception("$ns application or plugin not found.");
+            throw new Exception("$ns application or bundle not found.");
         }
 
         if ( strrpos($controllerName,'Controller') === false ) {

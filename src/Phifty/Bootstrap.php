@@ -113,7 +113,7 @@ function create_kernel() {
 /**
     * kernel() is a global shorter helper function to get Phifty\Kernel instance.
     *
-    * Initialize kernel instance, classloader, plugins and services.
+    * Initialize kernel instance, classloader, bundles and services.
     *
     * @return Phifty\Kernel
     */

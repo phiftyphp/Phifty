@@ -63,7 +63,7 @@ class CheckCommand extends Command
 
         // TODO:
         //   1. get services and get dependencies from these services for checking
-        foreach( $kernel->plugins as $plugin ) {
+        foreach( $kernel->bundles as $bundle ) {
             // $dir = $plugin->getTemplateDir();
         }
     }

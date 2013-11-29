@@ -35,7 +35,7 @@ abstract class Engine
 
     public function getDefaultTemplateDirs()
     {
-        // when we move all plugins into applications, we take off the PH_APP_ROOT and PH_ROOT from paths
+        // when we move all bundles into applications, we take off the PH_APP_ROOT and PH_ROOT from paths
         $dirs = array(
             $this->kernel->rootAppDir,
             $this->kernel->frameworkAppDir,

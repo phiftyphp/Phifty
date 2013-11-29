@@ -1,13 +1,13 @@
 <?php
 $finder = new LazyRecord\Schema\SchemaFinder;
 foreach ( kernel()->applications as $app ) {
-    $finder->addPath( $app->locate() );
+    $finder->in( $app->locate() );
 }
 
-foreach ( kernel()->plugins as $plugin ) {
-    $finder->addPath( $plugin->locate() );
+foreach ( kernel()->bundles as $bundle ) {
+    $finder->in( $bundle->locate() );
 }
 
-$finder->addPath( PH_ROOT . DIRECTORY_SEPARATOR . 'tests' );
-$finder->loadFiles();
+$finder->in( PH_ROOT . DIRECTORY_SEPARATOR . 'tests' );
+$finder->find();
 return $finder->getSchemas();
