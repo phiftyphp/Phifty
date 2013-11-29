@@ -64,10 +64,8 @@ class Kernel extends ObjectContainer
         // build path info
         $this->frameworkDir       = PH_ROOT;
         $this->frameworkAppDir    = PH_ROOT . DS . 'applications';
-        $this->frameworkBundleDir = PH_ROOT . DS . 'bundles';
         $this->rootDir            = PH_APP_ROOT;      // Application root.
         $this->rootAppDir         = PH_APP_ROOT . DS . 'applications';
-        $this->rootBundleDir      = PH_APP_ROOT . DS . 'bundles';
         $this->webroot            = PH_APP_ROOT . DS . 'webroot';
         $this->cacheDir           = PH_APP_ROOT . DS . 'cache';
 
@@ -224,7 +222,7 @@ class Kernel extends ObjectContainer
      */
     public function plugin($name)
     {
-        return $this->plugins->get( $name );
+        return $this->bundles->get( $name );
     }
 
 
@@ -236,7 +234,7 @@ class Kernel extends ObjectContainer
      */
     public function bundle($name, $lookup = false)
     {
-        return $this->plugins->get($name);
+        return $this->bundles->get($name);
     }
 
     /**

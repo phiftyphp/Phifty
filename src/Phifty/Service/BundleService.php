@@ -24,33 +24,23 @@ class BundleService
         // plugin manager depends on classloader,
         // register plugin namespace to classloader.
         $manager = BundleManager::getInstance();
-        $kernel->bundles = function() use ($manager) {
+        $kernel->bundles = function() use ($manager, $options) {
             return $manager;
         };
 
-        // default plugin paths
-        if ( PH_APP_ROOT !== PH_ROOT ) {
-            $manager->registerPluginDir( $kernel->rootBundleDir );
-        }
-        $manager->registerPluginDir( $kernel->frameworkBundleDir );
-
+        $paths = array();
         if ( isset($options["Paths"]) ) {
             foreach ($options["Paths"] as $dir) {
-                $manager->registerPluginDir($dir);
+                $paths[] = PH_APP_ROOT . DIRECTORY_SEPARATOR . $dir;
+                $manager->registerBundleDir(PH_APP_ROOT . DIRECTORY_SEPARATOR . $dir);
             }
         }
-
-        foreach ($config as $pluginName => $config) {
+        foreach ($config as $bundleName => $config) {
             $kernel->classloader->addNamespace(array(
-                $pluginName => array(
-                    $kernel->rootBundleDir,
-                    $kernel->frameworkBundleDir,
-                )
+                $bundleName => $paths,
             ));
-            $manager->load( $pluginName , $config );
+            $manager->load( $bundleName , $config );
         }
-
-        // initialize all loaded plugin
         $manager->init();
     }
 

@@ -14,7 +14,7 @@ class BundleManager
      */
     public $bundles = array();
 
-    public $BundleDirs = array();
+    public $bundleDirs = array();
 
     public function isLoaded( $name )
     {
@@ -23,7 +23,7 @@ class BundleManager
 
     public function registerBundleDir($dir)
     {
-        $this->BundleDirs[] = $dir;
+        $this->bundleDirs[] = $dir;
     }
 
     public function getList()
@@ -63,11 +63,10 @@ class BundleManager
         } else {
             // try to require Bundle class from Bundle path
             $subpath = $name . DIRECTORY_SEPARATOR . $name . '.php';
-            foreach ($this->BundleDirs as $dir) {
+            foreach ($this->bundleDirs as $dir) {
                 $path = $dir . DIRECTORY_SEPARATOR . $subpath;
                 if ( file_exists($path) ) {
                     require $path;
-
                     return $class;
                 }
             }
@@ -80,8 +79,8 @@ class BundleManager
     public function load( $name , $config = array() )
     {
         if ( $class = $this->_loadBundle($name) ) {
-            $Bundle = $class::getInstance($config);
-            return $this->bundles[ $name ] = $Bundle;
+            $bundle = $class::getInstance($config);
+            return $this->bundles[ $name ] = $bundle;
         }
         throw new Exception("Bundle $name not found.");
 
