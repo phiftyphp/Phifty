@@ -8,13 +8,13 @@ class GenerateActionCommand extends Command
 
     public function brief() { return 'generate action class'; }
 
-    public function usage() { return '[application name|plugin name] [action name]'; }
+    public function usage() { return '[application name|bundle name] [action name]'; }
 
     public function execute($ns,$actionName)
     {
-        $app = kernel()->app($ns) ?: kernel()->plugin($ns);
+        $app = kernel()->app($ns) ?: kernel()->bundle($ns);
         if (! $app) {
-            throw new Exception("$ns application or plugin not found.");
+            throw new Exception("$ns application or bundle not found.");
         }
 
         $dir = $app->locate();
