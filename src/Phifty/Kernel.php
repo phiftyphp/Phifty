@@ -49,6 +49,7 @@ class Kernel extends ObjectContainer
         /* define framework environment */
         $this->environment  = $environment ?: getenv('PHIFTY_ENV') ?: 'development';
         $this->isCLI        = isset($_SERVER['argc']) && !isset($_SERVER['HTTP_HOST']);
+        defined('CLI_MODE') || define( 'CLI_MODE' , $this->isCLI );
 
         // detect development mode
         $this->isDev = $this->environment === 'development';
@@ -68,9 +69,6 @@ class Kernel extends ObjectContainer
         $this->rootAppDir         = PH_APP_ROOT . DS . 'applications';
         $this->webroot            = PH_APP_ROOT . DS . 'webroot';
         $this->cacheDir           = PH_APP_ROOT . DS . 'cache';
-
-        defined('CLI_MODE')
-            || define( 'CLI_MODE' , $this->isCLI );
         mb_internal_encoding('UTF-8');
         if (! $this->isCLI) {
             ob_start();
