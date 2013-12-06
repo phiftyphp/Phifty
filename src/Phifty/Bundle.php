@@ -16,7 +16,7 @@ class Bundle
     public $config;
 
     /**
-     * @var string the plugin class directory, used for caching the locate() result.
+     * @var string the bundle class directory, used for caching the locate() result.
      */
     protected $_baseDir;
 
@@ -116,7 +116,7 @@ class Bundle
     }
 
     /**
-     * Locate plugin app dir path.
+     * Locate bundle dir path.
      */
     public function locate()
     {
@@ -161,7 +161,7 @@ class Bundle
 
 
     /**
-     * Get plugin config
+     * Get bundle config
      *
      * @param string $key config key
      * @return mixed
@@ -214,6 +214,8 @@ class Bundle
      *          'template' => 'template_file.html',
      *          'args' => array( ... ) )
      * )
+     *
+     * TODO: improve the performance here.
      */
     public function route( $path, $args, $options = array() )
     {
@@ -274,7 +276,13 @@ class Bundle
         }
     }
 
-    public function expandRoute($path,$class)
+
+    /**
+     *
+     * @param string $path path name
+     * @param string $class class name
+     */
+    public function expandRoute($path, $class)
     {
         // TODO: reduce the autoload checking cost.
         if ( ! class_exists($class,true) ) {
