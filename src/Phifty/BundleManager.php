@@ -24,6 +24,9 @@ class BundleManager
     public function registerBundleDir($dir)
     {
         $this->bundleDirs[] = $dir;
+        if ( $twig = kernel()->twig ) {
+            $twig->loader->addPath($dir);
+        }
     }
 
     public function getList()
