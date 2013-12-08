@@ -102,6 +102,10 @@ class TwigService
                 $env->addFunction( $export , new Twig_Function_Function( $func ));
             }
 
+            // kernel()->event->trigger('phifty.service.twig', $env );
+            $env->addGlobal('currentLang', kernel()->locale->current() );
+
+
             // auto-register all native PHP functions as Twig functions
             $env->registerUndefinedFunctionCallback(function($name) {
                 // use functions with prefix 'array_' and 'str'
@@ -110,6 +114,7 @@ class TwigService
                 }
                 return false;
             });
+
 
 
             return (object) array(
