@@ -8,6 +8,8 @@ foreach ( kernel()->bundles as $bundle ) {
     $finder->in( $bundle->locate() );
 }
 
-$finder->in( PH_ROOT . DIRECTORY_SEPARATOR . 'tests' );
+if ( file_exists('tests') ) {
+    $finder->in('tests');
+}
 $finder->find();
 return $finder->getSchemas();
