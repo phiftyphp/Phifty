@@ -47,5 +47,7 @@ class LocaleService
 
             return $locale;
         };
+        // we need service dependency for this.
+        // kernel()->twig->env->addGlobal('currentLang', kernel()->locale->current() );
     }
 }

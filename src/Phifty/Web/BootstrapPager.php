@@ -15,7 +15,7 @@ class BootstrapPager
 
     public $showHeader = false;
     public $showNavigator = true;
-    public $showPageNumbers = false;
+    public $showPageNumbers = true;
     public $wrapperClass = array('pagination', 'pagination-centered', 'pagination-mini', 'pagination-right');
     public $whenOverflow  = true;
 
@@ -90,7 +90,7 @@ class BootstrapPager
         return '?' . http_build_query( $params );
     }
 
-    public function renderLink( $num , $text = null , $moreclass = "" , $disabled = false )
+    public function renderLink( $num , $text = null , $moreclass = "" , $disabled = false , $active = false )
     {
         if ( $text == null )
             $text = $num;
@@ -102,9 +102,17 @@ class BootstrapPager
         $args = array_merge( $_GET , $_POST );
         $href = $this->mergeQuery( $args , array( "page" => $num ) );
 
+        if ( $active ) {
+        return <<<EOF
+ <li class="active"><a class="pager-link $moreclass" href="$href">$text</a></li>
+EOF;
+        }
+
         return <<<EOF
  <li><a class="pager-link $moreclass" href="$href">$text</a></li>
 EOF;
+
+
     }
 
     public function renderLink_dis( $text , $moreclass = "" )
@@ -166,10 +174,11 @@ TWIG;
             }
 
             for ($i = $pagenum_start ; $i <= $pagenum_end ; $i++) {
-                if ( $i == $this->currentPage )
-                    $output .= $this->renderLink( $i , $i , 'pager-number active pager-number-current' );
-                else
+                if ( $i == $this->currentPage ) {
+                    $output .= $this->renderLink( $i , $i , 'pager-number active pager-number-current', false, true);
+                } else {
                     $output .= $this->renderLink( $i , $i , 'pager-number' );
+                }
             }
 
             if ( $cur + 5 < $total_pages ) {

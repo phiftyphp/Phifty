@@ -10,6 +10,8 @@ class Email extends Message implements ArrayAccess
 
     public $from;
 
+    public $to;
+
     public $subject;
 
     public $template;
@@ -32,6 +34,9 @@ class Email extends Message implements ArrayAccess
         if ( $from = $this->getFrom() ) {
             $this->message->setFrom( (array) $from );
         }
+        if ( $to = $this->getTo() ) {
+            $this->message->setTo( (array) $to );
+        }
     }
 
     public function getSubject()
@@ -47,6 +52,15 @@ class Email extends Message implements ArrayAccess
 
     public function getFrom() {
         return $this->from;
+    }
+
+    public function getTo() {
+        return $this->from;
+    }
+
+    public function setTo($to) {
+        $this->to = $to;
+        $this->message->setTo((array) $to);
     }
 
     public function setFrom($from) {
@@ -113,7 +127,14 @@ class Email extends Message implements ArrayAccess
     {
         if ( method_exists($this->message, $m) ) {
             return call_user_func_array( array($this->message, $m) , $a );
+        } else {
+            throw new RuntimeException("$m is not defined. in " . get_class($this) );
         }
+    }
+
+    public function getMessage()
+    {
+        return $this->message;
     }
 
     public function send() 
