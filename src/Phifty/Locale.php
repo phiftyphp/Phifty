@@ -167,14 +167,14 @@ class Locale
     public function setupEnv()
     {
         $lang = $this->current;
-        putenv("LANG=$lang");
-        putenv("LANGUAGE=$lang");
+        // putenv("LANG=$lang");
+        // putenv("LANGUAGE=$lang");
         setlocale(LC_MESSAGES, $lang );
-        //setlocale(LC_ALL,  "$lang.UTF-8" );
-        // setlocale(LC_TIME, "$lang.UTF-8");
-
-        setlocale(LC_ALL,  $lang);
-        setlocale(LC_TIME, $lang);
+	header('Content-Language: '. strtolower(str_replace('_', '-', $lang)) );
+        // setlocale(LC_ALL,  $lang);
+        // setlocale(LC_TIME, $lang);
+        setlocale(LC_ALL,  "$lang.UTF-8" );
+        setlocale(LC_TIME, "$lang.UTF-8");
     }
 
     public function initGettext( $textdomain = null , $localedir = null )
