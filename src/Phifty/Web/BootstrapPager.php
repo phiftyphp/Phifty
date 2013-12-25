@@ -103,13 +103,10 @@ class BootstrapPager
         $href = $this->mergeQuery( $args , array( "page" => $num ) );
 
         if ( $active ) {
-        return <<<EOF
- <li class="active"><a class="pager-link $moreclass" href="$href">$text</a></li>
-EOF;
+            $liClass = 'active';
         }
-
         return <<<EOF
- <li><a class="pager-link $moreclass" href="$href">$text</a></li>
+ <li class="$liClass"><a class="pager-link $moreclass" href="$href">$text</a></li>
 EOF;
 
 

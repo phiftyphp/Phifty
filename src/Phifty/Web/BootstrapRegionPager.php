@@ -5,7 +5,7 @@ use Phifty\Web\Pager;
 class BootstrapRegionPager extends BootstrapPager
 {
 
-    public function renderLink( $num , $text = null , $moreclass = "" , $disabled = false )
+    public function renderLink( $num , $text = null , $moreclass = "" , $disabled = false , $active = false)
     {
         if ( $text == null ) {
             $text = $num;
@@ -15,8 +15,12 @@ class BootstrapRegionPager extends BootstrapPager
             return $this->renderLinkDisabled( $text , $moreclass );
         }
 
+        if ( $active ) {
+            $liClass = 'active';
+        }
+
         return <<<EOF
- <li><a class="pager-link $moreclass"
+ <li class="$liClass"><a class="pager-link $moreclass"
    onclick="return Region.of( this ).refreshWith({ page: $num  });">$text</a></li>
 EOF;
 
