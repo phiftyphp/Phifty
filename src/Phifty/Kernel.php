@@ -5,6 +5,7 @@ use Phifty\Locale;
 use Phifty\Web;
 use Universal\Container\ObjectContainer;
 use Phifty\Service\ServiceInterface;
+use Exception;
 
 class Kernel extends ObjectContainer
 {
@@ -74,6 +75,62 @@ class Kernel extends ObjectContainer
             ob_start();
         }
     }
+
+
+    /**
+     * TODO: A better place to put this method
+     */
+    public function getHost() {
+        if ( isset($_SERVER['HTTP_HOST']) ) {
+            return $_SERVER['HTTP_HOST'];
+        }
+        if ( $domain = $this->config->get('framework','Domain') ) {
+            return $domain;
+        }
+        throw new Exception("Domain is not configured in config file.");
+    }
+
+    public function getHostBaseUrl() {
+        return (isset($_SERVER['HTTPS']) ? 'https://' : 'http://')
+            . kernel()->getHost()
+            . ((isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] != 80) ? ":" . $_SERVER['SERVER_PORT'] : "" )
+            ;
+    }
+
+    public function getSystemMail() {
+        $mailConfig = $this->config->get('framework','Mail');
+        if ( isset($mailConfig['System']) ) {
+            $mail = $mailConfig['System'];
+            if( preg_match( '#"?(.*?)"??\s+<(.*?)>#i' , $mail ,$regs ) ) {
+                return array( $regs[2] => $regs[1] );
+            } else {
+                return array(
+                    $mail => $this->getApplicationName(),
+                );
+            }
+        }
+        return array(
+            'no-reply@' . $this->getHost() => $this->getApplicationName(),
+        );
+    }
+
+    public function getAdminMail() {
+        $mailConfig = $this->config->get('framework','Mail');
+        if ( isset($mailConfig['Admin']) ) {
+            $mail = $mailConfig['Admin'];
+            if( preg_match( '#"?(.*?)"??\s+<(.*?)>#i' , $mail ,$regs ) ) {
+                return array(
+                    /* address => name */
+                    $regs[2] => $regs[1],
+                );
+            } else {
+                return array( $mail => 'Administrator');
+            }
+        }
+        throw new Exception('The Email address of Administrator is not defined.');
+    }
+
+
 
     public function getVersion()
     {
