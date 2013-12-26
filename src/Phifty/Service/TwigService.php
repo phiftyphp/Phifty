@@ -104,7 +104,7 @@ class TwigService
 
             // kernel()->event->trigger('phifty.service.twig', $env );
             $env->addGlobal('currentLang', kernel()->locale->current() );
-
+            $env->addGlobal('Kernel', kernel() );
 
             // auto-register all native PHP functions as Twig functions
             $env->registerUndefinedFunctionCallback(function($name) {
