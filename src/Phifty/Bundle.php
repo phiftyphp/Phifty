@@ -175,6 +175,12 @@ class Bundle
             return $this->config[ $key ];
         }
 
+        /* apc cache on production mode
+        if ( $val = apc_fetch($key) ) {
+            return $val;
+        }
+        */
+
         if ( strchr( $key , '.' ) !== false ) {
             $parts = explode( '.' , $key );
             $ref = $this->config;
@@ -185,9 +191,10 @@ class Bundle
                 # throw new Exception( "Config key: $key not found.  '$ref_key'" );
                 $ref = & $ref[ $ref_key ];
             }
-
+            // apc_store($key, $ref);
             return $ref;
         }
+        // apc_store($key, null);
         return null;
     }
 
