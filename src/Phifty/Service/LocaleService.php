@@ -21,30 +21,27 @@ class LocaleService
 
         // call spl autoload, to load `__` locale function,
         // and we need to initialize locale before running the application.
-        spl_autoload_call('Phifty\Locale');
 
         $kernel->locale = function() use ($kernel,$options) {
-            $textdomain  = $kernel->config->framework->ApplicationID;
             $defaultLang = isset($options['Default'])   ? $options['Default']   : 'en';
             $localeDir   = isset($options['LocaleDir']) ? $options['LocaleDir'] : 'locale';
-
-            if ( ! ( $textdomain && $defaultLang && $localeDir) ) {
-                return;
-            }
+            $domain      = isset($options['Domain'])    ? $options['Domain'] : $kernel->getApplicationID();
+            $langs       = isset($options['Langs'])     ? $options['Langs'] : array('en');
 
             $locale = new Locale;
-            $locale->setDefault( $defaultLang );
-            $locale->domain( $textdomain ); # use application id for domain name.
-            $locale->localedir( $kernel->rootDir . DIRECTORY_SEPARATOR . $localeDir);
+            $locale->setDefault($defaultLang);
+            $locale->setDomain($domain); # use application id for domain name.
+            $locale->setLocaleDir( $kernel->rootDir . DIRECTORY_SEPARATOR . $localeDir);
 
             // add languages to list
-            foreach (@$options['Langs'] as $localeName) {
+            foreach ( $langs as $localeName) {
                 $locale->add( $localeName );
             }
 
             # _('en');
+            # _('zh_TW');
+            # _('zh_CN');
             $locale->init();
-
             return $locale;
         };
         // we need service dependency for this.
