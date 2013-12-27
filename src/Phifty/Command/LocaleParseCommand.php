@@ -82,14 +82,19 @@ class LocaleParseCommand extends Command
         $this->logger->info("Compiling bundle translation...");
         $languages = kernel()->locale->available();
         $dictionary = array();
-        foreach( $languages as $name => $locale ) {
+        foreach( $languages as $locale => $languageName ) {
             $dictionary[$locale] = array();
         }
         foreach( $kernel->bundles as $bundle ) {
-            foreach( $languages as $name => $locale ) {
+            $defaultDict = $bundle->getTranslation( kernel()->locale->getDefault() );
+            foreach( $languages as $locale => $languageName ) {
                 $bundleDict = $bundle->getTranslation( $locale );
                 if( empty($bundleDict) ) {
-                    continue;
+                    if ( $defaultDict ) {
+                        $bundleDict = $defaultDict;
+                    } else {
+                        continue;
+                    }
                 }
                 $dictionary[$locale] = array_merge_recursive(
                     $dictionary[$locale],
@@ -118,8 +123,8 @@ class LocaleParseCommand extends Command
             fclose($fp);
 
             $this->logger->info("Running msguniq on $poFile...");
-            system("msguniq $poFile > $poFile.new");
-            system("mv -v $poFile.new $poFile");
+            // system("msguniq $poFile > $poFile.new");
+            // system("mv -v $poFile.new $poFile");
         }
 
         // Compile templates from bundles
