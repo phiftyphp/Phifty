@@ -78,6 +78,50 @@ class LocaleParseCommand extends Command
             }
         }
 
+        // Get translations
+        $this->logger->info("Compiling bundle translation...");
+        $languages = kernel()->locale->available();
+        $dictionary = array();
+        foreach( $languages as $name => $locale ) {
+            $dictionary[$locale] = array();
+        }
+        foreach( $kernel->bundles as $bundle ) {
+            foreach( $languages as $name => $locale ) {
+                $bundleDict = $bundle->getTranslation( $locale );
+                if( empty($bundleDict) ) {
+                    continue;
+                }
+                $dictionary[$locale] = array_merge_recursive(
+                    $dictionary[$locale],
+                    $bundleDict
+                );
+            }
+        }
+        // write dictionary to po file.
+        foreach( $dictionary as $lang => $subdictionary ) {
+            $poFile = kernel()->locale->getLocalePoFile($lang);
+            $fp = fopen($poFile, 'a+');
+            foreach( $subdictionary as $msgId => $msgStr ) {
+                $idStrs = explode("\n",$msgId);
+                fputs($fp, "msgid ");
+                foreach( $idStrs as $idStr ) {
+                    fputs($fp, '"'. addslashes($idStr) . '"' . "\n");
+                }
+
+                $msgStrs = explode("\n",$msgStr);
+                fputs($fp, "msgstr ");
+                foreach( $msgStrs as $msgStr ) {
+                    fputs($fp, '"'. addslashes($msgStr) . '"' . "\n");
+                }
+                fputs($fp, "\n");
+            }
+            fclose($fp);
+
+            $this->logger->info("Running msguniq on $poFile...");
+            system("msguniq $poFile > $poFile.new");
+            system("mv -v $poFile.new $poFile");
+        }
+
         // Compile templates from bundles
         $this->logger->info("Compiling bundle templates...");
         foreach( $kernel->bundles as $bundle ) {
