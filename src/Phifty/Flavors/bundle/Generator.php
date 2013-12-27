@@ -19,13 +19,14 @@ class Generator extends BaseGenerator
         $this->createDir( $bundleDir . DIRECTORY_SEPARATOR . 'Action' );
         $this->createDir( $bundleDir . DIRECTORY_SEPARATOR . 'Templates' );
         $this->createDir( $bundleDir . DIRECTORY_SEPARATOR . 'Assets' );
-        $this->createDir( $bundleDir . DIRECTORY_SEPARATOR . 'Configs' );
+        $this->createDir( $bundleDir . DIRECTORY_SEPARATOR . 'Config' );
+        $this->createDir( $bundleDir . DIRECTORY_SEPARATOR . 'Translation' );
 
         $classFile = $bundleDir . DIRECTORY_SEPARATOR . $bundleName . '.php';
         $this->render('Bundle.php.twig', $classFile, [ 'bundleName' => $bundleName ]);
 
-        $classFile = $bundleDir . DIRECTORY_SEPARATOR . 'Translation.php';
-        $this->render('Translation.php.twig', $classFile, []);
+        // $classFile = $bundleDir . DIRECTORY_SEPARATOR . 'Translation.php';
+        // $this->render('Translation.php.twig', $classFile, []);
 
         // registering bundle to config
         // $config = yaml_parse(file_get_contents('config/framework.yml'));
