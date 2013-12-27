@@ -170,8 +170,9 @@ class Kernel extends ObjectContainer
      */
     public function getApplicationName()
     {
-        if ( $this->applicationName )
+        if ( $this->applicationName ) {
             return $this->applicationName;
+        }
         return $this->applicationName = $this->config->framework->ApplicationName;
     }
 
