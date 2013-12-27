@@ -4,9 +4,11 @@ use ActionKit\Action;
 
 class {{actionName}} extends Action
 {
-    function schema() {
+    public function schema() {
+
     }
 
-    function run() {
+    public function run() {
+        return $this->success( _('action.success') );
     }
 }

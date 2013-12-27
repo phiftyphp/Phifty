@@ -10,6 +10,7 @@ class {{handlerClass}} extends CRUDHandler
     public $crudId     = '{{crudId}}';
 
     // public $listColumns = array( 'id', 'thumb', 'name' , 'lang' , 'subtitle' , 'sn' );
+    // public $filterColumns = array();
     // public $quicksearchFields = array('name');
 
     public $canCreate = true;
@@ -25,12 +26,6 @@ class {{handlerClass}} extends CRUDHandler
     // public $actionViewClass = 'AdminUI\\Action\\View\\StackView';
     // public $pageLimit = 15;
     // public $defaultOrder = array('id', 'DESC');
-
-    public function init()
-    {
-        $this->plugin = \{{bundleName}}\{{bundleName}}::getInstance();
-        parent::init();
-    }
 
     public function getCollection()
     {
