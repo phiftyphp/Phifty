@@ -346,9 +346,15 @@ class Bundle
     {
         $file = $this->getTranslationDir() . DIRECTORY_SEPARATOR . $locale . '.yml';
         if ( file_exists($file) ) {
-            return yaml_parse( file_get_contents( $file ) ):
+            return yaml_parse( file_get_contents( $file ) );
         }
         return array();
+    }
+
+    public function saveTranslation($locale, $dict)
+    {
+        $file = $this->getTranslationDir() . DIRECTORY_SEPARATOR . $locale . '.yml';
+        return file_put_contents($file, yaml_emit($dict, YAML_UTF8_ENCODING) );
     }
 
     public function getConfigDir()
