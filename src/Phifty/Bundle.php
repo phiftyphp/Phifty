@@ -337,10 +337,23 @@ class Bundle
         return $this->locate() . DIRECTORY_SEPARATOR . 'Templates';
     }
 
+    public function getTranslationDir()
+    {
+        return $this->locate() . DIRECTORY_SEPARATOR . 'Translation';
+    }
+
+    public function getTranslation($locale)
+    {
+        $file = $this->getTranslationDir() . DIRECTORY_SEPARATOR . $locale . '.yml';
+        if ( file_exists($file) ) {
+            return yaml_parse( file_get_contents( $file ) ):
+        }
+        return array();
+    }
 
     public function getConfigDir()
     {
-        return $this->locate() . DIRECTORY_SEPARATOR . 'Configs';
+        return $this->locate() . DIRECTORY_SEPARATOR . 'Config';
     }
 
 
