@@ -91,7 +91,7 @@ class Kernel extends ObjectContainer
     }
 
     public function getHostBaseUrl() {
-        return (isset($_SERVER['HTTPS']) ? 'https://' : 'http://')
+        return (isset($_SERVER['HTTPS'] && $_SERVER['HTTPS'] ) ? 'https://' : 'http://')
             . kernel()->getHost()
             . ((isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] != 80) ? ":" . $_SERVER['SERVER_PORT'] : "" )
             ;
