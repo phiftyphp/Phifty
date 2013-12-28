@@ -78,6 +78,100 @@ class LocaleParseCommand extends Command
             }
         }
 
+
+        // Compile templates from bundles
+        $this->logger->info("Compiling bundle templates...");
+        foreach( $kernel->bundles as $bundle ) {
+            $pluginDir = $bundle->locate();
+            $templateDir = $bundle->getTemplateDir();
+            if ( ! file_exists($templateDir) ) {
+                continue;
+            }
+            foreach (new RecursiveIteratorIterator(
+                    new RecursiveDirectoryIterator($templateDir),
+                    RecursiveIteratorIterator::LEAVES_ONLY) as $file) 
+            {
+                // force compilation
+                if( preg_match( '/\.(html?|twig)$/', $file ) ) {
+                    $this->logger->info( FileUtils::remove_cwd($file->getPathname()) ,1);
+                    $twig->loadTemplate( substr($file, strlen(dirname($pluginDir)) + 1) );
+                }
+            }
+        }
+
+        $potFile = $localeDir . DIRECTORY_SEPARATOR . 'messages.pot';
+        $this->logger->info("Creating pot file: $potFile");
+        touch($potFile);
+
+        $scanDirs = func_get_args(); // get paths from command-line
+
+        if ( empty($scanDirs) ) {
+            $scanDirs[] = PH_APP_ROOT . DIRECTORY_SEPARATOR . 'applications';
+            $scanDirs[] = PH_APP_ROOT . DIRECTORY_SEPARATOR . 'bundles';
+            $scanDirs[] = $kernel->getCacheDir();
+        }
+        $scanDirs = array_filter( $scanDirs, 'file_exists' );
+        if ( empty($scanDirs) ) {
+            throw new Exception("Non of existing directories");
+        }
+
+        foreach( $scanDirs as $scanDir ) {
+            $this->logger->info("Parsing from $scanDir...");
+
+            $phpFinder = Finder::create()->files()->name('*.php')->in( $scanDir );
+            $phpFiles = array();
+            foreach( $phpFinder as $phpFile ) {
+                $phpFiles[] = $phpFile;
+            }
+
+            if ( empty($phpFiles) ) {
+                continue;
+            }
+
+            $cmd = sprintf("xgettext -j --no-location --sort-output --package-name=%s -o %s --from-code=UTF-8 -L PHP " . join(" ",$phpFiles)
+                ,kernel()->applicationID, $potFile);
+            $this->logger->debug($cmd,1);
+            system($cmd, $retval);
+            if ( $retval != 0 ) {
+                die('xgettext error');
+            }
+        }
+
+        $this->logger->info("Updating message catalog...");
+
+        // Update message catalog
+        $finder = Finder::create()->files()->name('*.po')->in( $localeDir );
+        foreach ( $finder->getIterator() as $file ) {
+            $shortPathname = $file;
+
+            $this->logger->info("Updating $shortPathname");
+            $cmd = sprintf('msgmerge --previous --verbose --no-fuzzy-matching --update %s %s', $shortPathname, $potFile);
+            $this->logger->debug($cmd);
+            system($cmd, $retval);
+            if ( $retval != 0 ) {
+                die('xgettext error');
+            }
+            /*
+            $this->logger->info("Removing obsolete messages for $shortPathname");
+            $msg = sprintf('msgattrib --output-file=%s --no-obsolete %s', $shortPathname, $potFile);
+            $this->logger->debug($cmd);
+            */
+        }
+
+        // Compile to mo files
+        $finder = Finder::create()->files()->name('*.po')->in( $localeDir );
+        foreach ( $finder->getIterator() as $file ) {
+            $shortPathname = $file;
+            $moPathname = futil_replace_extension($shortPathname,'mo');
+            $this->logger->info("Compiling messages $shortPathname");
+            $cmd = sprintf('msgfmt -v -o %s %s', $moPathname, $shortPathname);
+            $this->logger->debug($cmd);
+            system($cmd, $retval);
+            if ( $retval != 0 ) {
+                die('xgettext error');
+            }
+        }
+
         // Get translations
         $this->logger->info("Compiling bundle translation...");
         $languages = kernel()->locale->available();
@@ -123,99 +217,12 @@ class LocaleParseCommand extends Command
             fclose($fp);
 
             $this->logger->info("Running msguniq on $poFile...");
-            // system("msguniq $poFile > $poFile.new");
-            // system("mv -v $poFile.new $poFile");
+            system("msguniq $poFile > $poFile.new");
+            system("mv -v $poFile.new $poFile");
         }
 
-        // Compile templates from bundles
-        $this->logger->info("Compiling bundle templates...");
-        foreach( $kernel->bundles as $bundle ) {
-            $pluginDir = $bundle->locate();
-            $templateDir = $bundle->getTemplateDir();
-            if ( ! file_exists($templateDir) ) {
-                continue;
-            }
-            foreach (new RecursiveIteratorIterator(
-                    new RecursiveDirectoryIterator($templateDir),
-                    RecursiveIteratorIterator::LEAVES_ONLY) as $file) 
-            {
-                // force compilation
-                if( preg_match( '/\.(html?|twig)$/', $file ) ) {
-                    $this->logger->info( FileUtils::remove_cwd($file->getPathname()) ,1);
-                    $twig->loadTemplate( substr($file, strlen(dirname($pluginDir)) + 1) );
-                }
-            }
-        }
 
-        $potFile = $localeDir . DIRECTORY_SEPARATOR . 'messages.pot';
-        $this->logger->info("Creating pot file: $potFile");
-        touch($potFile);
 
-        $scanDirs = func_get_args(); // get paths from command-line
-
-        if ( empty($scanDirs) ) {
-            $scanDirs[] = PH_ROOT . DIRECTORY_SEPARATOR . 'src'; // phifty src
-            $scanDirs[] = PH_ROOT . DIRECTORY_SEPARATOR . 'applications'; // phifty applications
-            $scanDirs[] = PH_ROOT . DIRECTORY_SEPARATOR . 'bundles';
-            $scanDirs[] = PH_APP_ROOT . DIRECTORY_SEPARATOR . 'applications';
-            $scanDirs[] = PH_APP_ROOT . DIRECTORY_SEPARATOR . 'bundles';
-            $scanDirs[] = $kernel->getCacheDir();
-        }
-        $scanDirs = array_filter( $scanDirs, 'file_exists' );
-        if ( empty($scanDirs) ) {
-            throw new Exception("Non of existing directories");
-        }
-
-        foreach( $scanDirs as $scanDir ) {
-            $this->logger->info("Parsing from $scanDir...");
-
-            $phpFinder = Finder::create()->files()->name('*.php')->in( $scanDir );
-            $phpFiles = array();
-            foreach( $phpFinder as $phpFile ) {
-                $phpFiles[] = $phpFile;
-            }
-
-            if ( empty($phpFiles) ) {
-                continue;
-            }
-
-            $cmd = sprintf("xgettext -j --package-name=%s -o %s --from-code=UTF-8 -n -L PHP " . join(" ",$phpFiles)
-                ,kernel()->applicationID, $potFile);
-            $this->logger->debug($cmd,1);
-            system($cmd, $retval);
-            if ( $retval != 0 ) {
-                die('xgettext error');
-            }
-        }
-
-        $this->logger->info("Updating message catalog...");
-
-        // Update message catalog
-        $finder = Finder::create()->files()->name('*.po')->in( $localeDir );
-        foreach ( $finder->getIterator() as $file ) {
-            $shortPathname = $file;
-
-            $this->logger->info("Updating $shortPathname");
-            $cmd = sprintf('msgmerge --previous --verbose --no-fuzzy-matching --update %s %s', $shortPathname, $potFile);
-            $this->logger->debug($cmd);
-            system($cmd, $retval);
-            if ( $retval != 0 )
-                die('xgettext error');
-
-            /*
-            $this->logger->info("Removing obsolete messages for $shortPathname");
-            $msg = sprintf('msgattrib --output-file=%s --no-obsolete %s', $shortPathname, $potFile);
-            $this->logger->debug($cmd);
-            */
-
-            $moPathname = futil_replace_extension($shortPathname,'mo');
-            $this->logger->info("Compiling messages $shortPathname");
-            $cmd = sprintf('msgfmt -v -o %s %s', $moPathname, $shortPathname);
-            $this->logger->debug($cmd);
-            system($cmd, $retval);
-            if ( $retval != 0 )
-                die('xgettext error');
-        }
     }
 
 }
