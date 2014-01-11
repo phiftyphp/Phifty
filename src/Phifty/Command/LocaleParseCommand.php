@@ -128,7 +128,7 @@ class LocaleParseCommand extends Command
                 continue;
             }
 
-            $cmd = sprintf("xgettext -j --no-location --sort-output --package-name=%s -o %s --from-code=UTF-8 -L PHP " . join(" ",$phpFiles)
+            $cmd = sprintf("xgettext -j --no-location --sort-output --package-name=%s -o %s --from-code=UTF-8 PHP " . join(" ",$phpFiles)
                 ,kernel()->applicationID, $potFile);
             $this->logger->debug($cmd,1);
             system($cmd, $retval);
@@ -145,7 +145,7 @@ class LocaleParseCommand extends Command
             $shortPathname = $file;
 
             $this->logger->info("Updating $shortPathname");
-            $cmd = sprintf('msgmerge --previous --verbose --no-fuzzy-matching --update %s %s', $shortPathname, $potFile);
+            $cmd = sprintf('msgmerge --no-location --previous --verbose --no-fuzzy-matching --update %s %s', $shortPathname, $potFile);
             $this->logger->debug($cmd);
             system($cmd, $retval);
             if ( $retval != 0 ) {
