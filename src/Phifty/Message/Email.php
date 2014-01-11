@@ -139,9 +139,10 @@ class Email extends Message implements ArrayAccess
 
     public function send() 
     {
-        $view = kernel()->view;
-        $view->setArgs( $this->getData() );
-        $content = $view->render($this->getTemplate());
+        // $view = kernel()->getObject('view',array('Phifty\\View'));
+        // $view->setArgs( $this->getData() );
+        $twig = kernel()->twig->env;
+        $content = $twig->loadTemplate($this->getTemplate())->render($this->getData());
 
         if ( $this->format && $this->format === 'text/markdown' ) {
             if ( ! function_exists('Markdown') ) {
