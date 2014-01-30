@@ -11,7 +11,7 @@ class TemplateController extends Controller
     public function __construct($args)
     {
         $this->template = $args['template'];
-        $this->args = isset($args['template_args']) ? $args['args'] : null;
+        $this->args = isset($args['template_args']) ? $args['template_args'] : null;
     }
 
     public function run()
@@ -24,7 +24,7 @@ class TemplateController extends Controller
 #    Backend: twig
 #    Class: \Phifty\View
 #    TemplateDirs: {  }
-        $engineType = kernel()->config->get('framework','View.Backend');
+        $engineType = kernel()->config->get('framework','View.Backend') ?: 'twig';
 
         /* get template engine */
         $engine = Engine::createEngine( $engineType );

@@ -109,7 +109,8 @@ class Bundle
      */
     public function page( $path , $template , $args = array() )
     {
-        $this->add( $path , array(
+        $router = $this->kernel->router;
+        $router->add( $path , array(
             'template' => $template,
             'args' => $args,  // template args
         ));

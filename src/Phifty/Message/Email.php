@@ -86,6 +86,23 @@ class Email extends Message implements ArrayAccess
         return $this->format;
     }
 
+
+    public function setArguments($args) {
+        $this->data = $args;
+    }
+
+    public function getArguments() {
+        return $this->data;
+    }
+
+    public function getArgument($key) {
+        if ( isset($this->data[$key]) ) {
+            return $this->data[$key];
+        }
+    }
+
+
+    // XXX: Rename getData to getArguments()
     public function getData()
     {
         return $this->data;
@@ -144,7 +161,7 @@ class Email extends Message implements ArrayAccess
         $twig = kernel()->twig->env;
         $content = $twig->loadTemplate($this->getTemplate())->render($this->getData());
 
-        if ( $this->format && $this->format === 'text/markdown' ) {
+        if ( $this->format && $this->format === 'text/markdown' || $this->format === "markdown" ) {
             if ( ! function_exists('Markdown') ) {
                 throw new RuntimeException('Markdown library is not loaded.');
             }
