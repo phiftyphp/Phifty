@@ -128,7 +128,7 @@ class LocaleParseCommand extends Command
                 continue;
             }
 
-            $cmd = sprintf("xgettext -j --no-location --sort-output --package-name=%s -o %s --from-code=UTF-8 PHP " . join(" ",$phpFiles)
+            $cmd = sprintf("xgettext -j --no-location --sort-output --package-name=%s -o %s --from-code=UTF-8 --language PHP " . join(" ",$phpFiles)
                 ,kernel()->applicationID, $potFile);
             $this->logger->debug($cmd,1);
             system($cmd, $retval);
@@ -190,7 +190,7 @@ class LocaleParseCommand extends Command
                         continue;
                     }
                 }
-                $dictionary[$locale] = array_merge_recursive(
+                $dictionary[$locale] = array_merge(
                     $dictionary[$locale],
                     $bundleDict
                 );
@@ -202,12 +202,12 @@ class LocaleParseCommand extends Command
             $fp = fopen($poFile, 'a+');
             foreach( $subdictionary as $msgId => $msgStr ) {
                 $idStrs = explode("\n",$msgId);
+                $msgStrs = explode("\n",$msgStr);
                 fputs($fp, "msgid ");
                 foreach( $idStrs as $idStr ) {
                     fputs($fp, '"'. addslashes($idStr) . '"' . "\n");
                 }
 
-                $msgStrs = explode("\n",$msgStr);
                 fputs($fp, "msgstr ");
                 foreach( $msgStrs as $msgStr ) {
                     fputs($fp, '"'. addslashes($msgStr) . '"' . "\n");
@@ -221,8 +221,8 @@ class LocaleParseCommand extends Command
             system("mv -v $poFile.new $poFile");
         }
 
-
-
+        $this->logger->info("Removing obsolete entry comments..");
+        system("find locale -type f -iname '*.po' | xargs -I{} perl -i -pe 's/^#~ //' {}");
     }
 
 }
