@@ -175,27 +175,22 @@ class Bundle
             }
             return $this->config[ $key ];
         }
-
-        /* apc cache on production mode
-        if ( $val = apc_fetch($key) ) {
-            return $val;
-        }
-        */
-
         if ( strchr( $key , '.' ) !== false ) {
             $parts = explode( '.' , $key );
             $ref = $this->config;
-            while ( $ref_key = array_shift( $parts ) ) {
-                if ( ! isset($ref[ $ref_key ]) ) {
+            while ( $refKey = array_shift( $parts ) ) {
+                if ( is_array($ref) && isset($ref[ $refKey ]) ) {
+                    $ref = & $ref[ $refKey ];
+                    continue;
+                } else {
                     return null;
                 }
-                # throw new Exception( "Config key: $key not found.  '$ref_key'" );
-                $ref = & $ref[ $ref_key ];
             }
-            // apc_store($key, $ref);
+            if ( is_array($ref) ) {
+                return new Accessor($ref);
+            }
             return $ref;
         }
-        // apc_store($key, null);
         return null;
     }
 
