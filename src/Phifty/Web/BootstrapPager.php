@@ -101,7 +101,7 @@ class BootstrapPager
 
         $args = array_merge( $_GET , $_POST );
         $href = $this->mergeQuery( $args , array( "page" => $num ) );
-
+        $liClass = '';
         if ( $active ) {
             $liClass = 'active';
         }
