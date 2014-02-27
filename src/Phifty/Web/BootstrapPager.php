@@ -167,7 +167,7 @@ TWIG;
 
         if ( $this->showPageNumbers ) {
             if ( $cur > 5 ) {
-                $output .= $this->renderLink( 1 , 1 , 'pager-number' ) . ' ... ';
+                $output .= $this->renderLink( 1 , 1 , 'pager-number' );
             }
 
             for ($i = $pagenum_start ; $i <= $pagenum_end ; $i++) {

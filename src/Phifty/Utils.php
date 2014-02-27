@@ -61,4 +61,10 @@ class Utils
         }
     }
 
+    public static function encode_url($unencoded_url) {
+        return preg_replace_callback('#://([^/]+)/([^?\#]+)#', function ($match) {
+                return '://' . $match[1] . '/' . join('/', array_map('rawurlencode', explode('/', $match[2])));
+            }, $unencoded_url);
+    }
+
 }
