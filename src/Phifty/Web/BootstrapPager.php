@@ -179,7 +179,7 @@ TWIG;
             }
 
             if ( $cur + 5 < $total_pages ) {
-                $output .= ' ... ' . $this->renderLink( $total_pages , $total_pages , 'pager-number' );
+                $output .= $this->renderLink( $total_pages , $total_pages , 'pager-number' );
             }
         }
 
