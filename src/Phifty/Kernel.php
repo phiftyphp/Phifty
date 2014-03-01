@@ -81,11 +81,11 @@ class Kernel extends ObjectContainer
      * TODO: A better place to put this method
      */
     public function getHost() {
-        if ( isset($_SERVER['HTTP_HOST']) ) {
-            return $_SERVER['HTTP_HOST'];
-        }
         if ( $domain = $this->config->get('framework','Domain') ) {
             return $domain;
+        }
+        if ( isset($_SERVER['HTTP_HOST']) ) {
+            return $_SERVER['HTTP_HOST'];
         }
         throw new Exception("Domain is not configured in config file.");
     }
