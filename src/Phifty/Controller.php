@@ -6,6 +6,7 @@ use SerializerKit\YamlSerializer;
 use Exception;
 use InvalidArgumentException;
 use Roller\Controller as BaseController;
+use ReflectionObject;
 
 /*
     Synopsis
@@ -219,6 +220,29 @@ class Controller extends BaseController
         exit(0);
     }
 
+
+    public function runAction($action, $vars = array() )
+    {
+        $method = $action . 'Action';
+        if ( ! method_exists($this,$method) ) {
+            throw new Exception("Controller method $method does not exist.");
+        }
+
+        $ro = new ReflectionObject( $this );
+        $rm = $ro->getMethod($method);
+
+        // apply vars to function arguments
+        $parameters = $rm->getParameters();
+        $arguments = array();
+        foreach ($parameters as $param) {
+            if ( isset( $vars[ $param->getName() ] ) ) {
+                $arguments[] = $vars[ $param->getName() ];
+            }
+        }
+        return call_user_func_array( array($this,$method) , $arguments );
+    }
+
+
     /**
      * forward to another controller
      *
@@ -231,9 +255,11 @@ class Controller extends BaseController
      */
     public function forward($class, $action = 'index' , $parameters = array())
     {
-        // $controller = new $class;
-        // xxx: implement this
-        // return $controller->runAction( $action , $parameters );
+        $controller = new $class;
+        $controller->before();
+        $ret = $controller->runAction($action, $parameters);
+        $controller->after();
+        return $ret;
     }
 
     /**
