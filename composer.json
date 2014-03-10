@@ -23,7 +23,8 @@
         "symfony\/css-selector": "~2.2",
         "michelf\/php-markdown": "~1",
         "corneltek\/kendo": "~1",
-        "phpexcel\/phpexcel": "*"
+        "phpexcel\/phpexcel": "*",
+        "facebook/php-sdk": "dev-master"
     },
     "require-dev": {
         "firephp\/firephp-core": "dev-master",
