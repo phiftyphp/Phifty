@@ -253,10 +253,10 @@ class Controller extends BaseController
      *      )
      *  ));
      */
-    public function forward($class, $action = 'index' , $parameters = array())
+    public function forward($controller, $action = 'index' , $parameters = array())
     {
-        if ( is_string($class) ) {
-            $controller = new $class;
+        if ( is_string($controller) ) {
+            $controller = new $controller;
         }
         $controller->before();
         $ret = $controller->runAction($action, $parameters);
