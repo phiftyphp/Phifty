@@ -62,15 +62,6 @@ class MailerService implements ServiceInterface
     */
     public function register($kernel, $options = array() )
     {
-
-        # XXX: version 4.1.8 is fine, we should use it from PEAR,
-        # since onion can not install specific versino for now.
-#          $kernel->classloader->addPrefix(array(
-#              'Swift' => $kernel->frameworkDir . '/vendor/pear',
-#          ));
-#          require $kernel->frameworkDir . '/vendor/pear/swift_required.php';
-        require 'swift_required.php';
-
         $kernel->mailer = function() use ($kernel,$options) {
             $accessor = new Accessor( $options );
             $transportType = $accessor->Transport ?: 'MailTransport';
