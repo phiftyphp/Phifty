@@ -14,7 +14,7 @@
         "corneltek\/sessionkit": "~1.0",
         "corneltek\/twig-markdown": "~0.1",
         "corneltek\/sitemap": "~1",
-        "swiftmailer/swiftmailer": "@stable",
+        "swiftmailer\/swiftmailer": "@stable",
         "twig\/twig": "~1.12",
         "twig\/extensions": "1.0.*@dev",
         "symfony\/finder": "~2.2",
@@ -56,5 +56,5 @@
             "Phifty": "src"
         }
     },
-    "version": "2.8.3"
+    "version": "2.8.4"
 }
