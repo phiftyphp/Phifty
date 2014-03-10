@@ -24,7 +24,7 @@
         "michelf\/php-markdown": "~1",
         "corneltek\/kendo": "~1",
         "phpexcel\/phpexcel": "*",
-        "facebook/php-sdk": "dev-master"
+        "facebook/php-sdk": "*"
     },
     "require-dev": {
         "firephp\/firephp-core": "dev-master",
