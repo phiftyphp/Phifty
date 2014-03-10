@@ -154,12 +154,16 @@ class Email extends Message implements ArrayAccess
         return $this->message;
     }
 
+    public function getContent() {
+        $twig = kernel()->twig->env;
+        return $twig->loadTemplate($this->getTemplate())->render($this->getData());
+    }
+
     public function send() 
     {
         // $view = kernel()->getObject('view',array('Phifty\\View'));
         // $view->setArgs( $this->getData() );
-        $twig = kernel()->twig->env;
-        $content = $twig->loadTemplate($this->getTemplate())->render($this->getData());
+        $content = $this->getContent();
 
         if ( $this->format && $this->format === 'text/markdown' || $this->format === "markdown" ) {
             if ( ! function_exists('Markdown') ) {
