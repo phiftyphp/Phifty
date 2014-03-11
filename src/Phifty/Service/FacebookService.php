@@ -8,8 +8,8 @@ use Exception;
 
 /*
   FacebookService:
-    appId: 327281450625323
-    secret: 721be7a340cc0b4b5073071cabb8d26b
+    appId: {appId}
+    secret: {app secret}
 */
 
 class FacebookService implements ServiceInterface
