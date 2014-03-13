@@ -1,6 +1,7 @@
 <?php
 namespace Phifty\Service;
 use Exception;
+use ConfigKit\Accessor;
 
 class AesCryptor {
 
