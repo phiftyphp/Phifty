@@ -90,11 +90,15 @@ class Kernel extends ObjectContainer
         throw new Exception("Domain is not configured in config file.");
     }
 
+
+    public function getBaseUrl() {
+        $scheme = $this->config->get('framework','SSL') ? 'https://' : 'http://';
+        $port = (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] != 80) ? ":" . $_SERVER['SERVER_PORT'] : "";
+        return $scheme . $this->getHost() . $port;
+    }
+
     public function getHostBaseUrl() {
-        return (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] ? 'https://' : 'http://')
-            . kernel()->getHost()
-            . ((isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] != 80) ? ":" . $_SERVER['SERVER_PORT'] : "" )
-            ;
+        return $this->getBaseUrl();
     }
 
     public function getSystemMail() {
