@@ -23,14 +23,26 @@ class Email extends Message implements ArrayAccess
 
     public $data = array();
 
+
+    /**
+     * In the constructor we create a Swift Message instance
+     */
     public function __construct() 
     {
         $this->message = Swift_Message::newInstance();
 
-        // processing subject
+        // processing subject, TODO: rename getSubject() to subject()
+        //
+        // `subject()` should be predefine-able from class
+        //
+        // `getSubject()` should call subject()
+        //
+        // `setSubject()` should override the $this->subject.
+        //
         if ( $subject = $this->getSubject() ) {
             $this->message->setSubject($subject);
         }
+
         if ( $from = $this->getFrom() ) {
             $this->message->setFrom( (array) $from );
         }
@@ -38,6 +50,10 @@ class Email extends Message implements ArrayAccess
             $this->message->setTo( (array) $to );
         }
     }
+
+    public function from() { }
+    public function to() { }
+    public function subject() { }
 
     public function getSubject()
     {
