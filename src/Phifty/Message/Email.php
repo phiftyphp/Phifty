@@ -53,11 +53,12 @@ class Email extends Message implements ArrayAccess
 
     public function from() { }
     public function to() { }
-    public function subject() { }
-
-    public function getSubject()
-    {
+    public function subject() {
         return $this->subject;
+    }
+
+    public function getSubject() {
+        return $this->subject();
     }
 
     public function setSubject($subject)
@@ -66,23 +67,39 @@ class Email extends Message implements ArrayAccess
         $this->message->setSubject($subject);
     }
 
+
     public function getFrom() {
+        return $this->from();
+    }
+
+    public function from() {
         return $this->from;
+    }
+
+    /**
+     * should provide the ability to override the default from() defined by class
+     */
+    public function setFrom($from) {
+        $this->from = $from;
+        $this->message->setFrom((array) $from);
+    }
+
+    public function to() {
+        return $this->to;
     }
 
     public function getTo() {
-        return $this->from;
+        return $this->to();
     }
 
+    /**
+     * should provide the ability to override the default to() defined by class
+     */
     public function setTo($to) {
         $this->to = $to;
         $this->message->setTo((array) $to);
     }
 
-    public function setFrom($from) {
-        $this->from = $from;
-        $this->message->setFrom((array) $from);
-    }
 
     public function getTemplate()
     {
