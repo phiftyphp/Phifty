@@ -3,16 +3,23 @@ namespace Phifty\Message;
 use Swift_Message;
 use ArrayAccess;
 use RuntimeException;
+use Twig_Loader_String;
+use Twig_Environment;
 
 class Email extends Message implements ArrayAccess
 {
     public $message;
 
-    public $from;
-
-    public $to;
-
     public $subject;
+
+    /**
+     * @var string pre-defined email title
+     *
+     * A title is a part of a subject, that is, subject includes site name as its prefix 
+     * and append the title.
+     */
+    public $title;
+
 
     public $template;
 
@@ -23,6 +30,11 @@ class Email extends Message implements ArrayAccess
 
     public $data = array();
 
+    public $from;
+    public $to;
+    public $cc;
+    public $bcc;
+
 
     /**
      * In the constructor we create a Swift Message instance
@@ -30,82 +42,51 @@ class Email extends Message implements ArrayAccess
     public function __construct() 
     {
         $this->message = Swift_Message::newInstance();
-
-        // processing subject, TODO: rename getSubject() to subject()
-        //
-        // `subject()` should be predefine-able from class
-        //
-        // `getSubject()` should call subject()
-        //
-        // `setSubject()` should override the $this->subject.
-        //
-        if ( $subject = $this->getSubject() ) {
-            $this->message->setSubject($subject);
-        }
-
-        if ( $from = $this->getFrom() ) {
-            $this->message->setFrom( (array) $from );
-        }
-        if ( $to = $this->getTo() ) {
-            $this->message->setTo( (array) $to );
-        }
     }
 
-    public function from() { }
-    public function to() { }
     public function subject() {
-        return $this->subject;
+        if ( $this->subject ) {
+            return $this->subject;
+        }
+        return kernel()->getApplicationName() . ' - ' . $this->title();
     }
 
-    public function getSubject() {
-        return $this->subject();
-    }
-
-    public function setSubject($subject)
-    {
-        $this->subject = $subject;
-        $this->message->setSubject($subject);
+    /**
+     * This method is for subclasses to override.
+     *
+     * @return string title string
+     */
+    public function title() {
+        return $this->title ?: 'Untitled Mail';
     }
 
     public function from() {
-        return $this->from;
-    }
-
-    public function getFrom() {
         if ( $this->from ) {
             return $this->from;
         }
-        return $this->from();
-    }
-
-
-    /**
-     * should provide the ability to override the default from() defined by class
-     */
-    public function setFrom($from) {
-        $this->from = $from;
-        $this->message->setFrom((array) $from);
+        return $this->message->getFrom();
     }
 
     public function to() {
-        return $this->to;
-    }
-
-    public function getTo() {
         if ( $this->to ) {
             return $this->to;
         }
-        return $this->to();
+        return $this->message->getTo();
     }
 
-    /**
-     * should provide the ability to override the default to() defined by class
-     */
-    public function setTo($to) {
-        $this->to = $to;
-        $this->message->setTo((array) $to);
+    public function cc() {
+        if ( $this->cc ) {
+            return $this->cc;
+        }
+        return array();
     }
 
+    public function bcc() {
+        if ( $this->bcc ) {
+            return $this->bcc;
+        }
+        return array();
+    }
 
     /**
      * Get template file path.
@@ -204,20 +185,41 @@ class Email extends Message implements ArrayAccess
     }
 
     /**
-     * The default getContent method, get the template and render content.
+     * The default renderContent method, get the template and render content.
      *
      * @return string rendered content.
      */
-    public function getContent() {
+    public function renderContent() {
         $twig = kernel()->twig->env;
         return $twig->loadTemplate($this->getTemplate())->render($this->getData());
     }
 
+    public function renderSubject() {
+        $subjectTpl = $this->subject();
+        $loader = new Twig_Loader_String();
+        $twig = new Twig_Environment($loader);
+        return $twig->render($subjectTpl, $this->getData());
+    }
+
     public function send() 
     {
+        if ( ! $this->message->getSubject() ) {
+            $this->message->setSubject( $this->renderSubject() );
+        }
+        if ( empty($this->message->getTo()) ) {
+            $this->message->setTo( $this->to() );
+        }
+        if ( empty($this->message->getCc()) ) {
+            $this->message->setCc( $this->cc() );
+        }
+        if ( empty($this->message->getBcc()) ) {
+            $this->message->setBcc( $this->bcc() );
+        }
+
+
         // $view = kernel()->getObject('view',array('Phifty\\View'));
         // $view->setArgs( $this->getData() );
-        $content = $this->getContent();
+        $content = $this->renderContent();
 
         // Support more formats here.
         // rewrite format to 'text/markdown'
