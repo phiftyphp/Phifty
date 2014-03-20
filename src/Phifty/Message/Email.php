@@ -67,14 +67,17 @@ class Email extends Message implements ArrayAccess
         $this->message->setSubject($subject);
     }
 
-
-    public function getFrom() {
-        return $this->from();
-    }
-
     public function from() {
         return $this->from;
     }
+
+    public function getFrom() {
+        if ( $this->from ) {
+            return $this->from;
+        }
+        return $this->from();
+    }
+
 
     /**
      * should provide the ability to override the default from() defined by class
@@ -89,6 +92,9 @@ class Email extends Message implements ArrayAccess
     }
 
     public function getTo() {
+        if ( $this->to ) {
+            return $this->to;
+        }
         return $this->to();
     }
 
@@ -101,11 +107,21 @@ class Email extends Message implements ArrayAccess
     }
 
 
+    /**
+     * Get template file path.
+     *
+     * @return string template file path.
+     */
     public function getTemplate()
     {
         return $this->template;
     }
 
+    /**
+     * Set template file path.
+     *
+     * @param string $template
+     */
     public function setTemplate($template) 
     {
         $this->template = $template;
@@ -187,6 +203,11 @@ class Email extends Message implements ArrayAccess
         return $this->message;
     }
 
+    /**
+     * The default getContent method, get the template and render content.
+     *
+     * @return string rendered content.
+     */
     public function getContent() {
         $twig = kernel()->twig->env;
         return $twig->loadTemplate($this->getTemplate())->render($this->getData());
@@ -198,6 +219,8 @@ class Email extends Message implements ArrayAccess
         // $view->setArgs( $this->getData() );
         $content = $this->getContent();
 
+        // Support more formats here.
+        // rewrite format to 'text/markdown'
         if ( $this->format && $this->format === 'text/markdown' || $this->format === "markdown" ) {
             if ( ! function_exists('Markdown') ) {
                 throw new RuntimeException('Markdown library is not loaded.');
