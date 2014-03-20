@@ -134,13 +134,6 @@ class Email extends Message implements ArrayAccess
         }
     }
 
-
-    // XXX: Rename getData to getArguments()
-    public function getData()
-    {
-        return $this->getArguments();
-    }
-    
     public function offsetSet($name,$value)
     {
         $this->data[ $name ] = $value;
