@@ -122,7 +122,10 @@ class Email extends Message implements ArrayAccess
     }
 
     public function getArguments() {
-        return $this->data;
+        return array_merge(array( 
+            'Email' => $this,
+            'Kernel' => kernel(),
+        ),$this->data );
     }
 
     public function getArgument($key) {
@@ -135,7 +138,7 @@ class Email extends Message implements ArrayAccess
     // XXX: Rename getData to getArguments()
     public function getData()
     {
-        return $this->data;
+        return $this->getArguments();
     }
     
     public function offsetSet($name,$value)
@@ -191,14 +194,14 @@ class Email extends Message implements ArrayAccess
      */
     public function renderContent() {
         $twig = kernel()->twig->env;
-        return $twig->loadTemplate($this->getTemplate())->render($this->getData());
+        return $twig->loadTemplate($this->getTemplate())->render($this->getArguments());
     }
 
     public function renderSubject() {
         $subjectTpl = $this->subject();
         $loader = new Twig_Loader_String();
         $twig = new Twig_Environment($loader);
-        return $twig->render($subjectTpl, $this->getData());
+        return $twig->render($subjectTpl, $this->getArguments());
     }
 
     public function send() 
@@ -218,7 +221,7 @@ class Email extends Message implements ArrayAccess
 
 
         // $view = kernel()->getObject('view',array('Phifty\\View'));
-        // $view->setArgs( $this->getData() );
+        // $view->setArgs( $this->getArguments() );
         $content = $this->renderContent();
 
         // Support more formats here.
