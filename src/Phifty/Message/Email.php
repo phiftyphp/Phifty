@@ -88,6 +88,10 @@ class Email extends Message implements ArrayAccess
         return array();
     }
 
+    public function template() {
+        return $this->template;
+    }
+
     /**
      * Get template file path.
      *
@@ -95,8 +99,14 @@ class Email extends Message implements ArrayAccess
      */
     public function getTemplate()
     {
-        return $this->template;
+        if ( $this->template ) {
+            return $this->template;
+        }
+        return $this->template();
     }
+
+
+
 
     /**
      * Set template file path.
@@ -186,8 +196,20 @@ class Email extends Message implements ArrayAccess
      * @return string rendered content.
      */
     public function renderContent() {
-        $twig = kernel()->twig->env;
-        return $twig->loadTemplate($this->getTemplate())->render($this->getArguments());
+        $twig     = kernel()->twig->env;
+        $template = $twig->loadTemplate($this->getTemplate());
+        $html     = $template->render($this->getArguments());
+
+        // Support more formats here.
+        // rewrite format to 'text/markdown'
+        if ( $this->format && $this->format === 'text/markdown' || $this->format === "markdown" ) {
+            if ( ! function_exists('Markdown') ) {
+                throw new RuntimeException('Markdown library is not loaded.');
+            }
+            $this->format = 'text/html';
+            return Markdown($html);
+        }
+        return $html;
     }
 
     public function renderSubject() {
@@ -216,16 +238,6 @@ class Email extends Message implements ArrayAccess
         // $view = kernel()->getObject('view',array('Phifty\\View'));
         // $view->setArgs( $this->getArguments() );
         $content = $this->renderContent();
-
-        // Support more formats here.
-        // rewrite format to 'text/markdown'
-        if ( $this->format && $this->format === 'text/markdown' || $this->format === "markdown" ) {
-            if ( ! function_exists('Markdown') ) {
-                throw new RuntimeException('Markdown library is not loaded.');
-            }
-            $this->format = 'text/html';
-            $content = Markdown($content);
-        }
 
         if ( $this->format ) {
             $this->message->setBody($content,$this->format);

@@ -113,6 +113,7 @@ class Kernel extends ObjectContainer
                 );
             }
         }
+        // the default mailer
         return array(
             'no-reply@' . $this->getHost() => $this->getApplicationName(),
         );
