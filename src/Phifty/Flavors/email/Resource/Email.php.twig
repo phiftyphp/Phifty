@@ -1,0 +1,22 @@
+<?php
+namespace {{namespace}}\Email;
+use EmailBundle\BaseEmail;
+use MemberBundle\CurrentMember;
+use UserBundle\Model\UserCollection;
+
+abstract class {{emailClassName}} extends BaseEmail
+{
+    public $format = 'text/html';
+
+    public $templateHandle = '{{emailHandle}}';
+
+    public function to() {
+        // return recipients
+        return array();
+    }
+
+    // public function from();
+    // public function cc();
+    // public function bcc();
+}
+

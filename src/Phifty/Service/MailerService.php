@@ -3,6 +3,7 @@ namespace Phifty\Service;
 use Swift_MailTransport;
 use Swift_Mailer;
 use ConfigKit\Accessor;
+use Swift_Plugins_AntiFloodPlugin;
 
 class MailerService implements ServiceInterface
 {
