@@ -5,6 +5,7 @@
  * @author c9s <cornelius.howl@gmail.com>
  * @package Phifty
  */
+require '../main.php';
 if (php_sapi_name() == 'cli-server') {
     $uri = $_SERVER['REQUEST_URI'];
     $info = parse_url($uri);
@@ -17,48 +18,4 @@ if (php_sapi_name() == 'cli-server') {
 } else {
     $pathinfo = isset($_SERVER['PATH_INFO']) && $_SERVER["PATH_INFO"] ? $_SERVER['PATH_INFO'] : '/';
 }
-
-try {
-    require '../main.php';
-
-    // allow origin: https://developer.mozilla.org/en-US/docs/HTTP/Access_control_CORS
-    header( 'Access-Control-Allow-Origin: http://' . $_SERVER['HTTP_HOST'] );
-
-    $kernel = kernel();
-    $kernel->event->trigger('phifty.before_path_dispatch');
-    if( $r = $kernel->router->dispatch( $pathinfo ) ) {
-        $kernel->event->trigger('phifty.before_page');
-        echo $r->run();
-        $kernel->event->trigger('phifty.after_page');
-    } 
-    else {
-        // header('HTTP/1.0 404 Not Found');
-        echo "<h3>Page not found.</h3>";
-    }
-
-}
-#  catch ( Twig_Error_Runtime $e ) {
-#      # twig error exception
-#  
-#  }
-catch ( Exception $e ) {
-    if( kernel()->isDev ) 
-    {
-        if( class_exists('Core\\Controller\\ExceptionController',true) ) {
-            $controller = new Core\Controller\ExceptionController;
-            echo $controller->indexAction($e);
-        } else {
-            // simply throw exception
-            throw $e;
-        }
-    }
-    else {
-        header('HTTP/1.1 500 Internal Server Error');
-        die($e->getMessage());
-    }
-}
-catch ( Roller\Exception\RouteException $e ) {
-    header('HTTP/1.1 403');
-    die( $e->getMessage() );
-}
-
+kernel()->handle($pathinfo);

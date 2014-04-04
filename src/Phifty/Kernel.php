@@ -314,4 +314,55 @@ class Kernel extends ObjectContainer
         }
         return $one = new static;
     }
+
+
+    /**
+     * Handle request from rewrite rule or php-fpm
+     */
+    public function handle($pathinfo)
+    {
+        try {
+            // allow origin: https://developer.mozilla.org/en-US/docs/HTTP/Access_control_CORS
+            header( 'Access-Control-Allow-Origin: http://' . $_SERVER['HTTP_HOST'] );
+            $this->event->trigger('phifty.before_path_dispatch');
+            if( $r = $this->router->dispatch( $pathinfo ) ) {
+                $this->event->trigger('phifty.before_page');
+                echo $r->run();
+                $this->event->trigger('phifty.after_page');
+            } else {
+                // header('HTTP/1.0 404 Not Found');
+                echo "<h3>Page not found.</h3>";
+            }
+        }
+        // Cache Twig Template Error
+        /*
+        catch ( Twig_Error_Runtime $e ) {
+            # twig error exception
+        
+        }
+        */
+        catch ( Exception $e ) {
+            if( $this->isDev ) 
+            {
+                if( class_exists('CoreBundle\\Controller\\ExceptionController',true) ) {
+                    $controller = new \CoreBundle\Controller\ExceptionController;
+                    echo $controller->indexAction($e);
+                } else {
+                    // simply throw exception
+                    throw $e;
+                }
+            }
+            else {
+                header('HTTP/1.1 500 Internal Server Error');
+                die($e->getMessage());
+            }
+        }
+        catch ( \Roller\Exception\RouteException $e ) {
+            header('HTTP/1.1 403');
+            die( $e->getMessage() );
+        }
+
+    }
+
+
 }
