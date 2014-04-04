@@ -5,7 +5,7 @@ class CurrentUserTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $record = new User\Model\User;
+        $record = new UserBundle\Model\User;
         $record->load(array('account' => 'testing'));
         if($record->id)
             $record->delete();
@@ -13,7 +13,7 @@ class CurrentUserTest extends PHPUnit_Framework_TestCase
 
     public function tearDown()
     {
-        $record = new User\Model\User;
+        $record = new UserBundle\Model\User;
         $record->load(array('account' => 'testing'));
         if($record->id)
             $record->delete();
@@ -30,7 +30,7 @@ class CurrentUserTest extends PHPUnit_Framework_TestCase
     function testWithOptions() 
     {
         $user = new Phifty\Security\CurrentUser(array( 
-            'model_class' => 'User\\Model\\User',
+            'model_class' => 'UserBundle\\Model\\User',
             'session_prefix' => '__phifty_',
             'primary_key' => 'id',
         ));
@@ -39,7 +39,7 @@ class CurrentUserTest extends PHPUnit_Framework_TestCase
 
     function testWithRecord() 
     {
-        $record = new User\Model\User;
+        $record = new UserBundle\Model\User;
         $ret = $record->create(array(
             'account' => 'testing',
             'email'   => 'testing@testing.com',
