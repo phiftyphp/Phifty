@@ -23,6 +23,7 @@
         "symfony\/css-selector": "~2.2",
         "michelf\/php-markdown": "~1",
         "corneltek\/kendo": "~1",
+        "corneltek\/pux": "~1",
         "phpexcel\/phpexcel": "*",
         "facebook\/php-sdk": "*"
     },
