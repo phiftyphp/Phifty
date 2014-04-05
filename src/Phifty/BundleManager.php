@@ -95,11 +95,13 @@ class BundleManager
      */
     public function init()
     {
-        foreach ($this->bundles as $b) {
-            $b->routes();
-        }
+        // initialize bundle object.
         foreach ($this->bundles as $b) {
             $b->init();
+        }
+        // build routes
+        foreach ($this->bundles as $b) {
+            $b->routes();
         }
     }
 
