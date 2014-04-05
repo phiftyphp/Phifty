@@ -14,6 +14,10 @@ class BundleManager
      */
     public $bundles = array();
 
+
+    /**
+     * @var string[]
+     */
     public $bundleDirs = array();
 
     public function isLoaded( $name )
@@ -29,11 +33,21 @@ class BundleManager
         }
     }
 
+
+    /**
+     * get bundle names
+     *
+     * @return string[] bundle names
+     */
     public function getList()
     {
         return array_keys( $this->bundles );
     }
 
+
+    /**
+     * @return Phifty\Bundle[] bundle objects
+     */
     public function getBundles()
     {
         return array_values( $this->bundles );
@@ -48,15 +62,23 @@ class BundleManager
     }
 
     /**
-     * get Bundle object
+     * Get Bundle object
+     *
+     * @param string $name return bundle object.
      */
     public function get( $name )
     {
-        if ( isset( $this->bundles[ $name ] ) )
-
+        if ( isset( $this->bundles[ $name ] ) ) {
             return $this->bundles[ $name ];
+        }
     }
 
+
+    /**
+     * load bundle object
+     *
+     * @param string $name
+     */
     protected function _loadBundle($name)
     {
         # $name = '\\' . ltrim( $name , '\\' );
@@ -78,6 +100,9 @@ class BundleManager
 
     /**
      * Load Bundle
+     *
+     * @param string $name
+     * @param array $config
      */
     public function load( $name , $config = array() )
     {
@@ -91,7 +116,7 @@ class BundleManager
     }
 
     /**
-     * initialize all loaded bundles
+     * Initialize all loaded bundles.
      */
     public function init()
     {
