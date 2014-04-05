@@ -161,6 +161,8 @@ class Bundle
     }
 
 
+
+
     /**
      * Get bundle config
      *
@@ -295,6 +297,12 @@ class Bundle
         $class::set_mount_path($path);
         $this->kernel->router->mount( $path , $routes );
     }
+
+    /**
+     * Route definition method, users define bundle routes in this method.
+     */
+    public function routes() { }
+
 
     /**
      * Register/Generate CRUD actions
