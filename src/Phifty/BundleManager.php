@@ -95,9 +95,9 @@ class BundleManager
      */
     public function init()
     {
-        // TODO: initialize by config ordering
-        foreach ($this->bundles as $name => $Bundle) {
-            $Bundle->init();
+        foreach ($this->bundles as $b) {
+            $b->routes();
+            $b->init();
         }
     }
 
