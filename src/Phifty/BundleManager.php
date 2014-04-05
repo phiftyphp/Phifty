@@ -97,6 +97,8 @@ class BundleManager
     {
         foreach ($this->bundles as $b) {
             $b->routes();
+        }
+        foreach ($this->bundles as $b) {
             $b->init();
         }
     }
