@@ -20,7 +20,6 @@ class Email extends Message implements ArrayAccess
      */
     public $title;
 
-
     public $template;
 
     /**
@@ -28,7 +27,7 @@ class Email extends Message implements ArrayAccess
      */
     public $format;
 
-    public $data = array();
+    protected $data = array();
 
     public $from;
     public $to;
