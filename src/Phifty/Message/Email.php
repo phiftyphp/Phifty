@@ -224,16 +224,16 @@ class Email extends Message implements ArrayAccess
         if ( ! $this->message->getSubject() ) {
             $this->message->setSubject( $this->renderSubject() );
         }
-        if ( empty($this->message->getFrom()) ) {
+        if ( ! $this->message->getFrom() ) {
             $this->message->setFrom( $this->from() );
         }
-        if ( empty($this->message->getTo()) ) {
+        if ( ! $this->message->getTo() ) {
             $this->message->setTo( $this->to() );
         }
-        if ( empty($this->message->getCc()) ) {
+        if ( ! $this->message->getCc() ) {
             $this->message->setCc( $this->cc() );
         }
-        if ( empty($this->message->getBcc()) ) {
+        if ( ! $this->message->getBcc() ) {
             $this->message->setBcc( $this->bcc() );
         }
 
