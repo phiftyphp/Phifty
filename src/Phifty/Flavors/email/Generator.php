@@ -34,19 +34,18 @@ class Generator extends BaseGenerator
 
         if ( file_exists($classFile) ) {
             $this->logger->info("Found existing $classFile, skip");
-            return;
+        } else {
+            $this->render('Email.php.twig', $classFile ,array(
+                'namespace' => $ns,
+                'emailClassName' => $emailClassName,
+                'emailHandle' => $handle,
+            ));
         }
-
-        $this->render('Email.php.twig', $classFile ,array(
-            'namespace' => $ns,
-            'emailClassName' => $emailClassName,
-            'emailHandle' => $handle,
-        ));
 
         foreach( kernel()->locale->available() as $locale => $name ) {
             $templateFile = $app->getTemplateDir() . DIRECTORY_SEPARATOR . 'email' . DIRECTORY_SEPARATOR . $locale . DIRECTORY_SEPARATOR . $handle . '.html';
 
-            if ( file_exists($classFile) ) {
+            if ( file_exists($templateFile) ) {
                 $this->logger->info("Found existing $templateFile, skip");
                 continue;
             }

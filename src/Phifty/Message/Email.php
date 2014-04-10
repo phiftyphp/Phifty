@@ -218,7 +218,7 @@ class Email extends Message implements ArrayAccess
         return $twig->render($subjectTpl, $this->getArguments());
     }
 
-    public function send() 
+    public function send()
     {
         if ( ! $this->message->getSubject() ) {
             $this->message->setSubject( $this->renderSubject() );
