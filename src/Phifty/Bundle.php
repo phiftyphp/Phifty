@@ -403,6 +403,10 @@ class Bundle
         }
     }
 
+    public function getComposerDependency() {
+        return;
+    }
+
     public static function getInstance($config = array())
     {
         static $instance;
