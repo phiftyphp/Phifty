@@ -11,34 +11,11 @@ class ComposerConfigCommand extends Command
     public function execute()
     {
         $bundles = kernel()->bundles;
-
-        /*
-        {
-            "name": "site/ichimove",
-            "require": {
-                "php": ">=5.3.0",
-                "corneltek\/phifty-core": "dev-master",
-                "corneltek\/oauth-provider": "~1",
-                "corneltek\/oauth2": "~1",
-                "facebook/php-sdk": "dev-master"
-            },
-            "require-dev": {
-                "corneltek\/phpunit-testmore": "dev-master"
-            },
-            "version": "1.0",
-            "scripts": {
-                "post-install-cmd": [ "Phifty\\Installer\\ComposerInstaller::postInstall" ]
-            }
-        }
-        */
-
         $config = [];
-
         $kernel = kernel();
         $config['name'] = 'site/' . strtolower($kernel->getApplicationId());
         $config['version'] = '1.0';
         $config['require'] = [];
-
         foreach( $bundles as $bundle ) {
             if ( $deps = $bundle->getComposerDependency() ) {
                 if ( ! is_array($deps) ) {
