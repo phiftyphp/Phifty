@@ -1,8 +1,9 @@
 <?php
 namespace Phifty\Service;
+use Phifty\ComposerConfigBridge;
 
 class FirePHPService
-    implements ServiceInterface
+    implements ServiceInterface, ComposerConfigBridge
 {
 
     public function getId() { return 'FirePHP'; }
@@ -28,5 +29,10 @@ class FirePHPService
                 }
             }
         });
+    }
+
+    public function getComposerDependency() 
+    {
+        return ["firephp/firephp-core" => "dev-master"];
     }
 }

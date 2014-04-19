@@ -4,8 +4,9 @@ use Swift_MailTransport;
 use Swift_Mailer;
 use ConfigKit\Accessor;
 use Swift_Plugins_AntiFloodPlugin;
+use Phifty\ComposerConfigBridge;
 
-class MailerService implements ServiceInterface
+class MailerService implements ServiceInterface, ComposerConfigBridge
 {
 
     public function getId() { return 'Mailer'; }
@@ -119,6 +120,10 @@ class MailerService implements ServiceInterface
             return $mailer;
         };
 
+    }
+
+    public function getComposerDependency() {
+        return ["swiftmailer/swiftmailer" => "@stable"];
     }
 
 }

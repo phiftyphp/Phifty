@@ -24,13 +24,10 @@
         "michelf\/php-markdown": "~1",
         "corneltek\/kendo": "~1",
         "corneltek\/pux": "~1",
-        "phpexcel\/phpexcel": "*",
-        "facebook\/php-sdk": "*"
+        "phpexcel\/phpexcel": "*"
     },
     "require-dev": {
-        "firephp\/firephp-core": "dev-master",
-        "corneltek\/phpunit-testmore": "dev-master",
-        "phpexcel\/phpexcel": "~1.7"
+        "corneltek\/phpunit-testmore": "dev-master"
     },
     "repositories": [
         {

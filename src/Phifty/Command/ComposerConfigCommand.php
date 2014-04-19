@@ -1,11 +1,25 @@
 <?php
 namespace Phifty\Command;
 use CLIFramework\Command;
+use Phifty\ComposerConfigBridge;
+use Exception;
 
 class ComposerConfigCommand extends Command
 {
     public function brief() {
         return 'Build composer config for web application.';
+    }
+
+    public function mergeConfig(& $config, $deps ) {
+        if ( ! is_array($deps) ) {
+            throw new Exception("Returned dependency data is not an array.");
+        }
+        foreach( $deps as $pkgName => $versionConstraint ) {
+            if ( isset($config['require'][$pkgName]) ) {
+                throw new Exception("$pkgName is already defined.");
+            }
+            $config['require'][$pkgName] = $versionConstraint;
+        }
     }
 
     public function execute()
@@ -17,15 +31,17 @@ class ComposerConfigCommand extends Command
         $config['version'] = '1.0';
         $config['require'] = [];
         foreach( $bundles as $bundle ) {
-            if ( $deps = $bundle->getComposerDependency() ) {
-                if ( ! is_array($deps) ) {
-                    throw new Exception("Returned dependency data is not an array.");
+            if ($bundle instanceof ComposerConfigBridge ) {
+                if ( $deps = $bundle->getComposerDependency() ) {
+                    $this->mergeConfig($config, $deps);
                 }
-                foreach( $deps as $pkgName => $versionConstraint ) {
-                    if ( isset($config['require'][$pkgName]) ) {
-                        throw new Exception("$pkgName is already defined.");
-                    }
-                    $config['require'][$pkgName] = $versionConstraint;
+            }
+        }
+
+        foreach ( $kernel->services as $service ) {
+            if ($service instanceof ComposerConfigBridge ) {
+                if ( $deps = $service->getComposerDependency() ) {
+                    $this->mergeConfig($config, $deps);
                 }
             }
         }
