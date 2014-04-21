@@ -168,6 +168,7 @@ TWIG;
         if ( $this->showPageNumbers ) {
             if ( $cur > 5 ) {
                 $output .= $this->renderLink( 1 , 1 , 'pager-number' );
+                $output .= '<li><a>...</a></li>';
             }
 
             for ($i = $pagenum_start ; $i <= $pagenum_end ; $i++) {
@@ -179,6 +180,7 @@ TWIG;
             }
 
             if ( $cur + 5 < $total_pages ) {
+                $output .= '<li><a>...</a></li>';
                 $output .= $this->renderLink( $total_pages , $total_pages , 'pager-number' );
             }
         }
