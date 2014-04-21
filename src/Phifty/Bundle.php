@@ -361,11 +361,23 @@ class Bundle
         return file_put_contents($file, yaml_emit($dict, YAML_UTF8_ENCODING) );
     }
 
+    /**
+     * Get config directory
+     */
     public function getConfigDir()
     {
         return $this->locate() . DIRECTORY_SEPARATOR . 'Config';
     }
 
+
+    /**
+     * Return schema object array for initializing database.
+     *
+     * @return Schema[]
+     */
+    public function getSchemas() {
+        return [];
+    }
 
     /**
      * Get asset directory list, this is for registering bundle assets.
