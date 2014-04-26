@@ -304,34 +304,28 @@ class Bundle
     public function routes() { }
 
 
+    public function addCRUDAction( $model, $types = array() )
+    {
+        return $this->addRecordAction( $model, $types );
+    }
+
     /**
      * Register/Generate CRUD actions
      *
      * @param string $model model class
-     * @param array  $types action types (Create, Update, Delete...)
+     * @param array  $types action types (Create, Update, Delete, BulkCopy, BulkDelete.....)
      */
-    public function withCRUDAction( $model , $types )
-    {
+    public function addRecordAction( $model, $types = array() ) {
         if ( empty($types) ) {
             $types = $this->defaultActionTypes;
         }
         $self = $this;
-        $this->kernel->event->register('phifty.before_action', function() use ($self,$types, $model) {
-            $this->kernel->action->registerCRUD( $self->getNamespace() , $model , (array) $types );
+        $this->kernel->event->register('phifty.before_action', function() use ($self, $types, $model) {
+            $self->kernel->action->registerRecordAction( $self->getNamespace() , $model , (array) $types );
         });
     }
 
 
-    public function addCRUDAction( $model, $types = array() )
-    {
-        if ( empty($types) ) {
-            $types = $this->defaultActionTypes;
-        }
-        $self = $this;
-        $this->kernel->event->register('phifty.before_action', function() use ($self,$types, $model) {
-            $self->kernel->action->registerCRUD( $self->getNamespace() , $model , (array) $types );
-        });
-    }
 
     /**
      * Returns template directory path.
