@@ -53,10 +53,12 @@ class ActionService
                 if ( $runner->isAjax() ) {
                     die(json_encode(array(
                             'error' => 1,
-                            'message' => $e->getMessage()
+                            'message' => $e->getMessage(),
+                            'line' => $e->getLine(),
+                            'file' => $e->getFile(),
                     )));
                 } else {
-                    die( $e->getMessage() );
+                    die( $e->__toString() );
                 }
             }
         });
