@@ -13,6 +13,7 @@
         "corneltek\/sessionkit": "~1.0",
         "corneltek\/actionkit": "~1",
         "corneltek\/twig-markdown": "~0.1",
+        "corneltek\/actionkit": "~1.5",
         "swiftmailer\/swiftmailer": "@stable",
         "twig\/twig": "~1.12",
         "twig\/extensions": "1.0.*@dev",
