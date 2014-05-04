@@ -15,6 +15,7 @@ class BootstrapRegionPager extends BootstrapPager
             return $this->renderLinkDisabled( $text , $moreclass );
         }
 
+        $liClass = '';
         if ( $active ) {
             $liClass = 'active';
         }

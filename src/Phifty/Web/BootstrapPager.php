@@ -40,9 +40,11 @@ class BootstrapPager
         if ( $args = func_get_args() ) {
             if ( 2 === count($args) ) {
                 $this->currentPage = $args[0] ?: 1;
+                $this->pageSize = 10;
                 $this->calculatePages($args[1]);
             } elseif ( 3 === count($args) ) {
                 $this->currentPage = $args[0] ?: 1;
+                $this->pageSize = intval($args[2]) ?: 10;
                 $this->calculatePages($args[1],$args[2]);
             }
         }
@@ -77,9 +79,8 @@ class BootstrapPager
      * @param integer $total
      * @param integer $size  = null  (optional)
      */
-    public function calculatePages($total,$size = 20)
+    public function calculatePages($total)
     {
-        $this->pageSize = $size ?: 20;
         $this->totalPages = $total > 0 ? (int) ceil($total / $this->pageSize ) : 0;
     }
 
