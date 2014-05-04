@@ -4,6 +4,7 @@ use Twig_Environment;
 use Twig_Loader_Filesystem;
 use Twig_Function_Function;
 use Twig_Loader_String;
+use Twig_SimpleFilter;
 
 use Twig_Extension_Core;
 use Twig_Extension_Debug;
@@ -101,6 +102,14 @@ class TwigService
             foreach ($exports as $export => $func) {
                 $env->addFunction( $export , new Twig_Function_Function( $func ));
             }
+
+            $zhDate = new Twig_SimpleFilter('zh_date', function ($str) {
+                return str_replace(['Mon','Tue','Wed','Thu','Fri','Sat','Sun',
+                                    'Jan','Feb','Mar','Apr','May','June','July','Aug','Sep','Oct','Nov','Dec'],
+                                   ['一','二','三','四','五','六','日',
+                                    '一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'], $str);
+            });
+            $env->addFilter($zhDate);
 
             // kernel()->event->trigger('phifty.service.twig', $env );
             $env->addGlobal('currentLang', kernel()->locale->current() );

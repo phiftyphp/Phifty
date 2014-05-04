@@ -18,6 +18,9 @@ function newObject($class)
     return ClassUtils::new_class($class,$args);
 }
 
+
+
+
 class Twig extends Engine
 //    implements \Phifty\View\EngineInterface
 {
