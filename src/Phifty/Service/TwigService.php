@@ -105,7 +105,7 @@ class TwigService
 
             $zhDate = new Twig_SimpleFilter('zh_date', function ($str) {
                 return str_replace(['Mon','Tue','Wed','Thu','Fri','Sat','Sun',
-                                    'Jan','Feb','Mar','Apr','May','June','July','Aug','Sep','Oct','Nov','Dec'],
+                                    'Jan','Feb','Mar','Apr','May','Jun','July','Aug','Sep','Oct','Nov','Dec'],
                                    ['一','二','三','四','五','六','日',
                                     '一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'], $str);
             });
