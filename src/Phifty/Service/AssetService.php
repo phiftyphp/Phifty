@@ -29,7 +29,7 @@ class AssetService
      */
     public function register($kernel, $options = array() )
     {
-        $kernel->asset = function() use ($kernel) {
+        $kernel->asset = function() use ($kernel, $options) {
             // $assetFile = PH_APP_ROOT . DIRECTORY_SEPARATOR . 'config/assetkit.yml';
             $config = new AssetConfig($options);
             $config->setEnvironment($kernel->environment);
