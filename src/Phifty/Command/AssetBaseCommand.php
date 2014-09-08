@@ -10,16 +10,12 @@ class AssetBaseCommand extends Command
 
     public function getAssetConfig()
     {
-        static $config;
-        if ($config)
-
-            return $config;
-        return $config = new AssetConfig('.assetkit.php');
+        return kernel()->assetkit->config;
     }
 
     public function getAssetLoader()
     {
-        return new AssetLoader($this->getAssetConfig());
+        return kernel()->assetkit->loader;
     }
 
     public function registerBundleAssets($bundle)
@@ -30,7 +26,7 @@ class AssetBaseCommand extends Command
         foreach ( $bundle->getAssetDirs() as $dir ) {
             if ( file_exists($dir) ) {
                 $dir = substr($dir, strlen($cwd) + 1 );
-                if ( $asset = $config->registerAssetFromPath($dir) ) {
+                if ( $asset = $loader->register($dir) ) {
                     $this->logger->info( "Found asset {$asset->name}" ,1 );
                     $this->updateAssetResource($asset);
                 }

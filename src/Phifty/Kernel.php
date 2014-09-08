@@ -249,7 +249,6 @@ class Kernel extends ObjectContainer
      *
      *   kernel()->app('Core')->getController('ControllerClass');
      *   kernel()->app('Core')->getModel('ModelClass');
-     *   kernel()->app('Core')->getNamespace();
      *   kernel()->app('Core')->locate();
      *
      * @endcode
