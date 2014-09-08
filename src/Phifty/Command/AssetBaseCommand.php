@@ -10,17 +10,18 @@ class AssetBaseCommand extends Command
 
     public function getAssetConfig()
     {
-        return kernel()->assetkit->config;
+        return kernel()->asset->config;
     }
 
     public function getAssetLoader()
     {
-        return kernel()->assetkit->loader;
+        return kernel()->asset->loader;
     }
 
     public function registerBundleAssets($bundle)
     {
         $config = $this->getAssetConfig();
+        $loader = $this->getAssetLoader();
         $this->logger->info( ' - ' . get_class($bundle) );
         $cwd = getcwd();
         foreach ( $bundle->getAssetDirs() as $dir ) {

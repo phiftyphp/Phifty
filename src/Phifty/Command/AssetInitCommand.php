@@ -9,11 +9,6 @@ class AssetInitCommand extends AssetBaseCommand
     {
         $kernel = kernel();
         $config = $this->getAssetConfig();
-
-        $ns = $kernel->config->get('framework','ApplicationID');
-        $this->logger->info("Setting namespace to {$ns}");
-        $config->setNamespace($ns);
-
         $loader = $this->getAssetLoader();
 
         $this->logger->info("Finding assets from applications...");
@@ -25,6 +20,6 @@ class AssetInitCommand extends AssetBaseCommand
         foreach ($kernel->bundles as $bundle) {
             $this->registerBundleAssets($bundle);
         }
-        $this->getAssetConfig()->save();
+        $loader->saveEntries();
     }
 }
