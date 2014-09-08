@@ -19,12 +19,11 @@ class Web
     }
 
     /**
-     * @param string $name
+     * @param string $target
      */
     public function include_loaded_assets($target = null)
     {
         $kernel = kernel();
-
         // Instead of loading assets by triggering asset.load event
         // the flow (plugin service->init, appliation->init) can
         // not load the assets with the correct sequence.
@@ -50,15 +49,15 @@ class Web
 
     /**
      * @param string[] $assets asset names
-     * @param string   $name   name
+     * @param string   $target   name
      *
      * {{ Web.include_assets(['jquery','jquery-ui'], 'page_name')|raw}}
      */
-    public function include_assets($assets, $name = null)
+    public function include_assets($assetNames, $target = null)
     {
         $kernel = kernel();
-        $assetObjs = $kernel->asset->loader->loadAssets($assets);
-        return $kernel->asset->render->renderAssets($assetObjs,$name);
+        $assetObjs = $kernel->asset->loader->loadAssets($assetNames);
+        return $kernel->asset->render->renderAssets($assetObjs,$target);
     }
 
     public function langs()
