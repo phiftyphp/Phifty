@@ -42,7 +42,7 @@ class Web
         // $kernel->event->trigger('asset.load');
 
         // get all loaded assets
-        $assets = $kernel->asset->loader->all();
+        $assets = array_values($kernel->asset->loader->objects);
 
         // use renderAssets to render html
         return $kernel->asset->render->renderAssets($assets, $target);
