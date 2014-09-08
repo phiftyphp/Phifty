@@ -46,7 +46,7 @@ class CheckCommand extends Command
 
         echo "classes:\n";
         $this->printResult('lazyrecord', class_exists('LazyRecord\BaseModel',true));
-        $this->printResult('assetkit',   class_exists('AssetToolkit\AssetLoader',true));
+        $this->printResult('assetkit',   class_exists('AssetKit\AssetLoader',true));
         $this->printResult('roller',     class_exists('Roller\Router',true));
 
         echo "config:\n";

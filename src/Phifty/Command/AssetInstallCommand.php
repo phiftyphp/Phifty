@@ -1,8 +1,8 @@
 <?php
 namespace Phifty\Command;
 use CLIFramework\Command;
-use AssetToolkit\Installer;
-use AssetToolkit\LinkInstaller;
+use AssetKit\Installer;
+use AssetKit\LinkInstaller;
 
 /**
  * When running asset:init command, we should simply register app/plugin assets

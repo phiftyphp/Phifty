@@ -1,9 +1,9 @@
 <?php
 namespace Phifty\Command;
 use CLIFramework\Command;
-use AssetToolkit\AssetLoader;
-use AssetToolkit\AssetConfig;
-use AssetToolkit\ResourceUpdater;
+use AssetKit\AssetLoader;
+use AssetKit\AssetConfig;
+use AssetKit\ResourceUpdater;
 
 class AssetBaseCommand extends Command
 {

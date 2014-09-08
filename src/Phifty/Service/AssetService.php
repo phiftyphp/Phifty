@@ -1,11 +1,11 @@
 <?php
 namespace Phifty\Service;
-use AssetToolkit;
-use AssetToolkit\AssetConfig;
-use AssetToolkit\AssetLoader;
-use AssetToolkit\AssetCompiler;
-use AssetToolkit\AssetRender;
-use AssetToolkit\Cache;
+use AssetKit;
+use AssetKit\AssetConfig;
+use AssetKit\AssetLoader;
+use AssetKit\AssetCompiler;
+use AssetKit\AssetRender;
+use AssetKit\Cache;
 use UniversalCache\ApcCache;
 use UniversalCache\FileSystemCache;
 use UniversalCache\UniversalCache;

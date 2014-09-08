@@ -12,7 +12,7 @@ use Twig_Extension_Optimizer;
 use Twig_Extensions_Extension_Text;
 use Twig_Extensions_Extension_I18n;
 use Twig_Extension_Markdown;
-use AssetToolkit\Extension\Twig\AssetExtension;
+use AssetKit\Extension\Twig\AssetExtension;
 
 
 /**
