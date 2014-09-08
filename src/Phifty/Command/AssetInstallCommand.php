@@ -21,10 +21,11 @@ class AssetInstallCommand extends AssetBaseCommand
     {
         $options = $this->options;
         $config = $this->getAssetConfig();
+        $loader = $this->getAssetLoader();
 
         $installer = $options->link
-                ? new LinkInstaller
-                : new Installer;
+                ? new LinkInstaller($config)
+                : new Installer($config);
 
         $installer->logger = $this->logger;
         $loader = $this->getAssetLoader();
