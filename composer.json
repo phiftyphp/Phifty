@@ -7,6 +7,7 @@
         "corneltek\/universal-cache": "~1.0",
         "corneltek\/fileutil": "~1",
         "corneltek\/roller": "*",
+        "corneltek\/configkit": "*",
         "corneltek\/assetkit": "*",
         "corneltek\/lazyrecord": "*",
         "corneltek\/genphp": "~1.2",
