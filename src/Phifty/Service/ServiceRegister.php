@@ -1,7 +1,7 @@
 <?php
 namespace Phifty\Service;
 
-interface ServiceInterface
+interface ServiceRegister
 {
 
     public function getId();

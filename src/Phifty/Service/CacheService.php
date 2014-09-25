@@ -6,7 +6,7 @@ use UniversalCache\MemcacheCache;
 use UniversalCache\UniversalCache;
 
 class CacheService
-    implements ServiceInterface
+    implements ServiceRegister
 {
     public function getId() { return 'cache'; }
 

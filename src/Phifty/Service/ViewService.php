@@ -32,7 +32,7 @@ class ViewFactory
 }
 
 class ViewService
-    implements ServiceInterface
+    implements ServiceRegister
 {
     public $options;
 

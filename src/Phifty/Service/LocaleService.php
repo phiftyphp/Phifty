@@ -3,7 +3,7 @@ namespace Phifty\Service;
 use Phifty\Locale;
 
 class LocaleService
-    implements ServiceInterface
+    implements ServiceRegister
 {
 
     public function getId() { return 'Locale'; }

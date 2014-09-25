@@ -3,7 +3,7 @@ namespace Phifty\Service;
 use LazyRecord\ConnectionManager;
 
 class DatabaseService
-    implements ServiceInterface
+    implements ServiceRegister
 {
 
     public function getId() { return 'database'; }

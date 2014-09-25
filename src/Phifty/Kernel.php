@@ -4,7 +4,7 @@ use Phifty\Kernel;
 use Phifty\Locale;
 use Phifty\Web;
 use Universal\Container\ObjectContainer;
-use Phifty\Service\ServiceInterface;
+use Phifty\Service\ServiceRegister;
 use Exception;
 
 class Kernel extends ObjectContainer
@@ -182,7 +182,7 @@ class Kernel extends ObjectContainer
     }
 
 
-    public function registerService( ServiceInterface $service, $options = array() )
+    public function registerService( ServiceRegister $service, $options = array() )
     {
         $service->register( $this , $options );
         $this->services[ $service->getId() ] = $service;

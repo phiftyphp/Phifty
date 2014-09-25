@@ -3,7 +3,7 @@ namespace Phifty\Service;
 use Phifty\BundleManager;
 
 class BundleService
-    implements ServiceInterface
+    implements ServiceRegister
 {
 
     public function getId() { return 'Bundle'; }

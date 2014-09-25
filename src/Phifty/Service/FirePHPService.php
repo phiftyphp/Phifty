@@ -3,7 +3,7 @@ namespace Phifty\Service;
 use Phifty\ComposerConfigBridge;
 
 class FirePHPService
-    implements ServiceInterface, ComposerConfigBridge
+    implements ServiceRegister, ComposerConfigBridge
 {
 
     public function getId() { return 'FirePHP'; }

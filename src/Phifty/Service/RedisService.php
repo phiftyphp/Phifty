@@ -5,7 +5,7 @@ use PredisClient;
 use Exception;
 
 class RedisService
-    implements ServiceInterface, ComposerConfigBridge
+    implements ServiceRegister, ComposerConfigBridge
 {
     public function getId() { return 'Redis'; }
 

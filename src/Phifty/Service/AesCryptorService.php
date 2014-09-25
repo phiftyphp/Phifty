@@ -115,7 +115,7 @@ class AesCryptor {
 /**
  * http://www.itnewb.com/tutorial/PHP-Encryption-Decryption-Using-the-MCrypt-Library-libmcrypt
  */
-class AesCryptorService implements ServiceInterface {
+class AesCryptorService implements ServiceRegister {
 
     public function getId() { return 'AesCryptor'; }
 

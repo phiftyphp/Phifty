@@ -39,7 +39,7 @@ class WKHtmlToPdfService
  *  system('open test.pdf');
  */
 class WKHtmlToPdfService
-    implements ServiceInterface
+    implements ServiceRegister
 {
     public function getId() { return 'wkhtmltopdf'; }
 

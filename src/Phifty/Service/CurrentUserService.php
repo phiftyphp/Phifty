@@ -2,7 +2,7 @@
 namespace Phifty\Service;
 
 class CurrentUserService
-    implements ServiceInterface
+    implements ServiceRegister
 {
 
     public function getId() { return 'current_user'; }

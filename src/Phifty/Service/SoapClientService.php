@@ -4,7 +4,7 @@ use Exception;
 use SoapClient;
 
 class SoapClientService
-    implements ServiceInterface
+    implements ServiceRegister
 {
     public function getId() { return 'SoapClient'; }
 

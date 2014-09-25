@@ -14,7 +14,7 @@ use UniversalCache\UniversalCache;
 use Exception;
 
 class AssetService
-    implements ServiceInterface
+    implements ServiceRegister
 {
 
     public function getId()

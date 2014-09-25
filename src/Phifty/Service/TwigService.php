@@ -20,7 +20,7 @@ use AssetKit\Extension\Twig\AssetExtension;
  */
 
 class TwigService
-    implements ServiceInterface
+    implements ServiceRegister
 {
     public function getId() { return 'Twig'; }
 

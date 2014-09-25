@@ -7,7 +7,7 @@ use Universal\Container\ObjectContainer;
 use Exception;
 
 class GearmanService
-    implements ServiceInterface
+    implements ServiceRegister
 {
     public function getId() { return 'Gearman'; }
 

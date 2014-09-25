@@ -3,7 +3,7 @@ namespace Phifty\Service;
 use Roller\Router;
 
 class RouterService
-    implements ServiceInterface
+    implements ServiceRegister
 {
     public function getId() { return 'Router'; }
 

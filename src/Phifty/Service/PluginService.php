@@ -3,7 +3,7 @@ namespace Phifty\Service;
 use Phifty\Plugin\PluginManager;
 
 class PluginService
-    implements ServiceInterface
+    implements ServiceRegister
 {
 
     public function getId() { return 'Plugin'; }

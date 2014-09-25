@@ -2,7 +2,7 @@
 namespace Phifty\Service;
 
 class ClassLoaderService
-    implements ServiceInterface
+    implements ServiceRegister
 {
     public $classloader;
 

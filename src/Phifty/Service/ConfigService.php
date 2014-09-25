@@ -12,7 +12,7 @@ use Phifty\Config\ConfigLoader;
  * $config = $kernel->config->get('framework','Locale');
  */
 class ConfigService
-    implements ServiceInterface
+    implements ServiceRegister
 {
 
     public $loader;

@@ -4,7 +4,7 @@ use Memcache;
 use Exception;
 
 class MemcacheService
-    implements ServiceInterface
+    implements ServiceRegister
 {
 
     public function getId() { return 'Memcache'; }

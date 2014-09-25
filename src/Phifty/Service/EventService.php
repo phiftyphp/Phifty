@@ -3,7 +3,7 @@ namespace Phifty\Service;
 use Universal\Event\PhpEvent;
 
 class EventService
-    implements ServiceInterface
+    implements ServiceRegister
 {
 
     public function getId() { return 'event'; }

@@ -68,7 +68,7 @@ class LibraryLoader
  * }
  */
 class LibraryService
-    implements ServiceInterface
+    implements ServiceRegister
 {
     public $classloader;
 

@@ -2,7 +2,7 @@
 namespace Phifty\Service;
 
 class CoreService
-    implements ServiceInterface
+    implements ServiceRegister
 {
     public function getId() { return 'core'; }
 

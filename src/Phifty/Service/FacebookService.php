@@ -12,7 +12,7 @@ use Exception;
     secret: {app secret}
 */
 
-class FacebookService implements ServiceInterface
+class FacebookService implements ServiceRegister
 {
     public function getId() { return 'Facebook'; }
 

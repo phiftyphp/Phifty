@@ -4,7 +4,7 @@ use Exception;
 use ActionKit\ActionRunner;
 
 class ActionService
-    implements ServiceInterface
+    implements ServiceRegister
 {
     public function getId() { return 'action'; }
 

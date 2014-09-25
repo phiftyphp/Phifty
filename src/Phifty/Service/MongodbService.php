@@ -4,7 +4,7 @@ use Mongo;
 use Exception;
 
 class MongodbService
-    implements ServiceInterface
+    implements ServiceRegister
 {
 
     public function getId() { return 'mongodb'; }

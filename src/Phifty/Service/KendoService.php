@@ -4,7 +4,7 @@ use Kendo\Acl\RuleLoader;
 use Kendo\Acl\Acl;
 
 class KendoService
-    implements ServiceInterface
+    implements ServiceRegister
 {
 
     /**

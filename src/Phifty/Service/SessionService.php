@@ -3,7 +3,7 @@ namespace Phifty\Service;
 use SessionKit;
 
 class SessionService
-    implements ServiceInterface
+    implements ServiceRegister
 {
 
     public function getId() { return 'Session'; }
