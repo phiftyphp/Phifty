@@ -29,7 +29,7 @@ class Controller extends BaseController
 
     public $defaultViewClass;
 
-    public function init()
+    public function init() 
     {
     }
 
@@ -63,9 +63,7 @@ class Controller extends BaseController
     /**
      * xxx: is not used yet.
      *
-     * currentUserCan method
-     *
-     * provide a permission check.
+     * You may customize the permission check
      */
     public function currentUserCan($user)
     {
