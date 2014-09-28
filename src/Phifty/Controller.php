@@ -221,7 +221,15 @@ class Controller extends BaseController
     }
 
 
-    public function runAction($action, $vars = array() )
+
+    /**
+     * Run controller action
+     *
+     * @param string $action Action name, the action name should not include "Action" as its suffix.
+     * @param array $vars    Action method parameters, which will be applied to the method parameters by their names.
+     * @return string        Return execution result in string format.
+     */
+    public function runAction($action, $vars = array())
     {
         $method = $action . 'Action';
         if ( ! method_exists($this,$method) ) {
@@ -265,8 +273,7 @@ class Controller extends BaseController
         if ( is_string($controller) ) {
             $controller = new $controller;
         }
-        $ret = $controller->runAction($action, $parameters);
-        return $ret;
+        return $controller->runAction($action, $parameters);
     }
 
     /**
