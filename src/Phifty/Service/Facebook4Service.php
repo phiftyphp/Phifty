@@ -20,7 +20,7 @@ class Facebook4Service implements ServiceRegister, ServiceOptionValidator
     public function register($kernel, $options = array())
     {
         FacebookSession::setDefaultApplication($options['AppId'], $options['AppSecret']);
-        $kernel->facebook = function() use ($options) {
+        $kernel->facebookSession = function() use ($options) {
             return FacebookSession::newAppSession();
         };
     }

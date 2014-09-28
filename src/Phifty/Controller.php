@@ -228,6 +228,9 @@ class Controller extends BaseController
             throw new Exception("Controller method $method does not exist.");
         }
 
+        // Trigger the before action
+        $this->before();
+
         $ro = new ReflectionObject( $this );
         $rm = $ro->getMethod($method);
 
@@ -239,7 +242,11 @@ class Controller extends BaseController
                 $arguments[] = $vars[ $param->getName() ];
             }
         }
-        return call_user_func_array( array($this,$method) , $arguments );
+        $ret = call_user_func_array( array($this,$method) , $arguments );
+
+        // Trigger the after action
+        $this->after();
+        return $ret;
     }
 
 
@@ -258,9 +265,7 @@ class Controller extends BaseController
         if ( is_string($controller) ) {
             $controller = new $controller;
         }
-        $controller->before();
         $ret = $controller->runAction($action, $parameters);
-        $controller->after();
         return $ret;
     }
 
