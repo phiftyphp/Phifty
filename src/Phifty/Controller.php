@@ -150,9 +150,9 @@ class Controller extends BaseController
     public function renderJson($data)
     {
         /* XXX: dirty hack this for phpunit testing */
-        if ( ! CLI_MODE )
+        if (! CLI_MODE) {
             header('Content-type: application/json; charset=UTF-8');
-
+        }
         return json_encode($data);
     }
 
@@ -164,13 +164,21 @@ class Controller extends BaseController
     /*
      * Render yaml
      *
+     * @param mixed $data
+     * @return string
      **/
     public function renderYaml($data)
     {
-        if ( ! CLI_MODE )
+        if (! CLI_MODE) {
             header('Content-type: application/yaml; charset=UTF-8;');
-        $yaml = new YamlSerializer;
+        }
 
+        // If we've loaded the yaml extension, we should use it directly.
+        if (extension_loaded('yaml') ){
+            return yaml_emit($data);
+        }
+
+        $yaml = new YamlSerializer;
         return $yaml->encode($data);
     }
 
@@ -196,12 +204,12 @@ class Controller extends BaseController
         return $page->render();
     }
 
-    /*
+    /**
      * Render template directly.
      *
      * @param string $template template path, template name
      * @param array  $args     template arguments
-     *
+     * @return string rendered result
      */
     public function render( $template , $args = array() , $engineOpts = array()  )
     {
@@ -210,13 +218,18 @@ class Controller extends BaseController
         return $view->render( $template );
     }
 
-    public function forbidden($msg = null)
+    /**
+     * Set HTTP status to 403 forbidden with message
+     *
+     * @param string $msg
+     */
+    public function forbidden($msg = '403 Forbidden')
     {
         /* XXX: dirty hack this for phpunit testing */
-        if ( ! CLI_MODE )
+        if ( ! CLI_MODE ) {
             header('HTTP/1.1 403 Forbidden');
-        if ( $msg ) echo $msg;
-        else       echo "403 Forbidden";
+        }
+        echo $msg;
         exit(0);
     }
 
@@ -242,7 +255,7 @@ class Controller extends BaseController
         $ro = new ReflectionObject( $this );
         $rm = $ro->getMethod($method);
 
-        // apply vars to function arguments
+        // Map vars to function arguments
         $parameters = $rm->getParameters();
         $arguments = array();
         foreach ($parameters as $param) {
@@ -259,35 +272,38 @@ class Controller extends BaseController
 
 
     /**
-     * forward to another controller
+     * Forward to another controller action
+     *
+     * @param string|Controller $controller A controller class name or a controller instance.
+     * @param string            $actionName The action name
+     * @param array             $parameters Parameters for the action method
      *
      *
-     *  return $this->forward( '\OAuthPlugin\Controller\AuthenticationErrorPage','index',array(
+     *  return $this->forward('\OAuthPlugin\Controller\AuthenticationErrorPage','index',array(
      *      'vars' => array(
      *          'message' => $e->lastResponse
      *      )
      *  ));
      */
-    public function forward($controller, $action = 'index' , $parameters = array())
+    public function forward($controller, $actionName = 'index' , $parameters = array())
     {
-        if ( is_string($controller) ) {
+        if (is_string($controller)) {
             $controller = new $controller;
         }
-        return $controller->runAction($action, $parameters);
+        return $controller->runAction($actionName, $parameters);
     }
 
     /**
-     * check if the controller action exists
+     * Check if the controller action exists
      *
      * @param  string  $action action name
      * @return boolean
      */
     public function hasAction($action)
     {
-        if ( method_exists($this,$action . 'Action') ) {
+        if (method_exists($this, $action . 'Action')) {
             return $action . 'Action';
         }
         return false;
     }
-
 }
