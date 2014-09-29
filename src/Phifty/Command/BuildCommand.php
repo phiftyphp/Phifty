@@ -11,7 +11,7 @@ class BuildCommand extends Command
 
     public function init()
     {
-        $this->registerCommand('router', 'Phifty\Command\BuildRouterCommand');
+        $this->command('router', 'Phifty\Command\BuildRouterCommand');
     }
 
     public function execute()

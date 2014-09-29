@@ -22,26 +22,26 @@ class Console extends Application
     public function init()
     {
         parent::init();
-        $this->registerCommand('init');
-        $this->registerCommand('create');
-        $this->registerCommand('build-conf');
-        $this->registerCommand('build');
-        $this->registerCommand('export');
-        $this->registerCommand('locale');
-        $this->registerCommand('console');
-        $this->registerCommand('server');
-        $this->registerCommand('router');
-        $this->registerCommand('asset');
+        $this->command('init');
+        $this->command('create');
+        $this->command('build-conf');
+        $this->command('build');
+        $this->command('export');
+        $this->command('locale');
+        $this->command('console');
+        $this->command('server');
+        $this->command('router');
+        $this->command('asset');
 
-        $this->registerCommand('composer:config','Phifty\\Command\\ComposerConfigCommand');
+        $this->command('composer:config','Phifty\\Command\\ComposerConfigCommand');
 
-        $this->registerCommand('new','Phifty\\Command\\GenerateCommand');
-        $this->registerCommand('migration-check','Phifty\\Command\\MigrationCheckCommand');
-        $this->registerCommand('check');
-        $this->registerCommand('cache:clean','Phifty\\Command\\CacheCleanCommand');
+        $this->command('new','Phifty\\Command\\GenerateCommand');
+        $this->command('migration-check','Phifty\\Command\\MigrationCheckCommand');
+        $this->command('check');
+        $this->command('cache:clean','Phifty\\Command\\CacheCleanCommand');
 
-        $this->registerCommand('build-schema','LazyRecord\Command\BuildSchemaCommand');
-        $this->registerCommand('build-sql','LazyRecord\Command\BuildSqlCommand');
+        $this->command('build-schema','LazyRecord\Command\BuildSchemaCommand');
+        $this->command('build-sql','LazyRecord\Command\BuildSqlCommand');
     }
 
     public static function getInstance()

@@ -42,8 +42,8 @@ class LocaleCommand extends Command
     public function init()
     {
         parent::init();
-        $this->registerCommand('parse','Phifty\Command\LocaleParseCommand');
-        $this->registerCommand('update','Phifty\Command\LocaleUpdateCommand');
+        $this->command('parse','Phifty\Command\LocaleParseCommand');
+        $this->command('update','Phifty\Command\LocaleUpdateCommand');
     }
 
     public function execute()
