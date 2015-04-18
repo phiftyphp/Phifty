@@ -48,6 +48,7 @@
             }
         }
     ],
+    "license": "MIT",
     "autoload": {
         "psr-0": {
             "Phifty": "src"
