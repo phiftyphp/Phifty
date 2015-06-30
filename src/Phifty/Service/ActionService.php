@@ -24,10 +24,6 @@ class ActionService
             return $action;
         };
 
-        $kernel->container = function() use ($container) {
-            return $container;
-        };
-
         $kernel->event->register('view.init', function($view, $action) {
             $view->args['Action'] = $action;
         });
