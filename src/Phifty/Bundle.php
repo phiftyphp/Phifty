@@ -319,12 +319,16 @@ class Bundle
         if ( empty($types) ) {
             $types = $this->defaultActionTypes;
         }
-        $this->registerRecordAction('RecordActionTemplate', array(
+        
+        $self = $this;
+        $this->kernel->event->register('phifty.before_action', function() use ($self, $types, $model) {
+            $self->kernel->container['generator']->registerTemplate('RecordActionTemplate', new RecordActionTemplate);
+            $self->kernel->action->registerAction($template, array(
                 'namespace' => $self->getNamespace(),
                 'model' => $model,
                 'types' => (array) $types
-            )
-        )
+            ));
+        });
     }
 
     /**
@@ -333,25 +337,14 @@ class Bundle
      * @param string $model model class
      */
     public function addUpdateOrderingAction($model) {
-        $this->registerRecordAction('UpdateOrderingRecordActionTemplate', array(
-                'namespace' => $self->getNamespace(),
-                'model' => $model,
-            )
-        )
-    }
-
-    /**
-     * Register/Generate record actions
-     *
-     * @param string template action name
-     * @param array action config array
-     */
-    public function registerRecordAction($template, $args) {
         $self = $this;
-        $this->kernel->event->register('phifty.before_action', function() use ($self, $template, $args) {
-            $templateFullName = 'ActionKit\\ActionTemplate\\' . $template;
-            $self->kernel->container['generator']->registerTemplate($template, new $templateFullName);
-            $self->kernel->action->registerAction($template, $args);
+        $this->kernel->event->register('phifty.before_action', function() use ($self, $model) {
+            $self->kernel->container['generator']->registerTemplate('UpdateOrderingRecordActionTemplate', 
+                new UpdateOrderingRecordActionTemplate);
+            $self->kernel->action->registerAction($template, array(
+                'namespace' => $self->getNamespace(),
+                'model' => $model
+            ));
         });
     }
 
