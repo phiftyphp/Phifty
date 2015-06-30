@@ -319,11 +319,10 @@ class Bundle
         if ( empty($types) ) {
             $types = $this->defaultActionTypes;
         }
-        
+
         $self = $this;
         $this->kernel->event->register('phifty.before_action', function() use ($self, $types, $model) {
-            $self->kernel->container['generator']->registerTemplate('RecordActionTemplate', new RecordActionTemplate);
-            $self->kernel->action->registerAction($template, array(
+            $self->kernel->action->registerAction('RecordActionTemplate', array(
                 'namespace' => $self->getNamespace(),
                 'model' => $model,
                 'types' => (array) $types
@@ -339,9 +338,7 @@ class Bundle
     public function addUpdateOrderingAction($model) {
         $self = $this;
         $this->kernel->event->register('phifty.before_action', function() use ($self, $model) {
-            $self->kernel->container['generator']->registerTemplate('UpdateOrderingRecordActionTemplate', 
-                new UpdateOrderingRecordActionTemplate);
-            $self->kernel->action->registerAction($template, array(
+            $self->kernel->action->registerAction('UpdateOrderingRecordActionTemplate', array(
                 'namespace' => $self->getNamespace(),
                 'model' => $model
             ));

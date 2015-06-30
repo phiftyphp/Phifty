@@ -11,6 +11,12 @@ class ActionService
     public function register($kernel, $options = array() )
     {
         $container = new ServiceContainer;
+        $generator = $container['generator'];
+        $generator->registerTemplate('FileBasedActionTemplate', new FileBasedActionTemplate);
+        $generator->registerTemplate('CodeGenActionTemplate', new CodeGenActionTemplate);
+        $generator->registerTemplate('RecordActionTemplate', new RecordActionTemplate);
+        $generator->registerTemplate('UpdateOrderingRecordActionTemplate', new UpdateOrderingRecordActionTemplate);
+
         $action = new ActionRunner($container);
         $action->registerAutoloader();
 
