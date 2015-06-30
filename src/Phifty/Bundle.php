@@ -319,13 +319,41 @@ class Bundle
         if ( empty($types) ) {
             $types = $this->defaultActionTypes;
         }
-        $self = $this;
-        $this->kernel->event->register('phifty.before_action', function() use ($self, $types, $model) {
-            $self->kernel->action->registerRecordAction( $self->getNamespace() , $model , (array) $types );
-        });
+        $this->registerRecordAction('RecordActionTemplate', array(
+                'namespace' => $self->getNamespace(),
+                'model' => $model,
+                'types' => (array) $types
+            )
+        )
     }
 
+    /**
+     * Register/Generate update ordering action
+     *
+     * @param string $model model class
+     */
+    public function addUpdateOrderingAction($model) {
+        $this->registerRecordAction('UpdateOrderingRecordActionTemplate', array(
+                'namespace' => $self->getNamespace(),
+                'model' => $model,
+            )
+        )
+    }
 
+    /**
+     * Register/Generate record actions
+     *
+     * @param string template action name
+     * @param array action config array
+     */
+    public function registerRecordAction($template, $args) {
+        $self = $this;
+        $this->kernel->event->register('phifty.before_action', function() use ($self, $template, $args) {
+            $templateFullName = 'ActionKit\\ActionTemplate\\' . $template;
+            $self->kernel->container['generator']->registerTemplate($template, new $templateFullName);
+            $self->kernel->action->registerAction($template, $args);
+        });
+    }
 
     /**
      * Returns template directory path.
