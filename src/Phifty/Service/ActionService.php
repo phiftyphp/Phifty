@@ -2,6 +2,10 @@
 namespace Phifty\Service;
 use Exception;
 use ActionKit\ActionRunner;
+use ActionKit\ActionTemplate\FileBasedActionTemplate;
+use ActionKit\ActionTemplate\CodeGenActionTemplate;
+use ActionKit\ActionTemplate\RecordActionTemplate;
+use ActionKit\ActionTemplate\UpdateOrderingRecordActionTemplate;
 
 class ActionService
     implements ServiceRegister
