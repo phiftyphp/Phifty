@@ -2,6 +2,7 @@
 namespace Phifty\Service;
 use Exception;
 use ActionKit\ActionRunner;
+use ActionKit\ServiceContainer;
 use ActionKit\ActionTemplate\FileBasedActionTemplate;
 use ActionKit\ActionTemplate\CodeGenActionTemplate;
 use ActionKit\ActionTemplate\RecordActionTemplate;
@@ -28,7 +29,7 @@ class ActionService
             return $action;
         };
 
-        $kernel->event->register('view.init', function($view, $action) {
+        $kernel->event->register('view.init', function($view) use ($action) {
             $view->args['Action'] = $action;
         });
 
