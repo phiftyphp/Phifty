@@ -26,7 +26,13 @@ class Bundle
     protected $_namespace;
 
 
-    public $defaultActionTypes = array('Create','Update','Delete', 'BulkDelete');
+    public $defaultActionTypes = array(
+        array('prefix' => 'Create'),
+        array('prefix' => 'Update'),
+        array('prefix' => 'Delete'),
+        array('prefix' => 'BulkDelete')
+    );
+
 
     public $exportTemplates = true;
 

@@ -3,7 +3,7 @@ namespace Phifty\Service;
 use Exception;
 use ActionKit\ActionRunner;
 use ActionKit\ServiceContainer;
-use ActionKit\ActionTemplate\FileBasedActionTemplate;
+use ActionKit\ActionTemplate\TwigActionTemplate;
 use ActionKit\ActionTemplate\CodeGenActionTemplate;
 use ActionKit\ActionTemplate\RecordActionTemplate;
 use ActionKit\ActionTemplate\UpdateOrderingRecordActionTemplate;
@@ -17,7 +17,7 @@ class ActionService
     {
         $container = new ServiceContainer;
         $generator = $container['generator'];
-        $generator->registerTemplate('FileBasedActionTemplate', new FileBasedActionTemplate);
+        $generator->registerTemplate('TwigActionTemplate', new TwigActionTemplate);
         $generator->registerTemplate('CodeGenActionTemplate', new CodeGenActionTemplate);
         $generator->registerTemplate('RecordActionTemplate', new RecordActionTemplate);
         $generator->registerTemplate('UpdateOrderingRecordActionTemplate', new UpdateOrderingRecordActionTemplate);
@@ -41,7 +41,8 @@ class ActionService
 
             $runner = $kernel->action;  // get runner
             $kernel->event->trigger('phifty.before_action');
-            $result = $runner->handleWith(STDOUT, $_REQUEST);
+            $strout = fopen("php://stdout", "w");
+            $result = $runner->handleWith($strout, $_REQUEST);
 
         });
     }
