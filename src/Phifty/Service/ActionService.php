@@ -42,8 +42,7 @@ class ActionService
             $runner = $kernel->action;  // get runner
             $kernel->event->trigger('phifty.before_action');
             $strout = fopen("php://stdout", "w");
-            $result = $runner->handleWith($strout, $_REQUEST);
-
+            $result = $runner->handleWith($strout, $_REQUEST, $_FILES);
         });
     }
 }
