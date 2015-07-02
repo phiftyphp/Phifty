@@ -2,10 +2,10 @@
 
 class TwigServiceTest extends PHPUnit_Framework_TestCase
 {
-    public function testRegister()
+    public function testRegisterTwigService()
     {
         $kernel = kernel();
-        $twig = new Phifty\Service\TwigService();
+        $twig = new \Phifty\Service\TwigService();
         $twig->register($kernel, array(
             'Environment' => array(
                 'debug' => true,
@@ -14,10 +14,9 @@ class TwigServiceTest extends PHPUnit_Framework_TestCase
             ),
             'TemplateDirs' => array('applications','bundles'),
         ));
-        ok($twig);
-        ok($kernel->twig);
-        ok($kernel->twig->env,'get environment');
-        ok($kernel->twig->loader,'get loader');
+        $this->assertNotNull($kernel->twig);
+        $this->assertNotNull($kernel->twig->env,'get environment');
+        $this->assertNotNull($kernel->twig->loader,'get loader');
     }
 }
 

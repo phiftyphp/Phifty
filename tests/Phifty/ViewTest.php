@@ -2,10 +2,9 @@
 class ViewTest extends PHPUnit_Framework_TestCase
 {
 
-    function testView()
+    public function testView()
     {
         $view = new Phifty\View;
-        ok($view,'got view');
         ok($view->Kernel);
         ok($view['Kernel']);
         foreach( $view as $name => $val ) {
@@ -14,8 +13,7 @@ class ViewTest extends PHPUnit_Framework_TestCase
         }
     }
 
-
-    function testViewTwigEngine()
+    public function testViewTwigEngine()
     {
         $engine = \Phifty\View\Engine::createEngine( 'twig' );
         ok($engine);
@@ -27,32 +25,12 @@ class ViewTest extends PHPUnit_Framework_TestCase
 #          ok( strpos( $result , 'Hello World' ) !== false );
 
         $engine2 = \Phifty\View\Engine::createEngine( 'twig' );
-        ok( $engine2 );
+        $this->assertNotNull( $engine2 );
 
         $string = $engine2->renderString( 'Hello {{ name }}' , array( 'name' => 'John' ) );
-        ok( $string );
+        $this->assertNotNull($string);
         ok( strpos( $string , 'John' ) !== false );
     }
-
-
-    function testActionResult()
-    {
-        $view = new \Phifty\View;
-        $view->result = new \ActionKit\Result;
-        $view->result->success('Yes');
-        like('/success/', $view->render( '@CoreBundle/phifty/action_result.html' ));
-        like('/Yes/', $view->render( '@CoreBundle/phifty/action_result.html' ));
-    }
-
-    function testActionResult2()
-    {
-        $view = new \Phifty\View;
-        $view->result = new \ActionKit\Result;
-        $view->result->error('No');
-        like('/error/', $view->render( '@CoreBundle/phifty/action_result.html' ));
-        like('/No/', $view->render( '@CoreBundle/phifty/action_result.html' ));
-    }
-
 }
 
 
