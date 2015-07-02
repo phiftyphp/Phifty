@@ -7,6 +7,7 @@ use ActionKit\ActionTemplate\TwigActionTemplate;
 use ActionKit\ActionTemplate\CodeGenActionTemplate;
 use ActionKit\ActionTemplate\RecordActionTemplate;
 use ActionKit\ActionTemplate\UpdateOrderingRecordActionTemplate;
+use ActionKit\ActionRequest;
 
 class ActionService
     implements ServiceRegister
@@ -34,8 +35,7 @@ class ActionService
         });
 
         $kernel->event->register('phifty.before_path_dispatch',function() use ($kernel) {
-            // check if there is $_POST['__action'] or $_GET['__action']
-            if ( ! isset($_REQUEST['__action']) ) {
+            if ( !ActionRequest::hasAction($_REQUEST) ) {
                 return;
             }
 
