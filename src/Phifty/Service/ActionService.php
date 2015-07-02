@@ -34,7 +34,7 @@ class ActionService
         });
 
         $kernel->event->register('phifty.before_path_dispatch',function() use ($kernel) {
-            // check if there is $_POST['action'] or $_GET['action']
+            // check if there is $_POST['__action'] or $_GET['__action']
             if ( ! isset($_REQUEST['__action']) ) {
                 return;
             }
