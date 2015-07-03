@@ -42,7 +42,11 @@ class ActionService
             $runner = $kernel->action;  // get runner
             $kernel->event->trigger('phifty.before_action');
             $strout = fopen("php://output", "w");
-            $runner->handleWith($strout, $_REQUEST, $_FILES);
+
+            // If we found any ajax action, exit the application
+            if ($runner->handleWith($strout, $_REQUEST, $_FILES)) {
+                exit(0);
+            }
         });
     }
 }
