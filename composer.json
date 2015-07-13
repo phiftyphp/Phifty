@@ -31,8 +31,8 @@
     },
     "license": "MIT",
     "autoload": {
-        "psr-0": {
-            "Phifty": "src"
+        "psr-4": {
+            "Phifty\\": "src/Phifty/"
         }
     },
     "version": "2.10.0"
