@@ -19,4 +19,3 @@ build/
 *ModelBase.php
 *.swp
 manifest.php
-composer.lock
