@@ -20,7 +20,6 @@
         "symfony\/process": "~2.2@stable",
         "symfony\/yaml": "~2.2@stable",
         "symfony\/css-selector": "~2.2@stable",
-        "michelf\/php-markdown": "~1",
         "corneltek\/pux": "~1"
     },
     "suggest": {
@@ -30,24 +29,6 @@
     "require-dev": {
         "corneltek\/phpunit-testmore": "dev-master"
     },
-    "repositories": [
-        {
-            "type": "package",
-            "package": {
-                "name": "michelf\/php-markdown",
-                "version": "1.0",
-                "dist": {
-                    "url": "https:\/\/github.com\/michelf\/php-markdown\/zipball\/extra",
-                    "type": "zip"
-                },
-                "autoload": {
-                    "files": [
-                        "markdown.php"
-                    ]
-                }
-            }
-        }
-    ],
     "license": "MIT",
     "autoload": {
         "psr-0": {
