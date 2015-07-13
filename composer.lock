@@ -4,51 +4,59 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9eae86905c9a75090111276e7be89579",
+    "hash": "1881003672fa00fb43a7ae48c416173f",
     "packages": [
         {
             "name": "corneltek/actionkit",
-            "version": "1.5.2",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/c9s/ActionKit.git",
-                "reference": "b6cce0c7552df8d019a1a2d3fd6b8a8a24f7fd09"
+                "reference": "1bacbddb1e3fac9998be558b8ec9e3b320a0e018"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c9s/ActionKit/zipball/b6cce0c7552df8d019a1a2d3fd6b8a8a24f7fd09",
-                "reference": "b6cce0c7552df8d019a1a2d3fd6b8a8a24f7fd09",
+                "url": "https://api.github.com/repos/c9s/ActionKit/zipball/1bacbddb1e3fac9998be558b8ec9e3b320a0e018",
+                "reference": "1bacbddb1e3fac9998be558b8ec9e3b320a0e018",
                 "shasum": ""
             },
             "require": {
                 "corneltek/cascading-attribute": "~1.2",
-                "corneltek/class-template": "*",
-                "corneltek/formkit": "~1.3",
-                "corneltek/universal": "~1.0",
-                "corneltek/universal-cache": "~1.0",
-                "twig/twig": "1.12.*"
+                "corneltek/class-template": "~2",
+                "corneltek/fileutil": "~1",
+                "corneltek/formkit": "~1",
+                "corneltek/imagekit": "^1.0",
+                "corneltek/universal": "~1.4",
+                "corneltek/universal-cache": "~1",
+                "pimple/pimple": "~3.0",
+                "twig/twig": "*"
             },
             "require-dev": {
+                "corneltek/kendo": "dev-master",
                 "corneltek/lazyrecord": "dev-master",
-                "corneltek/phpunit-testmore": "dev-master"
+                "corneltek/phpunit-testmore": "dev-master",
+                "corneltek/webserver-runner": "dev-master"
             },
             "suggest": {
                 "corneltek/lazyrecord": "Support Record-based Action"
             },
             "type": "library",
             "autoload": {
-                "psr-0": {
-                    "ActionKit": "src"
+                "psr-4": {
+                    "ActionKit\\": "src/ActionKit/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
             "authors": [
                 {
                     "name": "c9s",
-                    "email": "cornelius.howl@gmail.com"
+                    "email": "yoanlin93+composer@gmail.com"
                 }
             ],
-            "time": "2015-02-15 06:57:40"
+            "time": "2015-07-13 15:10:05"
         },
         {
             "name": "corneltek/assetkit",
@@ -258,16 +266,16 @@
         },
         {
             "name": "corneltek/configkit",
-            "version": "1.5.4",
+            "version": "1.5.5",
             "source": {
                 "type": "git",
-                "url": "git@github.com:c9s/php-ConfigKit.git",
-                "reference": "c17cab1e0f8861b7b8688c0c43ae2a4e2e63ac32"
+                "url": "https://github.com/c9s/ConfigKit.git",
+                "reference": "7e7848788a5ee0a13c1bb48d6d741007e6124491"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c9s/php-ConfigKit/zipball/c17cab1e0f8861b7b8688c0c43ae2a4e2e63ac32",
-                "reference": "c17cab1e0f8861b7b8688c0c43ae2a4e2e63ac32",
+                "url": "https://api.github.com/repos/c9s/ConfigKit/zipball/7e7848788a5ee0a13c1bb48d6d741007e6124491",
+                "reference": "7e7848788a5ee0a13c1bb48d6d741007e6124491",
                 "shasum": ""
             },
             "require": {
@@ -285,7 +293,7 @@
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
-            "time": "2014-09-13 06:28:30"
+            "time": "2015-07-03 09:37:03"
         },
         {
             "name": "corneltek/dbutil",
@@ -419,16 +427,16 @@
         },
         {
             "name": "corneltek/getoptionkit",
-            "version": "2.2.0",
+            "version": "2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/c9s/GetOptionKit.git",
-                "reference": "5c9d87e2a427b441d880a7a3cb400916fcc3fecf"
+                "reference": "ac036186e176cfa03a1ebab295218992a84dbbab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c9s/GetOptionKit/zipball/5c9d87e2a427b441d880a7a3cb400916fcc3fecf",
-                "reference": "5c9d87e2a427b441d880a7a3cb400916fcc3fecf",
+                "url": "https://api.github.com/repos/c9s/GetOptionKit/zipball/ac036186e176cfa03a1ebab295218992a84dbbab",
+                "reference": "ac036186e176cfa03a1ebab295218992a84dbbab",
                 "shasum": ""
             },
             "require": {
@@ -457,7 +465,45 @@
             ],
             "description": "Powerful command-line option toolkit",
             "homepage": "http://github.com/c9s/GetOptionKit",
-            "time": "2015-06-04 05:55:50"
+            "time": "2015-07-05 10:38:10"
+        },
+        {
+            "name": "corneltek/imagekit",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/c9s/ImageKit.git",
+                "reference": "dda1294b83ccbed3536f97069cd412c62a46d24c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/c9s/ImageKit/zipball/dda1294b83ccbed3536f97069cd412c62a46d24c",
+                "reference": "dda1294b83ccbed3536f97069cd412c62a46d24c",
+                "shasum": ""
+            },
+            "require": {
+                "corneltek/fileutil": "~1"
+            },
+            "require-dev": {
+                "corneltek/phpunit-testmore": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ImageKit\\": "src/ImageKit/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "c9s",
+                    "email": "yoanlin93+composer@gmail.com"
+                }
+            ],
+            "time": "2015-07-08 04:45:13"
         },
         {
             "name": "corneltek/lazyrecord",
@@ -807,16 +853,16 @@
         },
         {
             "name": "corneltek/universal",
-            "version": "1.3.3",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/c9s/Universal.git",
-                "reference": "52e4a134eb59911bddda9fc5dd8291f81ec230b6"
+                "reference": "f4d964962dcacb5c51382d9874bdd60295d8b556"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c9s/Universal/zipball/52e4a134eb59911bddda9fc5dd8291f81ec230b6",
-                "reference": "52e4a134eb59911bddda9fc5dd8291f81ec230b6",
+                "url": "https://api.github.com/repos/c9s/Universal/zipball/f4d964962dcacb5c51382d9874bdd60295d8b556",
+                "reference": "f4d964962dcacb5c51382d9874bdd60295d8b556",
                 "shasum": ""
             },
             "require": {
@@ -827,8 +873,8 @@
             },
             "type": "library",
             "autoload": {
-                "psr-0": {
-                    "Universal": "src"
+                "psr-4": {
+                    "Universal\\": "src/Universal/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -844,7 +890,7 @@
             ],
             "description": "Universal library for PHP",
             "homepage": "http://github.com/c9s/Universal",
-            "time": "2013-03-23 15:16:59"
+            "time": "2015-07-13 06:39:11"
         },
         {
             "name": "corneltek/universal-cache",
@@ -919,22 +965,22 @@
         },
         {
             "name": "cpliakas/git-wrapper",
-            "version": "1.4.1",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cpliakas/git-wrapper.git",
-                "reference": "2fc1d45c0a62ba251d4c0155030c6dc83e607a38"
+                "reference": "0f8c4a4dcdd6ca5b46330ab12be3a439eea16d46"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cpliakas/git-wrapper/zipball/2fc1d45c0a62ba251d4c0155030c6dc83e607a38",
-                "reference": "2fc1d45c0a62ba251d4c0155030c6dc83e607a38",
+                "url": "https://api.github.com/repos/cpliakas/git-wrapper/zipball/0f8c4a4dcdd6ca5b46330ab12be3a439eea16d46",
+                "reference": "0f8c4a4dcdd6ca5b46330ab12be3a439eea16d46",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0",
-                "symfony/event-dispatcher": ">=2.3",
-                "symfony/process": ">=2.3"
+                "symfony/event-dispatcher": "~2.3|~3.0",
+                "symfony/process": "~2.3|~3.0"
             },
             "require-dev": {
                 "pdepend/pdepend": "~1.0",
@@ -970,7 +1016,7 @@
             "keywords": [
                 "git"
             ],
-            "time": "2014-12-09 15:53:03"
+            "time": "2015-07-08 14:28:09"
         },
         {
             "name": "doctrine/annotations",
@@ -1369,57 +1415,6 @@
                 "parser"
             ],
             "time": "2014-09-09 13:34:57"
-        },
-        {
-            "name": "michelf/php-markdown",
-            "version": "1.5.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/michelf/php-markdown.git",
-                "reference": "e1aabe18173231ebcefc90e615565742fc1c7fd9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/michelf/php-markdown/zipball/e1aabe18173231ebcefc90e615565742fc1c7fd9",
-                "reference": "e1aabe18173231ebcefc90e615565742fc1c7fd9",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-lib": "1.4.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Michelf": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "John Gruber",
-                    "homepage": "http://daringfireball.net/"
-                },
-                {
-                    "name": "Michel Fortin",
-                    "email": "michel.fortin@michelf.ca",
-                    "homepage": "https://michelf.ca/",
-                    "role": "Developer"
-                }
-            ],
-            "description": "PHP Markdown",
-            "homepage": "https://michelf.ca/projects/php-markdown/",
-            "keywords": [
-                "markdown"
-            ],
-            "time": "2015-03-01 12:03:08"
         },
         {
             "name": "natxet/CssMin",
@@ -1879,25 +1874,25 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.12.3",
+            "version": "v1.18.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "27f3428b08c7f656d6824359a9d9dee3f5fce31b"
+                "reference": "e8e6575abf6102af53ec283f7f14b89e304fa602"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/27f3428b08c7f656d6824359a9d9dee3f5fce31b",
-                "reference": "27f3428b08c7f656d6824359a9d9dee3f5fce31b",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/e8e6575abf6102af53ec283f7f14b89e304fa602",
+                "reference": "e8e6575abf6102af53ec283f7f14b89e304fa602",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.2.4"
+                "php": ">=5.2.7"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.12-dev"
+                    "dev-master": "1.18-dev"
                 }
             },
             "autoload": {
@@ -1907,16 +1902,24 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "BSD-3"
+                "BSD-3-Clause"
             ],
             "authors": [
                 {
                     "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
                 },
                 {
                     "name": "Armin Ronacher",
-                    "email": "armin.ronacher@active-4.com"
+                    "email": "armin.ronacher@active-4.com",
+                    "role": "Project Founder"
+                },
+                {
+                    "name": "Twig Team",
+                    "homepage": "http://twig.sensiolabs.org/contributors",
+                    "role": "Contributors"
                 }
             ],
             "description": "Twig, the flexible, fast, and secure template language for PHP",
@@ -1924,7 +1927,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2013-04-08 12:40:11"
+            "time": "2015-06-06 23:31:24"
         }
     ],
     "packages-dev": [
