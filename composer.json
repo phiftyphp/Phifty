@@ -26,6 +26,9 @@
         "corneltek/twig-markdown": "~0.1",
         "corneltek/kendo": "~1.0"
     },
+    "bin": [
+        "bin/phifty"
+    ],
     "require-dev": {
         "corneltek/phpunit-testmore": "dev-master",
         "satooshi/php-coveralls": "dev-master"
