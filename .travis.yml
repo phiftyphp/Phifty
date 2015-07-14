@@ -10,17 +10,12 @@ install:
 before_script:
 - mkdir -p applications bundles cache
 - phpenv rehash
-  #- php vendor/bin/lazy build-conf db/config/database.testing.yml
-  # - php vendor/bin/lazy schema build -f
-  # - php vendor/bin/lazy sql --rebuild
-script:
-  # - phpunit -c phpunit.xml.dist
-after_success:
-  # - php vendor/bin/coveralls -v
+script: 
+after_success: 
 cache:
   apt: true
   directories:
   - vendor
 notifications:
   slack:
-    secure: X+iimYs9fGh3K9PYgupJNaQn322zwP7gPKH/9EIcFQbZrwJaWDPrZC578FfF5ArMvUVV4T0O84le1Lm5bO1BsFd8O4qvZ8za9X8z05Jn2v6zWpqxhtN+l1nmpo+8m0lAc78yYLGHOeRrQQnNdHqo3fUZqJMb+kYKQPB9kLOJnzM=
+    secure: OwI7PtL9OGmGvwJ8SRObkTvl0cMQqRssLJ+fWwrAUQ4HW/CxAg95q0jPZ4YHmUk6eFTp23HtYrV62icVUiw0dmbGOnsKBPKW5fMs8+rXTXcKi4lu5sP8lsak8ORBLcp75pagiMrviMS6nvAJO/l0U7XMGGGHJjbfyLa5bRkXdRo=
