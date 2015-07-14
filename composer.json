@@ -2,32 +2,33 @@
     "name": "corneltek\/phifty-core",
     "require": {
         "php": ">=5.4.0",
-        "corneltek\/universal": "~1.4",
-        "corneltek\/locale": "~1",
-        "corneltek\/universal-cache": "~1",
-        "corneltek\/fileutil": "~1",
-        "corneltek\/roller": "*",
-        "corneltek\/configkit": "~1",
-        "corneltek\/assetkit": "~3",
-        "corneltek\/lazyrecord": "~2.1",
-        "corneltek\/genphp": "*",
-        "corneltek\/sessionkit": "~1",
-        "corneltek\/actionkit": "~2",
-        "swiftmailer\/swiftmailer": "@stable",
+        "corneltek/universal": "~1.4",
+        "corneltek/locale": "~1",
+        "corneltek/universal-cache": "~1",
+        "corneltek/fileutil": "~1",
+        "corneltek/roller": "*",
+        "corneltek/configkit": "~1",
+        "corneltek/assetkit": "~3",
+        "corneltek/lazyrecord": "~2.1",
+        "corneltek/genphp": "*",
+        "corneltek/sessionkit": "~1",
+        "corneltek/actionkit": "~2",
+        "swiftmailer/swiftmailer": "@stable",
         "twig/twig": "~1@stable",
         "twig/extensions": "*",
-        "symfony\/finder": "~2.2@stable",
-        "symfony\/process": "~2.2@stable",
-        "symfony\/yaml": "~2.2@stable",
-        "symfony\/css-selector": "~2.2@stable",
-        "corneltek\/pux": "~1"
+        "symfony/finder": "~2.2@stable",
+        "symfony/process": "~2.2@stable",
+        "symfony/yaml": "~2.2@stable",
+        "symfony/css-selector": "~2.2@stable",
+        "corneltek/pux": "~1"
     },
     "suggest": {
-        "corneltek\/twig-markdown": "~0.1",
-        "corneltek\/kendo": "~1.0"
+        "corneltek/twig-markdown": "~0.1",
+        "corneltek/kendo": "~1.0"
     },
     "require-dev": {
-        "corneltek\/phpunit-testmore": "dev-master"
+        "corneltek/phpunit-testmore": "dev-master",
+        "satooshi/php-coveralls": "dev-master"
     },
     "license": "MIT",
     "autoload": {
