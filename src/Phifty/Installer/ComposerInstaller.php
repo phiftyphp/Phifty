@@ -234,12 +234,17 @@ class ComposerInstaller
         $chmods[] = array( "og+rw" , "cache" );
         $chmods[] = array( "og+rw" , "webroot" . DIRECTORY_SEPARATOR . 'static' . DIRECTORY_SEPARATOR . 'upload');
         foreach ($chmods as $mod) {
-            system("chmod -R {$mod[0]} {$mod[1]}");
+            list($mod, $path) = $mod;
+            if (!file_exists($path)) {
+                mkdir($path, 0755, true);
+            }
+            system("chmod -R $mod $path");
         }
 
         if ( ! file_exists('.gitignore') ) {
             copy('vendor/corneltek/phifty-core/.gitignore','.gitignore');
         }
+        echo "Done";
     }
 
     public static function postPackageInstall(CommandEvent $event)
