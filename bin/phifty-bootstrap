@@ -1,4 +1,7 @@
 #!/bin/bash
+
+# enable command debug
+set -x
 [[ ! -e config/database.yml ]] && cp -v config/database.dev.yml config/database.yml
 [[ ! -e config/framework.yml ]] && cp -v config/framework.dev.yml config/framework.yml
 
