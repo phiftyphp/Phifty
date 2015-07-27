@@ -32,8 +32,7 @@
     ],
     "require-dev": {
         "corneltek/phpunit-testmore": "dev-master",
-        "satooshi/php-coveralls": "dev-master",
-        "sami/sami": "^3.0"
+        "satooshi/php-coveralls": "dev-master"
     },
     "license": "MIT",
     "autoload": {
