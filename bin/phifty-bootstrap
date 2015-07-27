@@ -1,0 +1,20 @@
+#!/bin/bash
+[[ ! -e config/database.yml ]] && cp -v config/database.dev.yml config/database.yml
+[[ ! -e config/framework.yml ]] && cp -v config/framework.dev.yml config/framework.yml
+
+# composer config -g github-oauth.github.com ad1406ad76df9d451bb0726e6543f0898eba5c0d
+composer install --prefer-source
+
+php bin/lazy build-conf config/database.yml
+php bin/lazy db create
+php bin/lazy schema build -f vendor/corneltek/kendo
+php bin/lazy sql --rebuild --basedata vendor/corneltek/kendo
+
+mkdir -p design/production webroot/upload
+touch design/production/index.html
+
+php bin/phfity build-conf
+php bin/phifty asset --link
+
+chmod -R oga+rw cache webroot/upload
+php main.php && echo "bootstrap script is working..."
