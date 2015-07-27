@@ -2,16 +2,16 @@
 [[ ! -e config/database.yml ]] && cp -v config/database.dev.yml config/database.yml
 [[ ! -e config/framework.yml ]] && cp -v config/framework.dev.yml config/framework.yml
 
-php bin/lazy build-conf config/database.yml
-php bin/lazy db create
-php bin/lazy schema build -f vendor/corneltek/kendo
-php bin/lazy sql --rebuild --basedata vendor/corneltek/kendo
+php vendor/bin/lazy build-conf config/database.yml
+php vendor/bin/lazy db create
+php vendor/bin/lazy schema build -f vendor/corneltek/kendo
+php vendor/bin/lazy sql --rebuild --basedata vendor/corneltek/kendo
 
 mkdir -p design/production webroot/upload
 touch design/production/index.html
 
-php bin/phfity build-conf
-php bin/phifty asset --link
+php vendor/bin/phifty build-conf
+php vendor/bin/phifty asset --link
 
 chmod -R oga+rw cache webroot/upload
-php main.php && echo "bootstrap script is working..."
+php main.php
