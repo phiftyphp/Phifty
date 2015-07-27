@@ -27,7 +27,8 @@
         "corneltek/kendo": "~1.0"
     },
     "bin": [
-        "bin/phifty"
+        "bin/phifty",
+        "bin/phifty-bootstrap"
     ],
     "require-dev": {
         "corneltek/phpunit-testmore": "dev-master",

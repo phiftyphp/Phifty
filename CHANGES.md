@@ -1,5 +1,9 @@
 # Changelog
 
+Version 2.9
+
+- Added bin/phifty-bootstrap
+
 Version 2.8
 
 1. Rename 'User' bundle to 'UserBundle'
