@@ -2,9 +2,6 @@
 [[ ! -e config/database.yml ]] && cp -v config/database.dev.yml config/database.yml
 [[ ! -e config/framework.yml ]] && cp -v config/framework.dev.yml config/framework.yml
 
-# composer config -g github-oauth.github.com ad1406ad76df9d451bb0726e6543f0898eba5c0d
-composer install --prefer-source
-
 php bin/lazy build-conf config/database.yml
 php bin/lazy db create
 php bin/lazy schema build -f vendor/corneltek/kendo
