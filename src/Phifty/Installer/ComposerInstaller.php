@@ -190,7 +190,7 @@ class ComposerInstaller
         }
 
         if (! file_exists('config/framework.yml')) {
-            echo "Installing framework config...\n";
+            echo "Installing default framework config...\n";
             $appId = basename(getcwd());
             $appName = ucfirst(basename(getcwd()));
             $uuid = UUID::v4();
@@ -200,9 +200,8 @@ class ComposerInstaller
             file_put_contents("config/framework.yml", $content );
         }
 
-
         if (! file_exists('config/database.yml')) {
-            echo "Installing database config...\n";
+            echo "Installing default database config...\n";
             copy('vendor/corneltek/phifty-core/config/database.yml', 'config/database.yml');
 
             echo "Rewriting database config...\n";
