@@ -1,0 +1,41 @@
+---
+ApplicationName: MyApp
+ApplicationID:   myapp
+ApplicationUUID: 84dd6792-a0a4-11e4-aa35-3c15c2cb5a5a
+Domain: myapp.dev
+Mail:
+  System: "\"System\" <noreply@localhost>"
+  Admin: "\"Admin\" <admin@localhost>"
+Applications:
+  BossNet:
+Services:
+  CurrentUserService:
+    Class: Phifty\Security\CurrentUser
+    Model: UserBundle\Model\User
+  ActionService:
+  RouterService:
+  LibraryService:
+  ViewService:
+    Backend: twig
+  MailerService:
+    Transport: MailTransport
+  CacheService: ~
+  LocaleService:
+    Directory: locale
+    Default: zh_TW
+    Domain: myapp
+    Langs:
+      - en
+      - zh_TW
+  CacheService:
+  SessionService:
+  TwigService:
+    TemplateDirs:
+      - design/production
+  AssetService:
+    BaseUrl: /assets
+    BaseDir: webroot/assets
+  BundleService:
+    Paths:
+      - bundles
+Bundles:
