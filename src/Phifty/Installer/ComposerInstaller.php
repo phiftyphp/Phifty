@@ -185,8 +185,8 @@ class ComposerInstaller
 
 
         echo "Installing main.php\n";
-        if ( ! file_exists('main.php') ) {
-            passthru('cp -v vendor/corneltek/phifty-core/main_app.php main.php');
+        if (! file_exists('main.php')) {
+            copy('vendor/corneltek/phifty-core/main_app.php','main.php');
         }
 
         if (! file_exists('config/framework.yml')) {
@@ -203,7 +203,7 @@ class ComposerInstaller
 
         if (! file_exists('config/database.yml')) {
             echo "Installing database config...\n";
-            passthru('cp -v vendor/corneltek/phifty-core/config/database.yml config/database.yml');
+            copy('vendor/corneltek/phifty-core/config/database.yml', 'config/database.yml');
 
             echo "Rewriting database config...\n";
             $config = ConfigCompiler::load('config/database.yml');
