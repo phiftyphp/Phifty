@@ -15,7 +15,7 @@ class CacheService
     {
         $kernel->cache = function() use ($kernel) {
             $cache = new UniversalCache(array());
-            if ( extension_loaded('apc') ) {
+            if (extension_loaded('apc') || extension_loaded('apcu')) {
                 $cache->addBackend(new ApcCache( array( 'namespace' => $kernel->getApplicationID() ) ));
             }
             if ( extension_loaded('memcache') ) {
