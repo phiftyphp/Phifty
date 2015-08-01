@@ -35,8 +35,8 @@ class AssetService
             $config->setEnvironment($kernel->environment);
             $config->setNamespace($kernel->getApplicationUUID());
             $cache = new UniversalCache(array(
-                new ApcCache(array( 'namespace' => $kernel->getApplicationUUID() )),
-                new FileSystemCache(array( 'cache_dir' => $kernel->getCacheDir() )),
+                new ApcCache(array('namespace' => $kernel->getApplicationUUID())),
+                new FileSystemCache(array( 'cache_dir' => $kernel->getCacheDir())),
             ));
             $config->setCache($cache);
             $config->setRoot(PH_APP_ROOT);

@@ -6,11 +6,12 @@ php:
 install:
 - travis_retry composer self-update
 - travis_retry composer install
+- echo "extension = apc.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 before_script:
 - mkdir -p applications bundles cache
 - phpenv rehash
-script: 
-after_success: 
+script:
+after_success:
 cache:
   apt: true
   directories:
