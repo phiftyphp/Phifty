@@ -6,9 +6,8 @@ php:
 install:
 - travis_retry composer self-update
 - travis_retry composer install
-- echo "no" | pecl install apcu-4.0.7
+- if [[ ${TRAVIS_PHP_VERSION:0:3} != "5.4" ] ; then echo "no" | pecl install apcu-4.0.7 ; fi
 - phpenv config-add tests/config/$TRAVIS_PHP_VERSION.ini
-- phpenv config-add tests/config/apc.ini
 before_script:
 - mkdir -p applications bundles cache
 - phpenv rehash
