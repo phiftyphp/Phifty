@@ -4,7 +4,6 @@ use CLIFramework\Command;
 
 class AssetInitCommand extends AssetBaseCommand
 {
-
     public function execute()
     {
         $kernel = kernel();

@@ -1,8 +1,9 @@
 <?php
-namespace Phifty\Command;
+namespace Phifty\Command\AssetCommand;
 use CLIFramework\Command;
 use AssetKit\Installer;
 use AssetKit\LinkInstaller;
+use Phifty\Command\AssetBaseCommand;
 
 /**
  * When running asset:init command, we should simply register app/plugin assets
@@ -10,7 +11,7 @@ use AssetKit\LinkInstaller;
  *
  * Then, By running asset install command, phifty will install assets into webroot.
  */
-class AssetInstallCommand extends AssetBaseCommand
+class InstallCommand extends AssetBaseCommand
 {
     public function options($opts)
     {
@@ -31,24 +32,27 @@ class AssetInstallCommand extends AssetBaseCommand
         $loader = $this->getAssetLoader();
         $kernel = kernel();
 
-
         $this->logger->info("Installing assets from applications...");
-        foreach ($kernel->applications as $application) {
-            $assetNames = $application->assets();
-            $assets = $loader->loadAssets($assetNames);
-            foreach ($assets as $asset) {
-                $this->logger->info("Installing {$asset->name} ...");
-                $installer->install( $asset );
+        if ($kernel->applications) {
+            foreach ($kernel->applications as $application) {
+                $assetNames = $application->assets();
+                $assets = $loader->loadAssets($assetNames);
+                foreach ($assets as $asset) {
+                    $this->logger->info("Installing {$asset->name} ...");
+                    $installer->install( $asset );
+                }
             }
         }
 
         $this->logger->info("Installing assets from bundles...");
-        foreach ($kernel->bundles as $plugin) {
-            $assetNames = $plugin->assets();
-            $assets = $loader->loadAssets($assetNames);
-            foreach ($assets as $asset) {
-                $this->logger->info("Installing {$asset->name} ...");
-                $installer->install( $asset );
+        if ($kernel->bundles) {
+            foreach ($kernel->bundles as $plugin) {
+                $assetNames = $plugin->assets();
+                $assets = $loader->loadAssets($assetNames);
+                foreach ($assets as $asset) {
+                    $this->logger->info("Installing {$asset->name} ...");
+                    $installer->install( $asset );
+                }
             }
         }
 

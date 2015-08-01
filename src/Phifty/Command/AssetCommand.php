@@ -19,27 +19,27 @@ class AssetCommand extends Command
 
     public function options($opts)
     {
-        $init = new AssetInstallCommand;
+        $init = new AssetCommand\InstallCommand;
         $init->logger = $this->logger;
         $init->options($opts);
     }
 
     public function init()
     {
-        $this->command('init', 'Phifty\Command\AssetInitCommand');
-        $this->command('install', 'Phifty\Command\AssetInstallCommand');
+        $this->command('init');
+        $this->command('install');
     }
 
     public function execute()
     {
         $app = Console::getInstance();
 
-        $init = new AssetInitCommand;
+        $init = new AssetCommand\InitCommand;
         $init->application = $app;
         $init->options = $this->options;
         $init->executeWrapper(array());
 
-        $install = new AssetInstallCommand;
+        $install = new AssetCommand\InstallCommand;
         $install->application = $app;
         $install->options = $this->options;
         $install->logger = $this->logger;
