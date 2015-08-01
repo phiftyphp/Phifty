@@ -32,7 +32,13 @@ class GetCommand extends Command
             throw new Exception('--target-dir option is required.');
         }
 
-        $targetBase = $this->options->{'target-dir'} . DIRECTORY_SEPARATOR . $basename;
+        $targetDir = $this->options->{'target-dir'};
+
+        if (!file_exists($targetDir)) {
+            mkdir($targetDir, 0755, true);
+        }
+
+        $targetBase = $targetDir . DIRECTORY_SEPARATOR . $basename;
 
         if (file_exists($targetBase)) {
             $this->logger->warn("$targetBase already exists.");

@@ -22,13 +22,19 @@ class SyncCommand extends Command
 
     public function syncDirectory($workingDir, $rebase = true) {
         $gitDir = $workingDir . DIRECTORY_SEPARATOR . '.git';
+        $ret = 127;
         if (is_dir($gitDir)) {
             if ($rebase) {
-                passthru("git --work-tree $workingDir pull --rebase origin");
+                passthru("git --work-tree $workingDir pull --rebase origin", $ret);
             } else {
-                passthru("git --work-tree $workingDir pull origin");
+                passthru("git --work-tree $workingDir pull origin", $ret);
             }
         }
+        if ($ret != 0) {
+            return false;
+        }
+        passthru("git --work-tree $workingDir push", $ret);
+        return $ret == 0;
     }
 
     public function execute()
@@ -37,6 +43,14 @@ class SyncCommand extends Command
             throw new Exception('--target-dir option is required.');
         }
 
+        $targetDir = $this->options->{'target-dir'};
+        if (file_exists($targetDir . DIRECTORY_SEPARATOR . '.git')) {
+            $this->logger->info("Syncing $targetDir...");
+            $ret = $this->syncDirectory(realpath($targetDir), $this->options->rebase);
+            if ($ret === false) {
+                $this->logger->error("Syncing $basename failed...");
+            }
+        }
 
         foreach (new DirectoryIterator($this->options->{'target-dir'}) as $fileInfo) {
             if ($fileInfo->isDot() || substr($fileInfo,0,1) == '.') {
@@ -47,27 +61,16 @@ class SyncCommand extends Command
             $workingDir = realpath($fileInfo->getPathname());
             $gitDir = $workingDir . DIRECTORY_SEPARATOR . '.git';
             if (is_dir($gitDir)) {
-                $this->logger->info("Syncing $basename");
-                $this->syncDirectory($workingDir, $this->options->rebase);
+                $this->logger->info("Syncing $basename...");
+                $ret = $this->syncDirectory($workingDir, $this->options->rebase);
+                if ($ret === false) {
+                    $this->logger->error("Syncing $basename failed...");
+                }
             }
         }
 
-        /*
-        $list = scandir($this->options->{'target-dir'});
-        var_dump( $list );
-        */
 
-        /*
-        passthru("ls",$ret);
-        var_dump( $ret );
-        */
 
-        /*
-        if (1 || $this->options->git) {
-            $targetBase = $this->options->{'target-dir'} . DIRECTORY_SEPARATOR . $basename;
-            $this->logger->info("Cloning $cloneUrl into $targetBase");
-        }
-        */
     }
 }
 
