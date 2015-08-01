@@ -31,6 +31,7 @@ class Console extends Application
         $this->command('server');
         $this->command('router');
         $this->command('asset');
+        $this->command('bundle');
 
         $this->command('composer:config','Phifty\\Command\\ComposerConfigCommand');
 
