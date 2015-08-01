@@ -6,6 +6,7 @@ php:
 install:
 - bash scripts/install-apcu.sh
 - phpenv config-add tests/config/$TRAVIS_PHP_VERSION.ini
+- phpenv config-add tests/config/apc.ini
 - travis_retry composer self-update
 - travis_retry composer install
 before_script:
