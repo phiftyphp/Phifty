@@ -7,7 +7,6 @@ Mail:
   System: "\"System\" <noreply@localhost>"
   Admin: "\"Admin\" <admin@localhost>"
 Applications:
-  BossNet:
 Services:
   CurrentUserService:
     Class: Phifty\Security\CurrentUser
