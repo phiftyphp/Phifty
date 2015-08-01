@@ -52,7 +52,8 @@ class SyncCommand extends Command
 
         }
 
-        passthru("git --work-tree $workingDir push", $ret);
+        $this->logger->info('Pushing to remote');
+        passthru("git --work-tree $workingDir push origin", $ret);
         return $ret == 0;
     }
 
@@ -83,7 +84,7 @@ class SyncCommand extends Command
                 $repo = new Repository($workingDir);
 
                 if ($this->isRepositoryDirty($repo)) {
-                    $this->logger->error("Repository status dirty");
+                    $this->logger->error("Repository $workingDir status dirty");
                     continue;
                 }
 
