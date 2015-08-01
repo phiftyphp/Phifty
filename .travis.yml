@@ -6,7 +6,7 @@ php:
 install:
 - travis_retry composer self-update
 - travis_retry composer install
-  printf "\n"| pecl install apcu
+- echo "no" | pecl install apcu-4.0.7
 - if [[ ${TRAVIS_PHP_VERSION:0:3} == "5.4" ]] ; then echo "extension = apc.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini ; fi
 - if [[ ${TRAVIS_PHP_VERSION:0:3} != "5.4" ]] ; then echo "extension = apcu.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini ; fi
 before_script:
