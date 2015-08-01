@@ -4,10 +4,10 @@ php:
 - 5.5
 - 5.6
 install:
-- travis_retry composer self-update
-- travis_retry composer install
 - bash scripts/install-apcu.sh
 - phpenv config-add tests/config/$TRAVIS_PHP_VERSION.ini
+- travis_retry composer self-update
+- travis_retry composer install
 before_script:
 - mkdir -p applications bundles cache
 - phpenv rehash
