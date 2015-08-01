@@ -11,3 +11,7 @@ Requirements
   - `yaml`
 
 
+Documentation
+--------------------
+
+See [wiki](https://github.com/c9s/Phifty/wiki)
