@@ -26,6 +26,7 @@ class BundleCommand extends Command
     {
         $this->command('get');
         $this->command('sync');
+        $this->command('install');
     }
 
     public function execute()

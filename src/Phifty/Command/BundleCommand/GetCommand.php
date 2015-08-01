@@ -4,7 +4,7 @@ use CLIFramework\Command;
 use Phifty\Console;
 use Exception;
 
-class GetCommand extends Command
+class GetCommand extends BaseCommand
 {
     public function brief() { return 'get bundle'; }
 

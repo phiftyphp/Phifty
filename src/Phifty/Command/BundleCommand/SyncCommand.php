@@ -6,7 +6,7 @@ use Exception;
 use DirectoryIterator;
 use GitElephant\Repository;
 
-class SyncCommand extends Command
+class SyncCommand extends BaseCommand
 {
     public function brief() { return 'get bundle'; }
 
@@ -49,7 +49,6 @@ class SyncCommand extends Command
         }
         if ($ret != 0) {
             return false;
-
         }
 
         $this->logger->info('Pushing to remote');
@@ -96,8 +95,6 @@ class SyncCommand extends Command
                 }
             }
         }
-
-
 
     }
 }

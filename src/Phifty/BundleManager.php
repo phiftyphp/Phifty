@@ -104,14 +104,12 @@ class BundleManager
      * @param string $name
      * @param array $config
      */
-    public function load( $name , $config = array() )
+    public function load($name, $config = array())
     {
-        if ( $class = $this->_loadBundle($name) ) {
+        if ($class = $this->_loadBundle($name)) {
             $bundle = $class::getInstance($config);
             return $this->bundles[ $name ] = $bundle;
         }
-        throw new Exception("Bundle $name not found.");
-
         return false;
     }
 
