@@ -25,7 +25,6 @@ class Console extends Application
         $this->command('init');
         // $this->command('create');
         $this->command('build-conf');
-        $this->command('build');
         $this->command('export');
         $this->command('locale');
         $this->command('console');
