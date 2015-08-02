@@ -1,5 +1,5 @@
 {
-    "name": "corneltek\/phifty-core",
+    "name": "corneltek/phifty-core",
     "require": {
         "php": ">=5.4.0",
         "corneltek/universal": "~1.4",
@@ -41,5 +41,5 @@
             "Phifty\\": "src/Phifty/"
         }
     },
-    "version": "2.10.0"
+    "version": "2.11.0"
 }
