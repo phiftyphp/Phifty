@@ -8,6 +8,7 @@ use ActionKit\ActionTemplate\CodeGenActionTemplate;
 use ActionKit\ActionTemplate\RecordActionTemplate;
 use ActionKit\ActionTemplate\UpdateOrderingRecordActionTemplate;
 use ActionKit\ActionRequest;
+use ActionKit\Action;
 
 class ActionService
     implements ServiceRegister
@@ -16,6 +17,9 @@ class ActionService
 
     public function register($kernel, $options = array() )
     {
+        if (isset($options['DefaultFieldView']))
+            Action::$defaultFieldView = $options['DefaultFieldView'];
+
         $container = new ServiceContainer;
         $generator = $container['generator'];
         $generator->registerTemplate('TwigActionTemplate', new TwigActionTemplate);
