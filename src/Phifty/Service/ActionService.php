@@ -17,8 +17,9 @@ class ActionService
 
     public function register($kernel, $options = array() )
     {
-        if (isset($options['DefaultFieldView']))
+        if (isset($options['DefaultFieldView'])) {
             Action::$defaultFieldView = $options['DefaultFieldView'];
+        }
 
         $container = new ServiceContainer;
         $generator = $container['generator'];
