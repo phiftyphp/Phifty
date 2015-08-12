@@ -28,8 +28,8 @@ class TwigService
     {
         $kernel->twig = function() use($kernel, $options) {
             $templateDirs = array();
-            if ( isset($options['TemplateDirs']) && $options['TemplateDirs'] ) {
-                foreach( $options['TemplateDirs'] as $dir ) {
+            if (isset($options['TemplateDirs']) && $options['TemplateDirs']) {
+                foreach ($options['TemplateDirs'] as $dir) {
                     // use absolute path from app root
                     $templateDirs[] = PH_APP_ROOT . DIRECTORY_SEPARATOR . $dir;
                 }
@@ -43,6 +43,12 @@ class TwigService
             // create the filesystem loader
             $loader   = new Twig_Loader_Filesystem( $templateDirs );
 
+
+            if (isset($options['Namespaces'])) {
+                foreach ($options['Namespaces'] as $namespace => $dir) {
+                    $this->kernel->twig->loader->addPath(PH_APP_ROOT . DIRECTORY_SEPARATOR . $dir, $namespace);
+                }
+            }
 
             // build default environment arguments
             $args = array(
@@ -64,6 +70,7 @@ class TwigService
 
             // http://www.twig-project.org/doc/api.html#environment-options
             $env = new Twig_Environment($loader, $args);
+
 
 
             if ($kernel->isDev) {
