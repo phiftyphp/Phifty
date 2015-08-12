@@ -50,10 +50,10 @@ class Bundle
         // $this->kernel->event->register('asset.load', array($this,'loadAssets'));
 
         // we should have twig service
-        if ( $this->exportTemplates && isset($this->kernel->twig) ) {
+        if ($this->exportTemplates && isset($this->kernel->twig)) {
             // register the loader to events
             $dir = $this->getTemplateDir();
-            if ( file_exists($dir) ) {
+            if (file_exists($dir)) {
                 $this->kernel->twig->loader->addPath($dir, $this->getNamespace() );
             }
         }
@@ -413,8 +413,30 @@ class Bundle
         return array();
     }
 
+    public function getAssets()
+    {
+        $assetConfig = $this->config('Assets');
+        if ($assetConfig) {
+            $assets =  $assetConfig->toArray();
+        } else {
+            // Get the assets provided by Bundle
+            $assets = $this->assets();
+        }
+
+        // Append the extra assets if we've defined them
+        $extraAssetsConfig = $this->config('ExtraAssets');
+        if ($extraAssetsConfig) {
+            $assets =  array_merge($assets, $assetsConfig->toArray());
+        }
+        return $assets;
+
+    }
+
+
     /**
      * Return assets for asset loader.
+     *
+     * @return array asset names
      */
     public function assets()
     {
@@ -427,8 +449,8 @@ class Bundle
     public function loadAssets()
     {
         $loader = $this->kernel->asset->loader;
-        $assetNames = $this->assets();
-        if ( ! empty($assetNames) ) {
+        $assetNames = $this->getAssets();
+        if (! empty($assetNames) ) {
             $loader->loadAssets($assetNames);
         }
     }
