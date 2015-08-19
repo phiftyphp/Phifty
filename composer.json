@@ -21,7 +21,7 @@
         "symfony/process": "~2.2@stable",
         "symfony/yaml": "~2.2@stable",
         "symfony/css-selector": "~2.2@stable",
-        "corneltek/pux": "~1"
+        "corneltek/pux": "2.0.x-dev"
     },
     "suggest": {
         "corneltek/twig-markdown": "~0.1",
