@@ -186,24 +186,27 @@
         },
         {
             "name": "corneltek/cliframework",
-            "version": "2.6.2",
+            "version": "2.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/c9s/CLIFramework.git",
-                "reference": "b4904279a2bdbeafd186e619862edbbca81709f1"
+                "reference": "3781714e15111743d6c4e8b946f78d39386c921d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c9s/CLIFramework/zipball/b4904279a2bdbeafd186e619862edbbca81709f1",
-                "reference": "b4904279a2bdbeafd186e619862edbbca81709f1",
+                "url": "https://api.github.com/repos/c9s/CLIFramework/zipball/3781714e15111743d6c4e8b946f78d39386c921d",
+                "reference": "3781714e15111743d6c4e8b946f78d39386c921d",
                 "shasum": ""
             },
             "require": {
                 "corneltek/class-template": "*",
+                "corneltek/codegen": "^2",
                 "corneltek/getoptionkit": "~2",
-                "corneltek/universal": "~1.4",
+                "corneltek/universal": ">= 1.4",
                 "php": ">=5.3.0",
-                "pimple/pimple": "*"
+                "pimple/pimple": "*",
+                "symfony/class-loader": "^2.7",
+                "symfony/finder": "^2.7"
             },
             "require-dev": {
                 "corneltek/phpunit-testmore": "dev-master",
@@ -211,8 +214,8 @@
             },
             "type": "library",
             "autoload": {
-                "psr-0": {
-                    "CLIFramework": "src"
+                "psr-4": {
+                    "CLIFramework\\": "src/CLIFramework/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -228,7 +231,15 @@
             ],
             "description": "Command-line framework for PHP",
             "homepage": "http://github.com/c9s/CLIFramework",
-            "time": "2015-07-30 08:05:06"
+            "keywords": [
+                "command",
+                "command-line",
+                "completion",
+                "framework",
+                "getopt",
+                "zsh"
+            ],
+            "time": "2015-08-23 10:52:23"
         },
         {
             "name": "corneltek/codegen",
@@ -674,21 +685,23 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/c9s/Pux.git",
-                "reference": "7fb1c833bd143f599c3efa4ca3f00f1c241a980b"
+                "reference": "eeff7e744f6a4b9ab082e90a90f0ce650bb38597"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c9s/Pux/zipball/7fb1c833bd143f599c3efa4ca3f00f1c241a980b",
-                "reference": "7fb1c833bd143f599c3efa4ca3f00f1c241a980b",
+                "url": "https://api.github.com/repos/c9s/Pux/zipball/eeff7e744f6a4b9ab082e90a90f0ce650bb38597",
+                "reference": "eeff7e744f6a4b9ab082e90a90f0ce650bb38597",
                 "shasum": ""
             },
             "require": {
-                "corneltek/cliframework": "^2",
-                "corneltek/codegen": "^2"
+                "corneltek/codegen": "^2",
+                "corneltek/universal": "^1.6"
             },
             "require-dev": {
                 "corneltek/lazyrecord": "dev-master",
-                "corneltek/phpunit-testmore": "dev-master"
+                "corneltek/phpunit-testmore": "dev-master",
+                "willdurand/geocoder": "^3.1",
+                "willdurand/negotiation": "^1.4"
             },
             "type": "library",
             "autoload": {
@@ -704,7 +717,7 @@
                 }
             ],
             "description": "Fast PHP router",
-            "time": "2015-08-18 12:11:39"
+            "time": "2015-08-23 09:10:25"
         },
         {
             "name": "corneltek/roller",
@@ -843,16 +856,16 @@
         },
         {
             "name": "corneltek/universal",
-            "version": "1.5.0",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/c9s/Universal.git",
-                "reference": "a39397bb82e432dbf9e7ccf12b1385d2ec272584"
+                "reference": "ded2149270654e36e6f04afca2df0990221485d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c9s/Universal/zipball/a39397bb82e432dbf9e7ccf12b1385d2ec272584",
-                "reference": "a39397bb82e432dbf9e7ccf12b1385d2ec272584",
+                "url": "https://api.github.com/repos/c9s/Universal/zipball/ded2149270654e36e6f04afca2df0990221485d9",
+                "reference": "ded2149270654e36e6f04afca2df0990221485d9",
                 "shasum": ""
             },
             "require": {
@@ -881,7 +894,7 @@
             ],
             "description": "Universal library for PHP",
             "homepage": "http://github.com/c9s/Universal",
-            "time": "2015-07-17 07:04:00"
+            "time": "2015-08-22 09:54:03"
         },
         {
             "name": "corneltek/universal-cache",
@@ -1702,6 +1715,56 @@
             "time": "2015-06-06 14:19:39"
         },
         {
+            "name": "symfony/class-loader",
+            "version": "v2.7.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/ClassLoader.git",
+                "reference": "2fccbc544997340808801a7410cdcb96dd12edc4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/ClassLoader/zipball/2fccbc544997340808801a7410cdcb96dd12edc4",
+                "reference": "2fccbc544997340808801a7410cdcb96dd12edc4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.9"
+            },
+            "require-dev": {
+                "symfony/finder": "~2.0,>=2.0.5",
+                "symfony/phpunit-bridge": "~2.7"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\ClassLoader\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony ClassLoader Component",
+            "homepage": "https://symfony.com",
+            "time": "2015-06-25 12:52:11"
+        },
+        {
             "name": "symfony/css-selector",
             "version": "v2.7.3",
             "source": {
@@ -2010,20 +2073,20 @@
         },
         {
             "name": "twig/extensions",
-            "version": "v1.2.0",
+            "version": "v1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig-extensions.git",
-                "reference": "8cf4b9fe04077bd54fc73f4fde83347040c3b8cd"
+                "reference": "449e3c8a9ffad7c2479c7864557275a32b037499"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig-extensions/zipball/8cf4b9fe04077bd54fc73f4fde83347040c3b8cd",
-                "reference": "8cf4b9fe04077bd54fc73f4fde83347040c3b8cd",
+                "url": "https://api.github.com/repos/twigphp/Twig-extensions/zipball/449e3c8a9ffad7c2479c7864557275a32b037499",
+                "reference": "449e3c8a9ffad7c2479c7864557275a32b037499",
                 "shasum": ""
             },
             "require": {
-                "twig/twig": "~1.12"
+                "twig/twig": "~1.20|~2.0"
             },
             "require-dev": {
                 "symfony/translation": "~2.3"
@@ -2034,7 +2097,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.2.x-dev"
+                    "dev-master": "1.3-dev"
                 }
             },
             "autoload": {
@@ -2058,7 +2121,7 @@
                 "i18n",
                 "text"
             ],
-            "time": "2014-10-30 14:30:03"
+            "time": "2015-08-22 16:38:35"
         },
         {
             "name": "twig/twig",
