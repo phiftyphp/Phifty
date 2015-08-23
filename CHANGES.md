@@ -1,5 +1,13 @@
 # Changelog
 
+## Version 3.0
+
+### Incompatible changes
+
+- Renamed Phifty\Service to Phifty\ServiceProvider
+- Renamed all Service classes with suffix `ServiceProvider`
+- Updated config key `Services` to `ServiceProviders`
+
 Version 2.9
 
 - Added bin/phifty-bootstrap
