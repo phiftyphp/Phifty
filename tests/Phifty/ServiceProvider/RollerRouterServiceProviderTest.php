@@ -1,6 +1,6 @@
 <?php
 
-class RollerRouterServiceTest extends PHPUnit_Framework_TestCase
+class RollerRouterServiceProviderTest extends PHPUnit_Framework_TestCase
 {
     public function testRouterService()
     {
