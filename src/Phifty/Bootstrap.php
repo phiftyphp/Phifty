@@ -72,22 +72,22 @@ function create_kernel() {
         ***********************************/
     // register default classloader service
     // $composerLoader = require PH_ROOT . '/vendor/autoload.php';
-    $kernel->registerService( new \Phifty\Service\ClassLoaderService(getSplClassLoader()));
+    $kernel->registerService( new \Phifty\ServiceProvider\ClassLoaderServiceProvider(getSplClassLoader()));
 
     // load config service.
     $configLoader = initConfigLoader();
-    $kernel->registerService( new \Phifty\Service\ConfigService($configLoader));
+    $kernel->registerService( new \Phifty\ServiceProvider\ConfigServiceProvider($configLoader));
 
     // load event service, so that we can bind events in Phifty
-    $kernel->registerService( new \Phifty\Service\EventService );
+    $kernel->registerService( new \Phifty\ServiceProvider\EventServiceProvider);
 
 
     // if the framework config is defined.
     if ( $configLoader->isLoaded('framework') ) {
         // we should load database service before other services
         // because other services might need database service
-        if ( $configLoader->isLoaded('database') ) {
-            $kernel->registerService( new \Phifty\Service\DatabaseService );
+        if ($configLoader->isLoaded('database')) {
+            $kernel->registerService( new \Phifty\ServiceProvider\DatabaseServiceProvider);
         }
 
         if ( $appconfigs = $kernel->config->get('framework','Applications') ) {
@@ -98,10 +98,10 @@ function create_kernel() {
             }
         }
 
-        if ( $services = $kernel->config->get('framework','Services') ) {
+        if ( $services = $kernel->config->get('framework','ServiceProviders') ) {
             foreach ($services as $name => $options) {
                 // not full qualified classname
-                $class = ( false === strpos($name,'\\') ) ? ('Phifty\\Service\\' . $name) : $name;
+                $class = ( false === strpos($name,'\\') ) ? ('Phifty\\ServiceProvider\\' . $name) : $name;
                 $kernel->registerService( new $class , $options );
             }
         }
