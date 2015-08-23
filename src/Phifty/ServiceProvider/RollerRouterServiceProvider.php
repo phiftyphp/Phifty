@@ -2,8 +2,7 @@
 namespace Phifty\ServiceProvider;
 use Roller\Router;
 
-class RouterServiceProvider
-    implements ServiceProvider
+class RollerRouterServiceProvider implements ServiceProvider
 {
     public function getId() { return 'Router'; }
 
