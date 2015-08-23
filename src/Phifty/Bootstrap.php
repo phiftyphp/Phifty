@@ -70,9 +70,6 @@ function create_kernel()
     $kernel->prepare(); // prepare constants
 
 
-    /***********************************
-        * Load Core Services
-        ***********************************/
     // register default classloader service
     // $composerLoader = require PH_ROOT . '/vendor/autoload.php';
     $kernel->registerService(new \Phifty\ServiceProvider\ClassLoaderServiceProvider(getSplClassLoader()));
@@ -125,8 +122,7 @@ function kernel()
         return $kernel;
     }
     create_kernel();
-
     return $kernel;
 }
 
-kernel();
+return kernel();
