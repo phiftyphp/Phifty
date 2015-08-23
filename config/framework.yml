@@ -7,34 +7,34 @@ Mail:
   System: "\"System\" <noreply@localhost>"
   Admin: "\"Admin\" <admin@localhost>"
 Applications:
-Services:
-  CurrentUserService:
+ServiceProviders:
+  CurrentUserServiceProvider:
     Class: Phifty\Security\CurrentUser
     Model: UserBundle\Model\User
-  ActionService:
-  RouterService:
-  LibraryService:
-  ViewService:
+  ActionServiceProvider:
+  RouterServiceProvider:
+  LibraryServiceProvider:
+  ViewServiceProvider:
     Backend: twig
-  MailerService:
+  MailerServiceProvider:
     Transport: MailTransport
-  CacheService: ~
-  LocaleService:
+  CacheServiceProvider: ~
+  LocaleServiceProvider:
     Directory: locale
     Default: zh_TW
     Domain: myapp
     Langs:
       - en
       - zh_TW
-  CacheService:
-  SessionService:
-  TwigService:
+  CacheServiceProvider:
+  SessionServiceProvider:
+  TwigServiceProvider:
     TemplateDirs:
       - design/production
-  AssetService:
+  AssetServiceProvider:
     BaseUrl: /assets
     BaseDir: webroot/assets
-  BundleService:
+  BundleServiceProvider:
     Paths:
       - bundles
 Bundles:
