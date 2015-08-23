@@ -163,8 +163,9 @@ class Kernel extends ObjectContainer
 
     public function getApplicationID()
     {
-        if ( $this->applicationID ) 
+        if ($this->applicationID) {
             return $this->applicationID;
+        }
         return $this->applicationID = $this->config->framework->ApplicationID;
     }
 
@@ -182,10 +183,15 @@ class Kernel extends ObjectContainer
     }
 
 
+    /**
+     * Register service object into this Kernel object
+     *
+     * @param ServiceProvider $service
+     */
     public function registerService(ServiceProvider $service, $options = array() )
     {
-        $service->register( $this , $options );
-        $this->services[ $service->getId() ] = $service;
+        $service->register($this , $options);
+        $this->services[$service->getId()] = $service;
     }
 
     /**
