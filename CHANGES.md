@@ -15,6 +15,10 @@ Bundle
 - Creating Bundle object now requires Kernel object.
 - getInstance method was removed from BundleManager.
 
+TemplateController
+
+- Reconcile the constructor arguments of TemplateController. it now accepts:
+   `($environment, $response, $route)` instead of route['args']
 
 
 ## Version 2.9

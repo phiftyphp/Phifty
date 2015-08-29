@@ -9,9 +9,9 @@ class TemplateController extends Controller
 
     public $args = array();
 
-    public function __construct(array $environment, array $matchedRoute)
+    public function __construct(array $environment = array(), array $response = array(), array $matchedRoute = array())
     {
-        parent::__construct($environment, $matchedRoute);
+        parent::__construct($environment, $response, $matchedRoute);
         list($pcre, $path, $callback, $options ) = $matchedRoute;
 
         $args = $options['args'];
