@@ -4,9 +4,10 @@ use Exception;
 use ArrayAccess;
 use IteratorAggregate;
 use ArrayIterator;
+use Phifty\Bundle;
+use Phifty\Kernel;
 
-class BundleManager
-    implements ArrayAccess, IteratorAggregate
+class BundleManager implements ArrayAccess, IteratorAggregate
 {
 
     /**
@@ -19,6 +20,13 @@ class BundleManager
      * @var string[]
      */
     public $bundleDirs = array();
+
+    protected $kernel;
+
+    public function __construct(Kernel $kernel)
+    {
+        $this->kernel;
+    }
 
     public function isLoaded( $name )
     {
@@ -107,7 +115,8 @@ class BundleManager
     public function load($name, $config = array())
     {
         if ($class = $this->_loadBundle($name)) {
-            $bundle = $class::getInstance($config);
+            $kernel = kernel();
+            $bundle = $class::getInstance($kernel, $config);
             return $this->bundles[ $name ] = $bundle;
         }
         return false;
@@ -134,9 +143,9 @@ class BundleManager
      * @param string               $name   Bundle id
      * @param Phifty\Bundle\Bundle $Bundle Bundle object
      */
-    public function add($name,$Bundle)
+    public function add($name, Bundle $bundle)
     {
-        $this->bundles[ $name ] = $Bundle;
+        $this->bundles[ $name ] = $bundle;
     }
 
     public function offsetSet($name,$value)
@@ -161,13 +170,6 @@ class BundleManager
 
     public function getIterator()
     {
-        return new ArrayIterator( $this->bundles );
+        return new ArrayIterator($this->bundles);
     }
-
-    public static function getInstance()
-    {
-        static $instance;
-        return $instance ?: $instance = new static;
-    }
-
 }
