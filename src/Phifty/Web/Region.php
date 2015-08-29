@@ -45,7 +45,7 @@ class Region
 
     static $serialId = 1;
 
-    public function __construct($path, $arguments = array(), array $options = array()) 
+    public function __construct($path, array $arguments = array(), array $options = array())
     {
         $this->path = $path;
         $this->arguments = $arguments;
@@ -112,17 +112,17 @@ class Region
     public function getTemplate()
     {
         return <<<TEMPL
-{{ Region.container.render()|raw }}
+{{Region.container.render()|raw}}
 <script type="text/javascript">
 $(document.body).ready(function() {
-    $('#{{Region.getRegionId()}}').asRegion().load( '{{Region.path|raw}}' , {{ Region.arguments|json_encode|raw }} );
+    $('#{{Region.getRegionId()}}').asRegion().load('{{Region.path|raw}}' , {{Region.arguments|json_encode|raw}});
 });
 </script>
 TEMPL;
 
     }
 
-    public function render($args = array())
+    public function render(array $args = array())
     {
         // set the region ID to container when rendering content
         $this->container->setId( $this->getRegionId() );
