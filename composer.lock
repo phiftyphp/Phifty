@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "500956ba46804f6ea6d13c8352390e01",
+    "hash": "bb79c3e43daf3ebba3bb289c7ce572ea",
     "packages": [
         {
             "name": "corneltek/actionkit",
@@ -695,12 +695,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/c9s/Pux.git",
-                "reference": "8053bbdb80df83ebcb114cc3e8f4a46fa897a50f"
+                "reference": "e1d049b7c778565811d6ae34a02699dde79b8122"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c9s/Pux/zipball/8053bbdb80df83ebcb114cc3e8f4a46fa897a50f",
-                "reference": "8053bbdb80df83ebcb114cc3e8f4a46fa897a50f",
+                "url": "https://api.github.com/repos/c9s/Pux/zipball/e1d049b7c778565811d6ae34a02699dde79b8122",
+                "reference": "e1d049b7c778565811d6ae34a02699dde79b8122",
                 "shasum": ""
             },
             "require": {
@@ -739,7 +739,7 @@
                 "router",
                 "server"
             ],
-            "time": "2015-08-29 15:24:13"
+            "time": "2015-08-29 17:14:18"
         },
         {
             "name": "corneltek/roller",
