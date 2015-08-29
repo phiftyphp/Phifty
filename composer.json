@@ -12,7 +12,7 @@
         "corneltek/lazyrecord": "^2.2",
         "corneltek/genphp": "*",
         "corneltek/sessionkit": "~1",
-        "corneltek/actionkit": "~2",
+        "corneltek/actionkit": "^2",
         "cypresslab/gitelephant": "^1.0",
         "swiftmailer/swiftmailer": "@stable",
         "twig/twig": "~1@stable",
