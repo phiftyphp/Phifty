@@ -1,14 +1,22 @@
 <?php
 namespace Phifty\ServiceProvider;
 use Phifty\ServiceProvider\ServiceProvider;
-use Roller\Router;
+use Pux\Mux;
+use Pux\Dispatcher\Dispatcher;
 
-class RollerRouterServiceProvider implements ServiceProvider
+class PuxRouterServiceProvider implements ServiceProvider
 {
-    public function getId() { return 'Router'; }
+    public function getId()
+    {
+        return 'router';
+    }
 
     public function register($kernel, $options = array() )
     {
+        $kernel->router = function() use ($kernel) {
+            return new Mux;
+        };
+        /*
         $kernel->restful = function() use($kernel) {
             $restful = new \Roller\Plugin\RESTful(array( 
                 'prefix' => '/restful'
@@ -30,5 +38,7 @@ class RollerRouterServiceProvider implements ServiceProvider
             $router->addPlugin($kernel->restful);
             return $router;
         };
+        */
     }
 }
+

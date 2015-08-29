@@ -18,8 +18,7 @@ use AssetKit\Extension\Twig\AssetExtension;
  * Depends on AssetServiceProvider
  */
 
-class TwigServiceProvider
-    implements ServiceProvider
+class TwigServiceProvider implements ServiceProvider
 {
     public function getId() { return 'Twig'; }
 
