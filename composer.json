@@ -11,6 +11,7 @@
         "corneltek/assetkit": "~3",
         "corneltek/lazyrecord": "^2.2",
         "corneltek/genphp": "*",
+        "corneltek/codegen": "^2",
         "corneltek/sessionkit": "~1",
         "corneltek/actionkit": "^2",
         "cypresslab/gitelephant": "^1.0",
