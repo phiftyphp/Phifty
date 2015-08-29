@@ -8,11 +8,20 @@
 - Renamed all Service classes with suffix `ServiceProvider`
 - Updated config key `Services` to `ServiceProviders`
 
-Version 2.9
+Bundle
+
+- Added kernel object to the argument of constructor of Bundle class.
+- Creating BundleManager object now requires Kernel object.
+- Creating Bundle object now requires Kernel object.
+- getInstance method was removed from BundleManager.
+
+
+
+## Version 2.9
 
 - Added bin/phifty-bootstrap
 
-Version 2.8
+## Version 2.8
 
 1. Rename 'User' bundle to 'UserBundle'
 2. Remove old 'Pages'
