@@ -45,9 +45,9 @@ class Kernel extends ObjectContainer
 
     public $services = array();
 
-    public function __construct( $environment = null )
+    public function __construct($environment = null)
     {
-        /* define framework environment */
+        // define framework environment
         $this->environment  = $environment ?: getenv('PHIFTY_ENV') ?: 'development';
         $this->isCLI        = isset($_SERVER['argc']) && !isset($_SERVER['HTTP_HOST']);
         defined('CLI_MODE') || define( 'CLI_MODE' , $this->isCLI );
