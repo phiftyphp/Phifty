@@ -234,6 +234,10 @@ class Bundle
      *          'args' => array( ... ) )
      * )
      *
+     * $this->route('/path/to', array(
+     *          'controller' => 'ControllerClass',
+     * ))
+     *
      * TODO: improve the performance here.
      */
     public function route($path, $args, array $options = array())
@@ -306,15 +310,16 @@ class Bundle
      * @param string $path path name
      * @param string $class class name
      */
-    public function expandRoute($path, $class)
+    public function mount($path, $class)
     {
         // TODO: reduce the autoload checking cost.
-        if ( ! class_exists($class,true) ) {
+        if (!class_exists($class,true)) {
             $class = $this->getNamespace() . '\\' . $class;
         }
-        $routes = $class::expand();
-        $class::set_mount_path($path);
-        $this->kernel->router->mount( $path , $routes );
+        $controller = new $class;
+        // $mux = $controller->expand();
+        // $class::set_mount_path($path);
+        $this->kernel->mux->mount($path, $controller);
     }
 
     /**

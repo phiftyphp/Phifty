@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8440156153fcec6fbdb5e165aae6c7d2",
+    "hash": "500956ba46804f6ea6d13c8352390e01",
     "packages": [
         {
             "name": "corneltek/actionkit",
@@ -695,12 +695,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/c9s/Pux.git",
-                "reference": "def60390223a2fe3573557f1b4cb41984121938b"
+                "reference": "8053bbdb80df83ebcb114cc3e8f4a46fa897a50f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c9s/Pux/zipball/def60390223a2fe3573557f1b4cb41984121938b",
-                "reference": "def60390223a2fe3573557f1b4cb41984121938b",
+                "url": "https://api.github.com/repos/c9s/Pux/zipball/8053bbdb80df83ebcb114cc3e8f4a46fa897a50f",
+                "reference": "8053bbdb80df83ebcb114cc3e8f4a46fa897a50f",
                 "shasum": ""
             },
             "require": {
@@ -739,19 +739,19 @@
                 "router",
                 "server"
             ],
-            "time": "2015-08-29 05:54:46"
+            "time": "2015-08-29 15:24:13"
         },
         {
             "name": "corneltek/roller",
             "version": "1.9.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/c9s/php-Roller.git",
+                "url": "https://github.com/c9s/Roller.git",
                 "reference": "2c6f5a631a1ac1189014cb69cf301d0ef8696ad9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c9s/php-Roller/zipball/2c6f5a631a1ac1189014cb69cf301d0ef8696ad9",
+                "url": "https://api.github.com/repos/c9s/Roller/zipball/2c6f5a631a1ac1189014cb69cf301d0ef8696ad9",
                 "reference": "2c6f5a631a1ac1189014cb69cf301d0ef8696ad9",
                 "shasum": ""
             },

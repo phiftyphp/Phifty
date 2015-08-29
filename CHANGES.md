@@ -14,6 +14,7 @@ Bundle
 - Creating BundleManager object now requires Kernel object.
 - Creating Bundle object now requires Kernel object.
 - getInstance method was removed from BundleManager.
+- Renamed `expandRoute` method to `mount`.
 
 TemplateController
 
