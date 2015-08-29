@@ -317,8 +317,6 @@ class Bundle
             $class = $this->getNamespace() . '\\' . $class;
         }
         $controller = new $class;
-        // $mux = $controller->expand();
-        // $class::set_mount_path($path);
         $this->kernel->mux->mount($path, $controller);
     }
 
@@ -330,6 +328,7 @@ class Bundle
 
     public function addCRUDAction( $model, $types = array() )
     {
+        @trigger_error('addCRUDAction will be deprecated, please use addRecordAction instead', E_USER_DEPRECATED);
         return $this->addRecordAction( $model, $types );
     }
 

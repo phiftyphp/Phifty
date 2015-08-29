@@ -21,6 +21,10 @@ TemplateController
 - Reconcile the constructor arguments of TemplateController. it now accepts:
    `($environment, $response, $route)` instead of route['args']
 
+- [ ] deprecate Phifty\Routing\ExpandableController
+    It's used by `getRoutePrefix` and navStack
+
+
 
 ## Version 2.9
 
