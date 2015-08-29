@@ -2,6 +2,8 @@
 namespace Phifty\Web;
 use Phifty\View\TemplateView;
 use FormKit\Element;
+use Twig_Loader_Array;
+use Twig_Environment;
 
 
 /*
@@ -65,7 +67,12 @@ TEMPL;
     {
         // set the region ID to container when rendering content
         $this->container->setId( $this->getRegionId() );
-        return $this->renderTemplateString($this->getTemplate(), $this->mergeTemplateArguments( $args ));
+
+        $loader = new Twig_Loader_Array(array(
+            'region.html' =>  $this->getTemplate(),
+        ));
+        $twig = new Twig_Environment($loader);
+        return $twig->render('region.html', $this->mergeTemplateArguments($args));
     }
 
     public function __toString() 

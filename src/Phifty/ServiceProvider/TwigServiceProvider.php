@@ -2,8 +2,7 @@
 namespace Phifty\ServiceProvider;
 use Twig_Environment;
 use Twig_Loader_Filesystem;
-use Twig_Function_Function;
-use Twig_Loader_String;
+use Twig_SimpleFunction;
 use Twig_SimpleFilter;
 
 use Twig_Extension_Core;
@@ -102,7 +101,7 @@ class TwigServiceProvider
                 'new' => 'Phifty\View\newObject',
             );
             foreach ($exports as $export => $func) {
-                $env->addFunction( $export , new Twig_Function_Function( $func ));
+                $env->addFunction(new Twig_SimpleFunction($export, $func));
             }
 
             $zhDate = new Twig_SimpleFilter('zh_date', function ($str) {
@@ -123,7 +122,7 @@ class TwigServiceProvider
             $env->registerUndefinedFunctionCallback(function($name) {
                 // use functions with prefix 'array_' and 'str'
                 if (function_exists($name) && ( strpos($name,'array_') === 0 || strpos($name,'str') === 0 ) ) {
-                    return new Twig_Function_Function($name);
+                    return new Twig_SimpleFunction($name, $name);
                 }
                 return false;
             });

@@ -28,13 +28,6 @@ abstract class TemplateView
         return $this->getClassDir() . DIRECTORY_SEPARATOR . 'Templates';
     }
 
-
-    public function createTwigStringLoader() 
-    {
-        return new Twig_Loader_String();
-    }
-
-
     public function createTwigFileSystemLoader()
     {
         $dir = $this->getTemplateDir();
@@ -78,13 +71,6 @@ abstract class TemplateView
         $loader = $this->createTwigFileSystemLoader();
         $twig = $this->createTwigEnvironment($loader);
         return $twig->render($templateFile,  $this->mergeTemplateArguments($arguments) );
-    }
-
-    public function renderTemplateString($template, $arguments = array())
-    {
-        $loader = $this->createTwigStringLoader();
-        $twig = $this->createTwigEnvironment($loader);
-        return $twig->render($template, $this->mergeTemplateArguments($arguments) );
     }
 
 }

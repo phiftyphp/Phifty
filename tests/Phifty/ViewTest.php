@@ -12,25 +12,6 @@ class ViewTest extends PHPUnit_Framework_TestCase
             ok($name);
         }
     }
-
-    public function testViewTwigEngine()
-    {
-        $engine = \Phifty\View\Engine::createEngine( 'twig' );
-        ok($engine);
-        isa_ok( 'Phifty\View\Twig' , $engine );
-
-# FIXME:
-#          $result = $engine->render( 'test/twig.html' , array( 'Msg' => 'Hello World' ) );
-#          ok( $result );
-#          ok( strpos( $result , 'Hello World' ) !== false );
-
-        $engine2 = \Phifty\View\Engine::createEngine( 'twig' );
-        $this->assertNotNull( $engine2 );
-
-        $string = $engine2->renderString( 'Hello {{ name }}' , array( 'name' => 'John' ) );
-        $this->assertNotNull($string);
-        ok( strpos( $string , 'John' ) !== false );
-    }
 }
 
 
