@@ -6,13 +6,13 @@ use Twig_Loader_Array;
 use Twig_Environment;
 
 
-/*
+/**
+ *
  * TODO: twig extension:
  *
  *    {% region '/bs/crud/list', { arguments ...  } %}
  *
  */
-
 class Region 
 {
 
