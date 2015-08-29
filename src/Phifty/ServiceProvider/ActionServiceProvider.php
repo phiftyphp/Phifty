@@ -20,6 +20,7 @@ class ActionServiceProvider
     public function register($kernel, $options = array())
     {
         $container = new ServiceContainer();
+        $container['cache_dir'] = $kernel->cacheDir;
         $generator = $container['generator'];
         $generator->registerTemplate('TwigActionTemplate', new TwigActionTemplate());
         $generator->registerTemplate('CodeGenActionTemplate', new CodeGenActionTemplate());
