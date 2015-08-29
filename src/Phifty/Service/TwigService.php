@@ -46,7 +46,7 @@ class TwigService
 
             if (isset($options['Namespaces'])) {
                 foreach ($options['Namespaces'] as $namespace => $dir) {
-                    $this->kernel->twig->loader->addPath(PH_APP_ROOT . DIRECTORY_SEPARATOR . $dir, $namespace);
+                    $loader->addPath(PH_APP_ROOT . DIRECTORY_SEPARATOR . $dir, $namespace);
                 }
             }
 
