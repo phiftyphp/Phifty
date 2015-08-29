@@ -1,58 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit bootstrap="tests/bootstrap.php"
-         backupGlobals="false"
-         colors="true"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
-         stopOnError="true"
-         stopOnFailure="true"
-         verbose="true">
+  backupGlobals="false"
+  colors="true"
+  convertErrorsToExceptions="true"
+  convertNoticesToExceptions="true"
+  convertWarningsToExceptions="true"
+  stopOnError="true"
+  stopOnFailure="true"
+  verbose="true">
+  <!--
+  <php>
+    <includePath>.</includePath>
+    <ini name="foo" value="bar"/>
+    <const name="foo" value="bar"/>
+    <var name="foo" value="bar"/>
+    <env name="foo" value="bar"/>
+    <post name="foo" value="bar"/>
+    <get name="foo" value="bar"/>
+    <cookie name="foo" value="bar"/>
+    <server name="foo" value="bar"/>
+    <files name="foo" value="bar"/>
+    <request name="foo" value="bar"/>
+  </php>
+  -->
   <testsuites>
+    <testsuite name="Phifty">
+      <directory suffix="Test.php">tests/Phifty</directory>
+      <exclude>_old</exclude>
+    </testsuite>
+  </testsuites>
 
-      <!-- Environment variable for testing -->
-      <!--
-        <php>
-        <includePath>.</includePath>
-        <ini name="foo" value="bar"/>
-        <const name="foo" value="bar"/>
-        <var name="foo" value="bar"/>
-        <env name="foo" value="bar"/>
-        <post name="foo" value="bar"/>
-        <get name="foo" value="bar"/>
-        <cookie name="foo" value="bar"/>
-        <server name="foo" value="bar"/>
-        <files name="foo" value="bar"/>
-        <request name="foo" value="bar"/>
-        </php>
-      -->
-
-        <testsuite name="Phifty">
-            <directory suffix="Test.php">tests/Phifty</directory>
-            <exclude>_old</exclude>
-        </testsuite>
-
-        <!--
-        <testsuite name="PluginTests">
-            <directory suffix="Test.php">bundles</directory>
-            <directory suffix="Test.php">tests/bundles</directory>
-        </testsuite>
-        -->
-        <!--
-        <testsuite name="Functional">
-            <directory suffix="Test.php">tests/functional</directory>
-        </testsuite>
-        -->
-        
-    </testsuites>
-
+  <listeners>
     <listeners>
-        <listeners>
-            <listener class="PHPUnit_Extensions_Selenium2TestCase_ScreenshotListener" file="PHPUnit/Extensions/Selenium2TestCase/ScreenshotListener.php">
-                <arguments>
-                    <string>build/screenshots</string>
-                </arguments>
-            </listener>
-        </listeners>
+      <listener class="PHPUnit_Extensions_Selenium2TestCase_ScreenshotListener" file="PHPUnit/Extensions/Selenium2TestCase/ScreenshotListener.php">
+        <arguments>
+          <string>build/screenshots</string>
+        </arguments>
+      </listener>
     </listeners>
+  </listeners>
 </phpunit>
