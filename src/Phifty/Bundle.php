@@ -3,12 +3,20 @@ namespace Phifty;
 use ReflectionObject;
 use Exception;
 use ConfigKit\Accessor;
+use LogicException;
+use Phifty\Kernel;
 
 /**
  *  Bundle is the base class of App, Core, {Plugin} class.
  */
 class Bundle
 {
+
+    /**
+     * @var Phifty\Kernel phifty kernel object
+     */
+    protected $kernel;
+
 
     /**
      * @var array bundle config stash
@@ -33,27 +41,27 @@ class Bundle
         array('prefix' => 'BulkDelete')
     );
 
-
     public $exportTemplates = true;
 
-    public $kernel;
-
-    public function __construct($config = array())
+    public function __construct(Kernel $kernel, array $config = array())
     {
-        if ( $config ) {
-            $this->setConfig( $this->mergeWithDefaultConfig($config) );
+        $this->kernel = $kernel;
+
+        if ($config) {
+            $this->setConfig($this->mergeWithDefaultConfig($config));
         } else {
-            $this->setConfig( $this->defaultConfig() );
+            $this->setConfig($this->defaultConfig());
         }
+
         $this->kernel = kernel();
         // XXX: currently we are triggering the loadAssets from Phifty\Web
         // $this->kernel->event->register('asset.load', array($this,'loadAssets'));
 
         // we should have twig service
-        if ( $this->exportTemplates && isset($this->kernel->twig) ) {
+        if ($this->exportTemplates && isset($this->kernel->twig)) {
             // register the loader to events
             $dir = $this->getTemplateDir();
-            if ( file_exists($dir) ) {
+            if (file_exists($dir)) {
                 $this->kernel->twig->loader->addPath($dir, $this->getNamespace() );
             }
         }
@@ -228,62 +236,67 @@ class Bundle
      *
      * TODO: improve the performance here.
      */
-    public function route( $path, $args, $options = array() )
+    public function route($path, $args, array $options = array())
     {
         $router = $this->kernel->router;
 
-        /* if args is string, it's a controller class */
-        if ( is_string($args)  ) {
-            /**
-             * Extract action method name out, and set default to run method.
-             *
-             *      FooController:index => array(FooController, indexAction)
-             */
+        // if args is string, it's a controller:action spec
+        if (is_string($args)) {
+            // Extract action method name out, and set default to run method.
+            //    FooController:index => array(FooController, indexAction)
             $class = null;
+
+            // the default action method name
             $action = 'indexAction';
-            if ( false !== ($pos = strrpos($args,':')) ) {
+            if (false !== ($pos = strrpos($args,':'))) {
                 list($class,$action) = explode(':',$args);
-                if ( false === strrpos( $action , 'Action' ) )
+                if (false === strrpos( $action , 'Action' )) {
                     $action .= 'Action';
+                }
             } else {
                 $class = $args;
             }
 
-            /**
-             * If it's not full-qualified classname, we should prepend our base namespace.
-             */
+            // Convert controlelr class name to full-qualified name
+            // If it's not full-qualified classname, we should prepend our base namespace.
             if ($class[0] === '+' || $class[0] === '\\') {
                 $class = substr( $class , 1 );
             } else {
                 $class = $this->getNamespace() . "\\Controller\\$class";
             }
 
-            if ( ! method_exists($class,$action) ) {
+            if (! method_exists($class,$action) ) {
                 // FIXME, it's broken if class is not loaded.
                 // throw new Exception("Controller action <$class:$action>' does not exist.");
             }
-            $router->add( $path, array($class,$action), $options );
-        } elseif ( is_array($args) ) {
+
+            $router->add($path, array($class,$action), $options);
+
+        } else if (is_array($args)) {
+
             // route to template controller ?
-            if ( isset($args['template']) ) {
+            if (isset($args['template']) ) {
                 $options['args'] = array(
                     'template' => $args['template'],
                     'template_args' => ( isset($args['args']) ? $args['args'] : null),
                 );
                 $router->add( $path , '\Phifty\Routing\TemplateController' , $options );
-            }
-            // route to normal controller ?
-            elseif ( isset($args['controller']) ) {
+
+            } else if ( isset($args['controller']) ) { // route to normal controller ?
+
                 $router->add( $path , $args['controller'], $options );
-            }
-            // simply treat it as a callback
-            elseif ( isset($args[0]) && count($args) == 2 ) {
+
+            } else if ( isset($args[0]) && count($args) == 2 ) { // simply treat it as a callback
+
                 $router->add( $path , $args , $options );
+
             } else {
-                throw new Exception('Unsupport route argument.');
+
+                throw new LogicException('Unsupport route argument.');
+
             }
         } else {
-            throw new Exception( "Unkown route argument." );
+            throw new LogicException( "Unsupported route argument." );
         }
     }
 
@@ -433,13 +446,13 @@ class Bundle
         }
     }
 
-    public static function getInstance($config = array())
+    public static function getInstance($kernel = null, $config = array())
     {
         static $instance;
         if ( $instance ) {
             return $instance;
         }
-        return $instance = new static($config);
+        return $instance = new static($kernel, $config);
     }
 
 }
