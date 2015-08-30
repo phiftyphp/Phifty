@@ -320,6 +320,12 @@ class Bundle
         $this->kernel->rootMux->mount($path, $controller);
     }
 
+    public function expandRoutes($path, $class)
+    {
+        @trigger_error('expandRoutes() will be deprecated, please use mount() instead', E_USER_DEPRECATED);
+        $this->mount($path, $class);
+    }
+
     /**
      * Route definition method, users define bundle routes in this method.
      */
