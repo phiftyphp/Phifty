@@ -236,13 +236,11 @@ class Kernel extends ObjectContainer
     /**
      * Create application object
      */
-    public function loadApp($appname, $config = array() )
+    public function loadApp($appname, $config = array())
     {
         $class = $appname . '\Application';
-        $app = $class::getInstance();
-        $app->config = $config;
+        $app = $class::getInstance($this, $config);
         $app->init();
-
         return $this->applications[ $appname ] = $app;
     }
 

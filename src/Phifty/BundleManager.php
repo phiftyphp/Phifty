@@ -25,7 +25,7 @@ class BundleManager implements ArrayAccess, IteratorAggregate
 
     public function __construct(Kernel $kernel)
     {
-        $this->kernel;
+        $this->kernel = $kernel;
     }
 
     public function isLoaded( $name )
@@ -115,8 +115,7 @@ class BundleManager implements ArrayAccess, IteratorAggregate
     public function load($name, $config = array())
     {
         if ($class = $this->_loadBundle($name)) {
-            $kernel = kernel();
-            $bundle = $class::getInstance($kernel, $config);
+            $bundle = $class::getInstance($this->kernel, $config);
             return $this->bundles[ $name ] = $bundle;
         }
         return false;

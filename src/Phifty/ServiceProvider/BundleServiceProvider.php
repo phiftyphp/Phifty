@@ -23,7 +23,7 @@ class BundleServiceProvider
 
         // plugin manager depends on classloader,
         // register plugin namespace to classloader.
-        $kernel->bundles = function() use ($kernel, $options) {
+        $kernel->bundles = function() use ($kernel, $config, $options) {
             $manager = new BundleManager($kernel);
             $paths = array();
             if (isset($options["Paths"])) {
@@ -32,11 +32,11 @@ class BundleServiceProvider
                     $manager->registerBundleDir(PH_APP_ROOT . DIRECTORY_SEPARATOR . $dir);
                 }
             }
-            foreach ($config as $bundleName => $config) {
+            foreach ($config as $bundleName => $bundleConfig) {
                 $kernel->classloader->addNamespace(array(
                     $bundleName => $paths,
                 ));
-                $manager->load( $bundleName , $config );
+                $manager->load($bundleName, $bundleConfig);
             }
             return $manager;
         };
