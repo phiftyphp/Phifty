@@ -8,6 +8,7 @@ use ActionKit\ActionTemplate\CodeGenActionTemplate;
 use ActionKit\ActionTemplate\RecordActionTemplate;
 use ActionKit\ActionTemplate\UpdateOrderingRecordActionTemplate;
 use ActionKit\ActionRequest;
+use ActionKit\Action;
 
 class ActionServiceProvider
     implements ServiceProvider
@@ -21,6 +22,11 @@ class ActionServiceProvider
     {
         $container = new ServiceContainer();
         $container['cache_dir'] = $kernel->cacheDir;
+
+        if (isset($options['DefaultFieldView'])) {
+            Action::$defaultFieldView = $options['DefaultFieldView'];
+        }
+
         $generator = $container['generator'];
         $generator->registerTemplate('TwigActionTemplate', new TwigActionTemplate());
         $generator->registerTemplate('CodeGenActionTemplate', new CodeGenActionTemplate());

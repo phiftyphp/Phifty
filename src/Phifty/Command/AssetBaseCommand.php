@@ -24,15 +24,23 @@ class AssetBaseCommand extends Command
         $loader = $this->getAssetLoader();
         $this->logger->info( ' - ' . get_class($bundle) );
         $cwd = getcwd();
-        foreach ( $bundle->getAssetDirs() as $dir ) {
-            if ( file_exists($dir) ) {
-                $dir = substr($dir, strlen($cwd) + 1 );
-                if ( $asset = $loader->register(realpath($dir)) ) {
-                    $this->logger->info( "Found asset {$asset->name}" ,1 );
-                    $this->updateAssetResource($asset);
-                }
-            } else {
-                $this->logger->warn("$dir directory not found.", 1);
+        foreach ($bundle->getAssetDirs() as $dir ) {
+
+            if (!file_exists($dir)) {
+                $this->logger->warn("$dir doesn't exist", 1);
+                continue;
+            }
+
+            $manifestFile = $dir . DIRECTORY_SEPARATOR . 'manifest.yml';
+            if (!file_exists($manifestFile)) {
+                $this->logger->warn("manifest file $manifestFile not found.", 1);
+                continue;
+            }
+
+            $dir = substr($dir, strlen($cwd) + 1 );
+            if ( $asset = $loader->register(realpath($dir)) ) {
+                $this->logger->info( "Found asset {$asset->name}" ,1 );
+                $this->updateAssetResource($asset);
             }
         }
     }

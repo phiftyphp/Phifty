@@ -35,7 +35,8 @@ class InstallCommand extends AssetBaseCommand
         $this->logger->info("Installing assets from applications...");
         if ($kernel->applications) {
             foreach ($kernel->applications as $application) {
-                $assetNames = $application->assets();
+                // getAssets supports assets defined in config file.
+                $assetNames = $application->getAssets();
                 $assets = $loader->loadAssets($assetNames);
                 foreach ($assets as $asset) {
                     $this->logger->info("Installing {$asset->name} ...");
@@ -46,8 +47,9 @@ class InstallCommand extends AssetBaseCommand
 
         $this->logger->info("Installing assets from bundles...");
         if ($kernel->bundles) {
-            foreach ($kernel->bundles as $plugin) {
-                $assetNames = $plugin->assets();
+            foreach ($kernel->bundles as $bundle) {
+                // getAssets supports assets defined in config file.
+                $assetNames = $bundle->getAssets();
                 $assets = $loader->loadAssets($assetNames);
                 foreach ($assets as $asset) {
                     $this->logger->info("Installing {$asset->name} ...");
