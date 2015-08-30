@@ -133,8 +133,6 @@ class TwigServiceProvider implements ServiceProvider
                 return false;
             });
 
-
-
             return (object) array(
                 'loader' => $loader,
                 'env' => $env,

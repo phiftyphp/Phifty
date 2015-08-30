@@ -5,8 +5,10 @@ use SerializerKit;
 use SerializerKit\YamlSerializer;
 use Exception;
 use InvalidArgumentException;
-use Roller\Controller as BaseController;
+// use Roller\Controller as BaseController;
 use ReflectionObject;
+use Pux\Controller\Controller as BaseController;
+use Pux\Expandable;
 
 /*
     Synopsis
@@ -29,14 +31,10 @@ class Controller extends BaseController
 
     public $defaultViewClass;
 
-    public function init() 
-    {
-    }
-
     public function __get($name)
     {
-        if ( 'request' === $name ) {
-            if ( $this->_request ) {
+        if ('request' === $name) {
+            if ($this->_request) {
                 return $this->_request;
             }
             return $this->_request = new HttpRequest;
@@ -186,30 +184,13 @@ class Controller extends BaseController
     }
 
     /**
-     * Render page content
-     *
-     *     $this->renderPage( 'ViewPageClass' , array(
-     *          'i18n' => 1,
-     *          'layout' => 'layout.html',
-     *          'content' => 'content.html' ) );
-     *
-     */
-    public function renderPage( $viewClass , $options = array() , $args = array() )
-    {
-        $page = new $viewClass( $options );
-        $page->setArgs( $args );
-
-        return $page->render();
-    }
-
-    /**
      * Render template directly.
      *
      * @param string $template template path, template name
      * @param array  $args     template arguments
      * @return string rendered result
      */
-    public function render( $template , $args = array() , $engineOpts = array()  )
+    public function render($template, array $args = array(), array $engineOpts = array())
     {
         $view = $this->view( $engineOpts );
         $view->assign( $args );
