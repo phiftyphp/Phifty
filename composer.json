@@ -22,7 +22,7 @@
         "symfony/process": "^2.7",
         "symfony/yaml": "^2.7",
         "symfony/css-selector": "^2.7",
-        "corneltek/pux": "2.0.*@dev"
+        "corneltek/pux": "dev-2.0.x"
     },
     "suggest": {
         "corneltek/twig-markdown": "~0.1",
