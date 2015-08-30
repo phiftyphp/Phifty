@@ -17,13 +17,6 @@ use Pux\Expandable;
 
 class Controller extends BaseController
 {
-
-    /**
-     * @var HttpRequest request object for cache
-     */
-    protected $_request;
-
-
     /**
      * @var Phifty\View view object cache
      */
@@ -34,18 +27,10 @@ class Controller extends BaseController
     public function __get($name)
     {
         if ('request' === $name) {
-            if ($this->_request) {
-                return $this->_request;
-            }
-            return $this->_request = new HttpRequest;
+            return $this->getRequest();
         } else {
             throw new InvalidArgumentException( $name );
         }
-    }
-
-    public function getMethod()
-    {
-        return $_SERVER['REQUEST_METHOD'];
     }
 
     public function getInputContent()
@@ -75,7 +60,7 @@ class Controller extends BaseController
      *
      * @return Phifty\View
      */
-    public function view( $options = array() )
+    public function view(array $options = array())
     {
         if ($this->_view) {
             if ( $options ) {

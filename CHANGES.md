@@ -27,6 +27,12 @@ CRUD
 
 - Updated expand method with Pux\Controller\ExpandableController
 
+Phifty\Controller
+
+- Phifty\Controller now extends from Pux\Controller\Controller;
+- `getMethod()` is now removed.
+- `$controller->request` now use `getRequest()` to return `HttpRequest` object.
+
 
 ## Version 2.9
 
