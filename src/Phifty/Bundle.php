@@ -317,7 +317,7 @@ class Bundle
             $class = $this->getNamespace() . '\\' . $class;
         }
         $controller = new $class;
-        $this->kernel->mux->mount($path, $controller);
+        $this->kernel->rootMux->mount($path, $controller);
     }
 
     /**
