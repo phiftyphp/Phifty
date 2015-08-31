@@ -99,12 +99,12 @@ class Controller extends PuxController
      * */
     public function redirect($url)
     {
-        header('Location: ' . $url);
+        $this->setHeader('Location', $url);
     }
 
     public function redirectLater($url,$seconds = 1 )
     {
-        header("Refresh: $seconds; url=" . $url );
+        $this->setHeader('Refresh', "$seconds; url=$url");
     }
 
     /* Move this into Agent class */
@@ -114,12 +114,13 @@ class Controller extends PuxController
         return preg_match( '/(ipad|iphone|android)/i' ,$agent );
     }
 
-    /*
+    /**
      * Tell browser dont cache page content
      */
     public function setHeaderNoCache()
     {
-        header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
+        // require HTTP/1.1
+        $this->setHeader("Cache-Control", "no-cache, must-revalidate");
     }
 
     /*
@@ -129,7 +130,7 @@ class Controller extends PuxController
     {
         $datestr = gmdate(DATE_RFC822, $time );
         // header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
-        header( "Expires: $datestr" );
+        header("Expires: $datestr");
     }
 
     public function toJson($data, $encodeFlags = null)

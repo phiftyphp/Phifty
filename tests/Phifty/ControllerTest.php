@@ -12,5 +12,15 @@ class ControllerTest extends PHPUnit_Framework_TestCase
         ]);
         $this->assertNotEmpty($yaml);
     }
+
+    public function testViewFactory()
+    {
+        $controller = new Controller;
+        $view = $controller->view();
+        $this->assertInstanceOf('Phifty\View', $view);
+
+        $view = $controller->createView();
+        $this->assertInstanceOf('Phifty\View', $view);
+    }
 }
 
