@@ -2,11 +2,10 @@
     "name": "corneltek/phifty-core",
     "require": {
         "php": ">=5.4.0",
-        "corneltek/universal": "^1",
-        "corneltek/universal-cache": "~1",
+        "corneltek/universal": "^1.7",
+        "corneltek/universal-cache": "^1",
         "corneltek/locale": "~1",
         "corneltek/fileutil": "~1",
-        "corneltek/roller": "*",
         "corneltek/configkit": "^1",
         "corneltek/assetkit": "~3",
         "corneltek/lazyrecord": "^2.2",
@@ -25,8 +24,9 @@
         "corneltek/pux": "2.0.x-dev"
     },
     "suggest": {
-        "corneltek/twig-markdown": "~0.1",
-        "corneltek/kendo": "~1.0"
+        "corneltek/roller": "*",
+        "corneltek/twig-markdown": "^1",
+        "corneltek/kendo": "^2"
     },
     "bin": [
         "bin/phifty",

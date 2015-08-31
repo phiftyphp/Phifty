@@ -12,7 +12,7 @@ ServiceProviders:
     Class: Phifty\Security\CurrentUser
     Model: UserBundle\Model\User
   ActionServiceProvider:
-  RollerRouterServiceProvider:
+  PuxRouterServiceProvider:
   LibraryServiceProvider:
   ViewServiceProvider:
     Backend: twig

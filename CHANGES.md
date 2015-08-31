@@ -32,6 +32,9 @@ Phifty\Controller
 - Phifty\Controller now extends from Pux\Controller\Controller;
 - `getMethod()` is now removed.
 - `$controller->request` now use `getRequest()` to return `HttpRequest` object.
+- `getInputContent()` is now removed, please use `HttpRequest::getRequestBody()` 
+- `renderJson`, `renderYaml` is now removed.
+- Move roller router to suggest dependency
 
 
 ## Version 2.9

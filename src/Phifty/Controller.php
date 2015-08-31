@@ -1,21 +1,14 @@
 <?php
 namespace Phifty;
 use Universal\Http\HttpRequest;
-use SerializerKit;
-use SerializerKit\YamlSerializer;
 use Exception;
 use InvalidArgumentException;
-// use Roller\Controller as BaseController;
 use ReflectionObject;
-use Pux\Controller\Controller as BaseController;
+use Symfony\Component\Yaml\Yaml;
+use Pux\Controller\Controller as PuxController;
 use Pux\Expandable;
 
-/*
-    Synopsis
-    $controller = new $class( $this );
-*/
-
-class Controller extends BaseController
+class Controller extends PuxController
 {
     /**
      * @var Phifty\View view object cache
@@ -33,11 +26,6 @@ class Controller extends BaseController
         }
     }
 
-    public function getInputContent()
-    {
-        return file_get_contents('php://input');
-    }
-
     public function getCurrentUser()
     {
         return kernel()->currentUser;
@@ -53,6 +41,29 @@ class Controller extends BaseController
         return true;
     }
 
+
+    /**
+     * some response header util methods
+     */
+    public function setHeader($field, $value)
+    {
+        $this->response[1][ $field ] = $value;
+    }
+
+
+    /**
+     * response header util method let you append headers.
+     *
+     * @param string $field
+     * @param string $value
+     */
+    public function appendHeader($field, $value)
+    {
+        $this->response[1][] = [$field => $value];
+    }
+
+
+
     /**
      * Create/Get view object with rendering engine options
      *
@@ -63,7 +74,7 @@ class Controller extends BaseController
     public function view(array $options = array())
     {
         if ($this->_view) {
-            if ( $options ) {
+            if (!empty($options)) {
                 throw new Exception("The View object is already initialized.");
             }
             return $this->_view;
@@ -88,19 +99,18 @@ class Controller extends BaseController
      * */
     public function redirect($url)
     {
-        header( 'Location: ' . $url );
+        header('Location: ' . $url);
     }
 
     public function redirectLater($url,$seconds = 1 )
     {
-        header( "refresh: $seconds; url=" . $url );
+        header("Refresh: $seconds; url=" . $url );
     }
 
     /* Move this into Agent class */
     public function isMobile()
     {
         $agent = $_SERVER['HTTP_USER_AGENT'];
-
         return preg_match( '/(ipad|iphone|android)/i' ,$agent );
     }
 
@@ -122,33 +132,15 @@ class Controller extends BaseController
         header( "Expires: $datestr" );
     }
 
-    /*
-     * Render json content
-     *
-     * @param array $data
-     *
-     */
-    public function renderJson($data)
+    public function toJson($data, $encodeFlags = null)
     {
-        /* XXX: dirty hack this for phpunit testing */
         if (! CLI_MODE) {
             header('Content-type: application/json; charset=UTF-8');
         }
-        return json_encode($data);
+        return parent::toJson($data, $encodeFlags);
     }
 
-    public function toJson($data)
-    {
-        return $this->renderJson($data);
-    }
-
-    /*
-     * Render yaml
-     *
-     * @param mixed $data
-     * @return string
-     **/
-    public function renderYaml($data)
+    public function toYaml($data, $encodeFlags = null)
     {
         if (! CLI_MODE) {
             header('Content-type: application/yaml; charset=UTF-8;');
@@ -156,16 +148,9 @@ class Controller extends BaseController
 
         // If we've loaded the yaml extension, we should use it directly.
         if (extension_loaded('yaml') ){
-            return yaml_emit($data);
+            return yaml_emit($data, $encodeFlags);
         }
-
-        $yaml = new YamlSerializer;
-        return $yaml->encode($data);
-    }
-
-    public function toYaml($data)
-    {
-        return $this->renderYaml( $data );
+        return Yaml::dump($data, $encodeFlags);
     }
 
     /**
