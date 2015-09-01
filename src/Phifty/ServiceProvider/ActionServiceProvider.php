@@ -36,6 +36,10 @@ class ActionServiceProvider
         $action = new ActionRunner($container);
         $action->registerAutoloader();
 
+        $kernel->actionService = function() use($container) {
+            return $container;
+        };
+
         $kernel->action = function () use ($options, $action) {
             return $action;
         };

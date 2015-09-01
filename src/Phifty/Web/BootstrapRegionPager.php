@@ -1,28 +1,27 @@
 <?php
 namespace Phifty\Web;
-use Phifty\Web\Pager;
+use WebUI\Components\Pager\BootstrapPager;
 
 class BootstrapRegionPager extends BootstrapPager
 {
-
     public function renderLink( $num , $text = null , $moreclass = "" , $disabled = false , $active = false)
     {
         if ( $text == null ) {
             $text = $num;
         }
 
-        if ( $disabled ) {
+        if ($disabled) {
             return $this->renderLinkDisabled( $text , $moreclass );
         }
 
         $liClass = '';
-        if ( $active ) {
+        if ($active) {
             $liClass = 'active';
         }
 
         return <<<EOF
- <li class="$liClass"><a class="pager-link $moreclass"
-   onclick="return Region.of( this ).refreshWith({ page: $num  });">$text</a></li>
+    <li class="$liClass"><a data-target-page="$num" class="pager-link $moreclass"
+        onclick="return Region.of( this ).refreshWith({ page: $num });">$text</a></li>
 EOF;
 
     }
@@ -30,7 +29,7 @@ EOF;
     public function renderLinkDisabled( $text , $moreclass = "" )
     {
         return <<<EOF
- <li><a class="pager-link pager-disabled $moreclass">$text</a></li>
+<li class="disabled"><a class="pager-link pager-disabled $moreclass">$text</a></li>
 EOF;
     }
 

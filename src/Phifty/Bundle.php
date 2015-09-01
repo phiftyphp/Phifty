@@ -354,7 +354,7 @@ class Bundle
             $self->kernel->action->registerAction('RecordActionTemplate', array(
                 'namespace' => $self->getNamespace(),
                 'model' => $model,
-                'types' => (array) $types
+                'types' => (array) $types,
             ));
         });
     }

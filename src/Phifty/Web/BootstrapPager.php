@@ -154,8 +154,7 @@ TWIG;
         $pagenum_end   = $cur + $this->rangeLimit < $total_pages ?  $cur + $this->rangeLimit : $total_pages;
 
         $output = "";
-        $output .= '<div class="'. join(' ',$this->wrapperClass) .'">';
-        $output .= '<ul>';
+        $output .= '<ul class="'. join(' ',$this->wrapperClass) .'">';
 
         if ($this->showNavigator) {
             if ( $cur > 1 )
@@ -198,7 +197,6 @@ TWIG;
         }
 
         $output .= '</ul>';
-        $output .= '</div>';
         return $output;
     }
 }
