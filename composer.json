@@ -13,6 +13,7 @@
         "corneltek/codegen": "^2",
         "corneltek/sessionkit": "~1",
         "corneltek/actionkit": "^2",
+        "phpsgi/funk": "dev-master",
         "cypresslab/gitelephant": "^1.0",
         "swiftmailer/swiftmailer": "^5.4",
         "twig/twig": "^1",
