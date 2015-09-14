@@ -1,6 +1,6 @@
 <?php
 namespace Phifty\ServiceProvider;
-use Mongo;
+use MongoClient;
 use Exception;
 
 class MongodbServiceProvider
@@ -12,9 +12,9 @@ class MongodbServiceProvider
     /**
      *
      * DSN:
-     *      $m = new Mongo("mongodb://username:password@/tmp/mongo-27017.sock:0/foo");
-     *      $m = new Mongo("mongodb:///tmp/mongo-27017.sock");
-     *      $m = new Mongo("mongodb://${username}:${password}@localhost/blog");
+     *      $m = new MongoClient("mongodb://username:password@/tmp/mongo-27017.sock:0/foo");
+     *      $m = new MongoClient("mongodb:///tmp/mongo-27017.sock");
+     *      $m = new MongoClient("mongodb://${username}:${password}@localhost/blog");
      */
     public function register( $kernel , $options = array() )
     {
@@ -25,9 +25,9 @@ class MongodbServiceProvider
             $conn = null;
             $db = null;
             if ( isset($options['DSN']) ) {
-                $conn = new Mongo( $options['DSN'] );
+                $conn = new MongoClient( $options['DSN'] );
             } else {
-                $conn = new Mongo;
+                $conn = new MongoClient;
             }
 
             if ( isset($options['Database']) ) {
