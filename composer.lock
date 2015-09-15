@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e92fbd7afc1cc0010d7f481dd5f7b8e0",
+    "hash": "bff4fbf084f63738dd31cade42e5430a",
     "packages": [
         {
             "name": "corneltek/actionkit",
@@ -695,17 +695,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/c9s/Pux.git",
-                "reference": "895bc009e86db0e59e373710403a59041974c38f"
+                "reference": "250cd97f9b5c88d2d7d79c6e11936eeed85bde7f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c9s/Pux/zipball/895bc009e86db0e59e373710403a59041974c38f",
-                "reference": "895bc009e86db0e59e373710403a59041974c38f",
+                "url": "https://api.github.com/repos/c9s/Pux/zipball/250cd97f9b5c88d2d7d79c6e11936eeed85bde7f",
+                "reference": "250cd97f9b5c88d2d7d79c6e11936eeed85bde7f",
                 "shasum": ""
             },
             "require": {
                 "corneltek/codegen": "^2",
-                "corneltek/universal": "^1.6"
+                "corneltek/universal": "^1.6",
+                "phpsgi/phpsgi": "dev-master"
             },
             "require-dev": {
                 "corneltek/lazyrecord": "dev-master",
@@ -739,7 +740,7 @@
                 "router",
                 "server"
             ],
-            "time": "2015-09-11 02:18:12"
+            "time": "2015-09-14 07:52:44"
         },
         {
             "name": "corneltek/serializerkit",
@@ -1270,12 +1271,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpsgi/Funk.git",
-                "reference": "dace23e61d5e184830ec9a4a3e11668f5c1b8e8e"
+                "reference": "1afa9009d1b906e424507810e60bea85527e21da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpsgi/Funk/zipball/dace23e61d5e184830ec9a4a3e11668f5c1b8e8e",
-                "reference": "dace23e61d5e184830ec9a4a3e11668f5c1b8e8e",
+                "url": "https://api.github.com/repos/phpsgi/Funk/zipball/1afa9009d1b906e424507810e60bea85527e21da",
+                "reference": "1afa9009d1b906e424507810e60bea85527e21da",
                 "shasum": ""
             },
             "require": {
@@ -1315,7 +1316,46 @@
                 "phpsgi",
                 "server"
             ],
-            "time": "2015-09-14 03:59:28"
+            "time": "2015-09-15 04:15:49"
+        },
+        {
+            "name": "phpsgi/phpsgi",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpsgi/phpsgi.git",
+                "reference": "74752fcb2557be2e916292d85e5819b70e4939ca"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpsgi/phpsgi/zipball/74752fcb2557be2e916292d85e5819b70e4939ca",
+                "reference": "74752fcb2557be2e916292d85e5819b70e4939ca",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PHPSGI\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "c9s",
+                    "email": "cornelius.howl@gmail.com"
+                }
+            ],
+            "homepage": "https://github.com/phpsgi/phpsgi",
+            "keywords": [
+                "http",
+                "middleware",
+                "phpsgi",
+                "server"
+            ],
+            "time": "2015-09-15 04:00:39"
         },
         {
             "name": "pimple/pimple",
@@ -1827,16 +1867,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.22.0",
+            "version": "v1.22.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "204a6c94907c2c2225322c267e09adbb2b1c04fd"
+                "reference": "b7fc2469fa009897871fb95b68237286fc54a5ad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/204a6c94907c2c2225322c267e09adbb2b1c04fd",
-                "reference": "204a6c94907c2c2225322c267e09adbb2b1c04fd",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/b7fc2469fa009897871fb95b68237286fc54a5ad",
+                "reference": "b7fc2469fa009897871fb95b68237286fc54a5ad",
                 "shasum": ""
             },
             "require": {
@@ -1884,7 +1924,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2015-09-13 17:12:38"
+            "time": "2015-09-15 06:50:16"
         }
     ],
     "packages-dev": [
@@ -2177,12 +2217,12 @@
             "version": "v2.7.4",
             "source": {
                 "type": "git",
-                "url": "git@github.com:symfony/Console.git",
+                "url": "https://github.com/symfony/Console.git",
                 "reference": "f1f7376766394f409b9b33a57a5675a52f8aad93"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Console/zipball/f1f7376766394f409b9b33a57a5675a52f8aad93",
+                "url": "https://api.github.com/repos/symfony/Console/zipball/9ff9032151186bd66ecee727d728f1319f52d1d8",
                 "reference": "f1f7376766394f409b9b33a57a5675a52f8aad93",
                 "shasum": ""
             },
@@ -2283,6 +2323,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "phpsgi/funk": 20,
+        "phpsgi/phpsgi": 20,
         "corneltek/pux": 20,
         "corneltek/phpunit-testmore": 20,
         "satooshi/php-coveralls": 20
