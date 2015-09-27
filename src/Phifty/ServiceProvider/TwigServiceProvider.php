@@ -34,13 +34,10 @@ class TwigServiceProvider implements ServiceProvider
             }
             // append fallback template dirs from plugin dir or framework plugin dir.
             $templateDirs[] = $kernel->rootAppDir;
-            $templateDirs[] = $kernel->frameworkAppDir;
             $templateDirs[] = PH_APP_ROOT;
-            $templateDirs[] = PH_ROOT;
 
             // create the filesystem loader
-            $loader   = new Twig_Loader_Filesystem( $templateDirs );
-
+            $loader   = new Twig_Loader_Filesystem($templateDirs);
 
             if (isset($options['Namespaces'])) {
                 foreach ($options['Namespaces'] as $namespace => $dir) {
@@ -50,7 +47,7 @@ class TwigServiceProvider implements ServiceProvider
 
             // build default environment arguments
             $args = array(
-                'cache' => kernel()->getCacheDir() . DIRECTORY_SEPARATOR . 'twig'
+                // 'cache' => kernel()->getCacheDir() . DIRECTORY_SEPARATOR . 'twig'
             );
 
             if ($kernel->isDev) {
