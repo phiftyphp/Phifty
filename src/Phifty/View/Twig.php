@@ -3,7 +3,6 @@ namespace Phifty\View;
 use Phifty\View\Engine;
 use Phifty\ClassUtils;
 use Twig_Environment;
-use Twig_Loader_String;
 
 /**
  * Rewrite this as an extension.
@@ -35,11 +34,6 @@ class Twig extends Engine
         return $this->env;
     }
 
-    public function newStringRenderer()
-    {
-        return new Twig_Environment( new Twig_Loader_String );
-    }
-
     public function render( $template,$args = array() )
     {
         return $this->getRenderer()->loadTemplate( $template )->render( $args );
@@ -48,15 +42,5 @@ class Twig extends Engine
     public function display( $template , $args = array() )
     {
         $this->getRenderer()->loadTemplate( $template )->display($args);
-    }
-
-    public function renderString( $stringTemplate , $args = array() )
-    {
-        return $this->newStringRenderer()->loadTemplate( $stringTemplate )->render( $args );
-    }
-
-    public function displayString( $stringTemplate , $args = array() )
-    {
-        $this->newStringRenderer()->loadTemplate( $stringTemplate )->display($args);
     }
 }
