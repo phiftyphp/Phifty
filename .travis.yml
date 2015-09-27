@@ -8,7 +8,7 @@ install:
 - phpenv config-add tests/config/$TRAVIS_PHP_VERSION.ini
 - phpenv config-add tests/config/apc.ini
 - travis_retry composer self-update
-- travis_retry composer install
+- travis_retry composer update
 before_script:
 - mkdir -p applications bundles cache
 - phpenv rehash
