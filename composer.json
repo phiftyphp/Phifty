@@ -23,7 +23,7 @@
         "symfony/process": "^2.7",
         "symfony/yaml": "^2.7",
         "symfony/css-selector": "^2.7",
-        "corneltek/pux": "2.0.x-dev"
+        "corneltek/pux": "dev-master"
     },
     "suggest": {
         "corneltek/roller": "*",
