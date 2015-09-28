@@ -12,6 +12,8 @@ install:
 before_script:
 - mkdir -p app applications bundles cache
 - phpenv rehash
+- cp -v config/framework.dev.yml config/framework.yml
+- cp -v config/database.dev.yml config/database.yml
 script:
 - php bin/phifty build && time php bootstrap.php
 - phpunit
