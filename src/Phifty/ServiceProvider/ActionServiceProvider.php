@@ -10,9 +10,8 @@ use ActionKit\ActionTemplate\UpdateOrderingRecordActionTemplate;
 use ActionKit\ActionRequest;
 use ActionKit\Action;
 
-class ActionServiceProvider
-    implements ServiceProvider
-{
+class ActionServiceProvider extends BaseServiceProvider {
+
     public function getId()
     {
         return 'action';

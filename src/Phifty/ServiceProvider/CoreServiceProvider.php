@@ -1,8 +1,7 @@
 <?php
 namespace Phifty\ServiceProvider;
 
-class CoreServiceProvider
-    implements ServiceProvider
+class CoreServiceProvider extends BaseServiceProvider
 {
     public function getId() { return 'core'; }
 

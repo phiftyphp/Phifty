@@ -3,8 +3,7 @@ namespace Phifty\ServiceProvider;
 use Kendo\Acl\RuleLoader;
 use Kendo\Acl\Acl;
 
-class KendoServiceProvider
-    implements ServiceProvider
+class KendoServiceProvider extends BaseServiceProvider
 {
 
     /**

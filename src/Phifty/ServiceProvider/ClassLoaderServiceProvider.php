@@ -1,8 +1,7 @@
 <?php
 namespace Phifty\ServiceProvider;
 
-class ClassLoaderServiceProvider
-    implements ServiceProvider
+class ClassLoaderServiceProvider extends BaseServiceProvider
 {
     public $classloader;
 

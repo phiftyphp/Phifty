@@ -13,8 +13,7 @@ use UniversalCache\FileSystemCache;
 use UniversalCache\UniversalCache;
 use Exception;
 
-class AssetServiceProvider
-    implements ServiceProvider
+class AssetServiceProvider extends BaseServiceProvider
 {
 
     public function getId()

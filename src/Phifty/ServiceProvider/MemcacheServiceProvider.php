@@ -3,8 +3,7 @@ namespace Phifty\ServiceProvider;
 use Memcache;
 use Exception;
 
-class MemcacheServiceProvider
-    implements ServiceProvider
+class MemcacheServiceProvider extends BaseServiceProvider
 {
 
     public function getId() { return 'Memcache'; }

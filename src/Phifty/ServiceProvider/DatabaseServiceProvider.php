@@ -3,8 +3,7 @@ namespace Phifty\ServiceProvider;
 use LazyRecord\ConnectionManager;
 use ConfigKit\ConfigLoader;
 
-class DatabaseServiceProvider
-    implements ServiceProvider
+class DatabaseServiceProvider extends BaseServiceProvider
 {
 
     protected $config;

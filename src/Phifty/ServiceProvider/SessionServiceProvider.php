@@ -2,8 +2,7 @@
 namespace Phifty\ServiceProvider;
 use SessionKit;
 
-class SessionServiceProvider
-    implements ServiceProvider
+class SessionServiceProvider extends BaseServiceProvider
 {
 
     public function getId() { return 'Session'; }

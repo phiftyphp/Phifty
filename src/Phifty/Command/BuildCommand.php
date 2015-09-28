@@ -11,6 +11,7 @@ use CodeGen\Statement\RequireComposerAutoloadStatement;
 use CodeGen\Statement\RequireClassStatement;
 use CodeGen\Statement\AssignStatement;
 use CodeGen\Statement\DefineStatement;
+use CodeGen\Expr\NewObject;
 
 
 class BuildCommand extends Command
@@ -131,7 +132,13 @@ class BuildCommand extends Command
                     $class = (false === strpos($name, '\\')) ? ('Phifty\\ServiceProvider\\'.$name) : $name;
                     if (class_exists($class, true)) {
                         $block[] = new RequireClassStatement($class);
-                        $block[] = '$kernel->registerService(new ' . $class . '(), ' . var_export($options, true) . ');';
+
+                        if (is_subclass_of($class, 'Phifty\\ServiceProvider\\BaseServiceProvider')) {
+                            $block[] = '$kernel->registerService(' . $class::generateNew($runtimeKernel, [$options]) . ');';
+                        } else {
+                            $expr = new NewObject($class, [$options]);
+                            $block[] = '$kernel->registerService(' . $expr->render() . ');';
+                        }
                     }
                 }
             }

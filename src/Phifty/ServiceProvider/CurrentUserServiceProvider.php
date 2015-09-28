@@ -2,8 +2,7 @@
 namespace Phifty\ServiceProvider;
 use Phifty\ServiceProvider\ServiceProvider;
 
-class CurrentUserServiceProvider
-    implements ServiceProvider
+class CurrentUserServiceProvider extends BaseServiceProvider
 {
 
     public function getId() { return 'current_user'; }

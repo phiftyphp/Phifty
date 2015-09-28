@@ -115,8 +115,8 @@ class AesCryptor {
 /**
  * http://www.itnewb.com/tutorial/PHP-Encryption-Decryption-Using-the-MCrypt-Library-libmcrypt
  */
-class AesCryptorServiceProvider implements ServiceProvider {
-
+class AesCryptorServiceProvider extends BaseServiceProvider
+{
     public function getId() { return 'AesCryptor'; }
 
     public function register($kernel, $options = array() )

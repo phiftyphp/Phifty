@@ -3,8 +3,7 @@ namespace Phifty\ServiceProvider;
 use MongoClient;
 use Exception;
 
-class MongodbServiceProvider
-    implements ServiceProvider
+class MongodbServiceProvider extends BaseServiceProvider
 {
 
     public function getId() { return 'mongodb'; }

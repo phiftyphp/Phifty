@@ -3,8 +3,7 @@ namespace Phifty\ServiceProvider;
 use Exception;
 use SoapClient;
 
-class SoapClientServiceProvider
-    implements ServiceProvider
+class SoapClientServiceProvider extends BaseServiceProvider
 {
     public function getId() { return 'SoapClient'; }
 

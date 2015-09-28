@@ -6,7 +6,7 @@ use ConfigKit\Accessor;
 use Swift_Plugins_AntiFloodPlugin;
 use Phifty\ComposerConfigBridge;
 
-class MailerServiceProvider implements ServiceProvider, ComposerConfigBridge
+class MailerServiceProvider extends BaseServiceProvider implements ComposerConfigBridge
 {
 
     public function getId() { return 'Mailer'; }

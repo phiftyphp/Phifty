@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ad1f5ba4d00de1832d5373cc21806a2b",
+    "hash": "927e93c1ea2c68d5ba202c58f9ee656a",
     "packages": [
         {
             "name": "corneltek/actionkit",
@@ -246,12 +246,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/c9s/CodeGen.git",
-                "reference": "0c347dcba3166e73f4bdbfec05c61d3803c070c7"
+                "reference": "f9b4199f2c811c6b68f67723b7bcdf3af7888c46"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c9s/CodeGen/zipball/0c347dcba3166e73f4bdbfec05c61d3803c070c7",
-                "reference": "0c347dcba3166e73f4bdbfec05c61d3803c070c7",
+                "url": "https://api.github.com/repos/c9s/CodeGen/zipball/f9b4199f2c811c6b68f67723b7bcdf3af7888c46",
+                "reference": "f9b4199f2c811c6b68f67723b7bcdf3af7888c46",
                 "shasum": ""
             },
             "require": {
@@ -281,7 +281,7 @@
             ],
             "description": "PHP Code Generation Library",
             "homepage": "http://github.com/c9s/CodeGen",
-            "time": "2015-09-28 13:19:27"
+            "time": "2015-09-28 13:47:15"
         },
         {
             "name": "corneltek/configkit",
@@ -617,16 +617,16 @@
         },
         {
             "name": "corneltek/locale",
-            "version": "1.0.4",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/c9s/Locale.git",
-                "reference": "5a8fa5d3eb65595218f059a17df5c0465344ec8e"
+                "reference": "90412e2c19a2522839f73d64ba649a4b9fc782e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c9s/Locale/zipball/5a8fa5d3eb65595218f059a17df5c0465344ec8e",
-                "reference": "5a8fa5d3eb65595218f059a17df5c0465344ec8e",
+                "url": "https://api.github.com/repos/c9s/Locale/zipball/90412e2c19a2522839f73d64ba649a4b9fc782e6",
+                "reference": "90412e2c19a2522839f73d64ba649a4b9fc782e6",
                 "shasum": ""
             },
             "require": {
@@ -637,15 +637,15 @@
             },
             "type": "library",
             "autoload": {
-                "psr-0": {
-                    "Phifty\\Locale": "."
+                "psr-4": {
+                    "Phifty\\": ""
                 },
                 "files": [
                     "helpers.php"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
-            "time": "2014-01-09 06:56:28"
+            "time": "2015-09-28 15:09:02"
         },
         {
             "name": "corneltek/phptask",
@@ -2275,6 +2275,7 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
+        "corneltek/locale": 20,
         "corneltek/codegen": 20,
         "phpsgi/funk": 20,
         "phpsgi/phpsgi": 20,

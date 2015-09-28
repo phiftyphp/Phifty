@@ -2,8 +2,7 @@
 namespace Phifty\ServiceProvider;
 use Universal\Event\PhpEvent;
 
-class EventServiceProvider
-    implements ServiceProvider
+class EventServiceProvider extends BaseServiceProvider
 {
 
     public function getId() { return 'event'; }

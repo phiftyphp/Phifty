@@ -13,73 +13,91 @@ use Twig_Extensions_Extension_I18n;
 use Twig_Extension_Markdown;
 use AssetKit\Extension\Twig\AssetExtension;
 
+use CodeGen\Expr\NewObject;
+use Phifty\Kernel;
+
 
 /**
  * Depends on AssetServiceProvider
  */
 
-class TwigServiceProvider implements ServiceProvider
+class TwigServiceProvider extends BaseServiceProvider
 {
-    public function getId() { return 'Twig'; }
+
+    public function getId()
+    {
+        return 'Twig';
+    }
+
+    static public function generateNew(Kernel $kernel, $args)
+    {
+        $className = get_called_class();
+
+        if (count($args)) {
+            // preprocess twig configs
+            $options = & $args[0];
+
+            $templateDirs = array();
+            if (isset($options['TemplateDirs']) && $options['TemplateDirs']) {
+                $templateDirs = array_map(function($dir) {
+                    return PH_APP_ROOT . DIRECTORY_SEPARATOR . $dir;
+                }, $options['TemplateDirs']);
+            }
+
+            // append fallback template dirs from plugin dir or framework plugin dir.
+            $templateDirs[] = PH_APP_ROOT;
+            $options['TemplateDirs'] = $templateDirs;
+
+
+            if ($kernel->isDev) {
+                $envOptions['debug'] = true;
+                $envOptions['auto_reload'] = true;
+            } else {
+                // for production
+                $envOptions['optimizations'] = true;
+                // $envOptions['cache'] = kernel()->getCacheDir() . DIRECTORY_SEPARATOR . 'twig';
+            }
+
+            // override from config
+            if (isset($options['Environment']) && $options['Environment']) {
+                $envOptions = array_merge($envOptions , $options['Environment'] );
+            }
+            $options['Environment'] = $envOptions;
+        }
+        return new NewObject($className, $args);
+    }
 
     public function register($kernel, $options = array() )
     {
         $kernel->twig = function() use($kernel, $options) {
-            $templateDirs = array();
-            if (isset($options['TemplateDirs']) && $options['TemplateDirs']) {
-                foreach ($options['TemplateDirs'] as $dir) {
-                    // use absolute path from app root
-                    $templateDirs[] = PH_APP_ROOT . DIRECTORY_SEPARATOR . $dir;
-                }
-            }
-            // append fallback template dirs from plugin dir or framework plugin dir.
-            $templateDirs[] = $kernel->rootAppDir;
-            $templateDirs[] = PH_APP_ROOT;
 
             // create the filesystem loader
-            $loader   = new Twig_Loader_Filesystem($templateDirs);
+            $loader   = new Twig_Loader_Filesystem($this->config['TemplateDirs']);
 
+            /**
+             * Template namespaces must be added after $loader is initialized.
+             */
             if (isset($options['Namespaces'])) {
                 foreach ($options['Namespaces'] as $namespace => $dir) {
                     $loader->addPath(PH_APP_ROOT . DIRECTORY_SEPARATOR . $dir, $namespace);
                 }
             }
 
-            // build default environment arguments
-            $args = array(
-                // 'cache' => kernel()->getCacheDir() . DIRECTORY_SEPARATOR . 'twig'
-            );
-
-            if ($kernel->isDev) {
-                $args['debug'] = true;
-                $args['auto_reload'] = true;
-            } else {
-                // for production
-                $args['optimizations'] = true;
-            }
-
-            // override from config
-            if ( isset($options['Environment']) && $options['Environment'] ) {
-                $args = array_merge( $args , $options['Environment'] );
-            }
-
             // http://www.twig-project.org/doc/api.html#environment-options
-            $env = new Twig_Environment($loader, $args);
-
-
+            $env = new Twig_Environment($loader, $options['Environment']);
 
             if ($kernel->isDev) {
-                $env->addExtension( new Twig_Extension_Debug );
+                $env->addExtension(new Twig_Extension_Debug);
             } else {
-                $env->addExtension( new Twig_Extension_Optimizer );
+                $env->addExtension(new Twig_Extension_Optimizer);
             }
-            $env->addExtension( new Twig_Extension_Core );
-            $env->addExtension( new Twig_Extensions_Extension_Text );
-            $env->addExtension( new Twig_Extensions_Extension_I18n );
+            $env->addExtension(new Twig_Extension_Core);
+            $env->addExtension(new Twig_Extensions_Extension_Text);
+            $env->addExtension(new Twig_Extensions_Extension_I18n);
 
             // load markdown twig extension
-            if( class_exists('Twig_Extension_Markdown',true) ) {
-                $env->addExtension( new Twig_Extension_Markdown );
+            if (class_exists('Twig_Extension_Markdown',true)) {
+                $env->addExtension( new Twig_Extension_Markdown);
             }
 
 
@@ -90,7 +108,6 @@ class TwigServiceProvider implements ServiceProvider
                 $assetExt->setAssetLoader( kernel()->asset->loader );
                 $env->addExtension($assetExt);
             }
-
 
             // TODO: we should refactor this
             $exports = array(
@@ -119,7 +136,7 @@ class TwigServiceProvider implements ServiceProvider
             if (kernel()->locale) {
                 $env->addGlobal('currentLang', kernel()->locale->current());
             }
-            $env->addGlobal('Kernel', kernel() );
+            $env->addGlobal('Kernel', kernel());
 
             // auto-register all native PHP functions as Twig functions
             $env->registerUndefinedFunctionCallback(function($name) {

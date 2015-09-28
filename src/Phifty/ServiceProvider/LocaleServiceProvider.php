@@ -2,8 +2,7 @@
 namespace Phifty\ServiceProvider;
 use Phifty\Locale;
 
-class LocaleServiceProvider
-    implements ServiceProvider
+class LocaleServiceProvider extends BaseServiceProvider
 {
 
     public function getId() { return 'Locale'; }

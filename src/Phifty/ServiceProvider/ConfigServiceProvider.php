@@ -11,8 +11,7 @@ use Phifty\Config\ConfigLoader;
  *
  * $config = $kernel->config->get('framework','Locale');
  */
-class ConfigServiceProvider
-    implements ServiceProvider
+class ConfigServiceProvider extends BaseServiceProvider
 {
 
     public $loader;

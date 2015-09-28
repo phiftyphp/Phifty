@@ -6,8 +6,7 @@ use ConfigKit\Accessor;
 use Universal\Container\ObjectContainer;
 use Exception;
 
-class GearmanServiceProvider
-    implements ServiceProvider
+class GearmanServiceProvider extends BaseServiceProvider
 {
     public function getId() { return 'Gearman'; }
 

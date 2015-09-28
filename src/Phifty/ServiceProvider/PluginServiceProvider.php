@@ -2,8 +2,7 @@
 namespace Phifty\ServiceProvider;
 use Phifty\Plugin\PluginManager;
 
-class PluginServiceProvider
-    implements ServiceProvider
+class PluginServiceProvider extends BaseServiceProvider
 {
 
     public function getId() { return 'Plugin'; }

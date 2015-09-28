@@ -7,7 +7,7 @@ use Pux\Dispatcher\Dispatcher;
 use Pux\MuxBuilder\RESTfulMuxBuilder;
 use Pux\RouteRequest;
 
-class PuxRouterServiceProvider implements ServiceProvider
+class PuxRouterServiceProvider extends BaseServiceProvider
 {
     public function getId()
     {

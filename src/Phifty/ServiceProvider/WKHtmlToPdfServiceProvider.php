@@ -1,7 +1,7 @@
 <?php
 namespace Phifty\ServiceProvider;
 
-class WKHtmlToPdfServiceProvider
+class WKHtmlToPdf
 {
     public $bin;
     public $pageSize;
@@ -24,7 +24,6 @@ class WKHtmlToPdfServiceProvider
         $cmds[] = $target;
         $cmd = join(' ',$cmds);
         system($cmd);
-
         return $target;
     }
 }
@@ -38,8 +37,7 @@ class WKHtmlToPdfServiceProvider
  *  kernel()->wkHtmlToPdf->convert('http://google.com','test.pdf');
  *  system('open test.pdf');
  */
-class WKHtmlToPdfServiceProvider
-    implements ServiceProvider
+class WKHtmlToPdfServiceProvider extends BaseServiceProvider
 {
     public function getId() { return 'wkhtmltopdf'; }
 

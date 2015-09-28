@@ -4,8 +4,7 @@ use Phifty\ComposerConfigBridge;
 use PredisClient;
 use Exception;
 
-class RedisServiceProvider
-    implements ServiceProvider, ComposerConfigBridge
+class RedisServiceProvider extends BaseServiceProvider implements ComposerConfigBridge
 {
     public function getId() { return 'Redis'; }
 

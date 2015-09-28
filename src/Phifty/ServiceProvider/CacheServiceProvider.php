@@ -5,8 +5,7 @@ use UniversalCache\FileSystemCache;
 use UniversalCache\MemcacheCache;
 use UniversalCache\UniversalCache;
 
-class CacheServiceProvider
-    implements ServiceProvider
+class CacheServiceProvider extends BaseServiceProvider
 {
     public function getId() { return 'cache'; }
 

@@ -31,8 +31,7 @@ class ViewFactory
     }
 }
 
-class ViewServiceProvider
-    implements ServiceProvider
+class ViewServiceProvider extends BaseServiceProvider
 {
     public $options;
 

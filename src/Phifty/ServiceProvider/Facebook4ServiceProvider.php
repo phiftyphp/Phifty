@@ -13,7 +13,7 @@ use Facebook\FacebookSession;
     AppSecret: {app secret}
 */
 
-class Facebook4ServiceProvider implements ServiceProvider, ServiceOptionValidator
+class Facebook4ServiceProvider extends BaseServiceProvider implements ServiceOptionValidator
 {
     public function getId() { return 'Facebook'; }
 
