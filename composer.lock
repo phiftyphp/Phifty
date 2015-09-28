@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e58e1d4d45318f2b2905c27627adc162",
+    "hash": "aaf6d25c7f0c60295c6f43aa144e40b7",
     "packages": [
         {
             "name": "corneltek/actionkit",
@@ -242,22 +242,22 @@
         },
         {
             "name": "corneltek/codegen",
-            "version": "2.3.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/c9s/CodeGen.git",
-                "reference": "5458c2ce84b1dd8c3d8c0705c3cd1b89a8937857"
+                "reference": "0d6a4c57db71d3945e8f501c0fe9573ffaf16261"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c9s/CodeGen/zipball/5458c2ce84b1dd8c3d8c0705c3cd1b89a8937857",
-                "reference": "5458c2ce84b1dd8c3d8c0705c3cd1b89a8937857",
+                "url": "https://api.github.com/repos/c9s/CodeGen/zipball/0d6a4c57db71d3945e8f501c0fe9573ffaf16261",
+                "reference": "0d6a4c57db71d3945e8f501c0fe9573ffaf16261",
                 "shasum": ""
             },
             "require": {
                 "doctrine/inflector": "*",
                 "php": ">=5.3.0",
-                "twig/twig": "*"
+                "twig/twig": "^1.21"
             },
             "require-dev": {
                 "corneltek/phpunit-testmore": "dev-master"
@@ -281,7 +281,7 @@
             ],
             "description": "PHP Code Generation Library",
             "homepage": "http://github.com/c9s/CodeGen",
-            "time": "2015-08-25 03:48:03"
+            "time": "2015-09-28 07:56:31"
         },
         {
             "name": "corneltek/configkit",
@@ -2265,9 +2265,17 @@
             "time": "2015-09-22 13:49:29"
         }
     ],
-    "aliases": [],
+    "aliases": [
+        {
+            "alias": "2.9999",
+            "alias_normalized": "2.9999.0.0",
+            "version": "9999999-dev",
+            "package": "corneltek/codegen"
+        }
+    ],
     "minimum-stability": "stable",
     "stability-flags": {
+        "corneltek/codegen": 20,
         "phpsgi/funk": 20,
         "phpsgi/phpsgi": 20,
         "corneltek/pux": 20,

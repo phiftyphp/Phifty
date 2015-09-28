@@ -1,5 +1,4 @@
 <?php
-
 use ConfigKit\ConfigCompiler;
 use ConfigKit\ConfigLoader;
 
@@ -12,7 +11,6 @@ function initConfigLoader()
 {
     // We load other services from the definitions in config file
     // Simple load three config files (framework.yml, database.yml, application.yml)
-
     $loader = new ConfigLoader();
     if (file_exists(PH_APP_ROOT.'/config/framework.yml')) {
         $loader->load('framework', PH_APP_ROOT.'/config/framework.yml');
@@ -37,7 +35,6 @@ function initConfigLoader()
             $loader->load('testing', ConfigCompiler::compile(PH_APP_ROOT.'/config/testing.yml'));
         }
     }
-
     return $loader;
 }
 
