@@ -8,8 +8,7 @@
  * file that was distributed with this source code.
  *
  */
-require 'vendor/autoload.php';
-require 'src/Phifty/Bootstrap.php';
+require 'bootstrap.php';
 // require 'selenium_helpers.php';
-kernel()->classloader->addFallback( 'tests' );
+kernel()->classloader->addFallback('tests');
 kernel()->classloader->addFallback( dirname(__DIR__) . '/src' );

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "aaf6d25c7f0c60295c6f43aa144e40b7",
+    "hash": "ad1f5ba4d00de1832d5373cc21806a2b",
     "packages": [
         {
             "name": "corneltek/actionkit",
@@ -246,12 +246,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/c9s/CodeGen.git",
-                "reference": "0d6a4c57db71d3945e8f501c0fe9573ffaf16261"
+                "reference": "0c347dcba3166e73f4bdbfec05c61d3803c070c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c9s/CodeGen/zipball/0d6a4c57db71d3945e8f501c0fe9573ffaf16261",
-                "reference": "0d6a4c57db71d3945e8f501c0fe9573ffaf16261",
+                "url": "https://api.github.com/repos/c9s/CodeGen/zipball/0c347dcba3166e73f4bdbfec05c61d3803c070c7",
+                "reference": "0c347dcba3166e73f4bdbfec05c61d3803c070c7",
                 "shasum": ""
             },
             "require": {
@@ -281,7 +281,7 @@
             ],
             "description": "PHP Code Generation Library",
             "homepage": "http://github.com/c9s/CodeGen",
-            "time": "2015-09-28 07:56:31"
+            "time": "2015-09-28 13:19:27"
         },
         {
             "name": "corneltek/configkit",
@@ -2267,8 +2267,8 @@
     ],
     "aliases": [
         {
-            "alias": "2.9999",
-            "alias_normalized": "2.9999.0.0",
+            "alias": "2.3.9999",
+            "alias_normalized": "2.3.9999.0",
             "version": "9999999-dev",
             "package": "corneltek/codegen"
         }

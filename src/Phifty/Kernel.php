@@ -338,7 +338,7 @@ class Kernel extends ObjectContainer
         }
         */
         catch ( Exception $e ) {
-            if( $this->isDev ) 
+            if ($this->isDev ) 
             {
                 if( class_exists('CoreBundle\\Controller\\ExceptionController',true) ) {
                     $controller = new \CoreBundle\Controller\ExceptionController;
@@ -349,12 +349,12 @@ class Kernel extends ObjectContainer
                 }
             }
             else {
-                header('HTTP/1.1 500 Internal Server Error');
+                @header('HTTP/1.1 500 Internal Server Error');
                 die($e->getMessage());
             }
         }
         catch ( \Roller\Exception\RouteException $e ) {
-            header('HTTP/1.1 403');
+            @header('HTTP/1.1 403');
             die( $e->getMessage() );
         }
 
