@@ -20,12 +20,13 @@ class BuildCommand extends Command
 {
     public function brief()
     {
-        return 'build application. (generates main.php)';
+        return 'build bootstrap script';
     }
 
     public function options($opts)
     {
-        $opts->add('o|output:=string', 'output file');
+        $opts->add('o|output:=string', 'output file')
+            ->defaultValue('bootstrap.php');
     }
 
     public function execute()
@@ -44,7 +45,9 @@ class BuildCommand extends Command
             ConfigCompiler::compile($configPath);
         }
 
-        $this->logger->info('===> Generating main.php...');
+        $outputFile = $this->options->output;
+
+        $this->logger->info("===> Generating bootstrap file: $outputFile");
 
         defined('PH_APP_ROOT') || define('PH_APP_ROOT', getcwd());
         // PH_ROOT is deprecated, but kept for backward compatibility
@@ -52,7 +55,6 @@ class BuildCommand extends Command
 
         $this->logger->info('PH_APP_ROOT:' . PH_APP_ROOT);
 
-        $outputFile = $this->options->output ?: 'main.php';
 
         $block = new Block;
         $block[] = '<?php';
