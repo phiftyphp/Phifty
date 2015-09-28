@@ -10,7 +10,7 @@ install:
 - travis_retry composer self-update
 - travis_retry composer update
 before_script:
-- mkdir -p applications bundles cache
+- mkdir -p app applications bundles cache
 - phpenv rehash
 script:
 - php bin/phifty build && time php bootstrap.php
