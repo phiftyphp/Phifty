@@ -23,13 +23,12 @@ class BuildCommand extends Command
 
 
 
-        $generator = new AppClassGenerator;
+        $generator = new AppClassGenerator([ 'namespace' => 'App', 'prefix' => '' ]);
         $appClass = $generator->generate($configLoader);
 
         $path = $appClass->generatePsr4ClassUnder('app'); 
-        var_dump($path);
-        echo file_get_contents($path);
-        // require_once($path);
+        require_once $path;
+        // echo file_get_contents($path);
     }
 
     static public function createConfigLoader($baseDir)
