@@ -71,7 +71,7 @@ class TwigServiceProvider extends BaseServiceProvider
         $kernel->twig = function() use($kernel, $options) {
 
             // create the filesystem loader
-            $loader   = new Twig_Loader_Filesystem($this->config['TemplateDirs']);
+            $loader   = new Twig_Loader_Filesystem(isset($this->config['TemplateDirs']) ? $this->config['TemplateDirs'] : array());
 
             /**
              * Template namespaces must be added after $loader is initialized.
@@ -83,7 +83,7 @@ class TwigServiceProvider extends BaseServiceProvider
             }
 
             // http://www.twig-project.org/doc/api.html#environment-options
-            $env = new Twig_Environment($loader, $options['Environment']);
+            $env = new Twig_Environment($loader, isset($options['Environment']) ? $options['Environment'] : array());
 
             if ($kernel->isDev) {
                 $env->addExtension(new Twig_Extension_Debug);
