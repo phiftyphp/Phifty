@@ -1,5 +1,12 @@
 <?php
-define('PH_ROOT', __DIR__);
-define('PH_APP_ROOT',__DIR__);
-require __DIR__ . '/vendor/autoload.php';
-require __DIR__ . '/src/Phifty/Bootstrap.php';
+define('PH_ROOT', '/Users/c9s/src/work/php/Phifty');
+define('PH_APP_ROOT', '/Users/c9s/src/work/php/Phifty');
+global $composerClassLoader;
+$composerClassLoader = require '/Users/c9s/src/work/php/Phifty/vendor/autoload.php';;
+require '/Users/c9s/src/work/php/Phifty/app/ConfigLoader.php';
+require '/Users/c9s/src/work/php/Phifty/vendor/corneltek/universal/src/Universal/ClassLoader/SplClassLoader.php';
+global $splClassLoader;
+$splClassLoader = new \Universal\ClassLoader\SplClassLoader();
+$splClassLoader->useIncludePath(false);
+$splClassLoader->register(false);
+require '/Users/c9s/src/work/php/Phifty/src/Phifty/Bootstrap.php';

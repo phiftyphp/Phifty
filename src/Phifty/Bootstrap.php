@@ -7,38 +7,6 @@ defined('PH_ROOT')     || define('PH_ROOT', getcwd());
 defined('PH_APP_ROOT') || define('PH_APP_ROOT', getcwd());
 defined('DS')          || define('DS', DIRECTORY_SEPARATOR);
 
-function initConfigLoader()
-{
-
-    // We load other services from the definitions in config file
-    // Simple load three config files (framework.yml, database.yml, application.yml)
-    $loader = new ConfigLoader();
-    if (file_exists(PH_APP_ROOT.'/config/framework.yml')) {
-        $loader->load('framework', PH_APP_ROOT.'/config/framework.yml');
-    }
-
-    // This is for DatabaseService
-    if (file_exists(PH_APP_ROOT.'/db/config/database.yml')) {
-        $loader->load('database', PH_APP_ROOT.'/db/config/database.yml');
-    } elseif (file_exists(PH_APP_ROOT.'/config/database.yml')) {
-        $loader->load('database', PH_APP_ROOT.'/config/database.yml');
-    }
-
-    // Config for application, services does not depends on this config file.
-    if (file_exists(PH_APP_ROOT.'/config/application.yml')) {
-        $loader->load('application', PH_APP_ROOT.'/config/application.yml');
-    }
-
-    // Only load testing configuration when environment
-    // is 'testing'
-    if (getenv('PHIFTY_ENV') === 'testing') {
-        if (file_exists(PH_APP_ROOT.'/config/testing.yml')) {
-            $loader->load('testing', ConfigCompiler::compile(PH_APP_ROOT.'/config/testing.yml'));
-        }
-    }
-    return $loader;
-}
-
 // Load Kernel so we don't need to load by classloader.
 require __DIR__.'/GlobalFuncs.php';
 // require __DIR__ . '/Kernel.php';
@@ -50,13 +18,7 @@ $kernel = new \Phifty\Kernel;
 $kernel->prepare(); // prepare constants
 $kernel->registerService(new \Phifty\ServiceProvider\ClassLoaderServiceProvider($splClassLoader));
 
-// load config service.
-if (class_exists('App\\AppConfigLoader', true)) {
-    $configLoader = new \App\ConfigLoader;
-} else {
-    $configLoader = initConfigLoader();
-}
-
+$configLoader = new \App\ConfigLoader;
 $kernel->registerService(new \Phifty\ServiceProvider\ConfigServiceProvider($configLoader));
 
 // load event service, so that we can bind events in Phifty

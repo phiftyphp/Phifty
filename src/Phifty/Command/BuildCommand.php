@@ -24,13 +24,15 @@ class BuildCommand extends Command
     public function execute()
     {
         $this->logger->info('Generating main.php...');
-        if (!defined('PH_APP_ROOT')) {
-            define('PH_APP_ROOT', getcwd());
-        }
+
+        defined('PH_APP_ROOT') || define('PH_APP_ROOT', getcwd());
+        // PH_ROOT is deprecated, but kept for backward compatibility
+        defined('PH_ROOT') || define('PH_ROOT', getcwd());
+
         $this->logger->info('PH_APP_ROOT:' . PH_APP_ROOT);
 
 
-        $outputFile = $this->options->output ?: 'main_dump.php';
+        $outputFile = $this->options->output ?: 'main.php';
 
 
         $block = new Block;
