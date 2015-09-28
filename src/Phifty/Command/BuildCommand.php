@@ -4,12 +4,20 @@ use CLIFramework\Command;
 use ConfigKit\ConfigCompiler;
 use ConfigKit\ConfigLoader;
 use CodeGen\Generator\AppClassGenerator;
+use CodeGen\Block;
+use CodeGen\Statement\RequireStatement;
+
 
 class BuildCommand extends Command
 {
     public function brief()
     {
         return 'build application. (generates main.php)';
+    }
+
+    public function options($opts)
+    {
+        $opts->add('o|output:=string', 'output file');
     }
 
     public function execute()
@@ -19,16 +27,37 @@ class BuildCommand extends Command
             define('PH_APP_ROOT', getcwd());
         }
         $this->logger->info('PH_APP_ROOT:' . PH_APP_ROOT);
+
+
+        $outputFile = $this->options->output ?: 'main_dump.php';
+
+
+        $block = new Block;
+
+        $block[] = '<?php';
+
+        // autoload script from composer
+        $block[] = sprintf("define('PH_ROOT', %s);", var_export(PH_ROOT, true));
+        $block[] = sprintf("define('PH_APP_ROOT', %s);", var_export(PH_APP_ROOT, true));
+
+        $block[] = new RequireStatement(PH_APP_ROOT . DIRECTORY_SEPARATOR . 'vendor/autoload.php');
+
+        $this->logger->info("Generating config loader...");
+        // generating the config loader
         $configLoader = self::createConfigLoader(PH_APP_ROOT);
-
-
-
         $generator = new AppClassGenerator([ 'namespace' => 'App', 'prefix' => '' ]);
         $appClass = $generator->generate($configLoader);
-
         $path = $appClass->generatePsr4ClassUnder('app'); 
         require_once $path;
-        // echo file_get_contents($path);
+        $block[] = new RequireStatement(PH_APP_ROOT . DIRECTORY_SEPARATOR . $path);
+
+        // Include bootstrap class
+        $block[] = new RequireStatement(dirname(__DIR__) . DIRECTORY_SEPARATOR . 'Bootstrap.php' );
+
+        $this->logger->info("Compiling code to $outputFile");
+        $code = $block->render();
+        echo $code;
+        file_put_contents($outputFile, $code);
     }
 
     static public function createConfigLoader($baseDir)
