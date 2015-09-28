@@ -56,14 +56,14 @@ class Kernel extends ObjectContainer
      */
     protected $applications = array();
 
+    private $configLoader;
+
     public function __construct($environment = null)
     {
         // define framework environment
         $this->environment  = $environment ?: getenv('PHIFTY_ENV') ?: 'development';
         $this->isDev = $this->environment === 'development';
     }
-
-
 
     /**
      * To run prepare method, please define the PH_ROOT and PH_APP_ROOT first.
@@ -81,6 +81,8 @@ class Kernel extends ObjectContainer
         $this->applicationUUID = $configLoader->framework->ApplicationUUID;
         $this->applicationID   = $configLoader->framework->ApplicationID;
         $this->applicationName = $configLoader->framework->ApplicationName;
+
+        $this->configLoader = $configLoader;
     }
 
 
