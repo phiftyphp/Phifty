@@ -6,8 +6,15 @@ use ConfigKit\ConfigLoader;
 use CodeGen\Generator\AppClassGenerator;
 use CodeGen\Block;
 use CodeGen\Statement\RequireStatement;
+use CodeGen\Statement\RequireComposerAutoloadStatement;
+use CodeGen\Statement\RequireClassStatement;
 use CodeGen\Statement\AssignStatement;
 
+
+function PhiftyClassPath($class)
+{
+    return dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
+}
 
 class BuildCommand extends Command
 {
@@ -37,7 +44,6 @@ class BuildCommand extends Command
             ConfigCompiler::compile($configPath);
         }
 
-
         $this->logger->info('Generating main.php...');
 
         defined('PH_APP_ROOT') || define('PH_APP_ROOT', getcwd());
@@ -46,20 +52,22 @@ class BuildCommand extends Command
 
         $this->logger->info('PH_APP_ROOT:' . PH_APP_ROOT);
 
-
         $outputFile = $this->options->output ?: 'main.php';
 
-
         $block = new Block;
-
         $block[] = '<?php';
 
         // autoload script from composer
         $block[] = sprintf("define('PH_ROOT', %s);", var_export(PH_ROOT, true));
         $block[] = sprintf("define('PH_APP_ROOT', %s);", var_export(PH_APP_ROOT, true));
+        $block[] = "defined('DS') || define('DS', DIRECTORY_SEPARATOR);";
+
 
         $block[] = 'global $composerClassLoader;';
-        $block[] = new AssignStatement('$composerClassLoader', new RequireStatement(PH_APP_ROOT . DIRECTORY_SEPARATOR . 'vendor/autoload.php'));
+        $block[] = new AssignStatement('$composerClassLoader', new RequireComposerAutoloadStatement());
+
+        $block[] = new RequireClassStatement('Universal\\Container\\ObjectContainer');
+        $block[] = new RequireClassStatement('Phifty\\Kernel');
 
         $this->logger->info("Generating config loader...");
         // generating the config loader
@@ -71,12 +79,11 @@ class BuildCommand extends Command
         $block[] = new RequireStatement(PH_APP_ROOT . DIRECTORY_SEPARATOR . $path);
 
 
-
         // FIXME:
         if (extension_loaded('apc')) {
 
         }
-        $block[] = new RequireStatement(PH_APP_ROOT . DIRECTORY_SEPARATOR . 'vendor/corneltek/universal/src/Universal/ClassLoader/SplClassLoader.php');
+        $block[] = new RequireClassStatement('Universal\\ClassLoader\\SplClassLoader');
         $block[] = 'global $splClassLoader;';
         $block[] = '$splClassLoader = new \Universal\ClassLoader\SplClassLoader();';
         $block[] = '$splClassLoader->useIncludePath(false);';
@@ -96,6 +103,10 @@ class BuildCommand extends Command
         }
          */
 
+
+        if ($configLoader->isLoaded('database')) {
+            $block[] = '$kernel->registerService(new \Phifty\ServiceProvider\DatabaseServiceProvider());';
+        }
 
 
 

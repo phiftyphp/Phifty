@@ -1,16 +1,4 @@
 <?php
-use ConfigKit\ConfigCompiler;
-use ConfigKit\ConfigLoader;
-
-// get PH_ROOT from phifty-core
-defined('PH_ROOT')     || define('PH_ROOT', getcwd());
-defined('PH_APP_ROOT') || define('PH_APP_ROOT', getcwd());
-defined('DS')          || define('DS', DIRECTORY_SEPARATOR);
-
-// Load Kernel so we don't need to load by classloader.
-require __DIR__.'/GlobalFuncs.php';
-// require __DIR__ . '/Kernel.php';
-
 global $kernel;
 global $splClassLoader;
 global $composerClassLoader;
