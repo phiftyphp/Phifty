@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "bff4fbf084f63738dd31cade42e5430a",
+    "hash": "e58e1d4d45318f2b2905c27627adc162",
     "packages": [
         {
             "name": "corneltek/actionkit",
@@ -185,16 +185,16 @@
         },
         {
             "name": "corneltek/cliframework",
-            "version": "2.7.1",
+            "version": "2.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/c9s/CLIFramework.git",
-                "reference": "40e42ff1980124442a4ac049fba4ce21542638d4"
+                "reference": "3c02c70a678dfbb8347304667ab93e1811de5a35"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c9s/CLIFramework/zipball/40e42ff1980124442a4ac049fba4ce21542638d4",
-                "reference": "40e42ff1980124442a4ac049fba4ce21542638d4",
+                "url": "https://api.github.com/repos/c9s/CLIFramework/zipball/3c02c70a678dfbb8347304667ab93e1811de5a35",
+                "reference": "3c02c70a678dfbb8347304667ab93e1811de5a35",
                 "shasum": ""
             },
             "require": {
@@ -238,7 +238,7 @@
                 "getopt",
                 "zsh"
             ],
-            "time": "2015-08-26 06:24:15"
+            "time": "2015-09-23 11:45:22"
         },
         {
             "name": "corneltek/codegen",
@@ -508,28 +508,28 @@
         },
         {
             "name": "corneltek/lazyrecord",
-            "version": "2.2.2",
+            "version": "2.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/c9s/LazyRecord.git",
-                "reference": "e94020649676e758b6997a6003a3fed38b4a9174"
+                "reference": "6ecdc79e49ac7de710121545eb5597e958484f55"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c9s/LazyRecord/zipball/e94020649676e758b6997a6003a3fed38b4a9174",
-                "reference": "e94020649676e758b6997a6003a3fed38b4a9174",
+                "url": "https://api.github.com/repos/c9s/LazyRecord/zipball/6ecdc79e49ac7de710121545eb5597e958484f55",
+                "reference": "6ecdc79e49ac7de710121545eb5597e958484f55",
                 "shasum": ""
             },
             "require": {
                 "corneltek/cascading-attribute": "~1.2",
                 "corneltek/class-template": "^2.1",
                 "corneltek/cliframework": "^2.6",
-                "corneltek/configkit": "~1",
+                "corneltek/configkit": "^1",
                 "corneltek/serializerkit": "~1",
-                "corneltek/sqlbuilder": "^2.7",
+                "corneltek/sqlbuilder": "^2.8",
                 "corneltek/universal-cache": "~1",
                 "corneltek/validationkit": "~1.1",
-                "cpliakas/git-wrapper": "~1.0",
+                "cypresslab/gitelephant": "^1.0",
                 "doctrine/inflector": "~1.0",
                 "php": ">=5.4.0",
                 "pimple/pimple": "~3.0",
@@ -537,7 +537,7 @@
             },
             "require-dev": {
                 "corneltek/phpunit-testmore": "dev-master",
-                "corneltek/universal": "~1.4",
+                "corneltek/universal": "^1",
                 "facebook/xhprof": "dev-master",
                 "satooshi/php-coveralls": "dev-master",
                 "simplyadmire/composer-plugins": "@dev"
@@ -572,7 +572,7 @@
                 "model",
                 "orm"
             ],
-            "time": "2015-08-06 12:42:19"
+            "time": "2015-09-27 12:15:04"
         },
         {
             "name": "corneltek/lightlogger",
@@ -691,16 +691,16 @@
         },
         {
             "name": "corneltek/pux",
-            "version": "2.0.x-dev",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/c9s/Pux.git",
-                "reference": "250cd97f9b5c88d2d7d79c6e11936eeed85bde7f"
+                "reference": "003b321add5ada157a816d726da8dea5b6386246"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c9s/Pux/zipball/250cd97f9b5c88d2d7d79c6e11936eeed85bde7f",
-                "reference": "250cd97f9b5c88d2d7d79c6e11936eeed85bde7f",
+                "url": "https://api.github.com/repos/c9s/Pux/zipball/003b321add5ada157a816d726da8dea5b6386246",
+                "reference": "003b321add5ada157a816d726da8dea5b6386246",
                 "shasum": ""
             },
             "require": {
@@ -740,7 +740,7 @@
                 "router",
                 "server"
             ],
-            "time": "2015-09-14 07:52:44"
+            "time": "2015-09-18 07:46:27"
         },
         {
             "name": "corneltek/serializerkit",
@@ -800,16 +800,16 @@
         },
         {
             "name": "corneltek/sqlbuilder",
-            "version": "2.7.2",
+            "version": "2.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/c9s/SQLBuilder.git",
-                "reference": "5968a491cac28addd57916307887c391413e4c26"
+                "reference": "12f6bc3bdddc58b05474bac4a797f4c65b2234c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c9s/SQLBuilder/zipball/5968a491cac28addd57916307887c391413e4c26",
-                "reference": "5968a491cac28addd57916307887c391413e4c26",
+                "url": "https://api.github.com/repos/c9s/SQLBuilder/zipball/12f6bc3bdddc58b05474bac4a797f4c65b2234c1",
+                "reference": "12f6bc3bdddc58b05474bac4a797f4c65b2234c1",
                 "shasum": ""
             },
             "require-dev": {
@@ -832,7 +832,7 @@
                 }
             ],
             "description": "Fast and Powerful SQLBuilder for PHP5.3",
-            "time": "2015-08-02 12:39:11"
+            "time": "2015-09-25 09:27:24"
         },
         {
             "name": "corneltek/universal",
@@ -948,72 +948,17 @@
             "time": "2013-03-28 13:35:21"
         },
         {
-            "name": "cpliakas/git-wrapper",
-            "version": "1.5.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/cpliakas/git-wrapper.git",
-                "reference": "0f8c4a4dcdd6ca5b46330ab12be3a439eea16d46"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/cpliakas/git-wrapper/zipball/0f8c4a4dcdd6ca5b46330ab12be3a439eea16d46",
-                "reference": "0f8c4a4dcdd6ca5b46330ab12be3a439eea16d46",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0",
-                "symfony/event-dispatcher": "~2.3|~3.0",
-                "symfony/process": "~2.3|~3.0"
-            },
-            "require-dev": {
-                "pdepend/pdepend": "~1.0",
-                "phploc/phploc": "~2.0",
-                "phpmd/phpmd": "~1.0",
-                "phpunit/phpunit": "~3.0",
-                "psr/log": "~1.0",
-                "scrutinizer/ocular": "~1.0",
-                "sebastian/phpcpd": "~2.0",
-                "symfony/filesystem": "~2.0"
-            },
-            "suggest": {
-                "monolog/monolog": "Enables logging of executed git commands"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "GitWrapper": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Chris Pliakas",
-                    "email": "opensource@chrispliakas.com"
-                }
-            ],
-            "description": "A PHP wrapper around the Git command line utility.",
-            "homepage": "https://github.com/cpliakas/git-wrapper",
-            "keywords": [
-                "git"
-            ],
-            "time": "2015-07-08 14:28:09"
-        },
-        {
             "name": "cypresslab/gitelephant",
-            "version": "v1.0.12",
+            "version": "v1.0.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/matteosister/GitElephant.git",
-                "reference": "4bb2ba3551e8b11b713748e1e6b8512ca1b6275a"
+                "reference": "7db4e7fd8bf1819b64a49fef801ac03e33ba6008"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/matteosister/GitElephant/zipball/4bb2ba3551e8b11b713748e1e6b8512ca1b6275a",
-                "reference": "4bb2ba3551e8b11b713748e1e6b8512ca1b6275a",
+                "url": "https://api.github.com/repos/matteosister/GitElephant/zipball/7db4e7fd8bf1819b64a49fef801ac03e33ba6008",
+                "reference": "7db4e7fd8bf1819b64a49fef801ac03e33ba6008",
                 "shasum": ""
             },
             "require": {
@@ -1049,7 +994,7 @@
             "keywords": [
                 "git"
             ],
-            "time": "2015-08-02 21:37:27"
+            "time": "2015-09-18 21:25:51"
         },
         {
             "name": "doctrine/inflector",
@@ -1120,16 +1065,16 @@
         },
         {
             "name": "natxet/CssMin",
-            "version": "3.0.3",
+            "version": "v3.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/natxet/CssMin.git",
-                "reference": "f076e41392b0008efb47074a133ec1d90dc8c99f"
+                "reference": "92de3fe3ccb4f8298d31952490ef7d5395855c39"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/natxet/CssMin/zipball/f076e41392b0008efb47074a133ec1d90dc8c99f",
-                "reference": "f076e41392b0008efb47074a133ec1d90dc8c99f",
+                "url": "https://api.github.com/repos/natxet/CssMin/zipball/92de3fe3ccb4f8298d31952490ef7d5395855c39",
+                "reference": "92de3fe3ccb4f8298d31952490ef7d5395855c39",
                 "shasum": ""
             },
             "require": {
@@ -1163,7 +1108,7 @@
                 "css",
                 "minify"
             ],
-            "time": "2015-05-21 16:53:45"
+            "time": "2015-09-25 11:13:11"
         },
         {
             "name": "phpcollection/phpcollection",
@@ -1271,18 +1216,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpsgi/Funk.git",
-                "reference": "1afa9009d1b906e424507810e60bea85527e21da"
+                "reference": "356e193573023dcaa42dfd33f92395c1dca4707c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpsgi/Funk/zipball/1afa9009d1b906e424507810e60bea85527e21da",
-                "reference": "1afa9009d1b906e424507810e60bea85527e21da",
+                "url": "https://api.github.com/repos/phpsgi/Funk/zipball/356e193573023dcaa42dfd33f92395c1dca4707c",
+                "reference": "356e193573023dcaa42dfd33f92395c1dca4707c",
                 "shasum": ""
             },
             "require": {
                 "corneltek/cliframework": "^2",
                 "corneltek/codegen": "^2",
-                "corneltek/universal": "^1.6"
+                "corneltek/universal": "^1.6",
+                "phpsgi/phpsgi": "@dev"
             },
             "require-dev": {
                 "corneltek/phpunit-testmore": "dev-master",
@@ -1316,7 +1262,7 @@
                 "phpsgi",
                 "server"
             ],
-            "time": "2015-09-15 04:15:49"
+            "time": "2015-09-25 01:16:39"
         },
         {
             "name": "phpsgi/phpsgi",
@@ -1324,12 +1270,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpsgi/phpsgi.git",
-                "reference": "74752fcb2557be2e916292d85e5819b70e4939ca"
+                "reference": "f7e5dd95fa8ad78551968e172f3ba6fa8172c1e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpsgi/phpsgi/zipball/74752fcb2557be2e916292d85e5819b70e4939ca",
-                "reference": "74752fcb2557be2e916292d85e5819b70e4939ca",
+                "url": "https://api.github.com/repos/phpsgi/phpsgi/zipball/f7e5dd95fa8ad78551968e172f3ba6fa8172c1e9",
+                "reference": "f7e5dd95fa8ad78551968e172f3ba6fa8172c1e9",
                 "shasum": ""
             },
             "type": "library",
@@ -1355,7 +1301,7 @@
                 "phpsgi",
                 "server"
             ],
-            "time": "2015-09-15 04:00:39"
+            "time": "2015-09-18 09:41:22"
         },
         {
             "name": "pimple/pimple",
@@ -1458,15 +1404,15 @@
         },
         {
             "name": "symfony/class-loader",
-            "version": "v2.7.4",
+            "version": "v2.7.5",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/ClassLoader.git",
+                "url": "https://github.com/symfony/class-loader.git",
                 "reference": "d957ea6295d7016e20d7eff33a6c1deef819c0d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/ClassLoader/zipball/d957ea6295d7016e20d7eff33a6c1deef819c0d4",
+                "url": "https://api.github.com/repos/symfony/class-loader/zipball/d957ea6295d7016e20d7eff33a6c1deef819c0d4",
                 "reference": "d957ea6295d7016e20d7eff33a6c1deef819c0d4",
                 "shasum": ""
             },
@@ -1508,16 +1454,16 @@
         },
         {
             "name": "symfony/css-selector",
-            "version": "v2.7.4",
+            "version": "v2.7.5",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/CssSelector.git",
-                "reference": "ffb5f3b8a75f8d1b9801e74dc6789a0751a670ad"
+                "url": "https://github.com/symfony/css-selector.git",
+                "reference": "abe19cc0429a06be0c133056d1f9859854860970"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/CssSelector/zipball/ffb5f3b8a75f8d1b9801e74dc6789a0751a670ad",
-                "reference": "ffb5f3b8a75f8d1b9801e74dc6789a0751a670ad",
+                "url": "https://api.github.com/repos/symfony/css-selector/zipball/abe19cc0429a06be0c133056d1f9859854860970",
+                "reference": "abe19cc0429a06be0c133056d1f9859854860970",
                 "shasum": ""
             },
             "require": {
@@ -1557,78 +1503,20 @@
             ],
             "description": "Symfony CssSelector Component",
             "homepage": "https://symfony.com",
-            "time": "2015-08-24 07:13:45"
-        },
-        {
-            "name": "symfony/event-dispatcher",
-            "version": "v2.7.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/EventDispatcher.git",
-                "reference": "b58c916f1db03a611b72dd702564f30ad8fe83fa"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/b58c916f1db03a611b72dd702564f30ad8fe83fa",
-                "reference": "b58c916f1db03a611b72dd702564f30ad8fe83fa",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.9"
-            },
-            "require-dev": {
-                "psr/log": "~1.0",
-                "symfony/config": "~2.0,>=2.0.5",
-                "symfony/dependency-injection": "~2.6",
-                "symfony/expression-language": "~2.6",
-                "symfony/phpunit-bridge": "~2.7",
-                "symfony/stopwatch": "~2.3"
-            },
-            "suggest": {
-                "symfony/dependency-injection": "",
-                "symfony/http-kernel": ""
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.7-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\EventDispatcher\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony EventDispatcher Component",
-            "homepage": "https://symfony.com",
-            "time": "2015-08-24 07:13:45"
+            "time": "2015-09-22 13:49:29"
         },
         {
             "name": "symfony/filesystem",
-            "version": "v2.7.4",
+            "version": "v2.7.5",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/Filesystem.git",
-                "reference": "f079e9933799929584200b9a926f72f29e291654"
+                "url": "https://github.com/symfony/filesystem.git",
+                "reference": "a17f8a17c20e8614c15b8e116e2f4bcde102cfab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/f079e9933799929584200b9a926f72f29e291654",
-                "reference": "f079e9933799929584200b9a926f72f29e291654",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/a17f8a17c20e8614c15b8e116e2f4bcde102cfab",
+                "reference": "a17f8a17c20e8614c15b8e116e2f4bcde102cfab",
                 "shasum": ""
             },
             "require": {
@@ -1664,20 +1552,20 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2015-08-27 07:03:44"
+            "time": "2015-09-09 17:42:36"
         },
         {
             "name": "symfony/finder",
-            "version": "v2.7.4",
+            "version": "v2.7.5",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/Finder.git",
-                "reference": "fff4b0c362640a0ab7355e2647b3d461608e9065"
+                "url": "https://github.com/symfony/finder.git",
+                "reference": "8262ab605973afbb3ef74b945daabf086f58366f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Finder/zipball/fff4b0c362640a0ab7355e2647b3d461608e9065",
-                "reference": "fff4b0c362640a0ab7355e2647b3d461608e9065",
+                "url": "https://api.github.com/repos/symfony/finder/zipball/8262ab605973afbb3ef74b945daabf086f58366f",
+                "reference": "8262ab605973afbb3ef74b945daabf086f58366f",
                 "shasum": ""
             },
             "require": {
@@ -1713,20 +1601,20 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
-            "time": "2015-08-26 17:56:37"
+            "time": "2015-09-19 19:59:23"
         },
         {
             "name": "symfony/process",
-            "version": "v2.7.4",
+            "version": "v2.7.5",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/Process.git",
-                "reference": "f7b3f73f70a7f8f49a1c838dc3debbf054732d8e"
+                "url": "https://github.com/symfony/process.git",
+                "reference": "b27c8e317922cd3cdd3600850273cf6b82b2e8e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Process/zipball/f7b3f73f70a7f8f49a1c838dc3debbf054732d8e",
-                "reference": "f7b3f73f70a7f8f49a1c838dc3debbf054732d8e",
+                "url": "https://api.github.com/repos/symfony/process/zipball/b27c8e317922cd3cdd3600850273cf6b82b2e8e9",
+                "reference": "b27c8e317922cd3cdd3600850273cf6b82b2e8e9",
                 "shasum": ""
             },
             "require": {
@@ -1762,20 +1650,20 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
-            "time": "2015-08-27 06:45:45"
+            "time": "2015-09-19 19:59:23"
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.7.4",
+            "version": "v2.7.5",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/Yaml.git",
-                "reference": "2dc7b06c065df96cc686c66da2705e5e18aef661"
+                "url": "https://github.com/symfony/yaml.git",
+                "reference": "31cb2ad0155c95b88ee55fe12bc7ff92232c1770"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/2dc7b06c065df96cc686c66da2705e5e18aef661",
-                "reference": "2dc7b06c065df96cc686c66da2705e5e18aef661",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/31cb2ad0155c95b88ee55fe12bc7ff92232c1770",
+                "reference": "31cb2ad0155c95b88ee55fe12bc7ff92232c1770",
                 "shasum": ""
             },
             "require": {
@@ -1811,7 +1699,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2015-08-24 07:13:45"
+            "time": "2015-09-14 14:14:09"
         },
         {
             "name": "twig/extensions",
@@ -1867,16 +1755,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.22.1",
+            "version": "v1.22.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "b7fc2469fa009897871fb95b68237286fc54a5ad"
+                "reference": "79249fc8c9ff62e41e217e0c630e2e00bcadda6a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/b7fc2469fa009897871fb95b68237286fc54a5ad",
-                "reference": "b7fc2469fa009897871fb95b68237286fc54a5ad",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/79249fc8c9ff62e41e217e0c630e2e00bcadda6a",
+                "reference": "79249fc8c9ff62e41e217e0c630e2e00bcadda6a",
                 "shasum": ""
             },
             "require": {
@@ -1924,7 +1812,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2015-09-15 06:50:16"
+            "time": "2015-09-22 13:59:32"
         }
     ],
     "packages-dev": [
@@ -2164,16 +2052,16 @@
         },
         {
             "name": "symfony/config",
-            "version": "v2.7.4",
+            "version": "v2.7.5",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/Config.git",
-                "reference": "5ab9ff48b3cb5b40951a607f77fc1cbfd29edba8"
+                "url": "https://github.com/symfony/config.git",
+                "reference": "9698fdf0a750d6887d5e7729d5cf099765b20e61"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Config/zipball/5ab9ff48b3cb5b40951a607f77fc1cbfd29edba8",
-                "reference": "5ab9ff48b3cb5b40951a607f77fc1cbfd29edba8",
+                "url": "https://api.github.com/repos/symfony/config/zipball/9698fdf0a750d6887d5e7729d5cf099765b20e61",
+                "reference": "9698fdf0a750d6887d5e7729d5cf099765b20e61",
                 "shasum": ""
             },
             "require": {
@@ -2210,20 +2098,20 @@
             ],
             "description": "Symfony Config Component",
             "homepage": "https://symfony.com",
-            "time": "2015-08-27 06:45:45"
+            "time": "2015-09-21 15:02:29"
         },
         {
             "name": "symfony/console",
-            "version": "v2.7.4",
+            "version": "v2.7.5",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/Console.git",
-                "reference": "f1f7376766394f409b9b33a57a5675a52f8aad93"
+                "url": "https://github.com/symfony/console.git",
+                "reference": "06cb17c013a82f94a3d840682b49425cd00a2161"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Console/zipball/9ff9032151186bd66ecee727d728f1319f52d1d8",
-                "reference": "f1f7376766394f409b9b33a57a5675a52f8aad93",
+                "url": "https://api.github.com/repos/symfony/console/zipball/06cb17c013a82f94a3d840682b49425cd00a2161",
+                "reference": "06cb17c013a82f94a3d840682b49425cd00a2161",
                 "shasum": ""
             },
             "require": {
@@ -2267,20 +2155,78 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2015-09-03 11:40:38"
+            "time": "2015-09-25 08:32:23"
         },
         {
-            "name": "symfony/stopwatch",
-            "version": "v2.7.4",
+            "name": "symfony/event-dispatcher",
+            "version": "v2.7.5",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/Stopwatch.git",
-                "reference": "abc61bac76fb10ffa2c6373d7932bc35190dbf3b"
+                "url": "https://github.com/symfony/event-dispatcher.git",
+                "reference": "ae4dcc2a8d3de98bd794167a3ccda1311597c5d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Stopwatch/zipball/abc61bac76fb10ffa2c6373d7932bc35190dbf3b",
-                "reference": "abc61bac76fb10ffa2c6373d7932bc35190dbf3b",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/ae4dcc2a8d3de98bd794167a3ccda1311597c5d9",
+                "reference": "ae4dcc2a8d3de98bd794167a3ccda1311597c5d9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.9"
+            },
+            "require-dev": {
+                "psr/log": "~1.0",
+                "symfony/config": "~2.0,>=2.0.5",
+                "symfony/dependency-injection": "~2.6",
+                "symfony/expression-language": "~2.6",
+                "symfony/phpunit-bridge": "~2.7",
+                "symfony/stopwatch": "~2.3"
+            },
+            "suggest": {
+                "symfony/dependency-injection": "",
+                "symfony/http-kernel": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\EventDispatcher\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony EventDispatcher Component",
+            "homepage": "https://symfony.com",
+            "time": "2015-09-22 13:49:29"
+        },
+        {
+            "name": "symfony/stopwatch",
+            "version": "v2.7.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/stopwatch.git",
+                "reference": "08dd97b3f22ab9ee658cd16e6758f8c3c404336e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/stopwatch/zipball/08dd97b3f22ab9ee658cd16e6758f8c3c404336e",
+                "reference": "08dd97b3f22ab9ee658cd16e6758f8c3c404336e",
                 "shasum": ""
             },
             "require": {
@@ -2316,7 +2262,7 @@
             ],
             "description": "Symfony Stopwatch Component",
             "homepage": "https://symfony.com",
-            "time": "2015-08-24 07:13:45"
+            "time": "2015-09-22 13:49:29"
         }
     ],
     "aliases": [],
