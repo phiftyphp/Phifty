@@ -12,6 +12,7 @@ class Kernel extends ObjectContainer
 {
     /* framework version */
     const FRAMEWORK_ID = 'phifty';
+
     const VERSION = '2.6.0';
 
     public $applicationID;
@@ -39,16 +40,21 @@ class Kernel extends ObjectContainer
     /* boolean: is in development mode ? */
     public $isDev = true;
 
+
+    public $environment = 'development';
+
+
+    /**
+     * @param ServiceProvider
+     */
+    protected $services = array();
+
     /**
      * application object pool
      *
      * app class name => app object
      */
-    public $applications = array();
-
-    public $environment = 'development';
-
-    public $services = array();
+    protected $applications = array();
 
     public function __construct($environment = null)
     {
@@ -81,18 +87,20 @@ class Kernel extends ObjectContainer
     /**
      * TODO: A better place to put this method
      */
-    public function getHost() {
-        if ( $domain = $this->config->get('framework','Domain') ) {
+    public function getHost()
+    {
+        if ($domain = $this->config->get('framework','Domain')) {
             return $domain;
         }
-        if ( isset($_SERVER['HTTP_HOST']) ) {
+        if (isset($_SERVER['HTTP_HOST'])) {
             return $_SERVER['HTTP_HOST'];
         }
         throw new Exception("Domain is not configured in config file.");
     }
 
 
-    public function getBaseUrl() {
+    public function getBaseUrl()
+    {
         $scheme = $this->config->get('framework','SSL') ? 'https://' : 'http://';
         $port = (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] != 80) ? ":" . $_SERVER['SERVER_PORT'] : "";
         return $scheme . $this->getHost() . $port;
