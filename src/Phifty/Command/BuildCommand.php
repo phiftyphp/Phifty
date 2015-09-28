@@ -79,10 +79,8 @@ class BuildCommand extends Command
         $block[] = new RequireStatement(PH_APP_ROOT . DIRECTORY_SEPARATOR . $path);
 
 
-        // FIXME:
-        if (extension_loaded('apc')) {
-
-        }
+        // TODO:
+        //  - add PSR-4 class loader here.
         $block[] = new RequireClassStatement('Universal\\ClassLoader\\SplClassLoader');
         $block[] = 'global $splClassLoader;';
         $block[] = '$splClassLoader = new \Universal\ClassLoader\SplClassLoader();';
@@ -93,30 +91,39 @@ class BuildCommand extends Command
         // Include bootstrap class
         $block[] = new RequireStatement(dirname(__DIR__) . DIRECTORY_SEPARATOR . 'Bootstrap.php' );
 
-        /*
-        if (0 && extension_loaded('apc')) {
-            // require PH_APP_ROOT . '/vendor/corneltek/universal/src/Universal/ClassLoader/ApcClassLoader.php';
-            $loader = new \Universal\ClassLoader\ApcClassLoader(PH_ROOT);
-        } else {
-            // require PH_APP_ROOT . '/vendor/corneltek/universal/src/Universal/ClassLoader/SplClassLoader.php';
-            $loader = new \Universal\ClassLoader\SplClassLoader();
+
+        // Kernel initialization after bootstrap script
+        if ($configLoader->isLoaded('framework')) {
+            if ($configLoader->isLoaded('database')) {
+                $dbConfig = $configLoader->getSection('database');
+                $block[] = '$kernel->registerService(new \Phifty\ServiceProvider\DatabaseServiceProvider(' . var_export($dbConfig, true) . '));';
+            }
+            if ($services = $configLoader->get('framework', 'ServiceProviders')) {
+                foreach ($services as $name => $options) {
+                    // not full qualified classname
+                    $class = (false === strpos($name, '\\')) ? ('Phifty\\ServiceProvider\\'.$name) : $name;
+                    if (class_exists($class, true)) {
+                        $block[] = new RequireClassStatement($class);
+                        $block[] = '$kernel->registerService(new ' . $class . '(), ' . var_export($options, true) . ');';
+                    }
+                }
+            }
+
+            // Require application classes directly
+            if ($appconfigs = $configLoader->get('framework', 'Applications')) {
+                foreach ($appconfigs as $appName => $appconfig) {
+                    $appClassPath = PH_APP_ROOT . DIRECTORY_SEPARATOR . 'applications' . DIRECTORY_SEPARATOR . $appName . DIRECTORY_SEPARATOR . 'Application.php';
+                    if (file_exists($appClassPath)) {
+                        $block[] = new RequireStatement($appClassPath);
+                    }
+                }
+            }
         }
-         */
-
-
-        if ($configLoader->isLoaded('database')) {
-            $block[] = '$kernel->registerService(new \Phifty\ServiceProvider\DatabaseServiceProvider());';
-        }
-
-
 
         $this->logger->info("Compiling code to $outputFile");
         $code = $block->render();
 
-
-
-
-        echo $code;
+        $this->logger->debug($code);
         return file_put_contents($outputFile, $code);
     }
 

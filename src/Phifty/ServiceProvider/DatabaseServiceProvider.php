@@ -18,7 +18,6 @@ class DatabaseServiceProvider
 
     public function register($kernel, $options = array() )
     {
-        // $config = $this->config->stashes['database'];
         $loader = \LazyRecord\ConfigLoader::getInstance();
         if (! $loader->loaded) {
             $loader->load($this->config);
