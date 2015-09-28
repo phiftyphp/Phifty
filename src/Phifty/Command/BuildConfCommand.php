@@ -20,7 +20,7 @@ class BuildConfCommand extends Command
         $configPath = func_get_args();
 
         // should we scan config directories ?
-        if ( empty($configPath) ) {
+        if (empty($configPath)) {
             $configPath = array_filter(
                 array(
                     'config/application.yml',
@@ -32,7 +32,7 @@ class BuildConfCommand extends Command
                         });
         }
 
-        if ( empty($configPath) ) {
+        if (empty($configPath)) {
             die("No config found.");
         }
 

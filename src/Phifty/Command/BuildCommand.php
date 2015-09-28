@@ -23,6 +23,21 @@ class BuildCommand extends Command
 
     public function execute()
     {
+        // XXX: connect to differnt config by using environment variable (PHIFTY_ENV)
+        $this->logger->info("Building config files...");
+        $configPaths = array_filter(
+            array(
+                'config/application.yml',
+                'config/framework.yml',
+                'config/database.yml',
+                'config/testing.yml'
+            ), 'file_exists');
+        foreach ($configPaths as $configPath) {
+            $this->logger->info("Building $configPath");
+            ConfigCompiler::compile($configPath);
+        }
+
+
         $this->logger->info('Generating main.php...');
 
         defined('PH_APP_ROOT') || define('PH_APP_ROOT', getcwd());
