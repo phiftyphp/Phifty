@@ -68,7 +68,12 @@ $kernel->prepare(); // prepare constants
 $kernel->registerService(new \Phifty\ServiceProvider\ClassLoaderServiceProvider(getSplClassLoader()));
 
 // load config service.
-$configLoader = initConfigLoader();
+if (class_exists('App\\AppConfigLoader', true)) {
+    $configLoader = new \App\ConfigLoader;
+} else {
+    $configLoader = initConfigLoader();
+}
+
 $kernel->registerService(new \Phifty\ServiceProvider\ConfigServiceProvider($configLoader));
 
 // load event service, so that we can bind events in Phifty
