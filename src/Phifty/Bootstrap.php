@@ -9,6 +9,7 @@ defined('DS')          || define('DS', DIRECTORY_SEPARATOR);
 
 function initConfigLoader()
 {
+
     // We load other services from the definitions in config file
     // Simple load three config files (framework.yml, database.yml, application.yml)
     $loader = new ConfigLoader();
@@ -59,50 +60,43 @@ require __DIR__.'/GlobalFuncs.php';
 // require __DIR__ . '/Kernel.php';
 
 global $kernel;
+$kernel = new \Phifty\Kernel;
+$kernel->prepare(); // prepare constants
 
-function create_kernel()
-{
-    global $kernel;
-    $kernel = new \Phifty\Kernel();
-    $kernel->prepare(); // prepare constants
+// register default classloader service
+// $composerLoader = require PH_ROOT . '/vendor/autoload.php';
+$kernel->registerService(new \Phifty\ServiceProvider\ClassLoaderServiceProvider(getSplClassLoader()));
 
+// load config service.
+$configLoader = initConfigLoader();
+$kernel->registerService(new \Phifty\ServiceProvider\ConfigServiceProvider($configLoader));
 
-    // register default classloader service
-    // $composerLoader = require PH_ROOT . '/vendor/autoload.php';
-    $kernel->registerService(new \Phifty\ServiceProvider\ClassLoaderServiceProvider(getSplClassLoader()));
+// load event service, so that we can bind events in Phifty
+$kernel->registerService(new \Phifty\ServiceProvider\EventServiceProvider());
 
-    // load config service.
-    $configLoader = initConfigLoader();
-    $kernel->registerService(new \Phifty\ServiceProvider\ConfigServiceProvider($configLoader));
+// if the framework config is defined.
+if ($configLoader->isLoaded('framework')) {
+    // we should load database service before other services
+    // because other services might need database service
+    if ($configLoader->isLoaded('database')) {
+        $kernel->registerService(new \Phifty\ServiceProvider\DatabaseServiceProvider());
+    }
 
-    // load event service, so that we can bind events in Phifty
-    $kernel->registerService(new \Phifty\ServiceProvider\EventServiceProvider());
-
-    // if the framework config is defined.
-    if ($configLoader->isLoaded('framework')) {
-        // we should load database service before other services
-        // because other services might need database service
-        if ($configLoader->isLoaded('database')) {
-            $kernel->registerService(new \Phifty\ServiceProvider\DatabaseServiceProvider());
-        }
-
-        if ($appconfigs = $kernel->config->get('framework', 'Applications')) {
-            foreach ($appconfigs as $appname => $appconfig) {
-                $kernel->classloader->addNamespace(array(
-                    $appname => array(PH_APP_ROOT.'/applications', PH_ROOT.'/applications'),
-                ));
-            }
-        }
-
-        if ($services = $kernel->config->get('framework', 'ServiceProviders')) {
-            foreach ($services as $name => $options) {
-                // not full qualified classname
-                $class = (false === strpos($name, '\\')) ? ('Phifty\\ServiceProvider\\'.$name) : $name;
-                $kernel->registerService(new $class(), $options);
-            }
+    if ($appconfigs = $kernel->config->get('framework', 'Applications')) {
+        foreach ($appconfigs as $appname => $appconfig) {
+            $kernel->classloader->addNamespace(array(
+                $appname => array(PH_APP_ROOT.'/applications', PH_ROOT.'/applications'),
+            ));
         }
     }
-    $kernel->init();
+
+    if ($services = $kernel->config->get('framework', 'ServiceProviders')) {
+        foreach ($services as $name => $options) {
+            // not full qualified classname
+            $class = (false === strpos($name, '\\')) ? ('Phifty\\ServiceProvider\\'.$name) : $name;
+            $kernel->registerService(new $class(), $options);
+        }
+    }
 }
 
 /**
@@ -118,7 +112,7 @@ function kernel()
     if ($kernel) {
         return $kernel;
     }
-    create_kernel();
+    $kernel->init();
     return $kernel;
 }
 

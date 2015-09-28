@@ -10,7 +10,6 @@ if( isset($argv[1]) && $argv[1] == 'build-conf' ) {
 
 # vim:filetype=php:
 require 'main.php';
-$kernel = kernel();
 $console = Phifty\Console::getInstance();
 $kernel->event->trigger( 'phifty.console.init_commands' , $console );
 $console->runWithTry( $argv );
