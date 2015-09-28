@@ -6,6 +6,7 @@ use ConfigKit\ConfigLoader;
 use CodeGen\Generator\AppClassGenerator;
 use CodeGen\Block;
 use CodeGen\Statement\RequireStatement;
+use CodeGen\Statement\AssignStatement;
 
 
 class BuildCommand extends Command
@@ -40,7 +41,8 @@ class BuildCommand extends Command
         $block[] = sprintf("define('PH_ROOT', %s);", var_export(PH_ROOT, true));
         $block[] = sprintf("define('PH_APP_ROOT', %s);", var_export(PH_APP_ROOT, true));
 
-        $block[] = new RequireStatement(PH_APP_ROOT . DIRECTORY_SEPARATOR . 'vendor/autoload.php');
+        $block[] = 'global $composerClassLoader;';
+        $block[] = new AssignStatement('$composerClassLoader', new RequireStatement(PH_APP_ROOT . DIRECTORY_SEPARATOR . 'vendor/autoload.php'));
 
         $this->logger->info("Generating config loader...");
         // generating the config loader
@@ -51,11 +53,41 @@ class BuildCommand extends Command
         require_once $path;
         $block[] = new RequireStatement(PH_APP_ROOT . DIRECTORY_SEPARATOR . $path);
 
+
+
+        // FIXME:
+        if (extension_loaded('apc')) {
+
+        }
+        $block[] = new RequireStatement(PH_APP_ROOT . DIRECTORY_SEPARATOR . 'vendor/corneltek/universal/src/Universal/ClassLoader/SplClassLoader.php');
+        $block[] = 'global $splClassLoader;';
+        $block[] = '$splClassLoader = new \Universal\ClassLoader\SplClassLoader();';
+        $block[] = '$splClassLoader->useIncludePath(false);';
+        $block[] = '$splClassLoader->register(false);';
+
+
         // Include bootstrap class
         $block[] = new RequireStatement(dirname(__DIR__) . DIRECTORY_SEPARATOR . 'Bootstrap.php' );
 
+        /*
+        if (0 && extension_loaded('apc')) {
+            // require PH_APP_ROOT . '/vendor/corneltek/universal/src/Universal/ClassLoader/ApcClassLoader.php';
+            $loader = new \Universal\ClassLoader\ApcClassLoader(PH_ROOT);
+        } else {
+            // require PH_APP_ROOT . '/vendor/corneltek/universal/src/Universal/ClassLoader/SplClassLoader.php';
+            $loader = new \Universal\ClassLoader\SplClassLoader();
+        }
+         */
+
+
+
+
         $this->logger->info("Compiling code to $outputFile");
         $code = $block->render();
+
+
+
+
         echo $code;
         return file_put_contents($outputFile, $code);
     }

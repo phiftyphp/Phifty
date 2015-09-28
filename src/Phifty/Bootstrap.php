@@ -39,33 +39,16 @@ function initConfigLoader()
     return $loader;
 }
 
-function getSplClassLoader()
-{
-    $loader = null;
-    if (0 && extension_loaded('apc')) {
-        // require PH_APP_ROOT . '/vendor/corneltek/universal/src/Universal/ClassLoader/ApcClassLoader.php';
-        $loader = new \Universal\ClassLoader\ApcClassLoader(PH_ROOT);
-    } else {
-        // require PH_APP_ROOT . '/vendor/corneltek/universal/src/Universal/ClassLoader/SplClassLoader.php';
-        $loader = new \Universal\ClassLoader\SplClassLoader();
-    }
-    $loader->useIncludePath(false);
-    $loader->register(false);
-
-    return $loader;
-}
-
 // Load Kernel so we don't need to load by classloader.
 require __DIR__.'/GlobalFuncs.php';
 // require __DIR__ . '/Kernel.php';
 
 global $kernel;
+global $splClassLoader;
+global $composerClassLoader;
 $kernel = new \Phifty\Kernel;
 $kernel->prepare(); // prepare constants
-
-// register default classloader service
-// $composerLoader = require PH_ROOT . '/vendor/autoload.php';
-$kernel->registerService(new \Phifty\ServiceProvider\ClassLoaderServiceProvider(getSplClassLoader()));
+$kernel->registerService(new \Phifty\ServiceProvider\ClassLoaderServiceProvider($splClassLoader));
 
 // load config service.
 if (class_exists('App\\AppConfigLoader', true)) {
