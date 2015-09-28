@@ -29,42 +29,41 @@ class TwigServiceProvider extends BaseServiceProvider
         return 'Twig';
     }
 
-    static public function generateNew(Kernel $kernel, $args)
+    static public function generateNew(Kernel $kernel, array & $options = array())
     {
         $className = get_called_class();
 
-        if (count($args)) {
-            // preprocess twig configs
-            $options = & $args[0];
+        // preprocess twig configs
 
-            $templateDirs = array();
-            if (isset($options['TemplateDirs']) && $options['TemplateDirs']) {
-                $templateDirs = array_map(function($dir) {
-                    return PH_APP_ROOT . DIRECTORY_SEPARATOR . $dir;
-                }, $options['TemplateDirs']);
-            }
-
-            // append fallback template dirs from plugin dir or framework plugin dir.
-            $templateDirs[] = PH_APP_ROOT;
-            $options['TemplateDirs'] = $templateDirs;
-
-
-            if ($kernel->isDev) {
-                $envOptions['debug'] = true;
-                $envOptions['auto_reload'] = true;
-            } else {
-                // for production
-                $envOptions['optimizations'] = true;
-                // $envOptions['cache'] = kernel()->getCacheDir() . DIRECTORY_SEPARATOR . 'twig';
-            }
-
-            // override from config
-            if (isset($options['Environment']) && $options['Environment']) {
-                $envOptions = array_merge($envOptions , $options['Environment'] );
-            }
-            $options['Environment'] = $envOptions;
+        $templateDirs = array();
+        if (isset($options['TemplateDirs']) && $options['TemplateDirs']) {
+            $templateDirs = array_map(function($dir) {
+                return PH_APP_ROOT . DIRECTORY_SEPARATOR . $dir;
+            }, $options['TemplateDirs']);
         }
-        return new NewObject($className, $args);
+
+        // append fallback template dirs from plugin dir or framework plugin dir.
+        $templateDirs[] = PH_APP_ROOT;
+        $options['TemplateDirs'] = $templateDirs;
+
+        if ($kernel->isDev) {
+            $envOptions['debug'] = true;
+            $envOptions['auto_reload'] = true;
+        } else {
+            // for production
+            $envOptions['optimizations'] = true;
+            $envOptions['cache'] = $kernel->cacheDir . DIRECTORY_SEPARATOR . 'twig';
+            if (!file_exists($envOptions['cache'])) {
+                @mkdir($envOptions['cache'], 0777);
+            }
+        }
+
+        // override from config
+        if (isset($options['Environment']) && $options['Environment']) {
+            $envOptions = array_merge($envOptions , $options['Environment'] );
+        }
+        $options['Environment'] = $envOptions;
+        return new NewObject($className, [$options]);
     }
 
     public function register($kernel, $options = array() )

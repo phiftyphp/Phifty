@@ -25,10 +25,10 @@ abstract class BaseServiceProvider implements ServiceProvider
      */
     abstract public function register($kernel, $options = array());
 
-    public static function generateNew(Kernel $kernel, $args)
+    public static function generateNew(Kernel $kernel, array & $options = array())
     {
         // (PHP 5 >= 5.3.0)
         $className = get_called_class();
-        return new NewObject($className, $args);
+        return new NewObject($className, [$options]);
     }
 }

@@ -128,13 +128,17 @@ class BuildCommand extends Command
             }
             if ($services = $configLoader->get('framework', 'ServiceProviders')) {
                 foreach ($services as $name => $options) {
+                    if (!$options) {
+                        $options = array();
+                    }
+
                     // not full qualified classname
                     $class = (false === strpos($name, '\\')) ? ('Phifty\\ServiceProvider\\'.$name) : $name;
                     if (class_exists($class, true)) {
                         $block[] = new RequireClassStatement($class);
 
                         if (is_subclass_of($class, 'Phifty\\ServiceProvider\\BaseServiceProvider')) {
-                            $block[] = '$kernel->registerService(' . $class::generateNew($runtimeKernel, [$options]) . ');';
+                            $block[] = '$kernel->registerService(' . $class::generateNew($runtimeKernel, $options) . ');';
                         } else {
                             $expr = new NewObject($class, [$options]);
                             $block[] = '$kernel->registerService(' . $expr->render() . ');';
