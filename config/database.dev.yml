@@ -1,0 +1,16 @@
+---
+bootstrap:
+  - 'main.php'
+schema:
+  auto_id: true
+  loader: src/Phifty/SchemaLoader.php
+seeds:
+data_source:
+  default: master
+  nodes:
+    master:
+      driver: mysql
+      host: localhost
+      database: phifty
+      user: root
+      pass:
