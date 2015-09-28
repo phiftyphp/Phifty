@@ -4,7 +4,7 @@
         "php": ">=5.4.0",
         "corneltek/universal": "^1.7",
         "corneltek/universal-cache": "^1",
-        "corneltek/locale": "~1",
+        "corneltek/locale": "^1.0",
         "corneltek/fileutil": "~1",
         "corneltek/configkit": "^1",
         "corneltek/assetkit": "~3",
