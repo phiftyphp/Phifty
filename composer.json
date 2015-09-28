@@ -10,7 +10,7 @@
         "corneltek/assetkit": "~3",
         "corneltek/lazyrecord": "^2.2",
         "corneltek/genphp": "*",
-        "corneltek/codegen": "^2.3",
+        "corneltek/codegen": "dev-master as 2.3.9999",
         "corneltek/sessionkit": "~1",
         "corneltek/actionkit": "^2",
         "phpsgi/funk": "dev-master@dev",
