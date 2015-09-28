@@ -5,7 +5,7 @@
  * @author c9s <cornelius.howl@gmail.com>
  * @package Phifty
  */
-require '../main.php';
+require '../bootstrap.php';
 if (php_sapi_name() == 'cli-server') {
     $uri = $_SERVER['REQUEST_URI'];
     $info = parse_url($uri);
