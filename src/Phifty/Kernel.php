@@ -6,6 +6,7 @@ use Phifty\Web;
 use Universal\Container\ObjectContainer;
 use Phifty\ServiceProvider\ServiceProvider;
 use Exception;
+use ConfigKit\ConfigLoader;
 
 class Kernel extends ObjectContainer
 {
@@ -14,22 +15,26 @@ class Kernel extends ObjectContainer
     const VERSION = '2.6.0';
 
     public $applicationID;
+
     public $applicationName;
+
     public $applicationUUID;
 
     public $frameworkDir;
+
     public $frameworkAppDir;
+
     public $frameworkBundleDir;
 
     public $cacheDir;
 
     public $rootDir;  // application root dir
-    public $rootAppDir;   // application dir (./applications)
-    public $rootBundleDir;
-    public $webroot;
 
-    /* boolean: is in command mode ? */
-    public $isCLI;
+    public $rootAppDir;   // application dir (./applications)
+
+    public $rootBundleDir;
+
+    public $webroot;
 
     /* boolean: is in development mode ? */
     public $isDev = true;
@@ -49,10 +54,6 @@ class Kernel extends ObjectContainer
     {
         // define framework environment
         $this->environment  = $environment ?: getenv('PHIFTY_ENV') ?: 'development';
-        $this->isCLI        = isset($_SERVER['argc']) && !isset($_SERVER['HTTP_HOST']);
-        defined('CLI_MODE') || define( 'CLI_MODE' , $this->isCLI );
-
-        // detect development mode
         $this->isDev = $this->environment === 'development';
     }
 
@@ -61,19 +62,19 @@ class Kernel extends ObjectContainer
     /**
      * To run prepare method, please define the PH_ROOT and PH_APP_ROOT first.
      */
-    public function prepare() 
+    public function prepare(ConfigLoader $configLoader) 
     {
         // build path info
-        $this->frameworkDir       = PH_ROOT;
-        $this->frameworkAppDir    = PH_ROOT . DS . 'applications';
+        $this->frameworkDir       = PH_APP_ROOT;
+        $this->frameworkAppDir    = PH_APP_ROOT . DIRECTORY_SEPARATOR . 'applications';
         $this->rootDir            = PH_APP_ROOT;      // Application root.
-        $this->rootAppDir         = PH_APP_ROOT . DS . 'applications';
-        $this->webroot            = PH_APP_ROOT . DS . 'webroot';
-        $this->cacheDir           = PH_APP_ROOT . DS . 'cache';
-        mb_internal_encoding('UTF-8');
-        if (! $this->isCLI) {
-            ob_start();
-        }
+        $this->rootAppDir         = PH_APP_ROOT . DIRECTORY_SEPARATOR . 'applications';
+        $this->webroot            = PH_APP_ROOT . DIRECTORY_SEPARATOR . 'webroot';
+        $this->cacheDir           = PH_APP_ROOT . DIRECTORY_SEPARATOR . 'cache';
+
+        $this->applicationUUID = $configLoader->framework->ApplicationUUID;
+        $this->applicationID   = $configLoader->framework->ApplicationID;
+        $this->applicationName = $configLoader->framework->ApplicationName;
     }
 
 
@@ -156,17 +157,12 @@ class Kernel extends ObjectContainer
      */
     public function getApplicationUUID()
     {
-        if ( $this->applicationUUID )
-            return $this->ApplicationUUID;
-        return $this->ApplicationUUID = $this->config->framework->ApplicationUUID;
+        return $this->ApplicationUUID;
     }
 
     public function getApplicationID()
     {
-        if ($this->applicationID) {
-            return $this->applicationID;
-        }
-        return $this->applicationID = $this->config->framework->ApplicationID;
+        return $this->applicationID;
     }
 
     /**
@@ -176,10 +172,7 @@ class Kernel extends ObjectContainer
      */
     public function getApplicationName()
     {
-        if ( $this->applicationName ) {
-            return $this->applicationName;
-        }
-        return $this->applicationName = $this->config->framework->ApplicationName;
+        return $this->applicationName;
     }
 
 
@@ -207,13 +200,13 @@ class Kernel extends ObjectContainer
         };
 
         // Turn off all error reporting
-        if ($this->isDev || $this->isCLI) {
+        if ($this->isDev || CLI) {
             \Phifty\Environment\Development::init($this);
         } else {
             \Phifty\Environment\Production::init($this);
         }
 
-        if ($this->isCLI) {
+        if (CLI) {
             \Phifty\Environment\CommandLine::init($this);
         }
 

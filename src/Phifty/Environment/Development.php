@@ -43,7 +43,7 @@ class Development
         // set_exception_handler(array(__CLASS__,'exception_handler') );
 
         // if firebug supports
-        if ( $kernel->isCLI && getenv('PHIFTY_PROFILE') ) {
+        if (CLI && getenv('PHIFTY_PROFILE') ) {
             $kernel->event->register('phifty.console.finish', function() use ($kernel) {
                 // echo 'memory usage: ', (int) (memory_get_usage() / 1024  ) , ' KB', PHP_EOL;
                 echo 'Memory peak usage: ', (int) (memory_get_peak_usage() / 1024 ) , ' KB' . PHP_EOL;

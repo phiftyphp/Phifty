@@ -135,7 +135,7 @@ class Controller extends PuxController
 
     public function toJson($data, $encodeFlags = null)
     {
-        if (! CLI_MODE) {
+        if (! CLI) {
             header('Content-type: application/json; charset=UTF-8');
         }
         return parent::toJson($data, $encodeFlags);
@@ -143,7 +143,7 @@ class Controller extends PuxController
 
     public function toYaml($data, $encodeFlags = null)
     {
-        if (! CLI_MODE) {
+        if (! CLI) {
             header('Content-type: application/yaml; charset=UTF-8;');
         }
 
@@ -176,7 +176,7 @@ class Controller extends PuxController
     public function forbidden($msg = '403 Forbidden')
     {
         /* XXX: dirty hack this for phpunit testing */
-        if ( ! CLI_MODE ) {
+        if ( ! CLI ) {
             header('HTTP/1.1 403 Forbidden');
         }
         echo $msg;

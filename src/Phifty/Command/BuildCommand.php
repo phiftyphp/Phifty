@@ -5,16 +5,13 @@ use ConfigKit\ConfigCompiler;
 use ConfigKit\ConfigLoader;
 use CodeGen\Generator\AppClassGenerator;
 use CodeGen\Block;
+use CodeGen\Raw;
 use CodeGen\Statement\RequireStatement;
 use CodeGen\Statement\RequireComposerAutoloadStatement;
 use CodeGen\Statement\RequireClassStatement;
 use CodeGen\Statement\AssignStatement;
+use CodeGen\Statement\DefineStatement;
 
-
-function PhiftyClassPath($class)
-{
-    return dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
-}
 
 class BuildCommand extends Command
 {
@@ -59,10 +56,20 @@ class BuildCommand extends Command
         $block = new Block;
         $block[] = '<?php';
 
+        if (extension_loaded('mbstring')) {
+            $block[] = "mb_internal_encoding('UTF-8');";
+        }
+
+
         // autoload script from composer
         $block[] = sprintf("define('PH_ROOT', %s);", var_export(PH_ROOT, true));
         $block[] = sprintf("define('PH_APP_ROOT', %s);", var_export(PH_APP_ROOT, true));
         $block[] = "defined('DS') || define('DS', DIRECTORY_SEPARATOR);";
+
+
+        // CLI mode should be dynamic
+        $block[] = new DefineStatement('CLI', new Raw("isset(\$_SERVER['argc']) && !isset(\$_SERVER['HTTP_HOST'])"));
+        $block[] = new DefineStatement('CLI_MODE', new Raw("CLI"));
 
 
         $block[] = 'global $kernel;';
@@ -84,12 +91,27 @@ class BuildCommand extends Command
         $this->logger->info("Generating config loader...");
         // generating the config loader
         $configLoader = self::createConfigLoader(PH_APP_ROOT);
-        $generator = new AppClassGenerator([ 'namespace' => 'App', 'prefix' => '' ]);
-        $appClass = $generator->generate($configLoader);
-        $path = $appClass->generatePsr4ClassUnder('app'); 
-        require_once $path;
-        $block[] = new RequireStatement(PH_APP_ROOT . DIRECTORY_SEPARATOR . $path);
+        $configClassGenerator = new AppClassGenerator([ 'namespace' => 'App', 'prefix' => 'App' ]);
+        $configClass = $configClassGenerator->generate($configLoader);
+        $classPath = $configClass->generatePsr4ClassUnder('app'); 
+        require_once $classPath;
+        $block[] = new RequireStatement(PH_APP_ROOT . DIRECTORY_SEPARATOR . $classPath);
 
+        $kernelClassGenerator = new AppClassGenerator([
+            'namespace' => 'App',
+            'prefix' => 'App',
+            'property_filter' => function($property) {
+                return !preg_match('/^(applications|services|environment|isDev|_.*)$/i', $property->getName());
+            }
+        ]);
+        $runtimeKernel = new \Phifty\Kernel;
+        $runtimeKernel->prepare($configLoader);
+        $appKernelClass = $kernelClassGenerator->generate($runtimeKernel);
+        $classPath = $appKernelClass->generatePsr4ClassUnder('app'); 
+        require_once $classPath;
+        $block[] = new RequireStatement(PH_APP_ROOT . DIRECTORY_SEPARATOR . $classPath);
+
+        // $block[] = '';
 
 
 

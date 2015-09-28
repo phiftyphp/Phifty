@@ -2,11 +2,10 @@
 global $kernel;
 global $splClassLoader;
 global $composerClassLoader;
-$kernel = new \Phifty\Kernel;
-$kernel->prepare(); // prepare constants
+$kernel = new \App\AppKernel;
 $kernel->registerService(new \Phifty\ServiceProvider\ClassLoaderServiceProvider($splClassLoader));
 
-$configLoader = new \App\ConfigLoader;
+$configLoader = new \App\AppConfigLoader;
 $kernel->registerService(new \Phifty\ServiceProvider\ConfigServiceProvider($configLoader));
 
 // load event service, so that we can bind events in Phifty
