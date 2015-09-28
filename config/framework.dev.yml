@@ -1,0 +1,40 @@
+---
+ApplicationName: MyApp
+ApplicationID:   myapp
+ApplicationUUID: 84dd6792-a0a4-11e4-aa35-3c15c2cb5a5a
+Domain: myapp.dev
+Mail:
+  System: "\"System\" <noreply@localhost>"
+  Admin: "\"Admin\" <admin@localhost>"
+Applications:
+ServiceProviders:
+  CurrentUserServiceProvider:
+    Class: Phifty\Security\CurrentUser
+    Model: UserBundle\Model\User
+  ActionServiceProvider:
+  PuxRouterServiceProvider:
+  LibraryServiceProvider:
+  ViewServiceProvider:
+    Backend: twig
+  MailerServiceProvider:
+    Transport: MailTransport
+  CacheServiceProvider: ~
+  LocaleServiceProvider:
+    Directory: locale
+    Default: zh_TW
+    Domain: myapp
+    Langs:
+      - en
+      - zh_TW
+  CacheServiceProvider:
+  SessionServiceProvider:
+  TwigServiceProvider:
+    TemplateDirs:
+      - design/production
+  AssetServiceProvider:
+    BaseUrl: /assets
+    BaseDir: webroot/assets
+  BundleServiceProvider:
+    Paths:
+      - bundles
+Bundles:
