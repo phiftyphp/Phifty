@@ -57,7 +57,7 @@ class BuildCommand extends Command
         $this->logger->info("Compiling code to $outputFile");
         $code = $block->render();
         echo $code;
-        file_put_contents($outputFile, $code);
+        return file_put_contents($outputFile, $code);
     }
 
     static public function createConfigLoader($baseDir)
