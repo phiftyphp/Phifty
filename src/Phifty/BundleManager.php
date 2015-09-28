@@ -36,7 +36,7 @@ class BundleManager implements ArrayAccess, IteratorAggregate
     public function registerBundleDir($dir)
     {
         $this->bundleDirs[] = $dir;
-        if ( $twig = kernel()->twig ) {
+        if ($twig = kernel()->twig) {
             $twig->loader->addPath($dir);
         }
     }

@@ -31,7 +31,7 @@ class BuildCommand extends Command
     public function execute()
     {
         // XXX: connect to differnt config by using environment variable (PHIFTY_ENV)
-        $this->logger->info("Building config files...");
+        $this->logger->info("===> Building config files...");
         $configPaths = array_filter(
             array(
                 'config/application.yml',
@@ -44,7 +44,7 @@ class BuildCommand extends Command
             ConfigCompiler::compile($configPath);
         }
 
-        $this->logger->info('Generating main.php...');
+        $this->logger->info('===> Generating main.php...');
 
         defined('PH_APP_ROOT') || define('PH_APP_ROOT', getcwd());
         // PH_ROOT is deprecated, but kept for backward compatibility
@@ -63,8 +63,18 @@ class BuildCommand extends Command
         $block[] = "defined('DS') || define('DS', DIRECTORY_SEPARATOR);";
 
 
+        $block[] = 'global $kernel;';
         $block[] = 'global $composerClassLoader;';
+        $block[] = 'global $splClassLoader;';
         $block[] = new AssignStatement('$composerClassLoader', new RequireComposerAutoloadStatement());
+
+        // TODO:
+        //  - add PSR-4 class loader here.
+        $block[] = new RequireClassStatement('Universal\\ClassLoader\\SplClassLoader');
+        $block[] = '$splClassLoader = new \Universal\ClassLoader\SplClassLoader();';
+        $block[] = '$splClassLoader->useIncludePath(false);';
+        $block[] = '$splClassLoader->register(false);';
+
 
         $block[] = new RequireClassStatement('Universal\\Container\\ObjectContainer');
         $block[] = new RequireClassStatement('Phifty\\Kernel');
@@ -79,13 +89,6 @@ class BuildCommand extends Command
         $block[] = new RequireStatement(PH_APP_ROOT . DIRECTORY_SEPARATOR . $path);
 
 
-        // TODO:
-        //  - add PSR-4 class loader here.
-        $block[] = new RequireClassStatement('Universal\\ClassLoader\\SplClassLoader');
-        $block[] = 'global $splClassLoader;';
-        $block[] = '$splClassLoader = new \Universal\ClassLoader\SplClassLoader();';
-        $block[] = '$splClassLoader->useIncludePath(false);';
-        $block[] = '$splClassLoader->register(false);';
 
 
         // Include bootstrap class
@@ -120,9 +123,8 @@ class BuildCommand extends Command
             }
         }
 
-        $this->logger->info("Compiling code to $outputFile");
+        $this->logger->info("===> Compiling code to $outputFile");
         $code = $block->render();
-
         $this->logger->debug($code);
         return file_put_contents($outputFile, $code);
     }

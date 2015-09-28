@@ -12,17 +12,6 @@ $kernel->registerService(new \Phifty\ServiceProvider\ConfigServiceProvider($conf
 // load event service, so that we can bind events in Phifty
 $kernel->registerService(new \Phifty\ServiceProvider\EventServiceProvider());
 
-// if the framework config is defined.
-if ($configLoader->isLoaded('framework')) {
-    if ($appconfigs = $kernel->config->get('framework', 'Applications')) {
-        foreach ($appconfigs as $appname => $appconfig) {
-            $kernel->classloader->addNamespace(array(
-                $appname => array(PH_APP_ROOT.'/applications', PH_ROOT.'/applications'),
-            ));
-        }
-    }
-}
-
 /**
  * kernel() is a global shorter helper function to get Phifty\Kernel instance.
  *
