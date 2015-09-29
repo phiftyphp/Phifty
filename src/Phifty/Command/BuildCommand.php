@@ -27,6 +27,31 @@ class BuildCommand extends Command
             ->defaultValue('bootstrap.php');
     }
 
+
+    /*
+        Build command generates the bootstrap.php script in the following sections:
+
+        ----------------------------
+        Predefined Constants
+        ----------------------------
+        Global variable definitions
+        ----------------------------
+        Require & init class loaders
+        ----------------------------
+        Create config loader object
+        ----------------------------
+        Create Kernel object
+        ----------------------------
+        Register ServiceProviders
+        ----------------------------
+        Register Apps
+        ----------------------------
+        Register Bundles
+        ----------------------------
+        Init Kernel object
+        ----------------------------
+
+     */
     public function execute()
     {
         // XXX: connect to differnt config by using environment variable (PHIFTY_ENV)
