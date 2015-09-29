@@ -25,6 +25,11 @@ abstract class BaseServiceProvider implements ServiceProvider
      */
     abstract public function register($kernel, $options = array());
 
+    public static function isGeneratable(Kernel $kernel, array & $options = array())
+    {
+        return true;
+    }
+
     public static function generateNew(Kernel $kernel, array & $options = array())
     {
         // (PHP 5 >= 5.3.0)
