@@ -119,6 +119,12 @@ class BootstrapCommand extends Command
         $block[] = 'global $kernel, $composerClassLoader, $splClassLoader;';
         $block[] = new AssignStatement('$composerClassLoader', new RequireComposerAutoloadStatement());
 
+        // $composerClassLoader->addPsr4('App\\', '/.../.../app');
+        $block[] = new Statement(new MethodCall('$composerClassLoader', 'addPsr4', [
+            'App\\',
+            PH_APP_ROOT . DIRECTORY_SEPARATOR . 'app',
+        ]));
+
         // TODO:
         //  - add PSR-4 class loader here.
         $block[] = new RequireClassStatement('Universal\\ClassLoader\\SplClassLoader');
