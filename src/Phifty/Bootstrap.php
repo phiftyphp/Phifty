@@ -21,8 +21,5 @@ $kernel->registerService(new \Phifty\ServiceProvider\EventServiceProvider());
 function kernel()
 {
     global $kernel;
-    if ($kernel) {
-        return $kernel;
-    }
     return $kernel;
 }
