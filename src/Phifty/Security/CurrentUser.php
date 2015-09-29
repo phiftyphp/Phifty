@@ -25,7 +25,7 @@ use Phifty\Security\CurrentUserRole;
  *   $currentUser = new CurrentUser;  // load current user from session data
  *
  *   $currentUser = new CurrentUser(array(
- *       'model_class' => 'User\Model\User',
+ *       'model_class' => 'UserBundle\Model\User',
  *   ));
 */
 class CurrentUser
@@ -69,7 +69,7 @@ class CurrentUser
                     isset($args['model_class'])
                         ? $args['model_class']
                         : kernel()->config->get( 'framework', 'CurrentUser.Model' )
-                            ?: 'User\Model\User';  // default user model (User\Model\User)
+                            ?: 'UserBundle\Model\User';  // default user model (UserBundle\Model\User)
             }
 
             if ( isset($args['session_prefix']) ) {
