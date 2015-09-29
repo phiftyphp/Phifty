@@ -58,6 +58,14 @@ class TwigServiceProvider extends BaseServiceProvider
             }
         }
 
+        if (isset($options['Namespaces'])) {
+            foreach ($options['Namespaces'] as $name => & $dir) {
+                $dir = realpath($dir);
+                // $loader->addPath(PH_APP_ROOT . DIRECTORY_SEPARATOR . $dir, $namespace);
+                // = array_map('realpath', $options['Namespaces']);
+            }
+        }
+
         // override from config
         if (isset($options['Environment']) && $options['Environment']) {
             $envOptions = array_merge($envOptions , $options['Environment'] );
@@ -78,7 +86,7 @@ class TwigServiceProvider extends BaseServiceProvider
              */
             if (isset($options['Namespaces'])) {
                 foreach ($options['Namespaces'] as $namespace => $dir) {
-                    $loader->addPath(PH_APP_ROOT . DIRECTORY_SEPARATOR . $dir, $namespace);
+                    $loader->addPath($dir, $namespace);
                 }
             }
 
