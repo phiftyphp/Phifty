@@ -120,12 +120,24 @@ class BuildCommand extends Command
         $block[] = new RequireStatement(dirname(__DIR__) . DIRECTORY_SEPARATOR . 'Bootstrap.php' );
 
 
+
         // Kernel initialization after bootstrap script
         if ($configLoader->isLoaded('framework')) {
             if ($configLoader->isLoaded('database')) {
                 $dbConfig = $configLoader->getSection('database');
                 $block[] = '$kernel->registerService(new \Phifty\ServiceProvider\DatabaseServiceProvider(' . var_export($dbConfig, true) . '));';
             }
+
+            // Require application classes directly, we need applications to be registered before services
+            if ($appconfigs = $configLoader->get('framework', 'Applications')) {
+                foreach ($appconfigs as $appName => $appconfig) {
+                    $appClassPath = PH_APP_ROOT . DIRECTORY_SEPARATOR . 'applications' . DIRECTORY_SEPARATOR . $appName . DIRECTORY_SEPARATOR . 'Application.php';
+                    if (file_exists($appClassPath)) {
+                        $block[] = new RequireStatement($appClassPath);
+                    }
+                }
+            }
+
             if ($services = $configLoader->get('framework', 'ServiceProviders')) {
                 foreach ($services as $name => $options) {
                     if (!$options) {
@@ -146,17 +158,9 @@ class BuildCommand extends Command
                     }
                 }
             }
-
-            // Require application classes directly
-            if ($appconfigs = $configLoader->get('framework', 'Applications')) {
-                foreach ($appconfigs as $appName => $appconfig) {
-                    $appClassPath = PH_APP_ROOT . DIRECTORY_SEPARATOR . 'applications' . DIRECTORY_SEPARATOR . $appName . DIRECTORY_SEPARATOR . 'Application.php';
-                    if (file_exists($appClassPath)) {
-                        $block[] = new RequireStatement($appClassPath);
-                    }
-                }
-            }
+            $block[] = '$kernel->init();';
         }
+
 
         $this->logger->info("===> Compiling code to $outputFile");
         $code = $block->render();
