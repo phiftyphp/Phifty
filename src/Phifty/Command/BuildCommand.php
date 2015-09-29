@@ -88,9 +88,12 @@ class BuildCommand extends Command
 
 
         // autoload script from composer
-        $block[] = sprintf("define('PH_ROOT', %s);", var_export(PH_ROOT, true));
-        $block[] = sprintf("define('PH_APP_ROOT', %s);", var_export(PH_APP_ROOT, true));
-        $block[] = "defined('DS') || define('DS', DIRECTORY_SEPARATOR);";
+        $block[] = new DefineStatement('PH_ROOT', PH_ROOT);
+        $block[] = new DefineStatement('PH_APP_ROOT', PH_ROOT);
+        $block[] = new DefineStatement('DS', DIRECTORY_SEPARATOR);
+        // $block[] = sprintf("define('PH_ROOT', %s);", var_export(PH_ROOT, true));
+        // $block[] = sprintf("define('PH_APP_ROOT', %s);", var_export(PH_APP_ROOT, true));
+        // $block[] = "defined('DS') || define('DS', DIRECTORY_SEPARATOR);";
 
 
         // CLI mode should be dynamic
