@@ -159,25 +159,25 @@ class BootstrapCommand extends Command
         $block[] = new AssignStatement('$kernel', new NewObject('App\\AppKernel'));
 
         // Generates: $kernel->registerService(new \Phifty\ServiceProvider\ClassLoaderServiceProvider($splClassLoader));
-        $block[] = new MethodCall('$kernel', 'registerService', [ 
+        $block[] = new Statement(new MethodCall('$kernel', 'registerService', [ 
             new NewObject('\\Phifty\\ServiceProvider\\ClassLoaderServiceProvider',[ new Variable('$splClassLoader') ]),
-        ]);
+        ]));
 
 
         // Generates: $configLoader = new \App\AppConfigLoader;
         $block[] = new AssignStatement('$configLoader', new NewObject('App\\AppConfigLoader'));
 
         // Generates: $kernel->registerService(new \Phifty\ServiceProvider\ConfigServiceProvider($configLoader));
-        $block[] = new MethodCall('$kernel', 'registerService', [ 
+        $block[] = new Statement(new MethodCall('$kernel', 'registerService', [ 
             new NewObject('\\Phifty\\ServiceProvider\\ConfigServiceProvider', [ new Variable('$configLoader') ]),
-        ]);
+        ]));
 
         // load event service, so that we can bind events in Phifty
         // Generates: $kernel->registerService(new \Phifty\ServiceProvider\EventServiceProvider());
         $block[] = new Comment('The event service is required for every component.');
-        $block[] = new MethodCall('$kernel', 'registerService', [ 
+        $block[] = new Statement(new MethodCall('$kernel', 'registerService', [ 
             new NewObject('\\Phifty\\ServiceProvider\\EventServiceProvider'),
-        ]);
+        ]));
 
         // Include bootstrap class
         $block[] = new Comment('Bootstrap.php nows only contains kernel() function.');
