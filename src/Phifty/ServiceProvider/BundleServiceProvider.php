@@ -40,20 +40,25 @@ class BundleServiceProvider extends BaseServiceProvider
         // here we check bundles stash to decide what to load.
         $config = $kernel->config->get('framework','Bundles');
         $manager = new BundleManager($kernel);
-        foreach ($config as $bundleName => $bundleConfig) {
-            $kernel->classloader->addNamespace(array(
-                $bundleName => $this->config["Paths"],
-            ));
+
+        if ($config) {
+            foreach ($config as $bundleName => $bundleConfig) {
+                $kernel->classloader->addNamespace(array(
+                    $bundleName => $this->config["Paths"],
+                ));
+            }
         }
 
         // plugin manager depends on classloader,
         // register plugin namespace to classloader.
         $self = $this;
         $kernel->bundles = function() use ($self, $manager, $config, $options) {
-            foreach ($config as $bundleName => $bundleConfig) {
-                if ($bundle = $manager->load($bundleName, $bundleConfig)) {
-                    $dir = $bundle->locate();
-                    $manager->registerBundleDir($dir);
+            if ($config) {
+                foreach ($config as $bundleName => $bundleConfig) {
+                    if ($bundle = $manager->load($bundleName, $bundleConfig)) {
+                        $dir = $bundle->locate();
+                        $manager->registerBundleDir($dir);
+                    }
                 }
             }
             return $manager;
