@@ -227,12 +227,12 @@ class Kernel extends ObjectContainer
             $this->locale;
         }
 
-        if ( $appconfigs = $this->config->get('framework','Applications') ) {
+        if ($appconfigs = $this->config->get('framework','Applications')) {
             foreach ($appconfigs as $appname => $appconfig) {
                 $this->loadApp( $appname , $appconfig );
             }
         }
-
+        $this->bundles->init();
         $this->event->trigger('phifty.after_init');
     }
 
