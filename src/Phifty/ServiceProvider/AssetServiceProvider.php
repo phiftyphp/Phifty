@@ -26,11 +26,12 @@ class AssetServiceProvider extends BaseServiceProvider
      * $kernel->asset->loader
      * $kernel->asset->writer
      */
-    public function register($kernel, $options = array() )
+    public function register($kernel, $options = array())
     {
-        $kernel->asset = function() use ($kernel, $options) {
+        $self = $this;
+        $kernel->asset = function() use ($kernel, $options, $self) {
             // $assetFile = PH_APP_ROOT . DIRECTORY_SEPARATOR . 'config/assetkit.yml';
-            $config = new AssetConfig($options);
+            $config = new AssetConfig($self->config);
             $config->setEnvironment($kernel->environment);
             $config->setNamespace($kernel->getApplicationUUID());
             $cache = new UniversalCache(array(
