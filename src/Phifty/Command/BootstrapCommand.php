@@ -16,7 +16,7 @@ use CodeGen\Expr\NewObject;
 use CodeGen\Expr\MethodCall;
 
 
-class BuildCommand extends Command
+class BootstrapCommand extends Command
 {
     public function brief()
     {

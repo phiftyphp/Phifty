@@ -24,7 +24,7 @@ class Console extends Application
         parent::init();
         $this->command('init');
         // $this->command('create');
-        $this->command('build');
+        $this->command('bootstrap');
         $this->command('export');
         $this->command('locale');
         $this->command('console');

@@ -15,7 +15,7 @@ before_script:
 - cp -v config/framework.dev.yml config/framework.yml
 - cp -v config/database.dev.yml config/database.yml
 script:
-- php bin/phifty build && time php bootstrap.php
+- php bin/phifty bootstrap && time php bootstrap.php
 - phpunit
 after_success:
 cache:
