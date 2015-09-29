@@ -14,6 +14,7 @@ use CodeGen\Statement\DefineStatement;
 use CodeGen\Statement\Statement;
 use CodeGen\Expr\NewObject;
 use CodeGen\Expr\MethodCall;
+use CodeGen\Variable;
 
 
 class BootstrapCommand extends Command
@@ -146,7 +147,28 @@ class BootstrapCommand extends Command
 
         // $block[] = '';
 
+        // Generates: $kernel = new \App\AppKernel;
+        $block[] = new AssignStatement('$kernel', new NewObject('App\\AppKernel'));
 
+        // Generates: $kernel->registerService(new \Phifty\ServiceProvider\ClassLoaderServiceProvider($splClassLoader));
+        $block[] = new MethodCall('$kernel', 'registerService', [ 
+            new NewObject('\\Phifty\\ServiceProvider\\ClassLoaderServiceProvider',[ new Variable('$splClassLoader') ]),
+        ]);
+
+
+        // Generates: $configLoader = new \App\AppConfigLoader;
+        $block[] = new AssignStatement('$configLoader', new NewObject('App\\AppConfigLoader'));
+
+        // Generates: $kernel->registerService(new \Phifty\ServiceProvider\ConfigServiceProvider($configLoader));
+        $block[] = new MethodCall('$kernel', 'registerService', [ 
+            new NewObject('\\Phifty\\ServiceProvider\\ConfigServiceProvider', [ new Variable('$configLoader') ]),
+        ]);
+
+        // load event service, so that we can bind events in Phifty
+        // Generates: $kernel->registerService(new \Phifty\ServiceProvider\EventServiceProvider());
+        $block[] = new MethodCall('$kernel', 'registerService', [ 
+            new NewObject('\\Phifty\\ServiceProvider\\EventServiceProvider'),
+        ]);
 
         // Include bootstrap class
         $block[] = new RequireStatement(dirname(__DIR__) . DIRECTORY_SEPARATOR . 'Bootstrap.php' );
