@@ -123,7 +123,7 @@ class AesCryptorServiceProvider extends BaseServiceProvider
     {
         $options = new Accessor($options);
         $kernel->aes = function() use ($options) {
-            if ( ! isset($options['Key']) ) {
+            if (! isset($options['Key']) ) {
                 throw new Exception("Option 'Key' is required.");
             }
             return new AesCryptor( $options['Key'] );
