@@ -242,6 +242,9 @@ class Bundle
     public function route($path, $args, array $options = array())
     {
         $router = $this->kernel->rootMux;
+        if (!$router) {
+            return false;
+        }
 
         // if args is string, it's a controller:action spec
         if (is_string($args)) {
