@@ -174,6 +174,7 @@ class BootstrapCommand extends Command
         $block[] = new AssignStatement('$configLoader', new NewObject('App\\AppConfigLoader'));
 
         // Generates: $kernel->registerService(new \Phifty\ServiceProvider\ConfigServiceProvider($configLoader));
+        $block[] = new RequireClassStatement('Phifty\\ServiceProvider\\ConfigServiceProvider');
         $block[] = new Statement(new MethodCall('$kernel', 'registerService', [ 
             new NewObject('\\Phifty\\ServiceProvider\\ConfigServiceProvider', [ new Variable('$configLoader') ]),
         ]));
@@ -181,6 +182,7 @@ class BootstrapCommand extends Command
         // load event service, so that we can bind events in Phifty
         // Generates: $kernel->registerService(new \Phifty\ServiceProvider\EventServiceProvider());
         $block[] = new Comment('The event service is required for every component.');
+        $block[] = new RequireClassStatement('Phifty\\ServiceProvider\\EventServiceProvider');
         $block[] = new Statement(new MethodCall('$kernel', 'registerService', [ 
             new NewObject('\\Phifty\\ServiceProvider\\EventServiceProvider'),
         ]));
