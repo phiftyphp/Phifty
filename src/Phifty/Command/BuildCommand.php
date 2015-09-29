@@ -154,11 +154,11 @@ class BuildCommand extends Command
             }
 
             // Require application classes directly, we need applications to be registered before services
-            if ($appconfigs = $configLoader->get('framework', 'Applications')) {
+            if ($appConfigs = $configLoader->get('framework', 'Applications')) {
 
                 $appDir = PH_APP_ROOT . DIRECTORY_SEPARATOR . 'applications';
 
-                foreach ($appconfigs as $appName => $appconfig) {
+                foreach ($appConfigs as $appName => $appconfig) {
                     $appClassPath = PH_APP_ROOT . DIRECTORY_SEPARATOR . 'applications' . DIRECTORY_SEPARATOR . $appName . DIRECTORY_SEPARATOR . 'Application.php';
                     if (file_exists($appClassPath)) {
                         $block[] = new RequireStatement($appClassPath);
