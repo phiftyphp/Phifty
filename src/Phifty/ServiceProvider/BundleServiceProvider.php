@@ -1,11 +1,21 @@
 <?php
 namespace Phifty\ServiceProvider;
 use Phifty\BundleManager;
+use Phifty\Kernel;
 
 class BundleServiceProvider extends BaseServiceProvider
 {
 
     public function getId() { return 'Bundle'; }
+
+
+    static public function generateNew(Kernel $kernel, array & $options = array())
+    {
+        if (isset($options["Paths"])) {
+            $options["Paths"] = array_map('realpath', $options["Paths"]);
+        }
+        return parent::generateNew($kernel, $options);
+    }
 
     /**
      *
@@ -20,26 +30,28 @@ class BundleServiceProvider extends BaseServiceProvider
             return;
         }
 
+        $manager = new BundleManager($kernel);
+        foreach ($config as $bundleName => $bundleConfig) {
+            $kernel->classloader->addNamespace(array(
+                $bundleName => $this->config["Paths"],
+            ));
+        }
+
         // plugin manager depends on classloader,
         // register plugin namespace to classloader.
-        $kernel->bundles = function() use ($kernel, $config, $options) {
-            $manager = new BundleManager($kernel);
+        $self = $this;
+        $kernel->bundles = function() use ($self, $manager, $config, $options) {
             $paths = array();
-            if (isset($options["Paths"])) {
-                foreach ($options["Paths"] as $dir) {
-                    $paths[] = PH_APP_ROOT . DIRECTORY_SEPARATOR . $dir;
-                    $manager->registerBundleDir(PH_APP_ROOT . DIRECTORY_SEPARATOR . $dir);
+            if (isset($self->options["Paths"])) {
+                foreach ($self->options["Paths"] as $dir) {
+                    $manager->registerBundleDir($dir);
                 }
             }
             foreach ($config as $bundleName => $bundleConfig) {
-                $kernel->classloader->addNamespace(array(
-                    $bundleName => $paths,
-                ));
                 $manager->load($bundleName, $bundleConfig);
             }
             return $manager;
         };
-        $kernel->bundles->init();
     }
 
 }
