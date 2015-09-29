@@ -100,10 +100,7 @@ class BuildCommand extends Command
         $block[] = new DefineStatement('CLI', new Raw("isset(\$_SERVER['argc']) && !isset(\$_SERVER['HTTP_HOST'])"));
         $block[] = new DefineStatement('CLI_MODE', new Raw("CLI"));
 
-
-        $block[] = 'global $kernel;';
-        $block[] = 'global $composerClassLoader;';
-        $block[] = 'global $splClassLoader;';
+        $block[] = 'global $kernel, $composerClassLoader, $splClassLoader;';
         $block[] = new AssignStatement('$composerClassLoader', new RequireComposerAutoloadStatement());
 
         // TODO:
