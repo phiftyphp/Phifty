@@ -40,8 +40,9 @@ class Console extends Application
         $this->command('check');
         $this->command('cache:clean','Phifty\\Command\\CacheCleanCommand');
 
-        $this->command('build-schema','LazyRecord\Command\BuildSchemaCommand');
-        $this->command('build-sql','LazyRecord\Command\BuildSqlCommand');
+        // Dissable this since we need to run "build"
+        // $this->command('build-schema','LazyRecord\Command\BuildSchemaCommand');
+        // $this->command('build-sql','LazyRecord\Command\BuildSqlCommand');
     }
 
     public static function getInstance()
