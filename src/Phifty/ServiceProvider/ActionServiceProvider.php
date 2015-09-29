@@ -22,8 +22,8 @@ class ActionServiceProvider extends BaseServiceProvider {
         $container = new ServiceContainer();
         $container['cache_dir'] = $kernel->cacheDir;
 
-        if (isset($options['DefaultFieldView'])) {
-            Action::$defaultFieldView = $options['DefaultFieldView'];
+        if (isset($this->config['DefaultFieldView'])) {
+            Action::$defaultFieldView = $this->config['DefaultFieldView'];
         }
 
         $generator = $container['generator'];
@@ -39,7 +39,7 @@ class ActionServiceProvider extends BaseServiceProvider {
             return $container;
         };
 
-        $kernel->action = function () use ($options, $action) {
+        $kernel->action = function () use ($action) {
             return $action;
         };
 
