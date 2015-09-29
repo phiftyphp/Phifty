@@ -23,6 +23,11 @@ class BootstrapCommand extends Command
         return 'build bootstrap script';
     }
 
+    public function aliases()
+    {
+        return ['b', 'bs'];
+    }
+
     public function options($opts)
     {
         $opts->add('o|output:=string', 'output file')
