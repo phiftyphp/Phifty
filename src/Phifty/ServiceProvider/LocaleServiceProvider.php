@@ -1,26 +1,22 @@
 <?php
 namespace Phifty\ServiceProvider;
 use Phifty\Locale;
+use Phifty\Kernel;
 
 class LocaleServiceProvider extends BaseServiceProvider
 {
 
     public function getId() { return 'Locale'; }
 
+    static public function isGeneratable(Kernel $kernel, array & $options = array() )
+    {
+        return !empty($options);
+    }
+
     public function register($kernel, $options = array() )
     {
-
-        // for backward compatibility
-        if (! $options) {
-            $options = $kernel->config->get('framework','Locale');
-            if ( ! $options )
-
-                return;
-        }
-
         // call spl autoload, to load `__` locale function,
         // and we need to initialize locale before running the application.
-
         $kernel->locale = function() use ($kernel,$options) {
             $defaultLang = isset($options['Default'])   ? $options['Default']   : 'en';
             $localeDir   = isset($options['LocaleDir']) ? $options['LocaleDir'] : 'locale';
