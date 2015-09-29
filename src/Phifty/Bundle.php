@@ -53,7 +53,6 @@ class Bundle
             $this->setConfig($this->defaultConfig());
         }
 
-        $this->kernel = kernel();
         // XXX: currently we are triggering the loadAssets from Phifty\Web
         // $this->kernel->event->register('asset.load', array($this,'loadAssets'));
 
