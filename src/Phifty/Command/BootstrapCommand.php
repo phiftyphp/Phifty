@@ -15,6 +15,8 @@ use CodeGen\Statement\Statement;
 use CodeGen\Expr\NewObject;
 use CodeGen\Expr\MethodCall;
 use CodeGen\Variable;
+use CodeGen\Comment;
+use CodeGen\CommentBlock;
 
 
 class BootstrapCommand extends Command
@@ -89,6 +91,12 @@ class BootstrapCommand extends Command
 
         $block = new Block;
         $block[] = '<?php';
+        $block[] = new CommentBlock([
+            "This file is auto-generated through 'bin/phifty bootstrap' command.",
+            "Don't modify this file directly",
+            "",
+            "For more information, please visit https://github.com/c9s/Phifty",
+        ]);
 
         if (extension_loaded('mbstring')) {
             $block[] = "mb_internal_encoding('UTF-8');";
@@ -166,11 +174,13 @@ class BootstrapCommand extends Command
 
         // load event service, so that we can bind events in Phifty
         // Generates: $kernel->registerService(new \Phifty\ServiceProvider\EventServiceProvider());
+        $block[] = new Comment('The event service is required for every component.');
         $block[] = new MethodCall('$kernel', 'registerService', [ 
             new NewObject('\\Phifty\\ServiceProvider\\EventServiceProvider'),
         ]);
 
         // Include bootstrap class
+        $block[] = new Comment('Bootstrap.php nows only contains kernel() function.');
         $block[] = new RequireStatement(dirname(__DIR__) . DIRECTORY_SEPARATOR . 'Bootstrap.php' );
 
 
