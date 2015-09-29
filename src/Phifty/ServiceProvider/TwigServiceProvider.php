@@ -76,22 +76,23 @@ class TwigServiceProvider extends BaseServiceProvider
 
     public function register($kernel, $options = array() )
     {
-        $kernel->twig = function() use($kernel, $options) {
+        $self = $this;
+        $kernel->twig = function() use($kernel, $options, $self) {
 
             // create the filesystem loader
-            $loader   = new Twig_Loader_Filesystem(isset($this->config['TemplateDirs']) ? $this->config['TemplateDirs'] : array());
+            $loader   = new Twig_Loader_Filesystem(isset($self->config['TemplateDirs']) ? $self->config['TemplateDirs'] : array());
 
             /**
              * Template namespaces must be added after $loader is initialized.
              */
-            if (isset($options['Namespaces'])) {
-                foreach ($options['Namespaces'] as $namespace => $dir) {
+            if (isset($self->config['Namespaces'])) {
+                foreach ($self->config['Namespaces'] as $namespace => $dir) {
                     $loader->addPath($dir, $namespace);
                 }
             }
 
             // http://www.twig-project.org/doc/api.html#environment-options
-            $env = new Twig_Environment($loader, isset($options['Environment']) ? $options['Environment'] : array());
+            $env = new Twig_Environment($loader, isset($self->config['Environment']) ? $self->config['Environment'] : array());
 
             if ($kernel->isDev) {
                 $env->addExtension(new Twig_Extension_Debug);
