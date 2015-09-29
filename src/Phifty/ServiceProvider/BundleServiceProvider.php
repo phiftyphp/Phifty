@@ -39,10 +39,6 @@ class BundleServiceProvider extends BaseServiceProvider
     {
         // here we check bundles stash to decide what to load.
         $config = $kernel->config->get('framework','Bundles');
-        if ( ! $config || $config->isEmpty() ) {
-            return;
-        }
-
         $manager = new BundleManager($kernel);
         foreach ($config as $bundleName => $bundleConfig) {
             $kernel->classloader->addNamespace(array(
@@ -54,14 +50,11 @@ class BundleServiceProvider extends BaseServiceProvider
         // register plugin namespace to classloader.
         $self = $this;
         $kernel->bundles = function() use ($self, $manager, $config, $options) {
-            $paths = array();
-            if (isset($self->options["Paths"])) {
-                foreach ($self->options["Paths"] as $dir) {
+            foreach ($config as $bundleName => $bundleConfig) {
+                if ($bundle = $manager->load($bundleName, $bundleConfig)) {
+                    $dir = $bundle->locate();
                     $manager->registerBundleDir($dir);
                 }
-            }
-            foreach ($config as $bundleName => $bundleConfig) {
-                $manager->load($bundleName, $bundleConfig);
             }
             return $manager;
         };
