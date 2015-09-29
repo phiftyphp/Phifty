@@ -23,7 +23,7 @@ class DatabaseServiceProvider extends BaseServiceProvider
             $loader->init();  // init data source and connection
         }
         $kernel->db = function() {
-            return ConnectionManager::getInstance()->getConnection();
+            return ConnectionManager::getInstance()->getConnection('default');
         };
     }
 
