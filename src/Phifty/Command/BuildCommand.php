@@ -11,7 +11,9 @@ use CodeGen\Statement\RequireComposerAutoloadStatement;
 use CodeGen\Statement\RequireClassStatement;
 use CodeGen\Statement\AssignStatement;
 use CodeGen\Statement\DefineStatement;
+use CodeGen\Statement\Statement;
 use CodeGen\Expr\NewObject;
+use CodeGen\Expr\MethodCall;
 
 
 class BuildCommand extends Command
@@ -188,6 +190,8 @@ class BuildCommand extends Command
                 }
             }
         }
+        // $block[] = '$kernel->init()';
+        $block[] = new Statement(new MethodCall('$kernel', 'init'));
 
 
         $this->logger->info("===> Compiling code to $outputFile");
