@@ -2,6 +2,7 @@
 namespace Phifty\ServiceProvider;
 use Phifty\BundleManager;
 use Phifty\Kernel;
+use ConfigKit\ConfigAccessor;
 
 class BundleServiceProvider extends BaseServiceProvider
 {
@@ -15,6 +16,18 @@ class BundleServiceProvider extends BaseServiceProvider
             $options["Paths"] = array_map('realpath', $options["Paths"]);
         }
         return parent::generateNew($kernel, $options);
+    }
+
+
+    static public function isGeneratable(Kernel $kernel, array & $options = array())
+    {
+        $config = $kernel->config->get('framework','Bundles');
+        return $config && (
+            (
+                $config instanceof ConfigAccessor && !$config->isEmpty()) 
+                    || (is_array($config) && !empty($config)
+            )
+        );
     }
 
     /**
