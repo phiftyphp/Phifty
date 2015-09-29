@@ -24,6 +24,5 @@ function kernel()
     if ($kernel) {
         return $kernel;
     }
-    $kernel->init();
     return $kernel;
 }
