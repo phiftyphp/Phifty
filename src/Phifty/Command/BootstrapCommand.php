@@ -120,10 +120,7 @@ class BootstrapCommand extends Command
         $block[] = new AssignStatement('$composerClassLoader', new RequireComposerAutoloadStatement());
 
         // $composerClassLoader->addPsr4('App\\', '/.../.../app');
-        $block[] = new Statement(new MethodCall('$composerClassLoader', 'addPsr4', [
-            'App\\',
-            PH_APP_ROOT . DIRECTORY_SEPARATOR . 'app',
-        ]));
+        $block[] = new Statement(new MethodCall('$composerClassLoader', 'addPsr4', [ 'App\\', PH_APP_ROOT . DIRECTORY_SEPARATOR . 'app' ]));
 
         // TODO:
         //  - add PSR-4 class loader here.
@@ -222,15 +219,16 @@ class BootstrapCommand extends Command
 
                     // not full qualified classname
                     $class = (false === strpos($name, '\\')) ? ('Phifty\\ServiceProvider\\'.$name) : $name;
-                    if (class_exists($class, true)) {
-                        $block[] = new RequireClassStatement($class);
+                    if (!class_exists($class, true)) {
+                        throw new \LogicException("$class does not exist.");
+                    }
+                    $block[] = new RequireClassStatement($class);
 
-                        if (is_subclass_of($class, 'Phifty\\ServiceProvider\\BaseServiceProvider')) {
-                            $block[] = '$kernel->registerService(' . $class::generateNew($runtimeKernel, $options) . ');';
-                        } else {
-                            $expr = new NewObject($class, [$options]);
-                            $block[] = '$kernel->registerService(' . $expr->render() . ');';
-                        }
+                    if (is_subclass_of($class, 'Phifty\\ServiceProvider\\BaseServiceProvider')) {
+                        $block[] = '$kernel->registerService(' . $class::generateNew($runtimeKernel, $options) . ');';
+                    } else {
+                        $expr = new NewObject($class, [$options]);
+                        $block[] = '$kernel->registerService(' . $expr->render() . ');';
                     }
                 }
             }
