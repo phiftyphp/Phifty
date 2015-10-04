@@ -219,10 +219,17 @@ class BootstrapCommand extends Command
                         $block[] = new RequireStatement($appClassPath);
                     }
                     if (file_exists($appClassDir)) {
-                        // $block[] = "\$splClassLoader->addNamespace(['$appName' => '$appDir']);";
-                        $block[] = new Statement(new MethodCall('$splClassLoader', 'addNamespace', [
-                            [ '$appName' => '$appDir' ],
+                        $block[] = new Statement(new MethodCall('$composerClassLoader', 'addPsr4', [
+                            $appName . '\\', [
+                                PH_APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR,
+                                $appClassDir . DIRECTORY_SEPARATOR,
+                            ],
                         ]));
+                        /*
+                        $block[] = new Statement(new MethodCall('$splClassLoader', 'addNamespace', [
+                            [ $appName => $appDir ],
+                        ]));
+                         */
                     }
                 }
             }
