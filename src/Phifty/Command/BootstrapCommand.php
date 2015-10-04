@@ -213,14 +213,17 @@ class BootstrapCommand extends Command
                 $appDir = PH_APP_ROOT . DIRECTORY_SEPARATOR . 'applications';
 
                 foreach ($appConfigs as $appName => $appconfig) {
+                    $appClassDir = PH_APP_ROOT . DIRECTORY_SEPARATOR . 'applications' . DIRECTORY_SEPARATOR . $appName;
                     $appClassPath = PH_APP_ROOT . DIRECTORY_SEPARATOR . 'applications' . DIRECTORY_SEPARATOR . $appName . DIRECTORY_SEPARATOR . 'Application.php';
                     if (file_exists($appClassPath)) {
                         $block[] = new RequireStatement($appClassPath);
                     }
-                    // $block[] = "\$splClassLoader->addNamespace(['$appName' => '$appDir']);";
-                    $block[] = new Statement(new MethodCall('$splClassLoader', 'addNamespace', [
-                        [ '$appName' => '$appDir' ],
-                    ]));
+                    if (file_exists($appClassDir)) {
+                        // $block[] = "\$splClassLoader->addNamespace(['$appName' => '$appDir']);";
+                        $block[] = new Statement(new MethodCall('$splClassLoader', 'addNamespace', [
+                            [ '$appName' => '$appDir' ],
+                        ]));
+                    }
                 }
             }
 
