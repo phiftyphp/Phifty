@@ -22,7 +22,7 @@ class App implements \Funk\App
         /*
         $compositor = new Compositor(new static);
         return $compositor->wrap();
-         */
+        */
     }
 }
 

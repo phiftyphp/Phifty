@@ -30,6 +30,11 @@ abstract class BaseServiceProvider implements ServiceProvider
         return true;
     }
 
+    public static function generatePrepare(Kernel $kernel, array & $options = array())
+    {
+        return null;
+    }
+
     public static function generateNew(Kernel $kernel, array & $options = array())
     {
         // (PHP 5 >= 5.3.0)
