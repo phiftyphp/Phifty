@@ -2,13 +2,47 @@
 namespace Phifty\ServiceProvider;
 use Phifty\BundleManager;
 use Phifty\Kernel;
-use ConfigKit\ConfigAccessor;
+use ConfigKit\Accessor;
+use CodeGen\Block;
+use CodeGen\Statement\Statement;
+use CodeGen\Statement\RequireStatement;
+use CodeGen\Expr\MethodCall;
 
 class BundleServiceProvider extends BaseServiceProvider
 {
 
     public function getId() { return 'Bundle'; }
 
+    public static function generatePrepare(Kernel $kernel, array & $options = array())
+    {
+        $prepareBlock = new Block;
+        $bundleDirs = [];
+        if (isset($options["Paths"])) {
+            $bundleDirs = array_map('realpath', $options["Paths"]);
+        }
+        $bundleList = $kernel->config->get('framework','Bundles');
+        // var_dump($bundleList);
+        foreach ($bundleList as $bundleName => $bundleConfig) {
+            foreach ($bundleDirs as $bundleDir) {
+                $bundlePath = $bundleDir . DIRECTORY_SEPARATOR . $bundleName;
+                if (is_dir($bundlePath)) {
+                    // if the bundle directory exists, we can generate class loaderr path.
+                    $prepareBlock[] = new Statement(new MethodCall('$composerClassLoader', 'addPsr4', [
+                        $bundleName . '\\',
+                        $bundlePath . DIRECTORY_SEPARATOR,
+                    ]));
+
+                    // If the bundle main class exists, just require it.
+                    $bundleClassPath = $bundlePath . DIRECTORY_SEPARATOR . $bundleName . '.php';
+                    if (file_exists($bundleClassPath)) {
+                        $prepareBlock[] = new RequireStatement($bundleClassPath);
+                    }
+                    break;
+                }
+            }
+        }
+        return $prepareBlock;
+    }
 
     static public function generateNew(Kernel $kernel, array & $options = array())
     {
@@ -24,7 +58,7 @@ class BundleServiceProvider extends BaseServiceProvider
         $config = $kernel->config->get('framework','Bundles');
         return $config && (
             (
-                $config instanceof ConfigAccessor && !$config->isEmpty()) 
+                $config instanceof \ConfigKit\Accessor && !$config->isEmpty())
                     || (is_array($config) && !empty($config)
             )
         );

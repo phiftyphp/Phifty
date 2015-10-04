@@ -38,3 +38,4 @@ ServiceProviders:
     Paths:
       - bundles
 Bundles:
+  AdminUI:

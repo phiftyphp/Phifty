@@ -120,7 +120,9 @@ class BootstrapCommand extends Command
         $block[] = new AssignStatement('$composerClassLoader', new RequireComposerAutoloadStatement());
 
         // $composerClassLoader->addPsr4('App\\', '/.../.../app');
-        $block[] = new Statement(new MethodCall('$composerClassLoader', 'addPsr4', [ 'App\\', PH_APP_ROOT . DIRECTORY_SEPARATOR . 'app' ]));
+        $block[] = new Statement(new MethodCall('$composerClassLoader', 'addPsr4', [
+            'App\\',
+            PH_APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR ]));
 
         // TODO:
         //  - add PSR-4 class loader here.
@@ -139,8 +141,11 @@ class BootstrapCommand extends Command
         $configClassGenerator = new AppClassGenerator([ 'namespace' => 'App', 'prefix' => 'App' ]);
         $configClass = $configClassGenerator->generate($configLoader);
         $classPath = $configClass->generatePsr4ClassUnder('app'); 
-        require_once $classPath;
         $block[] = new RequireStatement(PH_APP_ROOT . DIRECTORY_SEPARATOR . $classPath);
+        require_once $classPath;
+
+
+
 
         $kernelClassGenerator = new AppClassGenerator([
             'namespace' => 'App',
@@ -151,6 +156,11 @@ class BootstrapCommand extends Command
         ]);
         $runtimeKernel = new \Phifty\Kernel;
         $runtimeKernel->prepare($configLoader);
+        $runtimeKernel->config = function() use ($configLoader) {
+            return $configLoader;
+        };
+
+
         $appKernelClass = $kernelClassGenerator->generate($runtimeKernel);
         $classPath = $appKernelClass->generatePsr4ClassUnder('app'); 
         require_once $classPath;
@@ -224,7 +234,11 @@ class BootstrapCommand extends Command
                     }
                     $block[] = new RequireClassStatement($class);
 
-                    if (is_subclass_of($class, 'Phifty\\ServiceProvider\\BaseServiceProvider')) {
+                    $this->logger->info("Generating $class");
+                    if (is_subclass_of($class, 'Phifty\\ServiceProvider\\BaseServiceProvider') && $class::isGeneratable($runtimeKernel, $options)) {
+                        if ($prepareStm = $class::generatePrepare($runtimeKernel, $options)) {
+                            $block[] = $prepareStm;
+                        }
                         $block[] = '$kernel->registerService(' . $class::generateNew($runtimeKernel, $options) . ');';
                     } else {
                         $expr = new NewObject($class, [$options]);
