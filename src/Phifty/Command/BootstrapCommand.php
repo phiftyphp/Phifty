@@ -140,7 +140,7 @@ class BootstrapCommand extends Command
         $configLoader = self::createConfigLoader(PH_APP_ROOT);
         $configClassGenerator = new AppClassGenerator([ 'namespace' => 'App', 'prefix' => 'App' ]);
         $configClass = $configClassGenerator->generate($configLoader);
-        $classPath = $configClass->generatePsr4ClassUnder('app'); 
+        $classPath = $configClass->generatePsr4ClassUnder('app');
         $block[] = new RequireStatement(PH_APP_ROOT . DIRECTORY_SEPARATOR . $classPath);
         require_once $classPath;
 
@@ -217,7 +217,10 @@ class BootstrapCommand extends Command
                     if (file_exists($appClassPath)) {
                         $block[] = new RequireStatement($appClassPath);
                     }
-                    $block[] = "\$splClassLoader->addNamespace(['$appName' => '$appDir']);";
+                    // $block[] = "\$splClassLoader->addNamespace(['$appName' => '$appDir']);";
+                    $block[] = new Statement(new MethodCall('$splClassLoader', 'addNamespace', [
+                        [ '$appName' => '$appDir' ],
+                    ]));
                 }
             }
 

@@ -46,7 +46,6 @@ class Bundle
     public function __construct(Kernel $kernel, $config = array())
     {
         $this->kernel = $kernel;
-
         if ($config) {
             $this->setConfig($this->mergeWithDefaultConfig($config));
         } else {
