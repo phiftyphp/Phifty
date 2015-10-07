@@ -148,7 +148,7 @@ class CurrentUser
         $this->updateSessionFromRecord($this->record);
     }
 
-    public function getSessionFields($record)
+    public function getSessionFields(BaseModel $record)
     {
         return $record->getColumnNames();
     }
