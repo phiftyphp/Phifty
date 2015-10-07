@@ -9,8 +9,8 @@ if( isset($argv[1]) && $argv[1] == 'build-conf' ) {
 }
 
 # vim:filetype=php:
-if (file_exists('main.php')) {
-    require 'main.php';
+if (file_exists('bootstrap.php')) {
+    require 'bootstrap.php';
     $console = Phifty\Console::getInstance();
     $kernel->event->trigger( 'phifty.console.init_commands' , $console );
     $console->runWithTry( $argv );

@@ -99,12 +99,14 @@ class Controller extends PuxController
      * */
     public function redirect($url)
     {
-        $this->setHeader('Location', $url);
+        // $this->setHeader('Location', $url);
+        return [302, [ "Location: " . $url ], []];
     }
 
     public function redirectLater($url,$seconds = 1 )
     {
-        $this->setHeader('Refresh', "$seconds; url=$url");
+        return [302, ["Refresh" => "$seconds ;url=$url" ], []];
+        // $this->setHeader('Refresh', "$seconds; url=$url");
     }
 
     /* Move this into Agent class */
