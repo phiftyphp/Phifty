@@ -303,12 +303,12 @@ class CurrentUser
     // XXX: should be integrated with ACL
     public function isLogged()
     {
+        // deprecated
         return $this->getId();
     }
 
-    public function isLogin()
+    public function hasLoggedIn()
     {
         return $this->getId();
     }
-
 }
