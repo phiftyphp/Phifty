@@ -3,6 +3,7 @@ namespace Phifty\Security;
 use Phifty\Session;
 use Exception;
 use BadMethodCallException;
+use LazyRecord\BaseModel;
 
 /**
  * CurrentUserRole interface, for getting roles from model.
@@ -31,7 +32,7 @@ use Phifty\Security\CurrentUserRole;
 class CurrentUser
 {
     /**
-     * User model class
+     * @var BaseModel User model class
      */
     public $userModelClass;
 
@@ -53,7 +54,7 @@ class CurrentUser
     /**
      * @var Phifty\Session Session Manager
      */
-    public $session;
+    protected $session;
 
     public function __construct($args = array() )
     {
@@ -122,6 +123,11 @@ class CurrentUser
     }
 
 
+    public function getSession()
+    {
+        return $this->session;
+    }
+
     /**
      * Get user model class.
      */
@@ -152,7 +158,7 @@ class CurrentUser
      *
      * @param mixed User record object
      */
-    public function updateSessionFromRecord($record)
+    public function updateSessionFromRecord(BaseModel $record)
     {
         // get column maes to register 
         foreach ( $this->getSessionFields($record) as $name ) {
@@ -177,7 +183,7 @@ class CurrentUser
      *
      * @return bool
      */
-    public function setRecord( $record )
+    public function setRecord(BaseModel $record)
     {
         if ($record && $record->id) {
             $this->record = $record;
