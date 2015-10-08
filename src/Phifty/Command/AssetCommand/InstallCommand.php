@@ -33,8 +33,8 @@ class InstallCommand extends AssetBaseCommand
         $kernel = kernel();
 
         $this->logger->info("Installing assets from applications...");
-        if ($kernel->applications) {
-            foreach ($kernel->applications as $application) {
+        if ($apps = $kernel->getApps()) {
+            foreach ($apps as $application) {
                 // getAssets supports assets defined in config file.
                 $assetNames = $application->getAssets();
                 $assets = $loader->loadAssets($assetNames);

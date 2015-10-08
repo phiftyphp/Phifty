@@ -236,6 +236,12 @@ class Kernel extends ObjectContainer
         $this->event->trigger('phifty.after_init');
     }
 
+
+    public function getApps()
+    {
+        return $this->applications;
+    }
+
     /**
      * Create application object
      */

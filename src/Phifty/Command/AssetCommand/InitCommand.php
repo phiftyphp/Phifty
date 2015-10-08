@@ -12,8 +12,8 @@ class InitCommand extends AssetBaseCommand
         $config = $this->getAssetConfig();
         $loader = $this->getAssetLoader();
         $this->logger->info("Finding assets from applications...");
-        if ($kernel->applications) {
-            foreach ($kernel->applications as $application) {
+        if ($apps = $kernel->getApps()) {
+            foreach ($apps as $application) {
                 $this->registerBundleAssets($application);
             }
         }
