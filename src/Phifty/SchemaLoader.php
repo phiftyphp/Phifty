@@ -18,4 +18,7 @@ if (file_exists('tests')) {
     $finder->in('tests');
 }
 $finder->find();
+if (method_exists($finder,"getSchemas")) {
+    return $finder->getSchemas();
+}
 return SchemaLoader::loadDeclaredSchemas();
