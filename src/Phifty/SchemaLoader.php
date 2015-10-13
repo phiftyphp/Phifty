@@ -1,4 +1,5 @@
 <?php
+use LazyRecord\Schema\SchemaLoader;
 $finder = new LazyRecord\Schema\SchemaFinder;
 if ($apps = kernel()->applications) {
     foreach ($apps as $app) {
@@ -17,4 +18,4 @@ if (file_exists('tests')) {
     $finder->in('tests');
 }
 $finder->find();
-return $finder->getSchemas();
+return SchemaLoader::loadDeclaredSchemas();
