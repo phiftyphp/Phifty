@@ -10,17 +10,26 @@ use ActionKit\ActionTemplate\UpdateOrderingRecordActionTemplate;
 use ActionKit\ActionRequest;
 use ActionKit\Action;
 
-class ActionServiceProvider extends BaseServiceProvider {
+class ActionServiceProvider extends BaseServiceProvider
+{
 
     public function getId()
     {
         return 'action';
     }
 
+    public function depends()
+    {
+        return ['locale'];
+    }
+
     public function register($kernel, $options = array())
     {
         $container = new ServiceContainer();
         $container['cache_dir'] = $kernel->cacheDir;
+        if ($kernel->locale) {
+            $container['locale'] = $kernel->locale->current;
+        }
 
         if (isset($this->config['DefaultFieldView'])) {
             Action::$defaultFieldView = $this->config['DefaultFieldView'];
