@@ -18,6 +18,8 @@ abstract class BaseServiceProvider implements ServiceProvider
 
     abstract public function getId();
 
+    public function depends() { return []; }
+
     /**
      * register service
      *
