@@ -2,8 +2,12 @@
 namespace Phifty\Security;
 use Phifty\Session;
 use Exception;
+use LogicException;
+use RuntimeException;
 use BadMethodCallException;
 use LazyRecord\BaseModel;
+use Kendo\IdentifierProvider\ActorIdentifierProvider;
+use Kendo\IdentifierProvider\RoleIdentifierProvider;
 
 /**
  * CurrentUserRole interface, for getting roles from model.
@@ -29,7 +33,7 @@ use Phifty\Security\CurrentUserRole;
  *       'model_class' => 'UserBundle\Model\User',
  *   ));
 */
-class CurrentUser
+class CurrentUser implements RoleIdentifierProvider, ActorIdentifierProvider
 {
     /**
      * @var BaseModel User model class
@@ -249,6 +253,8 @@ class CurrentUser
         }
     }
 
+
+
     /**
      * Returns role identities
      *
@@ -317,4 +323,31 @@ class CurrentUser
     {
         return $this->getId();
     }
+
+
+
+
+
+
+    public function getRoleIdentifier()
+    {
+        $roles = $this->getRoles();
+        if (count($roles) == 1) {
+            return $roles[0];
+        } else if (count($roles) > 1) {
+            throw new RuntimeException('Multi-role is not supported with Kendo ACL');
+        }
+        return null;
+    }
+
+    /**
+     * Current user is always 'user' actor since users are human beings.
+     *
+     * @return string 'user'
+     */
+    public function getActorIdentifier()
+    {
+        return 'user';
+    }
+
 }
