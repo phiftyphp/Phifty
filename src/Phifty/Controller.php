@@ -5,10 +5,10 @@ use Exception;
 use InvalidArgumentException;
 use ReflectionObject;
 use Symfony\Component\Yaml\Yaml;
-use Pux\Controller\Controller as PuxController;
+use Pux\Controller\ExpandableController;
 use Pux\Expandable;
 
-class Controller extends PuxController
+class Controller extends ExpandableController
 {
     /**
      * @var Phifty\View view object cache

@@ -5,6 +5,7 @@ use Exception;
 use ConfigKit\Accessor;
 use LogicException;
 use Phifty\Kernel;
+use Phifty\Controller;
 
 /**
  *  Bundle is the base class of App, Core, {Plugin} class.
@@ -311,11 +312,14 @@ class Bundle
      * @param string $path path name
      * @param string $class class name
      */
-    public function mount($path, $class)
+    public function mount($path, $className)
     {
-        // TODO: reduce the autoload checking cost.
+        $class = $className;
         if (!class_exists($class,true)) {
-            $class = $this->getNamespace() . '\\' . $class;
+            $class = $this->getNamespace() . '\\' . $className;
+        }
+        if (!class_exists($class,true)) {
+            $class = $this->getNamespace() . '\\Controller\\' . $className;
         }
         $controller = new $class;
         $this->kernel->rootMux->mount($path, $controller);
