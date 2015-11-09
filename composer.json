@@ -17,7 +17,7 @@
         "phpsgi/phpsgi": "@dev",
         "cypresslab/gitelephant": "^1.0",
         "swiftmailer/swiftmailer": "^5.4",
-        "twig/twig": "^1.23",
+        "twig/twig": "^1 >=1.23",
         "twig/extensions": "^1",
         "symfony/finder": "^2.7",
         "symfony/process": "^2.7",
