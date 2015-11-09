@@ -99,7 +99,7 @@ class TwigServiceProvider extends BaseServiceProvider
             } else {
                 $env->addExtension(new Twig_Extension_Optimizer);
             }
-            $env->addExtension(new Twig_Extension_Core);
+            // $env->addExtension(new Twig_Extension_Core);
             $env->addExtension(new Twig_Extensions_Extension_Text);
             $env->addExtension(new Twig_Extensions_Extension_I18n);
 
