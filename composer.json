@@ -28,7 +28,7 @@
     },
     "suggest": {
         "corneltek/roller": "*",
-        "corneltek/twig-markdown": "^1",
+        "corneltek/twig-markdown": "^1"
     },
     "bin": [
         "bin/phifty",
