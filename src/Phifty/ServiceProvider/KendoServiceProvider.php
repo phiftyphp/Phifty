@@ -8,15 +8,19 @@ use Kendo\Authorizer\Authorizer;
 use Kendo\IdentifierProvider\ActorIdentifierProvider;
 use Kendo\Operation\GeneralOperation;
 use LazyRecord\ConnectionManager;
+use Phifty\Kernel;
 
 class KendoService
 {
+    protected $kernel;
+
     protected $options;
 
     protected $ruleLoader;
 
-    public function __construct(array $options)
+    public function __construct(Kernel $kernel, array $options)
     {
+        $this->kernel = $kernel;
         $this->options = $options;
         if (isset($options['SecurityPolicies'])) {
             $policies = $options['SecurityPolicies'];
@@ -50,6 +54,20 @@ class KendoService
         $authorizer->addMatcher($accessRuleMatcher);
         return $authorizer;
     }
+
+    public function authorize($operation, $resource)
+    {
+        static $authorizer;
+        $authorizer = $this->getAuthorizer();
+        return $authorizer->authorize($this->kernel->currentUser, $operation, $resource);
+    }
+
+    public function authorizeByActor($actor, $operation, $resource)
+    {
+        static $authorizer;
+        $authorizer = $this->getAuthorizer();
+        return $authorizer->authorize($actor, $operation, $resource);
+    }
 }
 
 class KendoServiceProvider extends BaseServiceProvider
@@ -60,7 +78,7 @@ class KendoServiceProvider extends BaseServiceProvider
     {
         $self = $this;
         $kernel->accessControl = function() use ($self, $kernel, $options) {
-            return new KendoService($options);
+            return new KendoService($kernel, $options);
             /*
             $actor = new NormalUser;
             $ret = $authorizer->authorize($actor, GeneralOperation::VIEW, 'products');

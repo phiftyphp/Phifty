@@ -324,11 +324,6 @@ class CurrentUser implements RoleIdentifierProvider, ActorIdentifierProvider
         return $this->getId();
     }
 
-
-
-
-
-
     public function getRoleIdentifier()
     {
         $roles = $this->getRoles();
