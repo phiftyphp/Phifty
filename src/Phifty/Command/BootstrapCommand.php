@@ -209,9 +209,7 @@ class BootstrapCommand extends Command
 
             // Require application classes directly, we need applications to be registered before services
             if ($appConfigs = $configLoader->get('framework', 'Applications')) {
-
                 $appDir = PH_APP_ROOT . DIRECTORY_SEPARATOR . 'applications';
-
                 foreach ($appConfigs as $appName => $appconfig) {
                     $appClassDir = PH_APP_ROOT . DIRECTORY_SEPARATOR . 'applications' . DIRECTORY_SEPARATOR . $appName;
                     $appClassPath = PH_APP_ROOT . DIRECTORY_SEPARATOR . 'applications' . DIRECTORY_SEPARATOR . $appName . DIRECTORY_SEPARATOR . 'Application.php';
@@ -219,18 +217,24 @@ class BootstrapCommand extends Command
                         $block[] = new RequireStatement($appClassPath);
                     }
                     if (file_exists($appClassDir)) {
-                        $block[] = new Statement(new MethodCall('$composerClassLoader', 'addPsr4', [
-                            $appName . '\\', [
-                                PH_APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR,
-                                $appClassDir . DIRECTORY_SEPARATOR,
-                            ],
-                        ]));
                         /*
                         $block[] = new Statement(new MethodCall('$splClassLoader', 'addNamespace', [
                             [ $appName => $appDir ],
                         ]));
                          */
                     }
+                }
+            } else {
+                // TODO: load "App\App" by default
+                $appDir = PH_APP_ROOT . DIRECTORY_SEPARATOR . 'app';
+                $appClassPath = PH_APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'App.php';
+                if (file_exists($appClassPath)) {
+                    $block[] = new RequireStatement($appClassPath);
+                }
+                if (is_dir($appDir)) {
+                    $block[] = new Statement(new MethodCall('$composerClassLoader', 'addPsr4', [
+                         'App\\', [$appDir . DIRECTORY_SEPARATOR],
+                    ]));
                 }
             }
 

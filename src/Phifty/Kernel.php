@@ -53,8 +53,12 @@ class Kernel extends ObjectContainer
      * application object pool
      *
      * app class name => app object
+     *
+     * @deprecated
      */
     protected $applications = array();
+
+    protected $app;
 
     private $configLoader;
 
@@ -227,50 +231,16 @@ class Kernel extends ObjectContainer
             $this->locale;
         }
 
-        if ($appconfigs = $this->config->get('framework','Applications')) {
-            foreach ($appconfigs as $appname => $appconfig) {
-                $this->loadApp( $appname , $appconfig );
-            }
-        }
+        $app = \App\App::getInstance($this, [ ]);
+        $app->init();
+
         $this->bundles->init();
         $this->event->trigger('phifty.after_init');
     }
 
-
-    public function getApps()
+    public function getApp()
     {
-        return $this->applications;
-    }
-
-    /**
-     * Create application object
-     */
-    public function loadApp($appname, $config = array())
-    {
-        $class = $appname . '\Application';
-        $app = $class::getInstance($this, $config);
-        $app->init();
-        return $this->applications[ $appname ] = $app;
-    }
-
-    /**
-     * Get application object
-     *
-     * @param string application name
-     *
-     * @code
-     *
-     *   kernel()->app('Core')->getController('ControllerClass');
-     *   kernel()->app('Core')->getModel('ModelClass');
-     *   kernel()->app('Core')->locate();
-     *
-     * @endcode
-     */
-    public function app( $appname )
-    {
-        if ( isset($this->applications[ $appname ]) ) {
-            return $this->applications[ $appname ];
-        }
+        return $this->app;
     }
 
     /**
