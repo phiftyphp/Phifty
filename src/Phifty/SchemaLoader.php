@@ -1,10 +1,8 @@
 <?php
 use LazyRecord\Schema\SchemaLoader;
 $finder = new LazyRecord\Schema\SchemaFinder;
-if ($apps = kernel()->applications) {
-    foreach ($apps as $app) {
-        $finder->in( $app->locate() );
-    }
+if ($app = kernel()->getApp()) {
+    $finder->in($app->locate());
 }
 
 
