@@ -32,26 +32,32 @@ class InstallCommand extends AssetBaseCommand
         $loader = $this->getAssetLoader();
         $kernel = kernel();
 
-        $this->logger->info("Installing assets from applications...");
+        $this->logger->debug("Installing assets from applications...");
         if ($app = $kernel->getApp()) {
             // getAssets supports assets defined in config file.
             $assetNames = $app->getAssets();
             $assets = $loader->loadAssets($assetNames);
-            foreach ($assets as $asset) {
-                $this->logger->info("Installing {$asset->name} ...");
-                $installer->install( $asset );
+            if (!empty($assets)) {
+                foreach ($assets as $asset) {
+                    $this->logger->debug("Installing {$asset->name} ...");
+                    $installer->install($asset);
+                }
+                $this->logger->info(get_class($app) . ': ' . count($assets) . " assets installed.");
             }
         }
 
-        $this->logger->info("Installing assets from bundles...");
+        $this->logger->debug("Installing assets from bundles...");
         if ($kernel->bundles) {
             foreach ($kernel->bundles as $bundle) {
                 // getAssets supports assets defined in config file.
                 $assetNames = $bundle->getAssets();
                 $assets = $loader->loadAssets($assetNames);
-                foreach ($assets as $asset) {
-                    $this->logger->info("Installing {$asset->name} ...");
-                    $installer->install( $asset );
+                if (!empty($assets)) {
+                    foreach ($assets as $asset) {
+                        $this->logger->debug("Installing {$asset->name} ...");
+                        $installer->install( $asset );
+                    }
+                    $this->logger->info(get_class($bundle) . ': ' . count($assets) . " assets installed.");
                 }
             }
         }

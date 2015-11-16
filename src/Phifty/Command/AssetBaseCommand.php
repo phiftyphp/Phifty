@@ -22,7 +22,7 @@ class AssetBaseCommand extends Command
     {
         $config = $this->getAssetConfig();
         $loader = $this->getAssetLoader();
-        $this->logger->info( ' - ' . get_class($bundle) );
+        $this->logger->debug("---> " . get_class($bundle));
         $cwd = getcwd();
         foreach ($bundle->getAssetDirs() as $dir ) {
 
@@ -36,10 +36,10 @@ class AssetBaseCommand extends Command
                 $this->logger->warn("manifest file $manifestFile not found.", 1);
                 continue;
             }
-
             $dir = substr($dir, strlen($cwd) + 1 );
+            $this->logger->debug("Checking asset dir $dir");
             if ( $asset = $loader->register(realpath($dir)) ) {
-                $this->logger->info( "Found asset {$asset->name}" ,1 );
+                $this->logger->debug( "Found asset {$asset->name} @ $dir");
                 $this->updateAssetResource($asset);
             }
         }
