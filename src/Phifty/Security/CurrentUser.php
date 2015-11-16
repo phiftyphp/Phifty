@@ -8,6 +8,7 @@ use BadMethodCallException;
 use LazyRecord\BaseModel;
 use Kendo\IdentifierProvider\ActorIdentifierProvider;
 use Kendo\IdentifierProvider\RoleIdentifierProvider;
+use Kendo\IdentifierProvider\RecordIdentifierProvider;
 
 /**
  * CurrentUserRole interface, for getting roles from model.
@@ -33,7 +34,7 @@ use Phifty\Security\CurrentUserRole;
  *       'model_class' => 'UserBundle\Model\User',
  *   ));
 */
-class CurrentUser implements RoleIdentifierProvider, ActorIdentifierProvider
+class CurrentUser implements RoleIdentifierProvider, ActorIdentifierProvider, RecordIdentifierProvider
 {
     /**
      * @var BaseModel User model class
@@ -344,5 +345,13 @@ class CurrentUser implements RoleIdentifierProvider, ActorIdentifierProvider
     {
         return 'user';
     }
+
+
+    public function getRecordIdentifier()
+    {
+        return $this->getId();
+    }
+
+
 
 }

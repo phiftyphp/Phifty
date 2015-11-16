@@ -7,11 +7,11 @@ class Generator extends BaseGenerator
 {
     public function brief() { return 'generate controller class'; }
 
-    public function generate($ns,$controllerName)
+    public function generate($ns, $controllerName)
     {
-        $app = kernel()->app($ns) ?: kernel()->bundle($ns) ?: kernel()->bundles->load($ns);
+        $app = strtolower($ns) == 'app' ? kernel()->getApp() : (kernel()->bundle($ns) ?: kernel()->bundles->load($ns));
         if (! $app) {
-            throw new Exception("$ns application or bundle not found.");
+            throw new Exception("Application or bundle not found.");
         }
 
         if ( strrpos($controllerName,'Controller') === false ) {

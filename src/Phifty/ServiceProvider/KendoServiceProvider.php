@@ -3,6 +3,7 @@ namespace Phifty\ServiceProvider;
 use Kendo\SecurityPolicy\SecurityPolicyModule;
 use Kendo\RuleLoader\RuleLoader;
 use Kendo\RuleLoader\SchemaRuleLoader;
+use Kendo\RuleLoader\PDORuleLoader;
 use Kendo\RuleMatcher\AccessRuleMatcher;
 use Kendo\Authorizer\Authorizer;
 use Kendo\IdentifierProvider\ActorIdentifierProvider;
@@ -18,6 +19,8 @@ class KendoService
     protected $options;
 
     protected $ruleLoader;
+
+    protected $authorizer;
 
     public function __construct(Kernel $kernel, array $options)
     {
@@ -55,6 +58,17 @@ class KendoService
         $authorizer->addMatcher($accessRuleMatcher);
         return $authorizer;
     }
+
+    public function can($operation, $resource)
+    {
+        static $authorizer;
+        $authorizer = $this->getAuthorizer();
+        if ($ret = $authorizer->authorize($this->kernel->currentUser, $operation, $resource)) {
+            return $ret->allowed;
+        }
+        return false;
+    }
+
 
     public function authorize($operation, $resource)
     {

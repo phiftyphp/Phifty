@@ -230,7 +230,6 @@ class Kernel extends ObjectContainer
         if ( isset($this->locale) ) {
             $this->locale;
         }
-
         $this->app = \App\App::getInstance($this, [ ]);
         $this->app->init();
 

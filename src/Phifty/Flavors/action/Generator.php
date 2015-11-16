@@ -8,7 +8,7 @@ class Generator extends BaseGenerator
 
     public function generate($ns,$actionName)
     {
-        $app = kernel()->app($ns) ?: kernel()->bundle($ns,true);
+        $app = strtolower($ns) == 'app' ? kernel()->getApp() : (kernel()->bundle($ns) ?: kernel()->bundles->load($ns));
         if (! $app) {
             throw new Exception("$ns application or bundle not found.");
         }
