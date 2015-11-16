@@ -9,6 +9,7 @@ use Kendo\IdentifierProvider\ActorIdentifierProvider;
 use Kendo\Operation\GeneralOperation;
 use LazyRecord\ConnectionManager;
 use Phifty\Kernel;
+use Exception;
 
 class KendoService
 {
@@ -78,12 +79,7 @@ class KendoServiceProvider extends BaseServiceProvider
     {
         $self = $this;
         $kernel->accessControl = function() use ($self, $kernel, $options) {
-            return new KendoService($kernel, $options);
-            /*
-            $actor = new NormalUser;
-            $ret = $authorizer->authorize($actor, GeneralOperation::VIEW, 'products');
-            var_dump($ret);
-            */
+            return new KendoService($kernel, $self->config);
         };
     }
 }
