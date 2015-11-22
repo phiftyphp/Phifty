@@ -114,8 +114,8 @@ class Region
         return <<<TEMPL
 {{Region.container.render()|raw}}
 <script type="text/javascript">
-$(document.body).ready(function() {
-    $('#{{Region.getRegionId()}}').asRegion().load('{{Region.path|raw}}' , {{Region.arguments|json_encode|raw}});
+jQuery(function() {
+    jQuery('#{{Region.getRegionId()}}').asRegion().load('{{Region.path|raw}}' , {{Region.arguments|json_encode|raw}});
 });
 </script>
 TEMPL;
