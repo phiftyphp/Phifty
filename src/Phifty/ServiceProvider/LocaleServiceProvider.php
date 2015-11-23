@@ -13,15 +13,16 @@ class LocaleServiceProvider extends BaseServiceProvider
         return !empty($options);
     }
 
-    public function register($kernel, $options = array() )
+    public function register($kernel, $options = array())
     {
         // call spl autoload, to load `__` locale function,
         // and we need to initialize locale before running the application.
-        $kernel->locale = function() use ($kernel,$options) {
-            $defaultLang = isset($options['Default'])   ? $options['Default']   : 'en';
-            $localeDir   = isset($options['LocaleDir']) ? $options['LocaleDir'] : 'locale';
-            $domain      = isset($options['Domain'])    ? $options['Domain'] : $kernel->getApplicationID();
-            $langs       = isset($options['Langs'])     ? $options['Langs'] : array('en');
+        $self = $this;
+        $kernel->locale = function() use ($kernel, $self, $options) {
+            $defaultLang = isset($self->config['Default'])   ? $self->config['Default']   : 'en';
+            $localeDir   = isset($self->config['LocaleDir']) ? $self->config['LocaleDir'] : 'locale';
+            $domain      = isset($self->config['Domain'])    ? $self->config['Domain'] : $kernel->getApplicationID();
+            $langs       = isset($self->config['Langs'])     ? $self->config['Langs'] : array('en');
 
             $locale = new Locale;
             $locale->setDefault($defaultLang);
