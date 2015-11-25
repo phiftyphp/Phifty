@@ -19,3 +19,4 @@ build/
 *ModelBase.php
 *.swp
 manifest.php
+/node_modules/
