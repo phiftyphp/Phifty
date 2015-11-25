@@ -48,9 +48,13 @@ class Bundle
     {
         $this->kernel = $kernel;
         if ($config) {
-            $this->setConfig($this->mergeWithDefaultConfig($config));
+            if ($config instanceof Accessor) {
+                $this->config = $this->mergeWithDefaultConfig($config->toArray());
+            } else {
+                $this->config = $this->mergeWithDefaultConfig($config);
+            }
         } else {
-            $this->setConfig($this->defaultConfig());
+            $this->config = $this->defaultConfig();
         }
 
         // XXX: currently we are triggering the loadAssets from Phifty\Web
@@ -76,9 +80,9 @@ class Bundle
         $this->config = $config;
     }
 
-    public function mergeWithDefaultConfig( $config = array() )
+    public function mergeWithDefaultConfig(array $config = array())
     {
-        return array_merge( $this->defaultConfig() , $config ?: array() );
+        return array_merge($this->defaultConfig() , $config);
     }
 
     public function defaultConfig()
@@ -89,8 +93,8 @@ class Bundle
 
     public function init()
     {
-    }
 
+    }
 
     public function getId()
     {
@@ -106,8 +110,9 @@ class Bundle
      * */
     public function getNamespace()
     {
-        if ( $this->_namespace )
+        if ($this->_namespace) {
             return $this->_namespace;
+        }
         $object = new ReflectionObject($this);
         return $this->_namespace = $object->getNamespaceName();
     }
@@ -337,28 +342,28 @@ class Bundle
     public function routes() { }
 
 
-    public function addCRUDAction( $model, $types = array() )
+    public function addCRUDAction($modelClass, $types = array() )
     {
         @trigger_error('addCRUDAction will be deprecated, please use addRecordAction instead', E_USER_DEPRECATED);
-        return $this->addRecordAction( $model, $types );
+        return $this->addRecordAction($modelClass, $types );
     }
 
     /**
      * Register/Generate CRUD actions
      *
-     * @param string $model model class
+     * @param string $modelClass model class
      * @param array  $types action types (Create, Update, Delete, BulkCopy, BulkDelete.....)
      */
-    public function addRecordAction( $model, $types = array() ) {
+    public function addRecordAction($modelClass, $types = array() ) {
         if ( empty($types) ) {
             $types = $this->defaultActionTypes;
         }
 
         $self = $this;
-        $this->kernel->event->register('phifty.before_action', function() use ($self, $types, $model) {
+        $this->kernel->event->register('phifty.before_action', function() use ($self, $types, $modelClass) {
             $self->kernel->action->registerAction('RecordActionTemplate', array(
                 'namespace' => $self->getNamespace(),
-                'model' => $model,
+                'model' => $modelClass,
                 'types' => (array) $types,
             ));
         });
@@ -367,30 +372,63 @@ class Bundle
     /**
      * Register/Generate update ordering action
      *
-     * @param string $model model class
+     * @param string $modelClass model class
      */
-    public function addUpdateOrderingAction($model) {
+    public function addUpdateOrderingAction($modelClass)
+    {
         $self = $this;
-        $this->kernel->event->register('phifty.before_action', function() use ($self, $model) {
+        $this->kernel->event->register('phifty.before_action', function() use ($self, $modelClass) {
             $self->kernel->action->registerAction('UpdateOrderingRecordActionTemplate', array(
                 'namespace' => $self->getNamespace(),
-                'model' => $model
+                'model' => $modelClass,
             ));
         });
     }
 
     /**
      * Returns template directory path.
+     *
+     * @group path
+     * @return path
      */
     public function getTemplateDir()
     {
         return $this->locate() . DIRECTORY_SEPARATOR . 'Templates';
     }
 
+    /**
+     *
+     * @group path
+     * @return path
+     */
     public function getTranslationDir()
     {
         return $this->locate() . DIRECTORY_SEPARATOR . 'Translation';
     }
+
+    /**
+     *
+     * @group path
+     * @return path
+     */
+    public function getAssetDir()
+    {
+        return $this->locate() . DIRECTORY_SEPARATOR . 'Assets';
+    }
+
+    /**
+     *
+     * @group path
+     * @return path
+     */
+    public function getTestDir()
+    {
+        return $this->locate() . DIRECTORY_SEPARATOR . 'Tests';
+    }
+
+
+
+
 
     public function getTranslation($locale)
     {
@@ -407,13 +445,6 @@ class Bundle
         return file_put_contents($file, yaml_emit($dict, YAML_UTF8_ENCODING) );
     }
 
-    /**
-     * Get config directory
-     */
-    public function getConfigDir()
-    {
-        return $this->locate() . DIRECTORY_SEPARATOR . 'Config';
-    }
 
 
     /**
@@ -425,10 +456,21 @@ class Bundle
         return [];
     }
 
+
+    /**
+     * Get config directory
+     *
+     * @return path
+     */
+    public function getConfigDir()
+    {
+        return $this->locate() . DIRECTORY_SEPARATOR . 'Config';
+    }
+
     /**
      * Get asset directory list, this is for registering bundle assets.
      *
-     * @return string[]
+     * @return path[]
      */
     public function getAssetDirs()
     {
@@ -471,6 +513,7 @@ class Bundle
         return array();
     }
 
+
     /**
      * Get the asset loader and load these assets.
      */
@@ -483,7 +526,7 @@ class Bundle
         }
     }
 
-    public static function getInstance($kernel = null, $config = array())
+    public static function getInstance(Kernel $kernel = null, $config = array())
     {
         static $instance;
         if ( $instance ) {
