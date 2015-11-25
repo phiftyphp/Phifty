@@ -174,8 +174,12 @@ class CurrentUser implements RoleIdentifierProvider, ActorIdentifierProvider, Re
             $this->session->set('roles', $record->getRoles() );
         } else if ( method_exists($record,'getRoles') ) {
             $this->session->set('roles', $record->getRoles() );
-        } else if (isset($record->custom_role) ) {
-            $this->session->set('roles', array($record->custom_role) );
+        } else if (isset($record->role)) {
+            if ($record->role instanceof BaseModel) {
+                $this->session->set('roles', array($record->role->identity) );
+            } else {
+                $this->session->set('roles', array($record->role) );
+            }
         } else {
             $this->session->set('roles', array() );
         }

@@ -62,6 +62,7 @@ class ActionServiceProvider extends BaseServiceProvider
             }
 
             $runner = $kernel->action;  // get runner
+            // $runner->setDebug();
             $kernel->event->trigger('phifty.before_action');
             $strout = fopen('php://output', 'w');
 
