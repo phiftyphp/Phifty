@@ -80,7 +80,7 @@ class Bundle
         return $this->config;
     }
 
-    public function setConfig($config)
+    public function setConfig(array $config)
     {
         $this->config = $config;
     }
