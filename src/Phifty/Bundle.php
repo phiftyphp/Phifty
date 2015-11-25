@@ -44,7 +44,7 @@ class Bundle
 
     public $exportTemplates = true;
 
-    public function __construct(Kernel $kernel, $config = array())
+    public function __construct(Kernel $kernel, $config = null)
     {
         $this->kernel = $kernel;
         if ($config) {
