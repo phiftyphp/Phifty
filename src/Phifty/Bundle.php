@@ -42,6 +42,11 @@ class Bundle
         array('prefix' => 'BulkDelete')
     );
 
+    /**
+     * @var boolean export templates directory to twig file system loader
+     *
+     * TODO we should let twig loader to get template directories forwardly.
+     */
     public $exportTemplates = true;
 
     public function __construct(Kernel $kernel, $config = null)
