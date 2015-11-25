@@ -24,7 +24,8 @@
         "symfony/yaml": "^2.7",
         "symfony/css-selector": "^2.7",
         "corneltek/pux": "dev-master",
-        "corneltek/kendo": "dev-master"
+        "corneltek/kendo": "dev-master",
+        "pimple/pimple": "~3.0"
     },
     "suggest": {
         "corneltek/roller": "*",
