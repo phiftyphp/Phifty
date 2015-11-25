@@ -36,10 +36,6 @@
         "bin/phifty-bootstrap"
     ],
     "require-dev": {
-        "corneltek/corebundle": "dev-master",
-        "corneltek/adminui": "dev-master",
-        "corneltek/crud": "dev-master",
-        "corneltek/emailbundle": "dev-master",
         "corneltek/phpunit-testmore": "dev-master",
         "satooshi/php-coveralls": "dev-master"
     },
