@@ -13,6 +13,7 @@
         "corneltek/lazyrecord": "3.0.x-dev",
         "corneltek/actionkit": "3.0.x-dev",
         "corneltek/assetkit": "3.4.x-dev",
+        "corneltek/pux": "2.0.x-dev",
         "phpsgi/funk": "dev-master@dev",
         "phpsgi/phpsgi": "@dev",
         "cypresslab/gitelephant": "^1.0",
@@ -23,7 +24,6 @@
         "symfony/process": "^2.7",
         "symfony/yaml": "^2.7",
         "symfony/css-selector": "^2.7",
-        "corneltek/pux": "dev-master",
         "corneltek/kendo": "dev-master",
         "pimple/pimple": "~3.0"
     },
