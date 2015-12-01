@@ -11,6 +11,7 @@
         "corneltek/sessionkit": "~1",
         "corneltek/locale": "2.0.x-dev",
         "corneltek/lazyrecord": "3.0.x-dev",
+        "corneltek/sqlbuilder": "@dev",
         "corneltek/actionkit": "3.0.x-dev",
         "corneltek/assetkit": "3.4.x-dev",
         "corneltek/pux": "2.0.x-dev",
