@@ -5,15 +5,7 @@ use ConfigKit\ConfigLoader;
 
 class DatabaseServiceProvider extends BaseServiceProvider
 {
-
-    protected $config;
-
     public function getId() { return 'database'; }
-
-    public function __construct(array $config = array())
-    {
-        $this->config = $config;
-    }
 
     public function register($kernel, $options = array() )
     {
