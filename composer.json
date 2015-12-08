@@ -6,7 +6,7 @@
         "corneltek/universal-cache": "^1",
         "corneltek/fileutil": "~1",
         "corneltek/configkit": "^1",
-        "corneltek/genphp": "dev-master",
+        "corneltek/genphp": "^1",
         "corneltek/codegen": "^2",
         "corneltek/sessionkit": "~1",
         "corneltek/locale": "2.0.x-dev",
