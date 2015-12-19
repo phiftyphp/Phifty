@@ -2,7 +2,7 @@
     "name": "corneltek/phifty-core",
     "require": {
         "php": ">=5.4.0",
-        "corneltek/universal": "^1.7",
+        "corneltek/universal": "1.8.x-dev",
         "corneltek/universal-cache": "^1",
         "corneltek/fileutil": "~1",
         "corneltek/configkit": "^1",
