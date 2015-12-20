@@ -2,16 +2,18 @@
 use ActionKit\ActionRunner;
 use ActionKit\ActionGenerator;
 use Pimple\Container;
+use Phifty\ServiceProvider\EventServiceProvider;
+use Phifty\ServiceProvider\ActionServiceProvider;
 
 class ActionServiceTest extends PHPUnit_Framework_TestCase
 {
     public function testActionService()
     {
         $kernel = new Phifty\Kernel;
-        $event = new Phifty\ServiceProvider\EventServiceProvider;
+        $event = new EventServiceProvider;
         $kernel->registerService($event);
 
-        $service = new Phifty\ServiceProvider\ActionServiceProvider;
+        $service = new ActionServiceProvider;
         $kernel->registerService($service);
         ok($kernel->action instanceof ActionRunner);
         ok($kernel->actionRunner instanceof ActionRunner);
