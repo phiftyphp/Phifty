@@ -25,35 +25,37 @@ class ActionServiceProvider extends BaseServiceProvider
 
     public function register($kernel, $options = array())
     {
-        $container = new ServiceContainer();
-        $container['cache_dir'] = $kernel->cacheDir;
-        if ($kernel->locale) {
-            $container['locale'] = $kernel->locale->current;
-        }
+        $kernel->actionService = function() use ($kernel) {
+            $container = new ServiceContainer;
+            $container['cache_dir'] = $kernel->cacheDir;
+            if ($kernel->locale) {
+                $container['locale'] = $kernel->locale->current;
+            }
 
-        if (isset($this->config['DefaultFieldView'])) {
-            Action::$defaultFieldView = $this->config['DefaultFieldView'];
-        }
+            if (isset($this->config['DefaultFieldView'])) {
+                Action::$defaultFieldView = $this->config['DefaultFieldView'];
+            }
 
-        $generator = $container['generator'];
-        $generator->registerTemplate('TwigActionTemplate', new TwigActionTemplate());
-        $generator->registerTemplate('CodeGenActionTemplate', new CodeGenActionTemplate());
-        $generator->registerTemplate('RecordActionTemplate', new RecordActionTemplate());
-        $generator->registerTemplate('UpdateOrderingRecordActionTemplate', new UpdateOrderingRecordActionTemplate());
-
-        $action = new ActionRunner($container);
-        $action->registerAutoloader();
-
-        $kernel->actionService = function() use($container) {
+            $generator = $container['generator'];
+            $generator->registerTemplate('TwigActionTemplate', new TwigActionTemplate());
+            $generator->registerTemplate('CodeGenActionTemplate', new CodeGenActionTemplate());
+            $generator->registerTemplate('RecordActionTemplate', new RecordActionTemplate());
+            $generator->registerTemplate('UpdateOrderingRecordActionTemplate', new UpdateOrderingRecordActionTemplate());
             return $container;
         };
 
-        $kernel->action = function () use ($action) {
-            return $action;
+        $kernel->actionRunner = function() use ($kernel) {
+            $actionRunner = new ActionRunner($kernel->actionService);
+            $actionRunner->registerAutoloader();
+            return $actionRunner;
         };
 
-        $kernel->event->register('view.init', function ($view) use ($action) {
-            $view->args['Action'] = $action;
+        $kernel->action = function () use ($kernel) {
+            return $kernel->actionRunner;
+        };
+
+        $kernel->event->register('view.init', function ($view) use ($kernel) {
+            $view->args['Action'] = $kernel->actionRunner;
         });
 
         $kernel->event->register('phifty.before_path_dispatch', function () use ($kernel) {
@@ -73,3 +75,4 @@ class ActionServiceProvider extends BaseServiceProvider
         });
     }
 }
+
