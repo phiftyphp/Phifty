@@ -374,6 +374,25 @@ class Bundle
         });
     }
 
+
+    public function addImportAction($modelClass)
+    {
+        $self = $this;
+        $this->kernel->event->register('phifty.before_action', function() use ($self, $modelClass) {
+            $className = $this->getNamespace() . '\\Action\\Import' . $modelClass . 'Simple';
+            $recordClass = $this->getNamespace() . '\\Model\\' . $modelClass;
+            $self->kernel->action->registerAction('CodeGenActionTemplate', array(
+                "action_class" => $className,
+                "extends"      => "\\CRUD\\Action\\ImportSimple",
+                "properties"   => [
+                    "recordClass" => $recordClass,
+                ],
+            ));
+        });
+    }
+
+
+
     /**
      * Register/Generate update ordering action
      *
