@@ -35,10 +35,7 @@
         "symfony/css-selector": "^2.7",
         "corneltek/twig-markdown": "^1"
     },
-    "bin": [
-        "bin/phifty",
-        "bin/phifty-bootstrap"
-    ],
+    "bin": ["bin/phifty"],
     "require-dev": {
         "corneltek/phpunit-testmore": "dev-master",
         "satooshi/php-coveralls": "dev-master"
