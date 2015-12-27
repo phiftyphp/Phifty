@@ -347,45 +347,70 @@ class Bundle
     public function routes() { }
 
 
-    public function addCRUDAction($modelClass, $types = array() )
+    public function addCRUDAction($modelName, $types = array() )
     {
         @trigger_error('addCRUDAction will be deprecated, please use addRecordAction instead', E_USER_DEPRECATED);
-        return $this->addRecordAction($modelClass, $types );
+        return $this->addRecordAction($modelName, $types );
     }
 
     /**
      * Register/Generate CRUD actions
      *
-     * @param string $modelClass model class
+     * @param string $modelName model class
      * @param array  $types action types (Create, Update, Delete, BulkCopy, BulkDelete.....)
      */
-    public function addRecordAction($modelClass, $types = array() ) {
-        if ( empty($types) ) {
+    public function addRecordAction($modelName, $types = array() )
+    {
+        if (empty($types)) {
             $types = $this->defaultActionTypes;
         }
 
         $self = $this;
-        $this->kernel->event->register('phifty.before_action', function() use ($self, $types, $modelClass) {
+        $this->kernel->event->register('phifty.before_action', function() use ($self, $types, $modelName) {
             $self->kernel->action->registerAction('RecordActionTemplate', array(
                 'namespace' => $self->getNamespace(),
-                'model' => $modelClass,
+                'model' => $modelName,
                 'types' => (array) $types,
             ));
         });
     }
 
+
+    /**
+     * Register import action for an record.
+     *
+     * @param string $modelName the model name Org
+     */
+    public function addImportAction($modelName)
+    {
+        $self = $this;
+        $this->kernel->event->register('phifty.before_action', function() use ($self, $modelName) {
+            $className = $this->getNamespace() . '\\Action\\Import' . $modelName . 'Simple';
+            $recordClass = $this->getNamespace() . '\\Model\\' . $modelName;
+            $self->kernel->action->registerAction('CodeGenActionTemplate', array(
+                "action_class" => $className,
+                "extends"      => "\\CRUD\\Action\\ImportSimple",
+                "properties"   => [
+                    "recordClass" => $recordClass,
+                ],
+            ));
+        });
+    }
+
+
+
     /**
      * Register/Generate update ordering action
      *
-     * @param string $modelClass model class
+     * @param string $modelName model class
      */
-    public function addUpdateOrderingAction($modelClass)
+    public function addUpdateOrderingAction($modelName)
     {
         $self = $this;
-        $this->kernel->event->register('phifty.before_action', function() use ($self, $modelClass) {
+        $this->kernel->event->register('phifty.before_action', function() use ($self, $modelName) {
             $self->kernel->action->registerAction('UpdateOrderingRecordActionTemplate', array(
                 'namespace' => $self->getNamespace(),
-                'model' => $modelClass,
+                'model' => $modelName,
             ));
         });
     }
