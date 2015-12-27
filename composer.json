@@ -48,5 +48,5 @@
             "Phifty\\": "src/Phifty/"
         }
     },
-    "version": "3.0.0"
+    "extra": { "branch-alias": { "dev-master": "3.0.x-dev" } }
 }
