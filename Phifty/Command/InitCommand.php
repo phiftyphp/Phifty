@@ -41,6 +41,7 @@ class InitCommand extends Command
         $dirs[] = 'webroot' . DIRECTORY_SEPARATOR . 'static' . DIRECTORY_SEPARATOR . 'css';
         $dirs[] = 'webroot' . DIRECTORY_SEPARATOR . 'static' . DIRECTORY_SEPARATOR . 'js';
         $dirs[] = 'webroot' . DIRECTORY_SEPARATOR . 'static' . DIRECTORY_SEPARATOR . 'upload';
+        $dirs[] = 'webroot' . DIRECTORY_SEPARATOR . 'upload';
         FileUtils::mkpath($dirs,true);
 
         // TODO: create .htaccess file
@@ -48,7 +49,10 @@ class InitCommand extends Command
         $this->logger->info( "Changing permissions..." );
         $chmods = [];
         $chmods[] = ["0777", "cache"];
+        $chmods[] = ["0777", "cache/view"];
+        $chmods[] = ["0777", "cache/config"];
         $chmods[] = ["0777", $kernel->webroot . DIRECTORY_SEPARATOR . 'static' . DIRECTORY_SEPARATOR . 'upload' ];
+        $chmods[] = ["0777", $kernel->webroot . DIRECTORY_SEPARATOR . 'upload' ];
         foreach ($chmods as $mod) {
             $this->logger->info("Changing mode to {$mod[0]} on {$mod[1]}", 1 );
             if ($this->options->system) {
