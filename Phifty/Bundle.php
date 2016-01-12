@@ -7,6 +7,76 @@ use LogicException;
 use Phifty\Kernel;
 use Phifty\Controller;
 
+class AppAction {
+
+    protected $kernel;
+
+    protected $bundle;
+
+    public function __construct(Kernel $kernel, Bundle $bundle)
+    {
+        $this->kernel = $kernel;
+        $this->bundle = $bundle;
+    }
+
+    /**
+     * Register/Generate update ordering action
+     *
+     * @param string $modelName model class
+     */
+    public function addUpdateOrderingAction($modelName)
+    {
+        $this->kernel->action->registerAction('UpdateOrderingRecordActionTemplate', array(
+            'namespace' => $this->bundle->getNamespace(),
+            'model' => $modelName,
+        ));
+    }
+
+
+    /**
+     * Register/Generate CRUD actions
+     *
+     *
+     * This method provides an API to register the user defined action class that can 
+     * be generated in the runtime.
+     *
+     * phifty.before_action will be triggered when users send the action request.
+     *
+     * @param string $modelName model class
+     * @param array  $types action types (Create, Update, Delete, BulkCopy, BulkDelete.....)
+     */
+    public function addRecordAction($modelName, $types = array() )
+    {
+        if (empty($types)) {
+            $types = $this->bundle->defaultActionTypes;
+        }
+        $this->kernel->action->registerAction('RecordActionTemplate', array(
+            'namespace' => $this->bundle->getNamespace(),
+            'model' => $modelName,
+            'types' => (array) $types,
+        ));
+    }
+
+
+    /**
+     * Register import action for an record.
+     *
+     * @param string $modelName the model name Org
+     */
+    public function addImportAction($modelName)
+    {
+        $className = $this->bundle->getNamespace() . '\\Action\\Import' . $modelName . 'Simple';
+        $recordClass = $this->bundle->getNamespace() . '\\Model\\' . $modelName;
+        $self->kernel->action->registerAction('CodeGenActionTemplate', array(
+            "action_class" => $className,
+            "extends"      => "\\CRUD\\Action\\ImportSimple",
+            "properties"   => [ "recordClass" => $recordClass, ],
+        ));
+    }
+
+
+}
+
 /**
  *  Bundle is the base class of App, Core, {Plugin} class.
  */
@@ -35,11 +105,14 @@ class Bundle
     protected $_namespace;
 
 
+    /**
+     *  The default action types is used in CRUD action generator.
+     */
     public $defaultActionTypes = array(
-        array('prefix' => 'Create'),
-        array('prefix' => 'Update'),
-        array('prefix' => 'Delete'),
-        array('prefix' => 'BulkDelete')
+        ['prefix' => 'Create'],
+        ['prefix' => 'Update'],
+        ['prefix' => 'Delete'],
+        ['prefix' => 'BulkDelete'],
     );
 
     /**
@@ -98,7 +171,8 @@ class Bundle
 
     public function init()
     {
-
+        // bind before action to self->actions method
+        $this->kernel->event->register('phifty.prepare_actions', [$this, 'actions']);
     }
 
     public function getId()
@@ -346,6 +420,11 @@ class Bundle
      */
     public function routes() { }
 
+    /**
+     * overridable method for defining user action classes.
+     */
+    public function actions() { }
+
 
     public function addCRUDAction($modelName, $types = array() )
     {
@@ -355,6 +434,12 @@ class Bundle
 
     /**
      * Register/Generate CRUD actions
+     *
+     *
+     * This method provides an API to register the user defined action class that can 
+     * be generated in the runtime.
+     *
+     * phifty.before_action will be triggered when users send the action request.
      *
      * @param string $modelName model class
      * @param array  $types action types (Create, Update, Delete, BulkCopy, BulkDelete.....)
