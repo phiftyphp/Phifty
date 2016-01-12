@@ -17,6 +17,12 @@ class InitCommand extends Command
         return 'Initialize phifty project files, directories and permissions.';
     }
 
+
+    public function options($opts)
+    {
+        $opts->add('system', 'use system commands');
+    }
+
     public function execute()
     {
         $kernel = kernel();
@@ -37,40 +43,23 @@ class InitCommand extends Command
         $dirs[] = 'webroot' . DIRECTORY_SEPARATOR . 'static' . DIRECTORY_SEPARATOR . 'upload';
         FileUtils::mkpath($dirs,true);
 
-// TODO: create .htaccess file
+        // TODO: create .htaccess file
 
         $this->logger->info( "Changing permissions..." );
-        $chmods = array();
-        $chmods[] = array( "og+rw" , "cache" );
-
-        $chmods[] = array( "og+rw" , $kernel->webroot . DIRECTORY_SEPARATOR . 'static' . DIRECTORY_SEPARATOR . 'upload' );
+        $chmods = [];
+        $chmods[] = ["0777", "cache"];
+        $chmods[] = ["0777", $kernel->webroot . DIRECTORY_SEPARATOR . 'static' . DIRECTORY_SEPARATOR . 'upload' ];
         foreach ($chmods as $mod) {
-            $this->logger->info( "{$mod[0]} {$mod[1]}", 1 );
-            system("chmod -R {$mod[0]} {$mod[1]}");
+            $this->logger->info("Changing mode to {$mod[0]} on {$mod[1]}", 1 );
+            if ($this->options->system) {
+                system("chmod -R {$mod[0]} {$mod[1]}");
+            } else {
+                chmod($mod[1], octdec($mod[0]));
+            }
         }
-
-        $this->logger->info("Linking bin/phifty");
-        if ( ! file_exists('bin/phifty') ) {
-            symlink(  '../phifty/bin/phifty', 'bin/phifty' );
+        $this->logger->info("Creating link of bin/phifty");
+        if (! file_exists('bin/phifty')) {
+            symlink('../vendor/bin/phifty', 'bin/phifty');
         }
-
-        # init config
-        $this->logger->info("Copying config files...");
-        copy_if_not_exists(FileUtils::path_join(PH_ROOT,'config','framework.app.yml'), FileUtils::path_join(PH_APP_ROOT,'config','framework.yml') );
-        // copy_if_not_exists(FileUtils::path_join(PH_ROOT,'config','application.dev.yml'), FileUtils::path_join(PH_APP_ROOT,'config','application.yml') );
-        copy_if_not_exists(FileUtils::path_join(PH_ROOT,'config','database.app.yml'), FileUtils::path_join(PH_APP_ROOT,'config','database.yml') );
-        copy_if_not_exists(FileUtils::path_join(PH_ROOT,'webroot','index.php'), FileUtils::path_join(PH_APP_ROOT,'webroot','index.php') );
-        copy_if_not_exists(FileUtils::path_join(PH_ROOT,'webroot','.htaccess'), FileUtils::path_join(PH_APP_ROOT,'webroot','.htaccess') );
-
-        $this->logger->info('Application is initialized, please edit your config files and run:');
-
-        echo <<<DOC
-
-    $ bin/phifty build-conf
-    $ bin/phifty asset
-
-    $ lazy build-conf config/database.yml
-
-DOC;
     }
 }
