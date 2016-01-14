@@ -7,8 +7,8 @@ use LogicException;
 use Phifty\Kernel;
 use Phifty\Controller;
 
-class AppAction {
-
+class AppActionGenerator
+{
     protected $kernel;
 
     protected $bundle;
@@ -82,6 +82,11 @@ class AppAction {
  */
 class Bundle
 {
+    /**
+     * @var AppActionGenerator
+     */
+    private $_actionGenerator;
+
 
     /**
      * @var Phifty\Kernel phifty kernel object
@@ -147,6 +152,15 @@ class Bundle
             }
         }
     }
+
+    protected function getActionGenerator()
+    {
+        if ($this->_actionGenerator) {
+            return $this->_actionGenerator;
+        }
+        return $this->_actionGenerator = new AppActionGenerator($this->kernel, $this);
+    }
+
 
     public function getConfig()
     {
