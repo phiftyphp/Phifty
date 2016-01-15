@@ -439,6 +439,18 @@ class Bundle
      */
     public function actions() { }
 
+    /**
+     * Return assets for asset loader.
+     *
+     * @return array asset names
+     */
+    public function assets()
+    {
+        return array();
+    }
+
+
+
 
     // =================================
     // Action Generator API
@@ -616,18 +628,6 @@ class Bundle
             $assets =  array_merge($assets, $assetsConfig->toArray());
         }
         return $assets;
-
-    }
-
-
-    /**
-     * Return assets for asset loader.
-     *
-     * @return array asset names
-     */
-    public function assets()
-    {
-        return array();
     }
 
 
