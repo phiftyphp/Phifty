@@ -73,11 +73,11 @@ class AppActionGenerator
      *
      * @param string $modelName the model name Org
      */
-    public function addImportAction($modelName)
+    public function addSimpleImportAction($modelName)
     {
         $className = $this->bundle->getNamespace() . '\\Action\\Import' . $modelName . 'Simple';
         $recordClass = $this->bundle->getNamespace() . '\\Model\\' . $modelName;
-        $self->kernel->action->registerAction('CodeGenActionTemplate', array(
+        $this->kernel->action->registerAction('CodeGenActionTemplate', array(
             "action_class" => $className,
             "extends"      => "\\CRUD\\Action\\ImportSimple",
             "properties"   => [ "recordClass" => $recordClass, ],
@@ -494,7 +494,7 @@ class Bundle
         $self = $this;
         $this->kernel->event->register('phifty.before_action', function() use ($self, $modelName) {
             $generator = $self->getActionGenerator();
-            $generator->addImportAction($modelName);
+            $generator->addSimpleImportAction($modelName);
         });
     }
 
