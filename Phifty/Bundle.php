@@ -13,6 +13,16 @@ class AppActionGenerator
 
     protected $bundle;
 
+    /**
+     *  The default action types is used in CRUD action generator.
+     */
+    public $defaultActionTypes = array(
+        ['prefix' => 'Create'],
+        ['prefix' => 'Update'],
+        ['prefix' => 'Delete'],
+        ['prefix' => 'BulkDelete'],
+    );
+
     public function __construct(Kernel $kernel, Bundle $bundle)
     {
         $this->kernel = $kernel;
@@ -45,10 +55,10 @@ class AppActionGenerator
      * @param string $modelName model class
      * @param array  $types action types (Create, Update, Delete, BulkCopy, BulkDelete.....)
      */
-    public function addRecordAction($modelName, $types = array() )
+    public function addRecordAction($modelName, $types = array())
     {
-        if (empty($types)) {
-            $types = $this->bundle->defaultActionTypes;
+        if (!$types || empty($types)) {
+            $types = $this->defaultActionTypes;
         }
         $this->kernel->action->registerAction('RecordActionTemplate', array(
             'namespace' => $this->bundle->getNamespace(),
@@ -109,16 +119,6 @@ class Bundle
      */
     protected $_namespace;
 
-
-    /**
-     *  The default action types is used in CRUD action generator.
-     */
-    public $defaultActionTypes = array(
-        ['prefix' => 'Create'],
-        ['prefix' => 'Update'],
-        ['prefix' => 'Delete'],
-        ['prefix' => 'BulkDelete'],
-    );
 
     /**
      * @var boolean export templates directory to twig file system loader
@@ -440,14 +440,18 @@ class Bundle
     public function actions() { }
 
 
+    // =================================
+    // Action Generator API
+    // =================================
+
     public function addCRUDAction($modelName, $types = array() )
     {
         @trigger_error('addCRUDAction will be deprecated, please use addRecordAction instead', E_USER_DEPRECATED);
         return $this->addRecordAction($modelName, $types );
     }
 
+
     /**
-     * Register/Generate CRUD actions
      *
      *
      * This method provides an API to register the user defined action class that can 
@@ -458,19 +462,12 @@ class Bundle
      * @param string $modelName model class
      * @param array  $types action types (Create, Update, Delete, BulkCopy, BulkDelete.....)
      */
-    public function addRecordAction($modelName, $types = array() )
+    public function addRecordAction($modelName, $types = null)
     {
-        if (empty($types)) {
-            $types = $this->defaultActionTypes;
-        }
-
         $self = $this;
         $this->kernel->event->register('phifty.before_action', function() use ($self, $types, $modelName) {
-            $self->kernel->action->registerAction('RecordActionTemplate', array(
-                'namespace' => $self->getNamespace(),
-                'model' => $modelName,
-                'types' => (array) $types,
-            ));
+            $generator = $self->getActionGenerator();
+            $generator->addRecordAction($modelName, $types);
         });
     }
 
@@ -484,15 +481,8 @@ class Bundle
     {
         $self = $this;
         $this->kernel->event->register('phifty.before_action', function() use ($self, $modelName) {
-            $className = $this->getNamespace() . '\\Action\\Import' . $modelName . 'Simple';
-            $recordClass = $this->getNamespace() . '\\Model\\' . $modelName;
-            $self->kernel->action->registerAction('CodeGenActionTemplate', array(
-                "action_class" => $className,
-                "extends"      => "\\CRUD\\Action\\ImportSimple",
-                "properties"   => [
-                    "recordClass" => $recordClass,
-                ],
-            ));
+            $generator = $self->getActionGenerator();
+            $generator->addImportAction($modelName);
         });
     }
 
@@ -507,10 +497,8 @@ class Bundle
     {
         $self = $this;
         $this->kernel->event->register('phifty.before_action', function() use ($self, $modelName) {
-            $self->kernel->action->registerAction('UpdateOrderingRecordActionTemplate', array(
-                'namespace' => $self->getNamespace(),
-                'model' => $modelName,
-            ));
+            $generator = $self->getActionGenerator();
+            $generator->addUpdateOrderingAction($modelName);
         });
     }
 
