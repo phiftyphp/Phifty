@@ -132,22 +132,18 @@ class Controller extends ExpandableController
     {
         $datestr = gmdate(DATE_RFC822, $time );
         // header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
-        header("Expires: $datestr");
+        @header("Expires: $datestr");
     }
 
     public function toJson($data, $encodeFlags = null)
     {
-        if (! CLI) {
-            header('Content-type: application/json; charset=UTF-8');
-        }
+        @header('Content-Type: application/json');
         return parent::toJson($data, $encodeFlags);
     }
 
     public function toYaml($data, $encodeFlags = null)
     {
-        if (! CLI) {
-            header('Content-type: application/yaml; charset=UTF-8;');
-        }
+        @header('Content-Type: application/yaml; charset=UTF-8;');
 
         // If we've loaded the yaml extension, we should use it directly.
         if (extension_loaded('yaml') ){
@@ -178,9 +174,7 @@ class Controller extends ExpandableController
     public function forbidden($msg = '403 Forbidden')
     {
         /* XXX: dirty hack this for phpunit testing */
-        if ( ! CLI ) {
-            header('HTTP/1.1 403 Forbidden');
-        }
+        @header('HTTP/1.1 403 Forbidden');
         echo $msg;
         exit(0);
     }
