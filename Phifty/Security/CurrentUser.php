@@ -39,12 +39,12 @@ class CurrentUser implements RoleIdentifierProvider, ActorIdentifierProvider, Re
     /**
      * @var BaseModel User model class
      */
-    public $userModelClass;
+    protected $userModelClass;
 
     /**
      * @var mixed User model record
      */
-    public $record; // user model record
+    protected $record; // user model record
 
     /**
      * @var string model primary key
@@ -61,13 +61,15 @@ class CurrentUser implements RoleIdentifierProvider, ActorIdentifierProvider, Re
      */
     protected $session;
 
+    protected $context = [];
+
     public function __construct($args = array() )
     {
         $record = null;
-        if ( is_object($args) ) {
+        if (is_object($args)) {
             $record = $args;
         } else {
-            if ( isset($args['record']) ) {
+            if (isset($args['record']) ) {
                 $record = $args['record'];
                 $this->userModelClass = get_class($record);
             } else {
@@ -146,16 +148,21 @@ class CurrentUser implements RoleIdentifierProvider, ActorIdentifierProvider, Re
      */
     public function updateSession()
     {
-        if (! $this->record) {
-            throw new Exception("Record is empty, Can not update session.");
+        if ($this->record) {
+            $this->record->reload();
+            $this->updateSessionFromRecord($this->record);
         }
-        $this->record->reload();
-        $this->updateSessionFromRecord($this->record);
     }
 
-    public function getSessionFields(BaseModel $record)
+
+    public function loginAs(BaseModel $anotherUser)
     {
-        return $record->getColumnNames();
+        if ($this->record) {
+            // Save the current user record into the context
+            $userId = $this->record->get($this->primaryKey);
+            $this->context[] = $userId;
+        }
+        $this->setRecord($anotherUser);
     }
 
     /**
@@ -163,10 +170,10 @@ class CurrentUser implements RoleIdentifierProvider, ActorIdentifierProvider, Re
      *
      * @param mixed User record object
      */
-    public function updateSessionFromRecord(BaseModel $record)
+    protected function updateSessionFromRecord(BaseModel $record)
     {
         // get column maes to register 
-        foreach ( $this->getSessionFields($record) as $name ) {
+        foreach ($record->getColumnNames() as $name) {
             $val = $record->$name;
             $this->session->set( $name, is_object($val) ? $val->__toString() : $val );
         }
@@ -186,7 +193,9 @@ class CurrentUser implements RoleIdentifierProvider, ActorIdentifierProvider, Re
     }
 
     /**
-     * Set current user record
+     * Set the user record as current user.
+     *
+     * This method is used for logging in or changing current user.
      *
      * @param mixed User record object
      *
@@ -199,7 +208,6 @@ class CurrentUser implements RoleIdentifierProvider, ActorIdentifierProvider, Re
             $this->updateSessionFromRecord($record);
             return true;
         }
-
         return false;
     }
 
