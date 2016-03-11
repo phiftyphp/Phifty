@@ -27,11 +27,27 @@ abstract class BaseServiceProvider implements ServiceProvider
      */
     abstract public function register($kernel, $options = array());
 
+
+    /**
+     * See if this service supports code generator
+     *
+     * @param Kernel $kernel
+     * @param array $options
+     * @return boolean
+     */
     public static function isGeneratable(Kernel $kernel, array & $options = array())
     {
         return true;
     }
 
+
+    /**
+     * generatePrepare generates the statements before registering the service.
+     *
+     * @param Kernel $kernel
+     * @param array $options
+     * @return null|array
+     */
     public static function generatePrepare(Kernel $kernel, array & $options = array())
     {
         return null;

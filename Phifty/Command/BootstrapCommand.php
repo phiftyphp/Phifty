@@ -162,7 +162,7 @@ class BootstrapCommand extends Command
 
 
         $appKernelClass = $kernelClassGenerator->generate($runtimeKernel);
-        $classPath = $appKernelClass->generatePsr4ClassUnder('app'); 
+        $classPath = $appKernelClass->generatePsr4ClassUnder('app');
         require_once $classPath;
         $block[] = new RequireStatement(PH_APP_ROOT . DIRECTORY_SEPARATOR . $classPath);
 
