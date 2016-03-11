@@ -65,7 +65,7 @@ class MailerServiceProvider extends BaseServiceProvider implements ComposerConfi
     public function register($kernel, $options = array() )
     {
         $kernel->mailer = function() use ($kernel,$options) {
-            $accessor = new Accessor( $options );
+            $accessor = new Accessor($options);
             $transportType = $accessor->Transport ?: 'MailTransport';
             $transportClass = 'Swift_' . $transportType;
             $transport = null;

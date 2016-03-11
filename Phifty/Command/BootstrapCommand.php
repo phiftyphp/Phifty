@@ -256,10 +256,15 @@ class BootstrapCommand extends Command
                         if ($prepareStm = $class::generatePrepare($runtimeKernel, $options)) {
                             $block[] = $prepareStm;
                         }
-                        $block[] = '$kernel->registerService(' . $class::generateNew($runtimeKernel, $options) . ');';
+                        $block[] = new Statement(new MethodCall('$kernel', 'registerService', [
+                            $class::generateNew($runtimeKernel, $options),
+                            $options,
+                        ]));
                     } else {
-                        $expr = new NewObject($class, [$options]);
-                        $block[] = '$kernel->registerService(' . $expr->render() . ');';
+                        $block[] = new Statement(new MethodCall('$kernel', 'registerService', [
+                            new NewObject($class, [$options]),
+                            $options,
+                        ]));
                     }
                 }
             }

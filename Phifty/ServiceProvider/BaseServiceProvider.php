@@ -37,6 +37,21 @@ abstract class BaseServiceProvider implements ServiceProvider
         return null;
     }
 
+
+    /**
+     * rewriteConfig rewrites the config array passed to the constructor
+     *
+     * @return array
+     */
+    public static function rewriteConfig(array $config)
+    {
+        return $config;
+    }
+
+
+    /**
+     * generateNew generates the code for constructing the object
+     */
     public static function generateNew(Kernel $kernel, array & $options = array())
     {
         // (PHP 5 >= 5.3.0)
