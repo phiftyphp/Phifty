@@ -1,6 +1,6 @@
 {
   "name": "phifty",
-  "version": "3.0.4",
+  "version": "3.0.5",
   "description": "node-js package for phifty web framework",
   "license" : "MIT",
   "scripts": {
@@ -16,8 +16,11 @@
     "email" : "yoanlin93@gmail.com",
     "url" : "http://corneltek.com"
   },
-  "repository" : { "type" : "git" , "url" : "https://github.com/c9s/Phifty.git" },
-  "peerDependencies": {
+  "repository" : {
+      "type": "git",
+      "url": "https://github.com/c9s/Phifty.git"
+  },
+  "dependencies": {
     "async": "^1.2.0",
     "babel-core": "^5.0",
     "babel-eslint": "^3.0.1",
