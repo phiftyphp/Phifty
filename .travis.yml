@@ -2,6 +2,7 @@ language: php
 php:
 - 5.5
 - 5.6
+- 7.0
 install:
 - bash scripts/install-apcu.sh
 - phpenv config-add tests/config/$TRAVIS_PHP_VERSION.ini
@@ -13,6 +14,7 @@ before_script:
 - phpenv rehash
 - cp -v config/framework.dev.yml config/framework.yml
 - cp -v config/database.dev.yml config/database.yml
+- npm install
 script:
 - php bin/phifty bootstrap && time php bootstrap.php
 - phpunit
