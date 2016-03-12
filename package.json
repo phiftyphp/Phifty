@@ -1,6 +1,6 @@
 {
   "name": "phifty",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "node-js package for phifty web framework",
   "license" : "MIT",
   "scripts": {
