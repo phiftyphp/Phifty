@@ -183,12 +183,6 @@ class ComposerInstaller
             futil_mkdir_if_not_exists($dir, 0755, true);
         }
 
-
-        echo "Installing main.php\n";
-        if (! file_exists('main.php')) {
-            copy('vendor/corneltek/phifty-core/main_app.php','main.php');
-        }
-
         if (! file_exists('config/framework.yml')) {
             echo "Installing default framework config...\n";
             $appId = basename(getcwd());
