@@ -2,6 +2,7 @@
   "name": "phifty",
   "version": "3.0.1",
   "description": "node-js package for phifty web framework",
+  "license" : "MIT",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev-server": "webpack-dev-server --config webpack-dev-server.config.js --progress --colors --port 2992 --inline",
@@ -10,7 +11,12 @@
     "start-dev": "node lib/server-development",
     "start": "node lib/server-production"
   },
-  "author": "Yo-An Lin",
+  "author": {
+    "name" : "Yo-An Lin",
+    "email" : "yoanlin93@gmail.com",
+    "url" : "http://corneltek.com"
+  },
+  "repository" : { "type" : "git" , "url" : "https://github.com/c9s/Phifty.git" },
   "dependencies": {
     "async": "^1.2.0",
     "babel-core": "^5.0.12",
