@@ -1,6 +1,7 @@
 var cwd = require('cwd');
 var path = require('path');
 var fs = require('fs');
+var webpack = require('webpack');
 var __root = cwd();
 
 var phifty = {};
@@ -9,7 +10,7 @@ phifty.moduleDirectory = path.join(__dirname, 'node_modules');
 
 phifty.webpackExcludePaths = function() {
   var excludePaths = [];
-  excludePaths.push(moduleDirectory);
+  excludePaths.push(this.moduleDirectory);
   excludePaths.push(path.resolve(__root, 'node_modules'));
   excludePaths.push(/node_modules/);
   return excludePaths;
@@ -35,5 +36,5 @@ phifty.assetAliases = function() {
   }
   return {};
 };
-
+phifty.webpack = webpack;
 module.exports = phifty;
