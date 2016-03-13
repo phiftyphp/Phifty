@@ -3,6 +3,7 @@
   "version": "3.0.5",
   "description": "node-js package for phifty web framework",
   "license" : "MIT",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev-server": "webpack-dev-server --config webpack-dev-server.config.js --progress --colors --port 2992 --inline",
@@ -15,6 +16,9 @@
     "name" : "Yo-An Lin",
     "email" : "yoanlin93@gmail.com",
     "url" : "http://corneltek.com"
+  },
+  "bugs": {
+    "url": "https://github.com/c9s/Phifty/issues"
   },
   "repository" : {
       "type": "git",
