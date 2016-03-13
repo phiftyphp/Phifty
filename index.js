@@ -1,6 +1,7 @@
 var cwd = require('cwd');
+var path = require('path');
+var fs = require('fs');
 var __root = cwd();
-
 
 var phifty = {};
 
