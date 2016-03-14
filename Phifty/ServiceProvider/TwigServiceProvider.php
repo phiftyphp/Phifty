@@ -32,6 +32,7 @@ class TwigServiceProvider extends BaseServiceProvider
     static public function generateNew(Kernel $kernel, array & $options = array())
     {
         $className = get_called_class();
+        $envOptions = [];
 
         // preprocess twig configs
         $templateDirs = array();
@@ -91,7 +92,7 @@ class TwigServiceProvider extends BaseServiceProvider
             }
 
             // http://www.twig-project.org/doc/api.html#environment-options
-            $env = new Twig_Environment($loader, isset($self->config['Environment']) ? $self->config['Environment'] : array());
+            $env = new Twig_Environment($loader, $self->config['Environment']);
 
             if ($kernel->isDev) {
                 $env->addExtension(new Twig_Extension_Debug);
