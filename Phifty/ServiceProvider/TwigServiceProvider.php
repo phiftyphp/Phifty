@@ -34,7 +34,6 @@ class TwigServiceProvider extends BaseServiceProvider
         $className = get_called_class();
 
         // preprocess twig configs
-
         $templateDirs = array();
         if (isset($options['TemplateDirs']) && $options['TemplateDirs']) {
             $templateDirs = array_map(function($dir) {
@@ -42,7 +41,7 @@ class TwigServiceProvider extends BaseServiceProvider
             }, $options['TemplateDirs']);
         }
 
-        // append fallback template dirs from plugin dir or framework plugin dir.
+        // Append fallback template dirs from plugin dir or framework plugin dir.
         $templateDirs[] = PH_APP_ROOT;
         $options['TemplateDirs'] = $templateDirs;
 
@@ -80,7 +79,7 @@ class TwigServiceProvider extends BaseServiceProvider
         $kernel->twig = function() use($kernel, $options, $self) {
 
             // create the filesystem loader
-            $loader   = new Twig_Loader_Filesystem(isset($self->config['TemplateDirs']) ? $self->config['TemplateDirs'] : array());
+            $loader = new Twig_Loader_Filesystem($self->config['TemplateDirs']);
 
             /**
              * Template namespaces must be added after $loader is initialized.
@@ -107,7 +106,6 @@ class TwigServiceProvider extends BaseServiceProvider
             if (class_exists('Twig_Extension_Markdown',true)) {
                 $env->addExtension( new Twig_Extension_Markdown);
             }
-
 
             // include assettoolkit extension
             if ($asset = kernel()->asset) {
