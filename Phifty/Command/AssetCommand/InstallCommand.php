@@ -3,7 +3,6 @@ namespace Phifty\Command\AssetCommand;
 use CLIFramework\Command;
 use AssetKit\Installer;
 use AssetKit\LinkInstaller;
-use Phifty\Command\AssetBaseCommand;
 
 /**
  * When running asset:init command, we should simply register app/plugin assets
@@ -32,7 +31,7 @@ class InstallCommand extends AssetBaseCommand
         $loader = $this->getAssetLoader();
         $kernel = kernel();
 
-        $this->logger->debug("Installing assets from applications...");
+        $this->logger->debug("Installing App assets...");
         if ($app = $kernel->getApp()) {
             // getAssets supports assets defined in config file.
             $assetNames = $app->getAssets();
@@ -46,16 +45,17 @@ class InstallCommand extends AssetBaseCommand
             }
         }
 
-        $this->logger->debug("Installing assets from bundles...");
         if ($kernel->bundles) {
             foreach ($kernel->bundles as $bundle) {
+                $this->logger->debug("Installing " . get_class($bundle) . " assets...");
+
                 // getAssets supports assets defined in config file.
                 $assetNames = $bundle->getAssets();
                 $assets = $loader->loadAssets($assetNames);
                 if (!empty($assets)) {
                     foreach ($assets as $asset) {
                         $this->logger->debug("Installing {$asset->name} ...");
-                        $installer->install( $asset );
+                        $installer->install($asset);
                     }
                     $this->logger->info(get_class($bundle) . ': ' . count($assets) . " assets installed.");
                 }

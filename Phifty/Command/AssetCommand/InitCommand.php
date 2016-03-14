@@ -1,7 +1,6 @@
 <?php
 namespace Phifty\Command\AssetCommand;
 use CLIFramework\Command;
-use Phifty\Command\AssetBaseCommand;
 
 class InitCommand extends AssetBaseCommand
 {

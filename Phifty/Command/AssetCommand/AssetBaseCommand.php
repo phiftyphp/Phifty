@@ -1,5 +1,5 @@
 <?php
-namespace Phifty\Command;
+namespace Phifty\Command\AssetCommand;
 use CLIFramework\Command;
 use AssetKit\AssetLoader;
 use AssetKit\AssetConfig;
