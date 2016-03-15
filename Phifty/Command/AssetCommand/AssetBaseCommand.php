@@ -18,6 +18,27 @@ class AssetBaseCommand extends Command
         return kernel()->asset->loader;
     }
 
+
+    public function showBundleAssets($bundle)
+    {
+        $config = $this->getAssetConfig();
+        $loader = $this->getAssetLoader();
+        $this->logger->debug("---> " . get_class($bundle));
+        $cwd = getcwd();
+        foreach ($bundle->getAssetDirs() as $dir ) {
+            if (!file_exists($dir)) {
+                continue;
+            }
+            $manifestFile = $dir . DIRECTORY_SEPARATOR . 'manifest.yml';
+            if (!file_exists($manifestFile)) {
+                continue;
+            }
+            $realdir = substr($dir, strlen($cwd) + 1 );
+            $this->logger->writeln(get_class($bundle) . ' ' . $realdir);
+        }
+
+    }
+
     public function registerBundleAssets($bundle)
     {
         $config = $this->getAssetConfig();

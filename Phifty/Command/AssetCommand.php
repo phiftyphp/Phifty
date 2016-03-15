@@ -27,6 +27,7 @@ class AssetCommand extends Command
     public function init()
     {
         $this->command('init');
+        $this->command('list');
         $this->command('install');
     }
 
