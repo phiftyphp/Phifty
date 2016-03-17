@@ -41,6 +41,7 @@
     "jsx-loader": "^0.13.2",
     "keymirror": "^0.1.1",
     "object-assign": "^4.0.1",
+    "classes": "^0.3",
     "react": "^0.13.3",
     "react-hot-loader": "^1.3.0",
     "react-proxy-loader": "^0.3.1",
