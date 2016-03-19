@@ -10,7 +10,7 @@ class Generator extends BaseGenerator
 
     public function generate($ns,$modelName,$crudId = null)
     {
-        $bundle = kernel()->app($ns) ?: kernel()->bundle($ns,true);
+        $bundle = kernel()->getApp() ?: kernel()->bundle($ns,true);
         if (! $bundle) {
             throw new Exception("$ns application or bundle not found.");
         }
