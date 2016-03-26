@@ -10,6 +10,7 @@ use CodeGen\Statement\RequireStatement;
 use CodeGen\Statement\RequireComposerAutoloadStatement;
 use CodeGen\Statement\RequireClassStatement;
 use CodeGen\Statement\ConstStatement;
+use CodeGen\Statement\DefineStatement;
 use CodeGen\Statement\AssignStatement;
 use CodeGen\Statement\Statement;
 use CodeGen\Expr\NewObject;
@@ -138,8 +139,8 @@ class BootstrapCommand extends Command
 
 
         // CLI mode should be dynamic
-        $block[] = new ConstStatement('CLI', new Raw("isset(\$_SERVER['argc']) && !isset(\$_SERVER['HTTP_HOST'])"));
-        $block[] = new ConstStatement('CLI_MODE', new Raw("CLI"));
+        $block[] = new DefineStatement('CLI', new Raw("isset(\$_SERVER['argc']) && !isset(\$_SERVER['HTTP_HOST'])"));
+        $block[] = new DefineStatement('CLI_MODE', new Raw("CLI"));
 
         $block[] = 'global $kernel, $composerClassLoader, $splClassLoader;';
         $block[] = new AssignStatement('$composerClassLoader', new RequireComposerAutoloadStatement());
