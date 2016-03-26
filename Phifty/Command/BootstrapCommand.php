@@ -33,6 +33,8 @@ class BootstrapCommand extends Command
 
     public function options($opts)
     {
+        $opts->add('c|clean', 'clean up generated files.');
+
         $opts->add('o|output:=string', 'output file')
             ->defaultValue('bootstrap.php');
     }
@@ -78,15 +80,38 @@ class BootstrapCommand extends Command
             ConfigCompiler::compile($configPath);
         }
 
-        $outputFile = $this->options->output;
 
-        $this->logger->info("===> Generating bootstrap file: $outputFile");
+        $appDirectory = 'app';
+
+        $outputFile = $this->options->output;
 
         defined('PH_APP_ROOT') || define('PH_APP_ROOT', getcwd());
         // PH_ROOT is deprecated, but kept for backward compatibility
         defined('PH_ROOT') || define('PH_ROOT', getcwd());
+        $this->logger->info('Using PH_APP_ROOT:' . PH_APP_ROOT);
 
-        $this->logger->info('PH_APP_ROOT:' . PH_APP_ROOT);
+        if ($this->options->clean) {
+            $this->logger->info("Removing genereated files");
+            $cleanFiles = [
+                $outputFile,
+                PH_APP_ROOT . $appDirectory . 'AppKernel.php',
+                PH_APP_ROOT . $appDirectory . 'AppConfigLoader.php',
+            ];
+
+            foreach ($cleanFiles as $cleanFile) {
+                $this->logger->debug("Checking $cleanFile");
+                if (file_exists($cleanFile)) {
+                    $this->logger->debug("Removing $cleanFile");
+                    unlink($cleanFile);
+                }
+            }
+            $this->logger->info('Cached files are cleaned up');
+            return;
+        }
+
+
+        $this->logger->info("===> Generating bootstrap file: $outputFile");
+
 
 
         $block = new Block;
@@ -119,10 +144,10 @@ class BootstrapCommand extends Command
         $block[] = 'global $kernel, $composerClassLoader, $splClassLoader;';
         $block[] = new AssignStatement('$composerClassLoader', new RequireComposerAutoloadStatement());
 
-        // $composerClassLoader->addPsr4('App\\', '/.../.../app');
+        // $composerClassLoader->addPsr4('App\\', '/.../.../$appDirectory');
         $block[] = new Statement(new MethodCall('$composerClassLoader', 'addPsr4', [
             'App\\',
-            PH_APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR ]));
+            PH_APP_ROOT . DIRECTORY_SEPARATOR . $appDirectory . DIRECTORY_SEPARATOR ]));
 
         // TODO:
         //  - add PSR-4 class loader here.
@@ -140,7 +165,7 @@ class BootstrapCommand extends Command
         $configLoader = self::createConfigLoader(PH_APP_ROOT);
         $configClassGenerator = new AppClassGenerator([ 'namespace' => 'App', 'prefix' => 'App' ]);
         $configClass = $configClassGenerator->generate($configLoader);
-        $classPath = $configClass->generatePsr4ClassUnder('app');
+        $classPath = $configClass->generatePsr4ClassUnder($appDirectory);
         $block[] = new RequireStatement(PH_APP_ROOT . DIRECTORY_SEPARATOR . $classPath);
         require_once $classPath;
 
@@ -162,7 +187,7 @@ class BootstrapCommand extends Command
 
 
         $appKernelClass = $kernelClassGenerator->generate($runtimeKernel);
-        $classPath = $appKernelClass->generatePsr4ClassUnder('app');
+        $classPath = $appKernelClass->generatePsr4ClassUnder($appDirectory);
         require_once $classPath;
         $block[] = new RequireStatement(PH_APP_ROOT . DIRECTORY_SEPARATOR . $classPath);
 
