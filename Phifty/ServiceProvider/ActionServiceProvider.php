@@ -47,6 +47,7 @@ class ActionServiceProvider extends BaseServiceProvider
         $kernel->actionRunner = function() use ($kernel) {
             $actionRunner = new ActionRunner($kernel->actionService);
             $actionRunner->registerAutoloader();
+            // $actionRunner->setDebug();
             return $actionRunner;
         };
 
@@ -62,10 +63,7 @@ class ActionServiceProvider extends BaseServiceProvider
             if (!ActionRequest::hasAction($_REQUEST)) {
                 return;
             }
-
-            $runner = $kernel->action;  // get runner
-            // $runner->setDebug();
-
+            $runner = $kernel->action;
             // the new trigger for actions defined in Bundle::actions method
             $kernel->event->trigger('phifty.prepare_actions');
             $kernel->event->trigger('phifty.before_action');
