@@ -9,8 +9,8 @@ use CodeGen\Raw;
 use CodeGen\Statement\RequireStatement;
 use CodeGen\Statement\RequireComposerAutoloadStatement;
 use CodeGen\Statement\RequireClassStatement;
+use CodeGen\Statement\ConstStatement;
 use CodeGen\Statement\AssignStatement;
-use CodeGen\Statement\DefineStatement;
 use CodeGen\Statement\Statement;
 use CodeGen\Expr\NewObject;
 use CodeGen\Expr\MethodCall;
@@ -129,17 +129,17 @@ class BootstrapCommand extends Command
 
 
         // autoload script from composer
-        $block[] = new DefineStatement('PH_ROOT', PH_ROOT);
-        $block[] = new DefineStatement('PH_APP_ROOT', PH_ROOT);
-        $block[] = new DefineStatement('DS', DIRECTORY_SEPARATOR);
+        $block[] = new ConstStatement('PH_ROOT', PH_ROOT);
+        $block[] = new ConstStatement('PH_APP_ROOT', PH_ROOT);
+        $block[] = new ConstStatement('DS', DIRECTORY_SEPARATOR);
         // $block[] = sprintf("define('PH_ROOT', %s);", var_export(PH_ROOT, true));
         // $block[] = sprintf("define('PH_APP_ROOT', %s);", var_export(PH_APP_ROOT, true));
         // $block[] = "defined('DS') || define('DS', DIRECTORY_SEPARATOR);";
 
 
         // CLI mode should be dynamic
-        $block[] = new DefineStatement('CLI', new Raw("isset(\$_SERVER['argc']) && !isset(\$_SERVER['HTTP_HOST'])"));
-        $block[] = new DefineStatement('CLI_MODE', new Raw("CLI"));
+        $block[] = new ConstStatement('CLI', new Raw("isset(\$_SERVER['argc']) && !isset(\$_SERVER['HTTP_HOST'])"));
+        $block[] = new ConstStatement('CLI_MODE', new Raw("CLI"));
 
         $block[] = 'global $kernel, $composerClassLoader, $splClassLoader;';
         $block[] = new AssignStatement('$composerClassLoader', new RequireComposerAutoloadStatement());
