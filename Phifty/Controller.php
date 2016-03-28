@@ -1,6 +1,5 @@
 <?php
 namespace Phifty;
-use Universal\Http\HttpRequest;
 use Exception;
 use InvalidArgumentException;
 use ReflectionObject;
