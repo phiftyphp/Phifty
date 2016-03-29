@@ -6,9 +6,11 @@ use Phifty\Kernel;
 
 abstract class Engine
 {
-    public $kernel;
-    public $options = array();
-    public $templateDirs = array();
+    protected $kernel;
+
+    protected $options = array();
+
+    protected $templateDirs = array();
 
     private $renderer;
 

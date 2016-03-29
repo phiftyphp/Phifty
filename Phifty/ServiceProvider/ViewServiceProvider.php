@@ -11,13 +11,11 @@ use Phifty\Kernel;
  */
 class ViewFactory
 {
-    public $templateDirs = array();
-
     protected $kernel;
 
     protected $options = array();
 
-    public function __construct($kernel, array $options = array())
+    public function __construct(Kernel $kernel, array $options = array())
     {
         $this->kernel = $kernel;
         $this->options = $options;
@@ -25,7 +23,6 @@ class ViewFactory
 
     public function __invoke($class = null)
     {
-        /* get template engine */
         $viewClass = $class ?: $this->options['Class'];
         return new $viewClass($this->kernel, [
             'template_dirs' => $this->options['TemplateDirs'],
