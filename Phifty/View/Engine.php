@@ -24,30 +24,6 @@ abstract class Engine
         if (isset($options['template_dirs'])) {
             $this->templateDirs = (array) $options['template_dirs'];
         }
-        if (empty( $this->templateDirs)) {
-            $this->templateDirs = $this->getDefaultTemplateDirs();
-        }
-    }
-
-    public function getDefaultTemplateDirs()
-    {
-        // when we move all bundles into applications, we take off the PH_APP_ROOT and PH_ROOT from paths
-        $dirs = array(
-            $this->kernel->rootAppDir,
-            $this->kernel->frameworkAppDir,
-            $this->kernel->rootBundleDir,
-            $this->kernel->frameworkBundleDir,
-            $this->kernel->rootDir,
-            $this->kernel->frameworkDir,
-        );
-
-        if ( $configDirs = $this->kernel->config->get('framework','View.TemplateDirs') ) {
-            foreach ($configDirs as $dir) {
-                $dirs[] = PH_APP_ROOT . '/' . $dir;
-            }
-        }
-
-        return $dirs;
     }
 
     /*

@@ -53,6 +53,13 @@ class ViewServiceProvider extends BaseServiceProvider
             } else {
                 $options['TemplateDirs'] = [PH_APP_ROOT];
             }
+        } else {
+            // Rewrite template directories with realpath
+            $dirs = [];
+            foreach ($options['TemplateDirs'] as $dir) {
+                $dirs[] = realpath($dir);
+            }
+            $options['TemplateDirs'] = $dirs;
         }
         $class = get_called_class();
         return new NewObject($class,[$options]);
