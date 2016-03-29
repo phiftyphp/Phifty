@@ -6,24 +6,28 @@ use IteratorAggregate;
 use Universal\Http\HttpRequest;
 use InvalidArgumentException;
 use Phifty\Web;
+use Phifty\Kernel;
+use Phifty\View\Engine;
 
 class View implements ArrayAccess, IteratorAggregate
 {
-
     /**
      * @var array template args
      */
     protected $args = array();
 
+    protected $kernel;
+
     protected $engine;
 
-    public function __construct($engine = null, $engineOpts = null)
+    public function __construct(Kernel $kernel, $engineOpts = null)
     {
-        $this->initEngine($engine , $engineOpts);
+        $this->kernel = $kernel;
+        $this->engine = Engine::createEngine($this->kernel, $engineOpts);
         $this->init();
 
         // register args
-        $this->args['Kernel']      = kernel();
+        $this->args['Kernel']      = $kernel;
         $this->args['Request'] = new HttpRequest;
 
         // helper functions
@@ -38,30 +42,14 @@ class View implements ArrayAccess, IteratorAggregate
 
     }
 
-    public function initEngine($engine = null , $engineOpts = null)
+    public function __set($name , $value)
     {
-        if ($engine) {
-            /* if it's an engine object already, just save it */
-            if ( is_object( $engine ) ) {
-                $this->engine = $engine;
-            } else {
-                $this->engine = \Phifty\View\Engine::createEngine(kernel(), $engineOpts);
-            }
-        } else {
-            /* get default engine from config */
-            $backend = kernel()->config->get('framework','View.Backend') ?: 'twig';
-            $this->engine = \Phifty\View\Engine::createEngine( $backend , $engineOpts );
-        }
+        $this->args[$name] = $value;
     }
 
-    public function __set( $name , $value )
+    public function __get($name)
     {
-        $this->args[ $name ] = $value;
-    }
-
-    public function __get( $name )
-    {
-        if ( isset($this->args[$name]) ) {
+        if (isset($this->args[$name])) {
             return $this->args[ $name ];
         }
     }

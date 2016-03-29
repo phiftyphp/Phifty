@@ -26,12 +26,10 @@ class ViewFactory
     public function __invoke($class = null)
     {
         /* get template engine */
-        $engine = Engine::createEngine($this->kernel);
         $viewClass = $class ?: $this->options['Class'];
-        $options = [
+        return new $viewClass($this->kernel, [
             'template_dirs' => $this->options['TemplateDirs'],
-        ];
-        return new $viewClass($engine, $options);
+        ]);
     }
 }
 
