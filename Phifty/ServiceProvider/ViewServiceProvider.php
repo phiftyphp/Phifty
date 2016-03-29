@@ -1,6 +1,8 @@
 <?php
 namespace Phifty\ServiceProvider;
 use Phifty\View\Engine;
+use CodeGen\Expr\NewObject;
+use Phifty\Kernel;
 
 /**
  * Usage:
@@ -9,50 +11,55 @@ use Phifty\View\Engine;
  */
 class ViewFactory
 {
-
-    public $backend = 'twig';
-    public $class = 'Phifty\\View';
     public $templateDirs = array();
 
-    public function __construct()
+    protected $kernel;
+
+    protected $options = array();
+
+    public function __construct($kernel, array $options = array())
     {
+        $this->kernel = $kernel;
+        $this->options = $options;
     }
 
     public function __invoke($class = null)
     {
         /* get template engine */
-        $engine = Engine::createEngine( $this->backend );
-        $viewClass = $class ? $class : $this->class;
-        $opts = array();
-        if ( $this->templateDirs ) {
-            $opts['template_dirs'] = $this->templateDirs;
-        }
-        return new $viewClass($engine, $opts);
+        $engine = Engine::createEngine($this->kernel);
+        $viewClass = $class ?: $this->options['Class'];
+        $options = [
+            'template_dirs' => $this->options['TemplateDirs'],
+        ];
+        return new $viewClass($engine, $options);
     }
 }
 
 class ViewServiceProvider extends BaseServiceProvider
 {
-    public $options;
-
     public function getId() { return 'View'; }
-    public function register($kernel, $options = array() )
+
+    static public function generateNew(Kernel $kernel, array & $options = array())
     {
-        $this->options = $options;
-        $factory = new ViewFactory;
-        if ( isset($options['Backend']) ) {
-            $factory->backend = $options['Backend'];
+        if (!isset($options['Class']) ) {
+            $options['Class'] = 'Phifty\\View';
         }
-        if ( isset($options['Class']) ) {
-            $factory->class = $options['Class'];
+        if (!isset($options['Backend']) ) {
+            $options['Backend'] = 'twig';
         }
-        if ( isset($options['TemplateDirs']) && is_array($options['TemplateDirs']) ) {
-            $factory->templateDirs = $options['TemplateDirs'];
-        } else {
-            $factory->templateDirs = array();
+        if (!isset($options['TemplateDirs'])) {
+            if (PH_APP_ROOT != PH_ROOT) {
+                $options['TemplateDirs'] = [PH_APP_ROOT, PH_ROOT];
+            } else {
+                $options['TemplateDirs'] = [PH_APP_ROOT];
+            }
         }
-        $factory->templateDirs[] = PH_APP_ROOT;
-        $factory->templateDirs[] = PH_ROOT;
-        $kernel->registerFactory('view',$factory);
+        $class = get_called_class();
+        return new NewObject($class,[$options]);
+    }
+
+    public function register($kernel, $options = array())
+    {
+        $kernel->registerFactory('view', new ViewFactory($kernel));
     }
 }

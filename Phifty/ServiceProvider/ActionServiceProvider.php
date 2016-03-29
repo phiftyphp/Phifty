@@ -56,7 +56,7 @@ class ActionServiceProvider extends BaseServiceProvider
         };
 
         $kernel->event->register('view.init', function ($view) use ($kernel) {
-            $view->args['Action'] = $kernel->actionRunner;
+            $view['Action'] = $kernel->actionRunner;
         });
 
         $kernel->event->register('phifty.before_path_dispatch', function () use ($kernel) {

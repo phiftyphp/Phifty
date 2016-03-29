@@ -164,9 +164,9 @@ class Controller extends ExpandableController
      */
     public function render($template, array $args = array(), array $engineOpts = array())
     {
-        $view = $this->view( $engineOpts );
-        $view->assign( $args );
-        return $view->render( $template );
+        $view = $this->view($engineOpts);
+        $view->assign($args);
+        return $view->render($template);
     }
 
     /**

@@ -1,8 +1,8 @@
 <?php
-
 namespace Phifty\View;
 
 use Phifty\FileUtils;
+use Phifty\Kernel;
 
 abstract class Engine
 {
@@ -17,18 +17,14 @@ abstract class Engine
      *   template_dirs
      *   cache_dir
      */
-    public function __construct( $options = array() )
+    public function __construct(Kernel $kernel, array $options = array())
     {
-        $this->kernel = kernel();
-
-        /* save options */
+        $this->kernel = $kernel;
         $this->options = $options;
-
-        /* preprocess options */
-        if ( isset( $options['template_dirs'] ) )
+        if (isset($options['template_dirs'])) {
             $this->templateDirs = (array) $options['template_dirs'];
-
-        if ( empty( $this->templateDirs) ) {
+        }
+        if (empty( $this->templateDirs)) {
             $this->templateDirs = $this->getDefaultTemplateDirs();
         }
     }
@@ -64,31 +60,15 @@ abstract class Engine
      */
     public function getRenderer()
     {
-        if ( $this->renderer )
-
+        if ($this->renderer) {
             return $this->renderer;
+        }
         return $this->renderer = $this->newRenderer();
     }
 
     /* refactor to Phifty\View\Smarty and Phifty\View\Twig */
-    public static function createEngine( $backend , $opts = array() )
+    public static function createEngine(Kernel $kernel, array $options = array())
     {
-        switch ($backend) {
-            case "twig":
-                return new \Phifty\View\Twig( $opts );
-            case "php":
-                return new \Phifty\View\Php( $opts );
-            default:
-                throw new \Exception("Engine type $backend is not supported.");
-        }
+        return new \Phifty\View\Twig($kernel, $options);
     }
-
-
-    /* render method should be defined,
-     * we should just call render method by default. */
-    public function display( $template , $args = null )
-    {
-        echo $this->render( $template , $args );
-    }
-
 }

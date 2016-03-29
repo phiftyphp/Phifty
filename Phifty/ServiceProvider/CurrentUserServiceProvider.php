@@ -45,7 +45,7 @@ class CurrentUserServiceProvider extends BaseServiceProvider
     public function register($kernel, $options = array() )
     {
         $kernel->event->register('view.init', function($view) use ($kernel) {
-            $view->args['CurrentUser'] = $kernel->currentUser;
+            $view['CurrentUser'] = $kernel->currentUser;
         });
 
         $self = $this;

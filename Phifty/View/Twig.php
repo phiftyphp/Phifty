@@ -17,30 +17,21 @@ function newObject($class)
     return ClassUtils::new_class($class,$args);
 }
 
-
-
-
 class Twig extends Engine
-//    implements \Phifty\View\EngineInterface
 {
-    public $loader;
-    public $env;
+    protected $loader;
+
+    protected $env;
 
     public function newRenderer()
     {
-        $kernel = kernel();
-        $this->env = $kernel->twig->env;
-        $this->loader = $kernel->twig->loader;
+        $this->env = $this->kernel->twig->env;
+        $this->loader = $this->kernel->twig->loader;
         return $this->env;
     }
 
-    public function render( $template,$args = array() )
+    public function render($template, array $args = array())
     {
-        return $this->getRenderer()->loadTemplate( $template )->render( $args );
-    }
-
-    public function display( $template , $args = array() )
-    {
-        $this->getRenderer()->loadTemplate( $template )->display($args);
+        return $this->getRenderer()->loadTemplate($template)->render($args);
     }
 }

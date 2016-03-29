@@ -7,18 +7,19 @@ use Universal\Http\HttpRequest;
 use InvalidArgumentException;
 use Phifty\Web;
 
-class View
-    implements ArrayAccess, IteratorAggregate
+class View implements ArrayAccess, IteratorAggregate
 {
-    public $args = array();
+
+    /**
+     * @var array template args
+     */
+    protected $args = array();
 
     protected $engine;
 
-    protected $defaultEngine = 'twig';
-
-    public function __construct( $engine = null , $engineOpts = null )
+    public function __construct($engine = null, $engineOpts = null)
     {
-        $this->initEngine( $engine , $engineOpts );
+        $this->initEngine($engine , $engineOpts);
         $this->init();
 
         // register args
@@ -37,14 +38,14 @@ class View
 
     }
 
-    public function initEngine( $engine = null , $engineOpts = null )
+    public function initEngine($engine = null , $engineOpts = null)
     {
         if ($engine) {
             /* if it's an engine object already, just save it */
             if ( is_object( $engine ) ) {
                 $this->engine = $engine;
             } else {
-                $this->engine = \Phifty\View\Engine::createEngine( $engine , $engineOpts );
+                $this->engine = \Phifty\View\Engine::createEngine(kernel(), $engineOpts);
             }
         } else {
             /* get default engine from config */
