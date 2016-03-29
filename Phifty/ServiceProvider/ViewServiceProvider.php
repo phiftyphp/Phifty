@@ -67,6 +67,6 @@ class ViewServiceProvider extends BaseServiceProvider
 
     public function register($kernel, $options = array())
     {
-        $kernel->registerFactory('view', new ViewFactory($kernel));
+        $kernel->registerFactory('view', new ViewFactory($kernel, $options));
     }
 }
