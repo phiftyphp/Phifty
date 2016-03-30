@@ -9,11 +9,10 @@ class LocaleServiceProvider extends BaseServiceProvider
 
     public function getId() { return 'Locale'; }
 
-    static public function isGeneratable(Kernel $kernel, array & $options = array() )
+    static public function isGeneratable(Kernel $kernel, array & $options = array())
     {
-        return !empty($options);
+        return true;
     }
-
 
     static public function generateNew(Kernel $kernel, array & $options = array())
     {
