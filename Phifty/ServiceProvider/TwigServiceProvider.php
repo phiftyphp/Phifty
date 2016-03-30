@@ -110,11 +110,8 @@ class TwigServiceProvider extends BaseServiceProvider
             }
 
             // include assettoolkit extension
-            if ($asset = kernel()->asset) {
-                $assetExt = new AssetExtension();
-                $assetExt->setAssetConfig( kernel()->asset->config );
-                $assetExt->setAssetLoader( kernel()->asset->loader );
-                $env->addExtension($assetExt);
+            if ($asset = $kernel->asset) {
+                $env->addExtension(new AssetExtension($asset->config, $asset->loader));
             }
 
             // TODO: we should refactor this
@@ -140,11 +137,10 @@ class TwigServiceProvider extends BaseServiceProvider
             });
             $env->addFilter($zhDate);
 
-            // kernel()->event->trigger('phifty.service.twig', $env );
-            if (kernel()->locale) {
-                $env->addGlobal('currentLang', kernel()->locale->current());
+            if ($locale = $kernel->locale) {
+                $env->addGlobal('currentLang', $locale->current());
             }
-            $env->addGlobal('Kernel', kernel());
+            $env->addGlobal('Kernel', $kernel);
 
             // auto-register all native PHP functions as Twig functions
             $env->registerUndefinedFunctionCallback(function($name) {
