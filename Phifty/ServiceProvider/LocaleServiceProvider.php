@@ -34,8 +34,8 @@ class LocaleServiceProvider extends BaseServiceProvider
     {
         $self = $this;
         $kernel->locale = function() use ($kernel, $self, $options) {
-            $locale = new Locale($options['Domain'], $options['LocaleDir'], $options['Langs']);
-            $locale->setDefaultLanguage($options['Default']);
+            $locale = new Locale($self->config['Domain'], $self->config['LocaleDir'], $self->config['Langs']);
+            $locale->setDefaultLanguage($self->config['Default']);
             // _('en');
             // _('es');
             // _('zh_TW');
