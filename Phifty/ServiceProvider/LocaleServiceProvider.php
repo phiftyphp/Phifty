@@ -2,6 +2,7 @@
 namespace Phifty\ServiceProvider;
 use Phifty\Locale;
 use Phifty\Kernel;
+use CodeGen\Expr\NewObject;
 
 class LocaleServiceProvider extends BaseServiceProvider
 {
@@ -13,30 +14,40 @@ class LocaleServiceProvider extends BaseServiceProvider
         return !empty($options);
     }
 
+
+    static public function generateNew(Kernel $kernel, array & $options = array())
+    {
+        if (!isset($options['Default'])) {
+            $options['Default'] = 'en';
+        }
+        if (!isset($options['LocaleDir'])) {
+            $options['LocaleDir'] = 'locale';
+        }
+        if (!isset($options['Domain'])) {
+            $options['Domain'] = $kernel->getApplicationID();
+        }
+        if (!isset($options['Langs'])) {
+            $options['Langs'] = [ 'en' => 'English' ];
+        }
+
+        $options['LocaleDir'] = $kernel->rootDir . DIRECTORY_SEPARATOR . $options['LocaleDir'];
+        $className = get_called_class();
+        return new NewObject($className, [$options]);
+    }
+
+
     public function register($kernel, $options = array())
     {
         // call spl autoload, to load `__` locale function,
         // and we need to initialize locale before running the application.
         $self = $this;
         $kernel->locale = function() use ($kernel, $self, $options) {
-            $defaultLang = isset($self->config['Default'])   ? $self->config['Default']   : 'en';
-            $localeDir   = isset($self->config['LocaleDir']) ? $self->config['LocaleDir'] : 'locale';
-            $domain      = isset($self->config['Domain'])    ? $self->config['Domain'] : $kernel->getApplicationID();
-            $langs       = isset($self->config['Langs'])     ? $self->config['Langs'] : array('en');
-
-            $locale = new Locale;
+            $locale = new Locale($options['Domain'], $options['LocaleDir'], $options['Langs']);
             $locale->setDefault($defaultLang);
-            $locale->setDomain($domain); # use application id for domain name.
-            $locale->setLocaleDir( $kernel->rootDir . DIRECTORY_SEPARATOR . $localeDir);
-
-            // add languages to list
-            foreach ( $langs as $localeName) {
-                $locale->add( $localeName );
-            }
-
-            # _('en');
-            # _('zh_TW');
-            # _('zh_CN');
+            // _('en');
+            // _('es');
+            // _('zh_TW');
+            // _('zh_CN');
             $locale->init();
             return $locale;
         };

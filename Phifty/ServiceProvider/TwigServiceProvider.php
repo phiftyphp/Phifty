@@ -31,7 +31,6 @@ class TwigServiceProvider extends BaseServiceProvider
 
     static public function generateNew(Kernel $kernel, array & $options = array())
     {
-        $className = get_called_class();
         $envOptions = [];
 
         // preprocess twig configs
@@ -71,6 +70,8 @@ class TwigServiceProvider extends BaseServiceProvider
             $envOptions = array_merge($envOptions , $options['Environment'] );
         }
         $options['Environment'] = $envOptions;
+
+        $className = get_called_class();
         return new NewObject($className, [$options]);
     }
 
