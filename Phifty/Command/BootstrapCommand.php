@@ -36,6 +36,8 @@ class BootstrapCommand extends Command
     {
         $opts->add('c|clean', 'clean up generated files.');
 
+        $opts->add('x|xhprof', 'enable xhprof profiler in the bootstrap file.');
+
         $opts->add('o|output:=string', 'output file')
             ->defaultValue('bootstrap.php');
     }
@@ -128,6 +130,10 @@ class BootstrapCommand extends Command
             $block[] = "mb_internal_encoding('UTF-8');";
         }
 
+        $xhprof = extension_loaded('xhprof') && $this->options->xhprof;
+        if ($xhprof) {
+            $block[] = 'xhprof_enable(XHPROF_FLAGS_CPU + XHPROF_FLAGS_MEMORY);';
+        }
 
         // autoload script from composer
         $block[] = new ConstStatement('PH_ROOT', PH_ROOT);
@@ -298,6 +304,14 @@ class BootstrapCommand extends Command
         // $block[] = '$kernel->init()';
         $block[] = new Statement(new MethodCall('$kernel', 'init'));
 
+        if ($xhprof) {
+            $block[] = '$xhprofNamespace = "phifty-bootstrap";';
+            $block[] = '$xhprofData = xhprof_disable();';
+            $block[] = '$xhprofRuns = new XHProfRuns_Default();';
+            $block[] = '$runId = $xhprofRuns->save_run($xhprofData,$xhprofNamespace);';
+            $block[] = 'header("X-XHPROF-RUN: $runId");';
+            $block[] = 'header("X-XHPROF-NS: $xhprofNamespace");';
+        }
 
         $this->logger->info("===> Compiling code to $outputFile");
         $code = $block->render();
