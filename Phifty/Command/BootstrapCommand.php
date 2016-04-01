@@ -15,10 +15,13 @@ use CodeGen\Statement\AssignStatement;
 use CodeGen\Statement\Statement;
 use CodeGen\Expr\NewObject;
 use CodeGen\Expr\MethodCall;
+use CodeGen\Expr\StaticMethodCall;
 use CodeGen\Variable;
 use CodeGen\Comment;
 use CodeGen\CommentBlock;
+use ReflectionClass;
 
+use Phifty\Bundle\BundleLoader;
 
 class BootstrapCommand extends Command
 {
@@ -35,6 +38,8 @@ class BootstrapCommand extends Command
     public function options($opts)
     {
         $opts->add('c|clean', 'clean up generated files.');
+
+        $opts->add('e|env:=string', 'environment');
 
         $opts->add('x|xhprof', 'enable xhprof profiler in the bootstrap file.');
 
@@ -69,6 +74,9 @@ class BootstrapCommand extends Command
      */
     public function execute()
     {
+        global $composerClassLoader;
+
+
         // XXX: connect to differnt config by using environment variable (PHIFTY_ENV)
         $this->logger->info("===> Building config files...");
         $configPaths = array_filter(
@@ -139,6 +147,10 @@ class BootstrapCommand extends Command
         $block[] = new ConstStatement('PH_ROOT', PH_ROOT);
         $block[] = new ConstStatement('PH_APP_ROOT', PH_ROOT);
         $block[] = new ConstStatement('DS', DIRECTORY_SEPARATOR);
+
+        $env = $this->options->env ?: getenv('PHIFTY_ENV') ?: 'development';
+        $block[] = new ConstStatement('PH_ENV', $env);
+
         // $block[] = sprintf("define('PH_ROOT', %s);", var_export(PH_ROOT, true));
         // $block[] = sprintf("define('PH_APP_ROOT', %s);", var_export(PH_APP_ROOT, true));
         // $block[] = "defined('DS') || define('DS', DIRECTORY_SEPARATOR);";
@@ -169,7 +181,7 @@ class BootstrapCommand extends Command
 
         $this->logger->info("Generating config loader...");
         // generating the config loader
-        $configLoader = self::createConfigLoader(PH_APP_ROOT);
+        $configLoader = $this->createConfigLoader(PH_APP_ROOT);
         $configClassGenerator = new AppClassGenerator([ 'namespace' => 'App', 'prefix' => 'App' ]);
         $configClass = $configClassGenerator->generate($configLoader);
         $classPath = $configClass->generatePsr4ClassUnder($appDirectory);
@@ -186,6 +198,8 @@ class BootstrapCommand extends Command
                 return !preg_match('/^(applications|services|environment|isDev|_.*)$/i', $property->getName());
             }
         ]);
+
+        // The runtime kernel will only contains "configLoader" and "classLoader" services
         $runtimeKernel = new \Phifty\Kernel;
         $runtimeKernel->prepare($configLoader);
         $runtimeKernel->config = function() use ($configLoader) {
@@ -301,7 +315,77 @@ class BootstrapCommand extends Command
                 }
             }
         }
-        // $block[] = '$kernel->init()';
+
+
+        /*
+        BundleLoader:
+          Paths:
+          - app_bundles
+          - bundles
+         */
+        $bundleLoaderConfig = $configLoader->get('framework','BundleLoader') ?: [ 'Paths' => ['app_bundles','bundles'] ];
+
+        $psr4Map = require "vendor/composer/autoload_psr4.php";
+
+        // Generating registering code for bundle classes
+        $bundleLoader = new BundleLoader($runtimeKernel, ['app_bundles', 'bundles']);
+        $bundleList = $configLoader->get('framework','Bundles');
+        if ($bundleList) {
+            foreach ($bundleList as $bundleName => $bundleConfig) {
+                $autoload = $bundleLoader->getAutoloadConfig($bundleName);
+                if ($autoload == false) {
+                    continue;
+                }
+                foreach ($autoload as $prefix => $autoloadPath) {
+                    if ($psr4Map && isset($psr4Map[$prefix])) {
+                        continue;
+                    }
+
+                    $realAutoloadPath = realpath($autoloadPath) . DIRECTORY_SEPARATOR;
+                    $this->logger->info("Adding psr4 $prefix to $realAutoloadPath");
+                    $composerClassLoader->addPsr4($prefix, $realAutoloadPath);
+                    $block[] = new Statement(
+                        new MethodCall('$composerClassLoader', 'addPsr4', [
+                            $prefix, $realAutoloadPath
+                        ])
+                    );
+                }
+            }
+        }
+
+        // Generate environment setup
+        switch ($env) {
+        case "production":
+            $block[] = new Statement(new StaticMethodCall('Phifty\Environment\Production', 'init', [new Variable('$kernel')]));
+            break;
+        case "development":
+        default:
+            $block[] = new Statement(new StaticMethodCall('Phifty\Environment\Development', 'init', [new Variable('$kernel')]));
+            break;
+        }
+
+
+        // BundleServiceProvider
+
+        // Init bundle objects in the bootstrap.php script
+        foreach ($bundleList as $bundleName => $bundleConfig) {
+            $bundleClass = "$bundleName\\$bundleName";
+            if (class_exists($bundleClass, true)) {
+                $reflection = new ReflectionClass($bundleClass);
+                $bundleClassFile = $reflection->getFileName();
+            } else {
+                $bundleClassFile = $bundleLoader->findBundleClass($bundleName);
+            }
+            if ($bundleClassFile) {
+                $block[] = new RequireStatement($bundleClassFile);
+            }
+        }
+        foreach ($bundleList as $bundleName => $bundleConfig) {
+            $bundleClass = "$bundleName\\$bundleName";
+            $block[] = "\$kernel->bundles['$bundleName'] = $bundleClass::getInstance(\$kernel, " . var_export($bundleConfig,true) . ");";
+        }
+
+        // $block[] = new Statement(new MethodCall('$kernel->bundles', 'init'));
         $block[] = new Statement(new MethodCall('$kernel', 'init'));
 
         if ($xhprof) {
@@ -319,7 +403,7 @@ class BootstrapCommand extends Command
         return file_put_contents($outputFile, $code);
     }
 
-    static public function createConfigLoader($baseDir)
+    public function createConfigLoader($baseDir)
     {
         // We load other services from the definitions in config file
         // Simple load three config files (framework.yml, database.yml, application.yml)
@@ -349,6 +433,4 @@ class BootstrapCommand extends Command
         }
         return $loader;
     }
-
-
 }

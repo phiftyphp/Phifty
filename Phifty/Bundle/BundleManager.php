@@ -1,5 +1,5 @@
 <?php
-namespace Phifty;
+namespace Phifty\Bundle;
 use Exception;
 use ArrayAccess;
 use IteratorAggregate;
@@ -90,7 +90,7 @@ class BundleManager implements ArrayAccess, IteratorAggregate
     {
         # $name = '\\' . ltrim( $name , '\\' );
         $class = "$name\\$name";
-        if ( class_exists($class,true) ) {
+        if (class_exists($class,true) ) {
             return $class;
         } else {
             // try to require Bundle class from Bundle path
@@ -115,7 +115,7 @@ class BundleManager implements ArrayAccess, IteratorAggregate
     {
         if ($class = $this->_loadBundle($name)) {
             $bundle = $class::getInstance($this->kernel, $config);
-            return $this->bundles[ $name ] = $bundle;
+            return $this->bundles[$name] = $bundle;
         }
         return false;
     }

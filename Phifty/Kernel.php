@@ -208,31 +208,22 @@ class Kernel extends ObjectContainer
     {
         $this->event->trigger('phifty.before_init');
         $self = $this;
-
         $this->web = function() use ($self) {
             return new \Phifty\Web( $self );
         };
-
-        // Turn off all error reporting
-        if ($this->isDev || CLI) {
-            \Phifty\Environment\Development::init($this);
-        } else {
-            \Phifty\Environment\Production::init($this);
-        }
 
         if (CLI) {
             \Phifty\Environment\CommandLine::init($this);
         }
 
-        if ( isset($this->session) ) {
+        if (isset($this->session)) {
             $this->session;
         }
-        if ( isset($this->locale) ) {
+        if (isset($this->locale)) {
             $this->locale;
         }
         $this->app = \App\App::getInstance($this, [ ]);
         $this->app->init();
-
         $this->bundles->init();
         $this->event->trigger('phifty.after_init');
     }

@@ -65,6 +65,14 @@ class TwigServiceProvider extends BaseServiceProvider
             }
         }
 
+        // Generate Namespaces from bundles
+        /*
+        foreach ($kernel->bundles as $bundle) {
+
+        }
+        */
+
+
         // override from config
         if (isset($options['Environment']) && $options['Environment']) {
             $envOptions = array_merge($envOptions , $options['Environment'] );

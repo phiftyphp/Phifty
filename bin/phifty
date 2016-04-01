@@ -16,7 +16,8 @@ if (file_exists('bootstrap.php')) {
     $console->runWithTry( $argv );
     $kernel->event->trigger( 'phifty.console.finish' , $console );
 } else {
-    require 'vendor/autoload.php';
+    global $composerClassLoader;
+    $composerClassLoader = require 'vendor/autoload.php';
     $console = Phifty\Console::getInstance();
     $console->runWithTry( $argv );
 }
