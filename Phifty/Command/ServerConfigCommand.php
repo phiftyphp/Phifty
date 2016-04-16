@@ -48,6 +48,46 @@ class ServerConfigCommand extends Command
         if ($this->options->apache2) {
             $config = $this->generateApache2Config($kernel);
             echo $config->generate();
+        } else {
+            $serverName = $kernel->config->get('framework', 'Domain');
+            $serverAliases = $kernel->config->get('framework', 'DomainAliases') ?: [];
+            $documentRoot = $kernel->webroot;
+
+
+            $etc = dirname(php_ini_loaded_file());
+            $fpmConfigFile = $etc . DIRECTORY_SEPARATOR . 'php-fpm.conf';
+            if (file_exists($fpmConfigFile)) {
+                $fpmConfig = parse_ini_file($fpmConfigFile);
+            } else {
+                $fpmConfig = [];
+            }
+
+            $listen = isset($fpmConfig['listen']) ? $fpmConfig['listen'] : 'localhost:9000';
+
+            echo <<<OUT
+server {
+    listen 80;
+    server_name $serverName;
+    index index.html index.htm index.php;
+    server_name_in_redirect off;
+    root $documentRoot;
+    autoindex off;
+    location / {
+        if (!-e \$request_filename) {
+            rewrite ^(.*)$ /index.php$1 last;
+        }
+    }
+    location ~ \.php {
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+        fastcgi_param  SCRIPT_FILENAME    \$document_root\$fastcgi_script_name;
+        fastcgi_param  SCRIPT_NAME        \$fastcgi_script_name;
+        fastcgi_param  PATH_INFO          \$fastcgi_path_info;
+        fastcgi_index  index.php;
+        fastcgi_pass   $listen;
+        include fastcgi_params;
+    }
+}
+OUT;
         }
     }
 }
