@@ -5,20 +5,7 @@ use CodeGen\Frameworks\Apache2\VirtualHost;
 use CodeGen\Frameworks\Apache2\Directory;
 use Phifty\Kernel;
 
-/*
-<VirtualHost *:80>
-  ServerName bossnet-test.lifeplus.tw
-  ServerAlias  bossnet-test.lifeplus.tw bossnet-test.corneltek.com
-
-  ServerAdmin webmaster@localhost
-  DocumentRoot /var/www/portal/webroot
-  ErrorLog ${APACHE_LOG_DIR}/lifeplus-error.log
-  CustomLog ${APACHE_LOG_DIR}/lifeplus-access.log combined
-</VirtualHost>
- */
-
-
-class GenerateConfigCommand extends Command
+class ServerConfigCommand extends Command
 {
 
     public function options($opts)
@@ -27,16 +14,6 @@ class GenerateConfigCommand extends Command
         $opts->add('nginx');
     }
 
-
-
-    /**
-    * TODO: support Directory directive
-    <Directory ....>
-    Options -Indexes +FollowSymLinks
-    AllowOverride All
-    Require all granted
-    </Directory>
-    */
     protected function generateApache2Config(Kernel $kernel)
     {
         $appId = $kernel->applicationID;

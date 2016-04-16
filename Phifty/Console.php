@@ -35,7 +35,7 @@ class Console extends Application
 
         $this->command('composer:config','Phifty\\Command\\ComposerConfigCommand');
 
-        $this->command('generate-config');
+        $this->command('server-config');
 
         $this->command('new','Phifty\\Command\\GenerateCommand');
         $this->command('migration-check','Phifty\\Command\\MigrationCheckCommand');
