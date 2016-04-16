@@ -65,27 +65,28 @@ class ServerConfigCommand extends Command
             $listen = isset($fpmConfig['listen']) ? $fpmConfig['listen'] : 'localhost:9000';
 
             echo <<<OUT
+# vim:et:sw=2:ts=2:sts=2:
 server {
-    listen 80;
-    server_name $serverName;
-    index index.html index.htm index.php;
-    server_name_in_redirect off;
-    root $documentRoot;
-    autoindex off;
-    location / {
-        if (!-e \$request_filename) {
-            rewrite ^(.*)$ /index.php$1 last;
-        }
+  listen 80;
+  server_name $serverName;
+  index index.html index.htm index.php;
+  server_name_in_redirect off;
+  root $documentRoot;
+  autoindex off;
+  location / {
+    if (!-e \$request_filename) {
+      rewrite ^(.*)$ /index.php$1 last;
     }
-    location ~ \.php {
-        fastcgi_split_path_info ^(.+\.php)(/.*)$;
-        fastcgi_param  SCRIPT_FILENAME    \$document_root\$fastcgi_script_name;
-        fastcgi_param  SCRIPT_NAME        \$fastcgi_script_name;
-        fastcgi_param  PATH_INFO          \$fastcgi_path_info;
-        fastcgi_index  index.php;
-        fastcgi_pass   $listen;
-        include fastcgi_params;
-    }
+  }
+  location ~ \.php {
+    fastcgi_split_path_info ^(.+\.php)(/.*)$;
+    fastcgi_param  SCRIPT_FILENAME    \$document_root\$fastcgi_script_name;
+    fastcgi_param  SCRIPT_NAME        \$fastcgi_script_name;
+    fastcgi_param  PATH_INFO          \$fastcgi_path_info;
+    fastcgi_index  index.php;
+    fastcgi_pass   $listen;
+    include fastcgi_params;
+  }
 }
 OUT;
         }
