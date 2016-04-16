@@ -1,7 +1,8 @@
 <?php
 namespace Phifty\Command;
 use CLIFramework\Command;
-use CodeGen\Frameworks\Apache2\VirtualHostConfig;
+use CodeGen\Frameworks\Apache2\VirtualHost;
+use CodeGen\Frameworks\Apache2\Directory;
 use Phifty\Kernel;
 
 /*
@@ -41,7 +42,7 @@ class GenerateConfigCommand extends Command
         $appId = $kernel->applicationID;
         $serverName = $kernel->config->get('framework', 'Domain');
         $serverAliases = $kernel->config->get('framework', 'DomainAliases') ?: [];
-        $config = new VirtualHostConfig('*', 80);
+        $config = new VirtualHost('*', 80);
         $config->setServerName($serverName);
         $config->setServerAliases($serverAliases);
         $config->setDocumentRoot($kernel->webroot);
@@ -53,6 +54,13 @@ class GenerateConfigCommand extends Command
         $config->addRewriteCond('%{DOCUMENT_ROOT}%{REQUEST_FILENAME}', '!-s');
         $config->addRewriteCond('%{DOCUMENT_ROOT}%{REQUEST_FILENAME}', '!-d');
         $config->addRewriteRule('^(.*)$', '%{DOCUMENT_ROOT}/index.php/$1', '[NC,L]');
+
+        $dir = new Directory($kernel->webroot);
+        $dir->addOption('-Indexes');
+        $dir->addOption('+FollowSymLinks');
+        $dir->setAllowOverride('None');
+        $dir->setRequire('all granted');
+        $config->addDirective($dir);
         return $config;
     }
 
