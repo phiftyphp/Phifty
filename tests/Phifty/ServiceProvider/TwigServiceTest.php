@@ -5,7 +5,14 @@ class TwigServiceTest extends PHPUnit_Framework_TestCase
     public function testRegisterTwigService()
     {
         $kernel = kernel();
-        $twig = new \Phifty\ServiceProvider\TwigServiceProvider();
+        $twig = new \Phifty\ServiceProvider\TwigServiceProvider([
+            'Environment' => array(
+                'debug' => true,
+                'cache' => 'cache/path',
+                'autoload' => 'auto_reload',
+            ),
+            'TemplateDirs' => array('applications','bundles'),
+        ]);
         $twig->register($kernel, array(
             'Environment' => array(
                 'debug' => true,
