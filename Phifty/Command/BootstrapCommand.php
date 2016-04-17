@@ -368,21 +368,23 @@ class BootstrapCommand extends Command
         // BundleServiceProvider
 
         // Init bundle objects in the bootstrap.php script
-        foreach ($bundleList as $bundleName => $bundleConfig) {
-            $bundleClass = "$bundleName\\$bundleName";
-            if (class_exists($bundleClass, true)) {
-                $reflection = new ReflectionClass($bundleClass);
-                $bundleClassFile = $reflection->getFileName();
-            } else {
-                $bundleClassFile = $bundleLoader->findBundleClass($bundleName);
+        if ($bundleList) {
+            foreach ($bundleList as $bundleName => $bundleConfig) {
+                $bundleClass = "$bundleName\\$bundleName";
+                if (class_exists($bundleClass, true)) {
+                    $reflection = new ReflectionClass($bundleClass);
+                    $bundleClassFile = $reflection->getFileName();
+                } else {
+                    $bundleClassFile = $bundleLoader->findBundleClass($bundleName);
+                }
+                if ($bundleClassFile) {
+                    $block[] = new RequireStatement($bundleClassFile);
+                }
             }
-            if ($bundleClassFile) {
-                $block[] = new RequireStatement($bundleClassFile);
+            foreach ($bundleList as $bundleName => $bundleConfig) {
+                $bundleClass = "$bundleName\\$bundleName";
+                $block[] = "\$kernel->bundles['$bundleName'] = $bundleClass::getInstance(\$kernel, " . var_export($bundleConfig,true) . ");";
             }
-        }
-        foreach ($bundleList as $bundleName => $bundleConfig) {
-            $bundleClass = "$bundleName\\$bundleName";
-            $block[] = "\$kernel->bundles['$bundleName'] = $bundleClass::getInstance(\$kernel, " . var_export($bundleConfig,true) . ");";
         }
 
         // $block[] = new Statement(new MethodCall('$kernel->bundles', 'init'));
