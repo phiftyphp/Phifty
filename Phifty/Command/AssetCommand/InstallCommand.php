@@ -24,6 +24,12 @@ class InstallCommand extends AssetBaseCommand
         $loader = $this->getAssetLoader();
         $this->logger->debug("Installing " . get_class($bundle) . " assets...");
 
+
+        $rootAssetEntryFile = PH_ROOT . DIRECTORY_SEPARATOR . '.asset-entries.json';
+        $rootNodeModules = PH_ROOT . DIRECTORY_SEPARATOR . 'node_modules';
+        $hasRootAssetEntryFile = file_exists($rootAssetEntryFile);
+        $hasRootNodeModule = file_exists($rootNodeModules);
+
         // getAssets supports assets defined in config file.
         $assetNames = $bundle->getAssets();
         $assets = $loader->loadAssets($assetNames);
@@ -33,13 +39,22 @@ class InstallCommand extends AssetBaseCommand
                 $this->logger->debug("Installing {$asset->name} ...");
                 $installer->install($asset);
 
-                $rootAssetEntryFile = PH_ROOT . DIRECTORY_SEPARATOR . '.asset-entries.json';
-                $assetEntryLinkTarget = $asset->getSourceDir() . DIRECTORY_SEPARATOR . '.asset-entries.json';
-                // destroy the original symlink
-                if (file_exists($assetEntryLinkTarget)) {
-                    unlink($assetEntryLinkTarget);
+                if ($hasRootAssetEntryFile) {
+                    $target = $asset->getSourceDir() . DIRECTORY_SEPARATOR . '.asset-entries.json';
+                    // destroy the original symlink
+                    if (file_exists($target)) {
+                        unlink($target);
+                    }
+                    symlink($rootAssetEntryFile, $target);
                 }
-                symlink($rootAssetEntryFile, $assetEntryLinkTarget);
+                if ($hasRootNodeModule) {
+                    $target = $asset->getSourceDir() . DIRECTORY_SEPARATOR . 'node_modules';
+                    // destroy the original symlink
+                    if (file_exists($target)) {
+                        unlink($target);
+                    }
+                    symlink($rootNodeModules, $target);
+                }
             }
             $this->logger->info(get_class($bundle) . ': ' . count($assets) . " assets installed.");
         }
