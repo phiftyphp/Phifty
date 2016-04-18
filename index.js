@@ -17,13 +17,20 @@ phifty.webpackExcludePaths = function() {
 };
 
 phifty.assetEntries = function() {
-  var assetEntryJson = path.resolve(__root, '.asset-entries.json');
-  try {
-    var json = fs.readFileSync(assetEntryJson);
-    return JSON.parse(json);
-  } catch (e) {
-    return null;
+  var files = [
+    path.resolve(__root, '.asset-entries.json'),
+    path.resolve(__dirname, '.asset-entries.json'),
+  ];
+  while (files.length > 0) {
+    var file = files.pop();
+    try {
+      var json = fs.readFileSync(file);
+      return JSON.parse(json);
+    } catch (e) {
+
+    }
   }
+  return null;
 };
 phifty.assetAliases = function() {
   var entries = this.assetEntries();
