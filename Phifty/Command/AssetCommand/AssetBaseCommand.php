@@ -4,22 +4,23 @@ use CLIFramework\Command;
 use AssetKit\AssetLoader;
 use AssetKit\AssetConfig;
 use AssetKit\ResourceUpdater;
+use Phifty\Bundle;
 
 class AssetBaseCommand extends Command
 {
 
-    public function getAssetConfig()
+    protected function getAssetConfig()
     {
         return kernel()->asset->config;
     }
 
-    public function getAssetLoader()
+    protected function getAssetLoader()
     {
         return kernel()->asset->loader;
     }
 
 
-    public function showBundleAssets($bundle)
+    protected function showBundleAssets(Bundle $bundle)
     {
         $config = $this->getAssetConfig();
         $loader = $this->getAssetLoader();
@@ -39,14 +40,13 @@ class AssetBaseCommand extends Command
 
     }
 
-    public function registerBundleAssets($bundle)
+    protected function registerBundleAssets(Bundle $bundle)
     {
         $config = $this->getAssetConfig();
         $loader = $this->getAssetLoader();
         $this->logger->debug("---> " . get_class($bundle));
         $cwd = getcwd();
         foreach ($bundle->getAssetDirs() as $dir ) {
-
             if (!file_exists($dir)) {
                 $this->logger->warn("$dir doesn't exist", 1);
                 continue;
@@ -59,14 +59,14 @@ class AssetBaseCommand extends Command
             }
             $dir = substr($dir, strlen($cwd) + 1 );
             $this->logger->debug("Checking asset dir $dir");
-            if ( $asset = $loader->register(realpath($dir)) ) {
+            if ($asset = $loader->register(realpath($dir))) {
                 $this->logger->debug( "Found asset {$asset->name} @ $dir");
                 $this->updateAssetResource($asset);
             }
         }
     }
 
-    public function updateAssetResource($asset)
+    protected function updateAssetResource($asset)
     {
         $updater = new ResourceUpdater;
         $updater->update($asset);

@@ -4,7 +4,6 @@ use CLIFramework\Command;
 
 class InitCommand extends AssetBaseCommand
 {
-
     public function execute()
     {
         $kernel = kernel();
@@ -15,7 +14,6 @@ class InitCommand extends AssetBaseCommand
             $this->registerBundleAssets($app);
         }
         $this->logger->debug("===> Finding assets from bundles...");
-
         if ($kernel->bundles) {
             foreach ($kernel->bundles as $bundle) {
                 $this->registerBundleAssets($bundle);

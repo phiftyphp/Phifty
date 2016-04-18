@@ -3,6 +3,7 @@ namespace Phifty\Command\AssetCommand;
 use CLIFramework\Command;
 use AssetKit\Installer;
 use AssetKit\LinkInstaller;
+use Phifty\Bundle;
 
 /**
  * When running asset:init command, we should simply register app/plugin assets
@@ -17,48 +18,50 @@ class InstallCommand extends AssetBaseCommand
         $opts->add('l|link','use symbolic link');
     }
 
+
+    protected function installBundleAssets(Bundle $bundle, Installer $installer)
+    {
+        $loader = $this->getAssetLoader();
+        $this->logger->debug("Installing " . get_class($bundle) . " assets...");
+
+        // getAssets supports assets defined in config file.
+        $assetNames = $bundle->getAssets();
+        $assets = $loader->loadAssets($assetNames);
+        if (!empty($assets)) {
+            foreach ($assets as $asset) {
+                // create symlink with the asset json files
+                $this->logger->debug("Installing {$asset->name} ...");
+                $installer->install($asset);
+
+                $rootAssetEntryFile = PH_ROOT . DIRECTORY_SEPARATOR . '.asset-entries.json';
+                $assetEntryLinkTarget = $asset->getSourceDir() . DIRECTORY_SEPARATOR . '.asset-entries.json';
+                // destroy the original symlink
+                if (file_exists($assetEntryLinkTarget)) {
+                    unlink($assetEntryLinkTarget);
+                }
+                symlink($rootAssetEntryFile, $assetEntryLinkTarget);
+            }
+            $this->logger->info(get_class($bundle) . ': ' . count($assets) . " assets installed.");
+        }
+    }
+
     public function execute()
     {
         $options = $this->options;
         $config = $this->getAssetConfig();
-        $loader = $this->getAssetLoader();
 
-        $installer = $options->link
-                ? new LinkInstaller($config)
-                : new Installer($config);
-
-        $installer->logger = $this->logger;
         $loader = $this->getAssetLoader();
+        $installer = $this->options->link ? new LinkInstaller($config, $this->logger) : new Installer($config, $this->logger);
         $kernel = kernel();
 
         $this->logger->debug("Installing App assets...");
         if ($app = $kernel->getApp()) {
-            // getAssets supports assets defined in config file.
-            $assetNames = $app->getAssets();
-            $assets = $loader->loadAssets($assetNames);
-            if (!empty($assets)) {
-                foreach ($assets as $asset) {
-                    $this->logger->debug("Installing {$asset->name} ...");
-                    $installer->install($asset);
-                }
-                $this->logger->info(get_class($app) . ': ' . count($assets) . " assets installed.");
-            }
+            $this->installBundleAssets($app, $installer);
         }
 
         if ($kernel->bundles) {
             foreach ($kernel->bundles as $bundle) {
-                $this->logger->debug("Installing " . get_class($bundle) . " assets...");
-
-                // getAssets supports assets defined in config file.
-                $assetNames = $bundle->getAssets();
-                $assets = $loader->loadAssets($assetNames);
-                if (!empty($assets)) {
-                    foreach ($assets as $asset) {
-                        $this->logger->debug("Installing {$asset->name} ...");
-                        $installer->install($asset);
-                    }
-                    $this->logger->info(get_class($bundle) . ': ' . count($assets) . " assets installed.");
-                }
+                $this->installBundleAssets($bundle, $installer);
             }
         }
 
