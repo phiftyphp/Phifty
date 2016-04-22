@@ -1,6 +1,5 @@
 <?php
 namespace Phifty\ServiceProvider;
-use UniversalCache\ApcCache;
 use UniversalCache\ApcuCache;
 use UniversalCache\FileSystemCache;
 use UniversalCache\MemcacheCache;
@@ -48,15 +47,13 @@ class CacheServiceProvider extends BaseServiceProvider
 
         if (extension_loaded('apcu')) {
             $builder[] = new Statement(new MethodCall('$cache', 'addBackend', [
-                new NewObject('UniversalCache\ApcuCache', [
-                    ['namespace' => $kernel->getApplicationID()]
-                ])
+                new NewObject('UniversalCache\ApcuCache', [$kernel->getApplicationID()])
             ]));
         }
 
         if (extension_loaded('memcached') && isset($options['Memcached']['Servers']) ) {
             if (isset($options['Memcached']['PersistentId'])) {
-                $builder[] = '$memcached = ' . new NewObject('Memcached', [$options['Memcached']['PersistentId']]);
+                $builder[] = '$memcached = ' . new NewObject('Memcached', [$options['Memcached']['PersistentId']]) . ';';
             } else {
                 $builder[] = '$memcached = new Memcached;';
             }

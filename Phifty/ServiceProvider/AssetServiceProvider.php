@@ -8,7 +8,7 @@ use AssetKit\ProductionAssetCompiler;
 use AssetKit\AssetRender;
 use AssetKit\Cache;
 use AssetKit\CacheFactory;
-use UniversalCache\ApcCache;
+use UniversalCache\ApcuCache;
 use UniversalCache\FileSystemCache;
 use UniversalCache\UniversalCache;
 use Exception;
@@ -35,7 +35,7 @@ class AssetServiceProvider extends BaseServiceProvider
             $config->setEnvironment($kernel->environment);
             $config->setNamespace($kernel->getApplicationUUID());
             $cache = new UniversalCache(array(
-                new ApcCache(array('namespace' => $kernel->getApplicationUUID())),
+                new ApcuCache($kernel->getApplicationUUID()),
                 new FileSystemCache(array( 'cache_dir' => $kernel->getCacheDir())),
             ));
             $config->setCache($cache);
