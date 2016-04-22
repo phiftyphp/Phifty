@@ -36,7 +36,7 @@ class AssetServiceProvider extends BaseServiceProvider
             $config->setNamespace($kernel->getApplicationUUID());
             $cache = new UniversalCache(array(
                 new ApcuCache($kernel->getApplicationUUID()),
-                new FileSystemCache(array( 'cache_dir' => $kernel->getCacheDir())),
+                new FileSystemCache($kernel->getCacheDir()),
             ));
             $config->setCache($cache);
             $config->setRoot(PH_APP_ROOT);

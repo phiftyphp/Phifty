@@ -62,6 +62,14 @@ class CacheServiceProvider extends BaseServiceProvider
             }
             $builder[] = new Statement(new MethodCall('$cache', 'addBackend', ['$memcached']));
         }
+
+        if (isset($options['FileSystem'])) {
+            $builder[] = new Statement(new MethodCall('$cache', 'addBackend', [
+                new NewObject('UniversalCache\FileSystemCache', [$kernel->getCacheDir()])
+            ]));
+        }
+
+
         $builder[] = 'return $cache;';
         $className = get_called_class();
         return new NewObject($className, [$options, $builder]);
