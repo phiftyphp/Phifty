@@ -34,10 +34,6 @@ class ReactDirectiveParser extends Twig_TokenParser
                 $node = $this->parser
                     ->getExpressionParser()
                     ->parseExpression(); // Twig_Node_Expression_Array
-
-                if (!$node instanceof Twig_Node_Expression_Array) {
-                    throw new LogicException('react config should be Twig_Node_Expression_Array.');
-                }
                 $attributes['config'] = $node;
 
             } else if ($stream->test(Twig_Token::NAME_TYPE, 'on')) {

@@ -49,8 +49,8 @@ class ReactAppNode extends Twig_Node
         $this->writeEcho($compiler, "<script type=\"text/javascript\">\n");
         $this->writeEcho($compiler, "jQuery(function() {\n");
 
-        if ($this->env->isDebug()) {
-            $this->writeEcho($compiler, "console.info('Initialize $appName on \$elementId:');");
+        if ($compiler->getEnvironment()->isDebug()) {
+            $compiler->raw("echo 'console.info(\'Initialize $appName on \$elementId:\');';\n");
             $compiler->raw("echo 'console.dir(';");
             $compiler->raw("echo json_encode(\$$configVarName, JSON_PRETTY_PRINT);\n");
             $compiler->raw("echo ');';");
