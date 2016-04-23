@@ -211,13 +211,12 @@ class Kernel extends ObjectContainer
         $this->web = function() use ($self) {
             return new \Phifty\Web( $self );
         };
-
         if (CLI) {
             \Phifty\Environment\CommandLine::init($this);
-        }
-
-        if (isset($this->session)) {
-            $this->session;
+        } else {
+            if (isset($this->session)) {
+                $this->session;
+            }
         }
         if (isset($this->locale)) {
             $this->locale;

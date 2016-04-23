@@ -20,6 +20,7 @@ use CodeGen\Variable;
 use CodeGen\Comment;
 use CodeGen\CommentBlock;
 use ReflectionClass;
+use Universal\ClassLoader\Psr4ClassLoader;
 
 use Phifty\Bundle\BundleLoader;
 
@@ -74,8 +75,7 @@ class BootstrapCommand extends Command
      */
     public function execute()
     {
-        global $composerClassLoader;
-
+        $psr4ClassLoader = new Psr4ClassLoader;
 
         // XXX: connect to differnt config by using environment variable (PHIFTY_ENV)
         $this->logger->info("===> Building config files...");
@@ -160,20 +160,24 @@ class BootstrapCommand extends Command
         $block[] = new DefineStatement('CLI', new Raw("isset(\$_SERVER['argc']) && !isset(\$_SERVER['HTTP_HOST'])"));
         $block[] = new DefineStatement('CLI_MODE', new Raw("CLI"));
 
-        $block[] = 'global $kernel, $composerClassLoader, $splClassLoader;';
+        $block[] = 'global $kernel, $composerClassLoader, $psr4ClassLoader, $splClassLoader;';
         $block[] = new AssignStatement('$composerClassLoader', new RequireComposerAutoloadStatement());
 
-        // $composerClassLoader->addPsr4('App\\', '/.../.../$appDirectory');
-        $block[] = new Statement(new MethodCall('$composerClassLoader', 'addPsr4', [
+
+        $block[] = new RequireClassStatement('Universal\\ClassLoader\\Psr4ClassLoader');
+        $block[] = '$psr4ClassLoader = new \Universal\ClassLoader\Psr4ClassLoader();';
+        $block[] = '$psr4ClassLoader->register(false);';
+
+        $block[] = new Statement(new MethodCall('$psr4ClassLoader', 'addPrefix', [
             'App\\',
             PH_APP_ROOT . DIRECTORY_SEPARATOR . $appDirectory . DIRECTORY_SEPARATOR ]));
 
-        // TODO:
-        //  - add PSR-4 class loader here.
         $block[] = new RequireClassStatement('Universal\\ClassLoader\\SplClassLoader');
         $block[] = '$splClassLoader = new \Universal\ClassLoader\SplClassLoader();';
         $block[] = '$splClassLoader->useIncludePath(false);';
         $block[] = '$splClassLoader->register(false);';
+
+
 
 
         $block[] = new RequireClassStatement('Universal\\Container\\ObjectContainer');
@@ -278,7 +282,7 @@ class BootstrapCommand extends Command
                     $block[] = new RequireStatement($appClassPath);
                 }
                 if (is_dir($appDir)) {
-                    $block[] = new Statement(new MethodCall('$composerClassLoader', 'addPsr4', [
+                    $block[] = new Statement(new MethodCall('$psr4ClassLoader', 'addPrefix', [
                          'App\\', [$appDir . DIRECTORY_SEPARATOR],
                     ]));
                 }
@@ -343,12 +347,8 @@ class BootstrapCommand extends Command
 
                     $realAutoloadPath = realpath($autoloadPath) . DIRECTORY_SEPARATOR;
                     $this->logger->info("Adding psr4 $prefix to $realAutoloadPath");
-                    $composerClassLoader->addPsr4($prefix, $realAutoloadPath);
-                    $block[] = new Statement(
-                        new MethodCall('$composerClassLoader', 'addPsr4', [
-                            $prefix, $realAutoloadPath
-                        ])
-                    );
+                    $psr4ClassLoader->addPrefix($prefix, $realAutoloadPath);
+                    $block[] = new Statement(new MethodCall('$psr4ClassLoader', 'addPrefix', [ $prefix, $realAutoloadPath ]));
                 }
             }
         }
