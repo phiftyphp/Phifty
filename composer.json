@@ -9,6 +9,7 @@
         "corneltek/configkit": "^1",
         "corneltek/genphp": "^1",
         "corneltek/codegen": "^2.7",
+        "corneltek/react-directive": "1.0.x-dev",
         "corneltek/sessionkit": "~1",
         "corneltek/locale": "2.0.x-dev",
         "corneltek/lazyrecord": "3.0.x-dev",

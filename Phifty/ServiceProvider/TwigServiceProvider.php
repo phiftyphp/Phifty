@@ -13,7 +13,7 @@ use Twig_Extensions_Extension_I18n;
 use Twig_Extension_Markdown;
 use AssetKit\Extension\Twig\AssetExtension;
 
-use Phifty\TwigExtensions\ReactDirective\ReactDirectiveExtension;
+use TwigReactDirective\ReactDirectiveExtension;
 
 use CodeGen\Expr\NewObject;
 use Phifty\Kernel;
