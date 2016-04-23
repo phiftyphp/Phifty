@@ -13,6 +13,8 @@ use Twig_Extensions_Extension_I18n;
 use Twig_Extension_Markdown;
 use AssetKit\Extension\Twig\AssetExtension;
 
+use Phifty\TwigExtensions\ReactDirective\ReactDirectiveExtension;
+
 use CodeGen\Expr\NewObject;
 use Phifty\Kernel;
 
@@ -48,6 +50,7 @@ class TwigServiceProvider extends BaseServiceProvider
         if ($kernel->isDev) {
             $envOptions['debug'] = true;
             $envOptions['auto_reload'] = true;
+            $envOptions['cache'] = $kernel->cacheDir . DIRECTORY_SEPARATOR . 'twig';
         } else {
             // for production
             $envOptions['optimizations'] = true;
@@ -117,10 +120,13 @@ class TwigServiceProvider extends BaseServiceProvider
                 $env->addExtension( new Twig_Extension_Markdown);
             }
 
+
             // include assettoolkit extension
             if ($asset = $kernel->asset) {
                 $env->addExtension(new AssetExtension($asset->config, $asset->loader));
             }
+
+            $env->addExtension(new ReactDirectiveExtension);
 
             // TODO: we should refactor this
             $exports = array(
