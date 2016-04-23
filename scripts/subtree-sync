@@ -1,0 +1,4 @@
+#!/bin/bash
+git subtree push \
+    --prefix Phifty/TwigExtensions/ReactDirective \
+    git@github.com:c9s/TwigReactDirective.git master
