@@ -39,7 +39,6 @@
     },
     "bin": ["bin/phifty"],
     "require-dev": {
-        "corneltek/phpunit-testmore": "dev-master",
         "satooshi/php-coveralls": "^1"
     },
     "license": "MIT",
