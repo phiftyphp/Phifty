@@ -14,6 +14,7 @@ use Twig_Extension_Markdown;
 use AssetKit\Extension\Twig\AssetExtension;
 
 use TwigReactDirective\ReactDirectiveExtension;
+use PJSON\PJSONEncoder;
 
 use CodeGen\Expr\NewObject;
 use Phifty\Kernel;
@@ -126,7 +127,9 @@ class TwigServiceProvider extends BaseServiceProvider
                 $env->addExtension(new AssetExtension($asset->config, $asset->loader));
             }
 
-            $env->addExtension(new ReactDirectiveExtension);
+            $reactDirExt = new ReactDirectiveExtension;
+            $reactDirExt->setJsonEncoder(new PJSONEncoder);
+            $env->addExtension($reactDirExt);
 
             // TODO: we should refactor this
             $exports = array(
