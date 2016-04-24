@@ -9,7 +9,7 @@
         "corneltek/pjson": "^1",
         "corneltek/configkit": "^1",
         "corneltek/genphp": "^1",
-        "corneltek/codegen": "^2.8.x-dev",
+        "corneltek/codegen": "2.8.x-dev",
         "corneltek/react-directive": "1.0.x-dev",
         "corneltek/sessionkit": "~1",
         "corneltek/locale": "2.0.x-dev",
