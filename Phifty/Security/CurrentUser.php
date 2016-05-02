@@ -326,17 +326,31 @@ class CurrentUser implements RoleIdentifierProvider, ActorIdentifierProvider, Re
      *******************/
 
     // XXX: should be integrated with ACL
+    /**
+     * deprecated API, use hasLoggedIn instead.
+     *
+     * @deprecated 
+     */
     public function isLogged()
     {
         // deprecated
         return $this->getId();
     }
 
+
+    /**
+     * Check if an user has logged in.
+     *
+     * @return integer user id
+     */
     public function hasLoggedIn()
     {
         return $this->getId();
     }
 
+    /**
+     * @return string
+     */
     public function getRoleIdentifier()
     {
         $roles = $this->getRoles();
