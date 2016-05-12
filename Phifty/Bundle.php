@@ -555,10 +555,6 @@ class Bundle
         return $this->locate() . DIRECTORY_SEPARATOR . 'Tests';
     }
 
-
-
-
-
     public function getTranslation($locale)
     {
         $file = $this->getTranslationDir() . DIRECTORY_SEPARATOR . $locale . '.yml';

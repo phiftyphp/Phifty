@@ -5,7 +5,7 @@ namespace Phifty\Message;
 use Swift_Message;
 use ArrayAccess;
 use RuntimeException;
-use Twig_Loader_String;
+use Twig_Loader_Array;
 use Twig_Environment;
 
 class Email extends Message implements ArrayAccess
@@ -239,10 +239,11 @@ class Email extends Message implements ArrayAccess
     public function renderSubject()
     {
         $subjectTpl = $this->subject();
-        $loader = new Twig_Loader_String();
+        $loader = new Twig_Loader_Array([
+            'subjectTpl' => $subjectTpl,
+        ]);
         $twig = new Twig_Environment($loader);
-
-        return $twig->render($subjectTpl, $this->getArguments());
+        return $twig->render('subjectTpl', $this->getArguments());
     }
 
     public function send()
