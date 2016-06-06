@@ -46,22 +46,16 @@ class TwigServiceProvider extends BaseServiceProvider
         $options['TemplateDirs'] = $templateDirs;
 
         // Rewrite environment config
-        $envOptions = isset($options['Environment']) ? $options['Environment'] : array();
         if ($kernel->isDev) {
-            $envOptions['debug'] = true;
-            $envOptions['auto_reload'] = true;
-            $envOptions['cache'] = $kernel->cacheDir . DIRECTORY_SEPARATOR . 'twig';
+            $options['Environment']['debug'] = true;
+            $options['Environment']['auto_reload'] = true;
+            $options['Environment']['cache'] = $kernel->cacheDir . DIRECTORY_SEPARATOR . 'twig';
         } else {
             // for production
-            $envOptions['optimizations'] = true;
-            $envOptions['cache'] = $kernel->cacheDir . DIRECTORY_SEPARATOR . 'twig';
+            $options['Environment']['optimizations'] = true;
+            $options['Environment']['cache'] = $kernel->cacheDir . DIRECTORY_SEPARATOR . 'twig';
         }
-        $options['Environment'] = $envOptions;
-        return $options;
-    }
 
-    static public function generateNew(Kernel $kernel, array & $options = array())
-    {
         if (isset($options['Namespaces'])) {
             foreach ($options['Namespaces'] as $name => & $dir) {
                 $dir = realpath($dir);
@@ -69,6 +63,12 @@ class TwigServiceProvider extends BaseServiceProvider
                 // = array_map('realpath', $options['Namespaces']);
             }
         }
+
+        return $options;
+    }
+
+    static public function generateNew(Kernel $kernel, array & $options = array())
+    {
         /*
         // Generate Namespaces from bundles
         foreach ($kernel->bundles as $bundle) {
@@ -76,35 +76,34 @@ class TwigServiceProvider extends BaseServiceProvider
         }
         */
         $className = get_called_class();
-        $options = self::canonicalizeConfig($kernel, $options);
         if (isset($options['Environment']['cache'])) {
             $cacheDir = $options['Environment']['cache'];
             if (!file_exists($cacheDir)) {
                 @mkdir($cacheDir, 0777);
             }
         }
-        return new NewObject($className, [$options]);
+        return new NewObject($className, []);
     }
 
-    public function register($kernel, $options = array() )
+    public function register($kernel, $options = array())
     {
         $self = $this;
         $kernel->twig = function() use($kernel, $options, $self) {
 
             // create the filesystem loader
-            $loader = new Twig_Loader_Filesystem($self->config['TemplateDirs']);
+            $loader = new Twig_Loader_Filesystem($options['TemplateDirs']);
 
             /**
              * Template namespaces must be added after $loader is initialized.
              */
-            if (isset($self->config['Namespaces'])) {
-                foreach ($self->config['Namespaces'] as $namespace => $dir) {
+            if (isset($options['Namespaces'])) {
+                foreach ($options['Namespaces'] as $namespace => $dir) {
                     $loader->addPath($dir, $namespace);
                 }
             }
 
             // http://www.twig-project.org/doc/api.html#environment-options
-            $env = new Twig_Environment($loader, $self->config['Environment']);
+            $env = new Twig_Environment($loader, $options['Environment']);
 
             if ($kernel->isDev) {
                 $env->addExtension(new Twig_Extension_Debug);

@@ -20,9 +20,11 @@ use CodeGen\Variable;
 use CodeGen\Comment;
 use CodeGen\CommentBlock;
 use ReflectionClass;
+use LogicException;
 use Universal\ClassLoader\Psr4ClassLoader;
 
 use Phifty\Bundle\BundleLoader;
+use Phifty\ServiceProvider\BundleServiceProvider;
 
 class BootstrapCommand extends Command
 {
@@ -212,6 +214,9 @@ class BootstrapCommand extends Command
             return $configLoader;
         };
 
+        // TODO: load services here?
+
+
         // Load the bundle list config
         // The config structure:
         //     BundleLoader:
@@ -219,10 +224,47 @@ class BootstrapCommand extends Command
         //       - app_bundles
         //       - bundles
         $bundleLoaderConfig = $configLoader->get('framework','BundleLoader') ?: [ 'Paths' => ['app_bundles','bundles'] ];
+        // Load bundle objects into the runtimeKernel
+        $bundleLoader = new BundleLoader($runtimeKernel, [
+            PH_ROOT . DIRECTORY_SEPARATOR . 'app_bundles',
+            PH_ROOT . DIRECTORY_SEPARATOR . 'bundles'
+        ]);
         $bundleList = $configLoader->get('framework','Bundles');
 
-        // Load bundle objects into the runtimeKernel
-        $bundleLoader = new BundleLoader($runtimeKernel, ['app_bundles', 'bundles']);
+        $bundleService = new BundleServiceProvider();
+        $bundleService->register($runtimeKernel, $bundleLoaderConfig);
+
+
+        // Generating registering code for bundle classes
+        if ($bundleList) {
+            foreach ($bundleList as $bundleName => $bundleConfig) {
+                $autoload = $bundleLoader->getAutoloadConfig($bundleName);
+                if ($autoload == false) {
+                    continue;
+                }
+                foreach ($autoload as $prefix => $autoloadPath) {
+                    if ($psr4Map && isset($psr4Map[$prefix])) {
+                        continue;
+                    }
+
+                    $realAutoloadPath = realpath($autoloadPath) . DIRECTORY_SEPARATOR;
+                    $this->logger->info("Adding psr4 $prefix to $realAutoloadPath");
+                    $psr4ClassLoader->addPrefix($prefix, $realAutoloadPath);
+                    $block[] = new Statement(new MethodCall('$psr4ClassLoader', 'addPrefix', [ $prefix, $realAutoloadPath ]));
+                }
+            }
+            foreach ($bundleList as $bundleName => $bundleConfig) {
+                $bundleClass = "$bundleName\\$bundleName";
+                if (!class_exists($bundleClass, true)) {
+                    $bundleClassFile = $bundleLoader->findBundleClass($bundleName);
+                    if (!$bundleClassFile) {
+                        throw new Exception("bundle class file '$bundleClassFile' doesn't exist.");
+                    }
+                    require $bundleClassFile;
+                }
+                $runtimeKernel->bundles[$bundleName] = $bundleClass::getInstance($runtimeKernel, $bundleConfig);
+            }
+        }
 
 
 
@@ -309,15 +351,23 @@ class BootstrapCommand extends Command
                         $options = array();
                     }
 
-                    // not full qualified classname
+                    // Not full qualified classname
                     $class = (false === strpos($name, '\\')) ? ('Phifty\\ServiceProvider\\'.$name) : $name;
                     if (!class_exists($class, true)) {
-                        throw new \LogicException("$class does not exist.");
+                        throw new LogicException("$class does not exist.");
                     }
                     $block[] = new RequireClassStatement($class);
 
-                    $this->logger->info("Generating $class");
-                    if (is_subclass_of($class, 'Phifty\\ServiceProvider\\BaseServiceProvider') && $class::isGeneratable($runtimeKernel, $options)) {
+                    $this->logger->info("Generating $class ...");
+
+                    $options = $class::canonicalizeConfig($runtimeKernel, $options);
+                    if ($options === null) {
+                        throw new LogicException("$class::canonicalizeConfig should return an array for service config.");
+                    }
+
+                    if (is_subclass_of($class, 'Phifty\\ServiceProvider\\BaseServiceProvider')
+                        && $class::isGeneratable($runtimeKernel, $options))
+                    {
                         if ($prepareStm = $class::generatePrepare($runtimeKernel, $options)) {
                             $block[] = $prepareStm;
                         }
@@ -327,7 +377,7 @@ class BootstrapCommand extends Command
                         ]));
                     } else {
                         $block[] = new Statement(new MethodCall('$kernel', 'registerService', [
-                            new NewObject($class, [$options]),
+                            new NewObject($class, []),
                             $options,
                         ]));
                     }
@@ -337,25 +387,6 @@ class BootstrapCommand extends Command
 
 
 
-        // Generating registering code for bundle classes
-        if ($bundleList) {
-            foreach ($bundleList as $bundleName => $bundleConfig) {
-                $autoload = $bundleLoader->getAutoloadConfig($bundleName);
-                if ($autoload == false) {
-                    continue;
-                }
-                foreach ($autoload as $prefix => $autoloadPath) {
-                    if ($psr4Map && isset($psr4Map[$prefix])) {
-                        continue;
-                    }
-
-                    $realAutoloadPath = realpath($autoloadPath) . DIRECTORY_SEPARATOR;
-                    $this->logger->info("Adding psr4 $prefix to $realAutoloadPath");
-                    $psr4ClassLoader->addPrefix($prefix, $realAutoloadPath);
-                    $block[] = new Statement(new MethodCall('$psr4ClassLoader', 'addPrefix', [ $prefix, $realAutoloadPath ]));
-                }
-            }
-        }
 
         // Generate environment setup
         switch ($env) {

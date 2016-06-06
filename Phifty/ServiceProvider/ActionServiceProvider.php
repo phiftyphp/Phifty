@@ -25,15 +25,15 @@ class ActionServiceProvider extends BaseServiceProvider
 
     public function register($kernel, $options = array())
     {
-        $kernel->actionService = function() use ($kernel) {
+        $kernel->actionService = function() use ($kernel, $options) {
             $container = new ServiceContainer;
             $container['cache_dir'] = $kernel->cacheDir;
             if ($kernel->locale) {
                 $container['locale'] = $kernel->locale->current;
             }
 
-            if (isset($this->config['DefaultFieldView'])) {
-                Action::$defaultFieldView = $this->config['DefaultFieldView'];
+            if (isset($options['DefaultFieldView'])) {
+                Action::$defaultFieldView = $options['DefaultFieldView'];
             }
 
             $generator = $container['generator'];

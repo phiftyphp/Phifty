@@ -5,10 +5,6 @@ use Phifty\Kernel;
 
 abstract class BaseServiceProvider implements ServiceProvider
 {
-
-    // XXX: should be removed
-    public $options;
-
     protected $config;
 
     public function __construct(array $config = array())
@@ -35,7 +31,7 @@ abstract class BaseServiceProvider implements ServiceProvider
      * @param array $options
      * @return boolean
      */
-    public static function isGeneratable(Kernel $kernel, array & $options = array())
+    public static function isGeneratable(Kernel $kernel, array $options = array())
     {
         return true;
     }
@@ -59,9 +55,9 @@ abstract class BaseServiceProvider implements ServiceProvider
      *
      * @return array
      */
-    public static function canonicalizeConfig(Kernel $kernel, array $config)
+    public static function canonicalizeConfig(Kernel $kernel, array $options)
     {
-        return $config;
+        return $options;
     }
 
 
@@ -72,8 +68,7 @@ abstract class BaseServiceProvider implements ServiceProvider
     {
         // (PHP 5 >= 5.3.0)
         $className = get_called_class();
-
         // Use late static binding to call the canonicalizeConfig from different instance.
-        return new NewObject($className, [static::canonicalizeConfig($kernel, $options)]);
+        return new NewObject($className, []);
     }
 }

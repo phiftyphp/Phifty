@@ -22,7 +22,7 @@ class CacheServiceProvider extends BaseServiceProvider
         $this->builder = $builder;
     }
 
-    static public function generateNew(Kernel $kernel, array & $options = array())
+    static public function canonicalizeConfig(Kernel $kernel, array $options = array())
     {
         // handle Memcache initialization
         if (isset($options['Memcached'])) {
@@ -41,6 +41,12 @@ class CacheServiceProvider extends BaseServiceProvider
                 $options['Memcached']['Servers'] = [['localhost', 11211]];
             }
         }
+        return $options;
+    }
+
+
+    static public function generateNew(Kernel $kernel, array & $options = array())
+    {
 
         $builder = new UserClosure([], ['$kernel']);
         $builder[] = '$cache = new UniversalCache(array());';

@@ -31,7 +31,7 @@ class AssetServiceProvider extends BaseServiceProvider
         $self = $this;
         $kernel->asset = function() use ($kernel, $options, $self) {
             // $assetFile = PH_APP_ROOT . DIRECTORY_SEPARATOR . 'config/assetkit.yml';
-            $config = new AssetConfig($self->config);
+            $config = new AssetConfig($options);
             $config->setEnvironment($kernel->environment);
             $config->setNamespace($kernel->getApplicationUUID());
             $cache = new UniversalCache(array(

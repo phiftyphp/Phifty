@@ -93,7 +93,7 @@ class KendoServiceProvider extends BaseServiceProvider
     {
         $self = $this;
         $kernel->accessControl = function() use ($self, $kernel, $options) {
-            return new KendoService($kernel, $self->config);
+            return new KendoService($kernel, $options);
         };
     }
 }

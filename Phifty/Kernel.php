@@ -7,6 +7,7 @@ use Universal\Container\ObjectContainer;
 use Phifty\ServiceProvider\ServiceProvider;
 use Exception;
 use ConfigKit\ConfigLoader;
+use Phifty\Environment\CommandLine;
 
 class Kernel extends ObjectContainer
 {
@@ -209,10 +210,10 @@ class Kernel extends ObjectContainer
         $this->event->trigger('phifty.before_init');
         $self = $this;
         $this->web = function() use ($self) {
-            return new \Phifty\Web( $self );
+            return new Web($self);
         };
         if (CLI) {
-            \Phifty\Environment\CommandLine::init($this);
+            CommandLine::init($this);
         } else {
             if (isset($this->session)) {
                 $this->session;
@@ -254,7 +255,7 @@ class Kernel extends ObjectContainer
      */
     public function plugin($name)
     {
-        return $this->bundles->get( $name );
+        return $this->bundles->get($name);
     }
 
 

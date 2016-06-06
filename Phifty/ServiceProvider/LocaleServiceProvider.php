@@ -9,7 +9,7 @@ class LocaleServiceProvider extends BaseServiceProvider
 
     public function getId() { return 'Locale'; }
 
-    static public function generateNew(Kernel $kernel, array & $options = array())
+    static public function canonicalizeConfig(Kernel $kernel, array $options)
     {
         if (!isset($options['Default'])) {
             $options['Default'] = 'en';
@@ -23,19 +23,16 @@ class LocaleServiceProvider extends BaseServiceProvider
         if (!isset($options['Langs'])) {
             $options['Langs'] = [ 'en' => 'English' ];
         }
-
         $options['LocaleDir'] = $kernel->rootDir . DIRECTORY_SEPARATOR . $options['LocaleDir'];
-        $className = get_called_class();
-        return new NewObject($className, [$options]);
+        return $options;
     }
-
 
     public function register($kernel, $options = array())
     {
         $self = $this;
         $kernel->locale = function() use ($kernel, $self, $options) {
-            $locale = new Locale($self->config['Domain'], $self->config['LocaleDir'], $self->config['Langs']);
-            $locale->setDefaultLanguage($self->config['Default']);
+            $locale = new Locale($options['Domain'], $options['LocaleDir'], $options['Langs']);
+            $locale->setDefaultLanguage($options['Default']);
             // _('en');
             // _('es');
             // _('zh_TW');

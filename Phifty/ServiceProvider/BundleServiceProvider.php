@@ -15,10 +15,15 @@ class BundleServiceProvider extends BaseServiceProvider
 
     static public function generateNew(Kernel $kernel, array & $options = array())
     {
+        return parent::generateNew($kernel, $options);
+    }
+
+    static public function canonicalizeConfig(Kernel $kernel, array $options)
+    {
         if (isset($options["Paths"])) {
             $options["Paths"] = array_map('realpath', $options["Paths"]);
         }
-        return parent::generateNew($kernel, $options);
+        return $options;
     }
 
 
@@ -31,8 +36,7 @@ class BundleServiceProvider extends BaseServiceProvider
     {
         // plugin manager depends on classloader,
         // register plugin namespace to classloader.
-        $self = $this;
-        $kernel->bundles = function() use ($kernel, $self, $options) {
+        $kernel->bundles = function() use ($kernel, $options) {
             return new BundleManager($kernel);
         };
     }
