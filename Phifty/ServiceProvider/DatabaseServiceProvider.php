@@ -10,8 +10,8 @@ class DatabaseServiceProvider extends BaseServiceProvider
     public function register($kernel, $options = array() )
     {
         $loader = \LazyRecord\ConfigLoader::getInstance();
-        if (! $loader->loaded) {
-            $loader->load($this->config);
+        if (!$loader->loaded) {
+            $loader->load($options);
             $loader->init();  // init data source and connection
         }
         $kernel->db = function() {
