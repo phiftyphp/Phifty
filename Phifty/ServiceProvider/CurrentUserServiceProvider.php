@@ -15,7 +15,7 @@ class CurrentUserServiceProvider extends BaseServiceProvider
 
     public function getId() { return 'current_user'; }
 
-    static public function generateNew(Kernel $kernel, array & $options = array())
+    static public function canonicalizeConfig(Kernel $kernel, array $options)
     {
         $args = [];
         $args['model_class'] = isset($options['Model'])
@@ -36,10 +36,7 @@ class CurrentUserServiceProvider extends BaseServiceProvider
 
         $options['CurrentUserConstructorArgs'] = $args;
         $options['CurrentUserClass'] = $currentUserClass;
-
-        $class = get_called_class();
-        return new NewObject($class,[$options]);
-        // return parent::generateNew($kernel, $options);
+        return $options;
     }
 
     public function register($kernel, $options = array() )

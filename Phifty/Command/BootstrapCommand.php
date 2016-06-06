@@ -75,6 +75,8 @@ class BootstrapCommand extends Command
      */
     public function execute()
     {
+        $psr4Map = require "vendor/composer/autoload_psr4.php";
+
         $psr4ClassLoader = new Psr4ClassLoader;
 
         // XXX: connect to differnt config by using environment variable (PHIFTY_ENV)
@@ -210,6 +212,19 @@ class BootstrapCommand extends Command
             return $configLoader;
         };
 
+        // Load the bundle list config
+        // The config structure:
+        //     BundleLoader:
+        //       Paths:
+        //       - app_bundles
+        //       - bundles
+        $bundleLoaderConfig = $configLoader->get('framework','BundleLoader') ?: [ 'Paths' => ['app_bundles','bundles'] ];
+        $bundleList = $configLoader->get('framework','Bundles');
+
+        // Load bundle objects into the runtimeKernel
+        $bundleLoader = new BundleLoader($runtimeKernel, ['app_bundles', 'bundles']);
+
+
 
         $appKernelClass = $kernelClassGenerator->generate($runtimeKernel);
         $classPath = $appKernelClass->generatePsr4ClassUnder($appDirectory);
@@ -321,19 +336,8 @@ class BootstrapCommand extends Command
         }
 
 
-        /*
-        BundleLoader:
-          Paths:
-          - app_bundles
-          - bundles
-         */
-        $bundleLoaderConfig = $configLoader->get('framework','BundleLoader') ?: [ 'Paths' => ['app_bundles','bundles'] ];
-
-        $psr4Map = require "vendor/composer/autoload_psr4.php";
 
         // Generating registering code for bundle classes
-        $bundleLoader = new BundleLoader($runtimeKernel, ['app_bundles', 'bundles']);
-        $bundleList = $configLoader->get('framework','Bundles');
         if ($bundleList) {
             foreach ($bundleList as $bundleName => $bundleConfig) {
                 $autoload = $bundleLoader->getAutoloadConfig($bundleName);

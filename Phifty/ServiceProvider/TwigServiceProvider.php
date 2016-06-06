@@ -32,22 +32,21 @@ class TwigServiceProvider extends BaseServiceProvider
         return 'Twig';
     }
 
-    static public function generateNew(Kernel $kernel, array & $options = array())
+    static public function canonicalizeConfig(Kernel $kernel, array $options)
     {
-        $envOptions = [];
-
-        // preprocess twig configs
+        // Rewrite template directories
         $templateDirs = array();
         if (isset($options['TemplateDirs']) && $options['TemplateDirs']) {
             $templateDirs = array_map(function($dir) {
                 return PH_APP_ROOT . DIRECTORY_SEPARATOR . $dir;
             }, $options['TemplateDirs']);
         }
-
         // Append fallback template dirs from plugin dir or framework plugin dir.
         $templateDirs[] = PH_APP_ROOT;
         $options['TemplateDirs'] = $templateDirs;
 
+        // Rewrite environment config
+        $envOptions = isset($options['Environment']) ? $options['Environment'] : array();
         if ($kernel->isDev) {
             $envOptions['debug'] = true;
             $envOptions['auto_reload'] = true;
@@ -56,11 +55,13 @@ class TwigServiceProvider extends BaseServiceProvider
             // for production
             $envOptions['optimizations'] = true;
             $envOptions['cache'] = $kernel->cacheDir . DIRECTORY_SEPARATOR . 'twig';
-            if (!file_exists($envOptions['cache'])) {
-                @mkdir($envOptions['cache'], 0777);
-            }
         }
+        $options['Environment'] = $envOptions;
+        return $options;
+    }
 
+    static public function generateNew(Kernel $kernel, array & $options = array())
+    {
         if (isset($options['Namespaces'])) {
             foreach ($options['Namespaces'] as $name => & $dir) {
                 $dir = realpath($dir);
@@ -68,22 +69,20 @@ class TwigServiceProvider extends BaseServiceProvider
                 // = array_map('realpath', $options['Namespaces']);
             }
         }
-
-        // Generate Namespaces from bundles
         /*
+        // Generate Namespaces from bundles
         foreach ($kernel->bundles as $bundle) {
-
+            echo get_class($bundle), PHP_EOL;
         }
         */
-
-
-        // override from config
-        if (isset($options['Environment']) && $options['Environment']) {
-            $envOptions = array_merge($envOptions , $options['Environment'] );
-        }
-        $options['Environment'] = $envOptions;
-
         $className = get_called_class();
+        $options = self::canonicalizeConfig($kernel, $options);
+        if (isset($options['Environment']['cache'])) {
+            $cacheDir = $options['Environment']['cache'];
+            if (!file_exists($cacheDir)) {
+                @mkdir($cacheDir, 0777);
+            }
+        }
         return new NewObject($className, [$options]);
     }
 
@@ -146,6 +145,7 @@ class TwigServiceProvider extends BaseServiceProvider
                 $env->addFunction(new Twig_SimpleFunction($export, $func));
             }
 
+            // TODO: make this static
             $zhDate = new Twig_SimpleFilter('zh_date', function ($str) {
                 return str_replace(['Mon','Tue','Wed','Thu','Fri','Sat','Sun',
                                     'Jan','Feb','Mar','Apr','May','Jun','July','Aug','Sep','Oct','Nov','Dec'],

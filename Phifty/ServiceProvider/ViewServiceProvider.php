@@ -34,7 +34,7 @@ class ViewServiceProvider extends BaseServiceProvider
 {
     public function getId() { return 'View'; }
 
-    static public function generateNew(Kernel $kernel, array & $options = array())
+    static public function canonicalizeConfig(Kernel $kernel, array $options)
     {
         if (!isset($options['Class']) ) {
             $options['Class'] = 'Phifty\\View';
@@ -56,8 +56,7 @@ class ViewServiceProvider extends BaseServiceProvider
             }
             $options['TemplateDirs'] = $dirs;
         }
-        $class = get_called_class();
-        return new NewObject($class,[$options]);
+        return $options;
     }
 
     public function register($kernel, $options = array())

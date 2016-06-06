@@ -55,11 +55,11 @@ abstract class BaseServiceProvider implements ServiceProvider
 
 
     /**
-     * rewriteConfig rewrites the config array passed to the constructor
+     * canonicalizeConfig canonialize the config array before genearting the config array.
      *
      * @return array
      */
-    public static function rewriteConfig(array $config)
+    public static function canonicalizeConfig(Kernel $kernel, array $config)
     {
         return $config;
     }
@@ -72,6 +72,8 @@ abstract class BaseServiceProvider implements ServiceProvider
     {
         // (PHP 5 >= 5.3.0)
         $className = get_called_class();
-        return new NewObject($className, [$options]);
+
+        // Use late static binding to call the canonicalizeConfig from different instance.
+        return new NewObject($className, [static::canonicalizeConfig($kernel, $options)]);
     }
 }
