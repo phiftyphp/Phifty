@@ -12,6 +12,7 @@ class ServerConfigCommand extends Command
     {
         $opts->add('apache2');
         $opts->add('nginx');
+        $opts->add('fastcgi:=string', 'fastcgi socket');
     }
 
     protected function generateApache2Config(Kernel $kernel)
@@ -62,7 +63,10 @@ class ServerConfigCommand extends Command
                 $fpmConfig = [];
             }
 
-            $listen = isset($fpmConfig['listen']) ? $fpmConfig['listen'] : 'localhost:9000';
+            $listen = $this->options->{'fastcgi'}
+                ?: (isset($fpmConfig['listen'])
+                    ? $fpmConfig['listen']
+                    : 'localhost:9000');
 
             echo <<<OUT
 # vim:et:sw=2:ts=2:sts=2:
