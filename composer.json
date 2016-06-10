@@ -37,6 +37,7 @@
     "bin": ["bin/phifty"],
     "require-dev": {
         "corneltek/phpunit-testmore": "dev-master",
+        "corneltek/lazyrecord": "@dev",
         "satooshi/php-coveralls": "^1"
     },
     "license": "MIT",
