@@ -15,7 +15,7 @@
         "corneltek/lazyrecord": "^3.0.0",
         "corneltek/cliframework": "^3.0.0",
         "corneltek/sqlbuilder": "^3.0.0",
-        "corneltek/actionkit": "3.0.x-dev",
+        "corneltek/actionkit": "^3.0.0",
         "corneltek/assetkit": "3.4.x-dev",
         "corneltek/pux": "2.0.x-dev",
         "phpsgi/funk": "1.0.x-dev",
