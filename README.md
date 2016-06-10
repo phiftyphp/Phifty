@@ -1,7 +1,11 @@
 Phifty Web Framework
 ====================
 
-[![Build Status](https://travis-ci.org/c9s/Phifty.svg?branch=master)](https://travis-ci.org/c9s/Phifty)
+[![Build Status](https://travis-ci.org/corneltek/Phifty.svg?branch=master)](https://travis-ci.org/corneltek/Phifty)
+[![Latest Stable Version](https://poser.pugx.org/corneltek/phifty/v/stable)](https://packagist.org/packages/corneltek/phifty)
+[![Total Downloads](https://poser.pugx.org/corneltek/phifty/downloads)](https://packagist.org/packages/corneltek/phifty)
+[![Latest Unstable Version](https://poser.pugx.org/corneltek/phifty/v/unstable)](https://packagist.org/packages/corneltek/phifty)
+[![License](https://poser.pugx.org/corneltek/phifty/license)](https://packagist.org/packages/corneltek/phifty)
 
 Requirements
 --------------------
@@ -14,4 +18,6 @@ Requirements
 Documentation
 --------------------
 
-See [wiki](https://github.com/c9s/Phifty/wiki)
+See [wiki](https://github.com/corneltek/Phifty/wiki)
+
+
