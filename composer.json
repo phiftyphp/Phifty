@@ -4,7 +4,6 @@
     "require": {
         "php": ">=5.4.0",
         "corneltek/universal": "1.8.x-dev",
-        "corneltek/universal-cache": "2.0.x-dev",
         "corneltek/fileutil": "^1",
         "corneltek/configkit": "^1",
         "corneltek/genphp": "^1",
@@ -16,7 +15,7 @@
         "corneltek/cliframework": "^3.0.0",
         "corneltek/sqlbuilder": "^3.0.0",
         "corneltek/actionkit": "^3.0.0",
-        "corneltek/assetkit": "3.4.x-dev",
+        "corneltek/assetkit": "^3.4.0",
         "corneltek/pux": "2.0.x-dev",
         "phpsgi/funk": "1.0.x-dev",
         "phpsgi/phpsgi": "1.0.x-dev",
