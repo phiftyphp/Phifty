@@ -19,6 +19,18 @@ class AssetServiceProvider extends BaseServiceProvider
         return 'Asset';
     }
 
+
+    public static canonicalizeConfig(Kernel $kernel, array $options)
+    {
+        if (!isset($options['BaseUrl'])) {
+            $options['BaseUrl'] = '/assets';
+        }
+        if (!isset($options['BaseDir'])) {
+            $options['BaseDir'] = 'webroot/assets';
+        }
+        return $options;
+    }
+
     /**
      * $kernel->asset->loader
      * $kernel->asset->writer.

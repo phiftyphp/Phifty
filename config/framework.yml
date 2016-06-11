@@ -35,6 +35,7 @@ ServiceProviders:
   AssetServiceProvider:
     BaseUrl: /assets
     BaseDir: webroot/assets
+  AesCryptorServiceProvider:
   BundleServiceProvider:
     Paths:
       - bundles
