@@ -2,6 +2,9 @@ language: php
 php:
 - 5.6
 - 7.0
+services:
+- memcached
+- redis
 install:
 - bash scripts/install-apcu.sh
 - phpenv config-add tests/config/$TRAVIS_PHP_VERSION.ini
@@ -9,6 +12,9 @@ install:
 - travis_retry composer self-update
 - travis_retry composer update
 before_script:
+- echo "extension = memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+- echo "extension = apcu.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+- echo "extension = redis.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 - mkdir -p app applications bundles cache
 - phpenv rehash
 - cp -v config/framework.dev.yml config/framework.yml
