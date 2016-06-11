@@ -1,38 +1,25 @@
 <?php
 namespace Phifty\ServiceProvider;
 use Phifty\ComposerConfigBridge;
-use PredisClient;
-use Exception;
 use Phifty\Kernel;
+use Predis\Client as PredisClient;
+use Exception;
 
 class PredisServiceProvider extends BaseServiceProvider implements ComposerConfigBridge
 {
-    public function getId() { return 'Redis'; }
+    public function getId() { return 'Predis'; }
+
+
+    static public function canonicalizeConfig(Kernel $kernel, array $options)
+    {
+        return $options;
+    }
+
 
     public function register(Kernel $kernel, $options = array() )
     {
-        $kernel->redis = function() use ($kernel, $options) {
-            /*
-             $redis = new PredisClient([
-                "scheme" => "tcp",
-                "host" => "127.0.0.1",
-                "port" => 6379,
-             ]);
-             * */
-            try {
-                if ( empty($options) ) {
-                    $redis = new PredisClient();
-                } else {
-                    $redis = new PredisClient(array_merge([
-                        "scheme" => "tcp",
-                        "host" => "127.0.0.1",
-                        "port" => 6379,
-                    ],$options));
-                }
-            } catch (Exception $e) {
-                die("Couldn't connected to Redis: " . $e->getMessage());
-            }
-            return $redis;
+        $kernel->redis = function() use ($options) {
+            return new PredisClient($options);
         };
     }
 
