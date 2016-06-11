@@ -27,7 +27,7 @@ class RedisServiceProvider extends BaseServiceProvider implements ComposerConfig
     {
         $kernel->redis = function () use ($options) {
             $redis = new Redis();
-            $redis->connect($options['Host'], $options['Port']);
+            $redis->pconnect($options['Host'], $options['Port']);
             return $redis;
         };
     }
