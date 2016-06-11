@@ -1,26 +1,30 @@
 <?php
+
 namespace Phifty\ServiceProvider;
+
 use Exception;
 use SoapClient;
 use Phifty\Kernel;
 
-
 class SoapClientServiceProvider extends BaseServiceProvider
 {
-    public function getId() { return 'SoapClient'; }
-
-    public function register(Kernel $kernel, $options = array() )
+    public function getId()
     {
-        if ( ! isset($options["WSDL"]) ) {
-            throw new Exception("WSDL is not defined.");
+        return 'SoapClient';
+    }
+
+    public function register(Kernel $kernel, $options = array())
+    {
+        if (!isset($options['WSDL'])) {
+            throw new Exception('WSDL is not defined.');
         }
-        $kernel->soapClient = function() use ($options) {
+        $kernel->soapClient = function () use ($options) {
             $wsdl = $options['WSDL'];
-            if ( ! preg_match('#^https?://#', $wsdl) && $wsdl[0] != '/' ) {
-                $wsdl = PH_APP_ROOT . DIRECTORY_SEPARATOR . $wsdl;
+            if (!preg_match('#^https?://#', $wsdl) && $wsdl[0] != '/') {
+                $wsdl = PH_APP_ROOT.DIRECTORY_SEPARATOR.$wsdl;
             }
-            return new SoapClient( $wsdl );
+
+            return new SoapClient($wsdl);
         };
     }
 }
-

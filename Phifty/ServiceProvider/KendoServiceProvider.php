@@ -1,13 +1,11 @@
 <?php
+
 namespace Phifty\ServiceProvider;
-use Kendo\SecurityPolicy\SecurityPolicyModule;
+
 use Kendo\RuleLoader\RuleLoader;
-use Kendo\RuleLoader\SchemaRuleLoader;
 use Kendo\RuleLoader\PDORuleLoader;
 use Kendo\RuleMatcher\AccessRuleMatcher;
 use Kendo\Authorizer\Authorizer;
-use Kendo\IdentifierProvider\ActorIdentifierProvider;
-use Kendo\Operation\GeneralOperation;
 use LazyRecord\ConnectionManager;
 use Phifty\Kernel;
 use Exception;
@@ -32,7 +30,6 @@ class KendoService
         if (!isset($options['RuleLoader']['PDORuleLoader'])) {
             throw new Exception('Missing RuleLoader settings');
         }
-
     }
 
     public function getRuleLoader()
@@ -43,8 +40,9 @@ class KendoService
         $dataSource = $this->options['RuleLoader']['PDORuleLoader']['DataSource'];
         $connectionManager = ConnectionManager::getInstance();
         $conn = $connectionManager->getConnection($dataSource);
-        $this->ruleLoader = new PDORuleLoader;
+        $this->ruleLoader = new PDORuleLoader();
         $this->ruleLoader->load($conn);
+
         return $this->ruleLoader;
     }
 
@@ -53,9 +51,10 @@ class KendoService
         if ($this->authorizer) {
             return $this->authorizer;
         }
-        $authorizer = new Authorizer;
+        $authorizer = new Authorizer();
         $accessRuleMatcher = new AccessRuleMatcher($this->getRuleLoader());
         $authorizer->addMatcher($accessRuleMatcher);
+
         return $authorizer;
     }
 
@@ -66,14 +65,15 @@ class KendoService
         if ($ret = $authorizer->authorize($this->kernel->currentUser, $operation, $resource)) {
             return $ret->allowed;
         }
+
         return false;
     }
-
 
     public function authorize($operation, $resource)
     {
         static $authorizer;
         $authorizer = $this->getAuthorizer();
+
         return $authorizer->authorize($this->kernel->currentUser, $operation, $resource);
     }
 
@@ -81,18 +81,22 @@ class KendoService
     {
         static $authorizer;
         $authorizer = $this->getAuthorizer();
+
         return $authorizer->authorize($actor, $operation, $resource);
     }
 }
 
 class KendoServiceProvider extends BaseServiceProvider
 {
-    public function getId() { return 'access_control'; }
+    public function getId()
+    {
+        return 'access_control';
+    }
 
     public function register(Kernel $kernel, $options = array())
     {
         $self = $this;
-        $kernel->accessControl = function() use ($kernel, $options) {
+        $kernel->accessControl = function () use ($kernel, $options) {
             return new KendoService($kernel, $options);
         };
     }

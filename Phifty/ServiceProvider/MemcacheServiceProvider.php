@@ -1,27 +1,30 @@
 <?php
+
 namespace Phifty\ServiceProvider;
+
 use Memcache;
 use Exception;
 use Phifty\Kernel;
 
-
 class MemcacheServiceProvider extends BaseServiceProvider
 {
-
-    public function getId() { return 'Memcache'; }
-
-    public function register(Kernel $kernel , $options = array() )
+    public function getId()
     {
-        if (! extension_loaded('memcache')) {
+        return 'Memcache';
+    }
+
+    public function register(Kernel $kernel, $options = array())
+    {
+        if (!extension_loaded('memcache')) {
             throw new Exception('memcache extension is required');
         }
 
-        $kernel->memcache = function() use ($options) {
-            $memcache = new Memcache;
+        $kernel->memcache = function () use ($options) {
+            $memcache = new Memcache();
 
-            if ( isset($options['Servers'] )) {
+            if (isset($options['Servers'])) {
                 foreach ($options['Servers'] as $server) {
-                    /**
+                    /*
                         bool Memcache::addServer ( string $host
                             [, int $port = 11211
                             [, bool $persistent
@@ -33,19 +36,19 @@ class MemcacheServiceProvider extends BaseServiceProvider
                             [, int $timeoutms ]]]]]]]] )
                      */
                     $args = array();
-                    foreach ( array('host','port','persistent','weight','timeout','retry_interval','status') as $k ) {
-                        if ( isset($server[$k]) ) {
+                    foreach (array('host', 'port', 'persistent', 'weight', 'timeout', 'retry_interval', 'status') as $k) {
+                        if (isset($server[$k])) {
                             $args[] = $server[$k];
                         } else {
                             break;
                         }
                     }
-                    if ( false === call_user_func_array( array($memcache,'addServer') , $args ) ) {
-                        throw new Exception("Could not connect to memcache.");
+                    if (false === call_user_func_array(array($memcache, 'addServer'), $args)) {
+                        throw new Exception('Could not connect to memcache.');
                     }
                 }
             } else {
-                $memcache->addServer('localhost',11211);
+                $memcache->addServer('localhost', 11211);
             }
             // $memcache->connect('localhost', 11211) or die ("Could not connect");
             return $memcache;

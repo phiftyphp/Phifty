@@ -1,74 +1,28 @@
 <?php
+
 namespace Phifty\ServiceProvider;
-use Swift_MailTransport;
+
 use Swift_Mailer;
 use ConfigKit\Accessor;
-use Swift_Plugins_AntiFloodPlugin;
 use Phifty\ComposerConfigBridge;
 use Phifty\Kernel;
 
 class MailerServiceProvider extends BaseServiceProvider implements ComposerConfigBridge
 {
-
-    public function getId() { return 'Mailer'; }
+    public function getId()
+    {
+        return 'Mailer';
+    }
 
     /**
-
-    $kernel->mailer->send( $message );
-
-    Transport Configurations:
-
-    @see http://swiftmailer.org/docs/sending.html
-
-    SMTP Transport:
-
-        $transport = Swift_SmtpTransport::newInstance('smtp.example.org', 25)
-            ->setUsername('username')
-            ->setPassword('password');
-
-        MailerServiceProvider:
-          Transport: SmtpTransport
-          Username: your username
-          Password: your password
-          Host: smtp.example.org
-          Port: 25
-
-        MailerServiceProvider:
-          Transport: SmtpTransport
-          Username: your username
-          Password: your password
-          Host: smtp.example.org
-          Port: 587
-          SSL: true
-
-    Sendmail Transport:
-
-        $transport = Swift_SendmailTransport::newInstance('/usr/sbin/sendmail -bs');
-        $transport = Swift_SendmailTransport::newInstance('/usr/sbin/exim -bs');
-
-        MailerServiceProvider:
-          Transport: SendmailTransport
-          Command: '/usr/sbin/exim -bs'
-
-    Mail Transport:
-
-        $transport = Swift_MailTransport::newInstance();
-
-        MailerServiceProvider:
-          Transport: MailTransport
-
-    Plugins:
-
-        Plugins:
-          AntiFloodPlugin: { EmailLimit: , PauseSeconds: }
-
-    */
-    public function register(Kernel $kernel, $options = array() )
+     
+     */
+    public function register(Kernel $kernel, $options = array())
     {
-        $kernel->mailer = function() use ($kernel,$options) {
+        $kernel->mailer = function () use ($kernel, $options) {
             $accessor = new Accessor($options);
             $transportType = $accessor->Transport ?: 'MailTransport';
-            $transportClass = 'Swift_' . $transportType;
+            $transportClass = 'Swift_'.$transportType;
             $transport = null;
 
             switch ($transportType) {
@@ -79,10 +33,11 @@ class MailerServiceProvider extends BaseServiceProvider implements ComposerConfi
 
                 case 'SendmailTransport':
                     // sendmail transport has defined a built-in default command.
-                    if ( $command = $accessor->Command )
+                    if ($command = $accessor->Command) {
                         $transport = $transportClass::newInstance($command);
-                    else
+                    } else {
                         $transport = $transportClass::newInstance();
+                    }
                 break;
 
                 case 'SmtpTransport':
@@ -105,13 +60,13 @@ class MailerServiceProvider extends BaseServiceProvider implements ComposerConfi
 
             if ($accessor->Plugins) {
                 foreach ($accessor->Plugins as $pluginName => $options) {
-                    $pluginOptions = new Accessor( $options );
+                    $pluginOptions = new Accessor($options);
                     $class = 'Swift_Plugins_'.$pluginName;
                     switch ($pluginName) {
                         case 'AntiFloodPlugin':
                             $emailLimit = $pluginOptions->EmailLimit ?: 100; // default email limit
                             $pauseSeconds = $pluginOptions->PauseSeconds ?: null;
-                            $plugin = new \Swift_Plugins_AntiFloodPlugin($emailLimit , $pauseSeconds);
+                            $plugin = new \Swift_Plugins_AntiFloodPlugin($emailLimit, $pauseSeconds);
                             break;
                     }
                     $mailer->registerPlugin($plugin);
@@ -120,11 +75,10 @@ class MailerServiceProvider extends BaseServiceProvider implements ComposerConfi
 
             return $mailer;
         };
-
     }
 
-    public function getComposerDependency() {
-        return ["swiftmailer/swiftmailer" => "@stable"];
+    public function getComposerDependency()
+    {
+        return ['swiftmailer/swiftmailer' => '@stable'];
     }
-
 }

@@ -1,6 +1,7 @@
 <?php
+
 namespace Phifty\ServiceProvider;
-use Exception;
+
 use Monolog\Logger;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Formatter\HtmlFormatter;
@@ -9,18 +10,20 @@ use Monolog\Handler\StreamHandler;
 use Pimple\Container;
 use Phifty\Kernel;
 
-
 class MonologServiceProvider extends BaseServiceProvider
 {
-    public function getId() { return 'monolog'; }
-
-    public function register(Kernel $kernel , $options = array())
+    public function getId()
     {
-        $kernel->monolog = function() use ($kernel,$options) {
-            // create sub container for monolog
-            $container = new Container;
+        return 'monolog';
+    }
 
-            $container['logger'] = $container->factory(function() {
+    public function register(Kernel $kernel, $options = array())
+    {
+        $kernel->monolog = function () use ($kernel, $options) {
+            // create sub container for monolog
+            $container = new Container();
+
+            $container['logger'] = $container->factory(function () {
                 $channel = isset($options['Channel']) ? $options['Channel'] : 'phifty';
                 $logger = new Logger($channel);
                 // $log->pushProcessor(new Monolog\Processor\IntrospectionProcessor(Monolog\Logger::INFO))
@@ -28,7 +31,7 @@ class MonologServiceProvider extends BaseServiceProvider
             });
 
             // Create different logger
-            $container['file'] = function($c) {
+            $container['file'] = function ($c) {
                 $logger = $c['logger'];
                 /*
                 // This is the Handler, I choose a RotatingFileHandler in ordert to have
@@ -36,12 +39,12 @@ class MonologServiceProvider extends BaseServiceProvider
                 // have any message from the “info” level above.
                 $logger->pushHandler(new Monolog\Handler\RotatingFileHandler(“logs/events.log”,60, Monolog\Logger::INFO));
                 */
-                $logFilePath = join(DIRECTORY_SEPARATOR, ['logs', date('c') . '.log']);
+                $logFilePath = implode(DIRECTORY_SEPARATOR, ['logs', date('c').'.log']);
                 $logger->pushHandler(new StreamHandler($logFilePath, Logger::ERROR));
             };
 
             if (isset($options['SwiftMailerHandler'])) {
-                $container['mail'] = function($c) use ($kernel, $logger, $options) {
+                $container['mail'] = function ($c) use ($kernel, $logger, $options) {
                     $from = $options['SwiftMailerHandler']['From'];
                     $to = $options['SwiftMailerHandler']['To'];
 
@@ -58,7 +61,7 @@ class MonologServiceProvider extends BaseServiceProvider
                         ->setFrom($from)
                         ->setTo($to);
 
-                    $message->setBody('','text/html');
+                    $message->setBody('', 'text/html');
                     $handler = new SwiftMailerHandler($mailer, $message, Logger::WARNING);
 
                     // The new SwiftMailerHandler: it takes the $mailer and the $message
@@ -66,9 +69,8 @@ class MonologServiceProvider extends BaseServiceProvider
                     // that we will use this handler (= we will receive e-mails)
                     // only for warnings and above
 
-
                     // Apply the html formatter to the handler
-                    $htmlFormatter = new HtmlFormatter;
+                    $htmlFormatter = new HtmlFormatter();
                     $handler->setFormatter($htmlFormatter);
 
                     //Register the SwiftMailerHandler with the logger
@@ -77,17 +79,18 @@ class MonologServiceProvider extends BaseServiceProvider
             }
 
             // define console logger
-            $container['console'] = function($c) {
+            $container['console'] = function ($c) {
                 // line formatter
                 $formatter = new LineFormatter("[%datetime%] %channel%.%level_name%: %message%\n");
                 $handler = new StreamHandler('php://stderr', Logger::ERROR);
                 $handler->setFormatter($formatter);
                 $logger = $c['logger'];
                 $logger->pushHandler($handler);
+
                 return $logger;
             };
+
             return $container;
         };
     }
-
 }

@@ -1,10 +1,12 @@
 <?php
+
 namespace Phifty\ServiceProvider;
+
 use Phifty\Config\ConfigLoader;
 use Phifty\Kernel;
 
 /**
- * Config service usage
+ * Config service usage.
  *
  * $noreply = kernel()->config->get('framework','Mail.NoReply');
  *
@@ -14,26 +16,28 @@ use Phifty\Kernel;
  */
 class ConfigServiceProvider extends BaseServiceProvider
 {
-
     public $loader;
 
-    public function __construct( $loader = null )
+    public function __construct($loader = null)
     {
-        $this->loader = $loader ?: new ConfigLoader;
+        $this->loader = $loader ?: new ConfigLoader();
     }
 
-    public function getId() { return 'config'; }
+    public function getId()
+    {
+        return 'config';
+    }
 
-    public function register(Kernel $kernel, $options = array() )
+    public function register(Kernel $kernel, $options = array())
     {
         $self = $this;
-        $kernel->config = function() use ($self) {
+        $kernel->config = function () use ($self) {
             return $self->loader;
         };
     }
 
-    public function load($section,$file)
+    public function load($section, $file)
     {
-        return $this->loader->load($section,$file);
+        return $this->loader->load($section, $file);
     }
 }

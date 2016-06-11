@@ -1,4 +1,5 @@
 <?php
+
 namespace Phifty\ServiceProvider;
 
 use ActionKit\ActionRunner;
@@ -13,7 +14,6 @@ use Phifty\Kernel;
 
 class ActionServiceProvider extends BaseServiceProvider
 {
-
     public function getId()
     {
         return 'action';
@@ -26,8 +26,8 @@ class ActionServiceProvider extends BaseServiceProvider
 
     public function register(Kernel $kernel, $options = array())
     {
-        $kernel->actionService = function() use ($kernel, $options) {
-            $container = new ServiceContainer;
+        $kernel->actionService = function () use ($kernel, $options) {
+            $container = new ServiceContainer();
             $container['cache_dir'] = $kernel->cacheDir;
             if ($kernel->locale) {
                 $container['locale'] = $kernel->locale->current;
@@ -42,10 +42,11 @@ class ActionServiceProvider extends BaseServiceProvider
             $generator->registerTemplate('CodeGenActionTemplate', new CodeGenActionTemplate());
             $generator->registerTemplate('RecordActionTemplate', new RecordActionTemplate());
             $generator->registerTemplate('UpdateOrderingRecordActionTemplate', new UpdateOrderingRecordActionTemplate());
+
             return $container;
         };
 
-        $kernel->actionRunner = function() use ($kernel) {
+        $kernel->actionRunner = function () use ($kernel) {
             $actionRunner = new ActionRunner($kernel->actionService);
             $actionRunner->registerAutoloader();
             // $actionRunner->setDebug();
@@ -77,4 +78,3 @@ class ActionServiceProvider extends BaseServiceProvider
         });
     }
 }
-

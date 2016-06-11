@@ -1,20 +1,21 @@
 <?php
-namespace Phifty\ServiceProvider;
-use Phifty\Kernel;
 
+namespace Phifty\ServiceProvider;
+
+use Phifty\Kernel;
 
 class WKHtmlToPdf
 {
     public $bin;
     public $pageSize;
 
-    public function __construct($bin,$pageSize = 'A4')
+    public function __construct($bin, $pageSize = 'A4')
     {
         $this->bin = $bin;
         $this->pageSize = $pageSize;
     }
 
-    public function convert($url,$target)
+    public function convert($url, $target)
     {
         $cmds = array($this->bin);
         if ($this->pageSize) {
@@ -24,14 +25,15 @@ class WKHtmlToPdf
         putenv('DISPLAY=:1');
         $cmds[] = "\"$url\"";
         $cmds[] = $target;
-        $cmd = join(' ',$cmds);
+        $cmd = implode(' ', $cmds);
         system($cmd);
+
         return $target;
     }
 }
 
 /**
- * WebKitHtmlToPdf
+ * WebKitHtmlToPdf.
  *
  * Usage:
  *
@@ -41,11 +43,14 @@ class WKHtmlToPdf
  */
 class WKHtmlToPdfServiceProvider extends BaseServiceProvider
 {
-    public function getId() { return 'wkhtmltopdf'; }
-
-    public function register(Kernel $kernel, $options = array() )
+    public function getId()
     {
-        $kernel->wkHtmlToPdf = function() use ($kernel,$options) {
+        return 'wkhtmltopdf';
+    }
+
+    public function register(Kernel $kernel, $options = array())
+    {
+        $kernel->wkHtmlToPdf = function () use ($kernel, $options) {
             return new WKHtmlToPdf($options['Bin'], @$options['PageSize']);
         };
     }

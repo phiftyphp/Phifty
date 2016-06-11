@@ -1,16 +1,15 @@
 <?php
-namespace Phifty\ServiceProvider;
-use Phifty\Kernel;
 
+namespace Phifty\ServiceProvider;
+
+use Phifty\Kernel;
 
 interface ServiceProvider
 {
-
     public function getId();
 
     /**
-     * register service
+     * register service.
      */
-    public function register(Kernel $kernel, $options = array() );
-
+    public function register(Kernel $kernel, $options = array());
 }

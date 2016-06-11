@@ -1,11 +1,11 @@
 <?php
+
 namespace Phifty\ServiceProvider;
-use Phifty\View\Engine;
+
 use Phifty\Kernel;
-use CodeGen\Expr\NewObject;
 
 /**
- * Usage:
+ * Usage:.
  *
  *    $view = kernel()->view;
  */
@@ -24,6 +24,7 @@ class ViewFactory
     public function __invoke($class = null)
     {
         $viewClass = $class ?: $this->options['Class'];
+
         return new $viewClass($this->kernel, [
             'template_dirs' => $this->options['TemplateDirs'],
         ]);
@@ -32,14 +33,17 @@ class ViewFactory
 
 class ViewServiceProvider extends BaseServiceProvider
 {
-    public function getId() { return 'View'; }
-
-    static public function canonicalizeConfig(Kernel $kernel, array $options)
+    public function getId()
     {
-        if (!isset($options['Class']) ) {
+        return 'View';
+    }
+
+    public static function canonicalizeConfig(Kernel $kernel, array $options)
+    {
+        if (!isset($options['Class'])) {
             $options['Class'] = 'Phifty\\View';
         }
-        if (!isset($options['Backend']) ) {
+        if (!isset($options['Backend'])) {
             $options['Backend'] = 'twig';
         }
         if (!isset($options['TemplateDirs'])) {
@@ -56,6 +60,7 @@ class ViewServiceProvider extends BaseServiceProvider
             }
             $options['TemplateDirs'] = $dirs;
         }
+
         return $options;
     }
 
