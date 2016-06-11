@@ -28,6 +28,7 @@ ServiceProviders:
       - zh_TW
   CacheServiceProvider:
   SessionServiceProvider:
+  PredisServiceProvider:
   TwigServiceProvider:
     TemplateDirs:
       - design/production
