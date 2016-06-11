@@ -20,7 +20,7 @@ class PredisServiceProvider extends BaseServiceProvider implements ComposerConfi
 
     public function register(Kernel $kernel, $options = array())
     {
-        $kernel->redis = function () use ($options) {
+        $kernel->predis = function () use ($options) {
             return new PredisClient($options);
         };
     }
