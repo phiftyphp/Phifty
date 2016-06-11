@@ -2,8 +2,11 @@
 namespace Phifty\ServiceProvider;
 use Phifty\Locale;
 use Phifty\Kernel;
-use CodeGen\Expr\NewObject;
 
+// _('en');
+// _('es');
+// _('zh_TW');
+// _('zh_CN');
 class LocaleServiceProvider extends BaseServiceProvider
 {
 
@@ -33,10 +36,6 @@ class LocaleServiceProvider extends BaseServiceProvider
         $kernel->locale = function() use ($kernel, $self, $options) {
             $locale = new Locale($options['Domain'], $options['LocaleDir'], $options['Langs']);
             $locale->setDefaultLanguage($options['Default']);
-            // _('en');
-            // _('es');
-            // _('zh_TW');
-            // _('zh_CN');
             $locale->init();
             return $locale;
         };
