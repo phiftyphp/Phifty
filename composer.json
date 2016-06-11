@@ -21,16 +21,16 @@
         "cypresslab/gitelephant": "^1.0",
         "twig/twig": "^1.23",
         "twig/extensions": "^1",
-        "symfony/finder": "^2.7",
-        "symfony/process": "^2.7",
-        "symfony/yaml": "^2.7",
+        "symfony/finder": "^2.8|3.0",
+        "symfony/process": "^2.8|3.0",
+        "symfony/yaml": "^2.8|3.0",
         "corneltek/kendo": "dev-master",
         "pimple/pimple": "^3.0",
         "corneltek/installers": "dev-master"
     },
     "suggest": {
         "swiftmailer/swiftmailer": "^5.4",
-        "symfony/css-selector": "^2.7",
+        "symfony/css-selector": "^2.8|3.0",
         "corneltek/twig-markdown": "^1"
     },
     "bin": ["bin/phifty"],
