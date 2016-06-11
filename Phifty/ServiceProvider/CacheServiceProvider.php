@@ -20,6 +20,11 @@ class CacheServiceProvider extends BaseServiceProvider
     {
         // handle Memcache initialization
         if (isset($options['Memcached'])) {
+
+            if ($options['Memcached'] === true) {
+                $options['Memcached'] = [];
+            }
+
             if (isset($options['Memcached']['Servers'])) {
                 $options['Memcached']['Servers'] = array_map(function ($item) {
                     if (is_array($item)) {
@@ -44,20 +49,22 @@ class CacheServiceProvider extends BaseServiceProvider
         $builder = new UserClosure([], ['$kernel']);
         $builder[] = '$cache = new UniversalCache(array());';
 
-        if (extension_loaded('apcu')) {
+        if (extension_loaded('apcu') && isset($options['APC'])) {
             $builder[] = new Statement(new MethodCall('$cache', 'addBackend', [
                 new NewObject('UniversalCache\ApcuCache', [$kernel->getApplicationID()]),
             ]));
         }
 
-        if (extension_loaded('memcached') && isset($options['Memcached']['Servers'])) {
+        if (extension_loaded('memcached') && isset($options['Memcached'])) {
             if (isset($options['Memcached']['PersistentId'])) {
                 $builder[] = '$memcached = '.new NewObject('Memcached', [$options['Memcached']['PersistentId']]).';';
             } else {
                 $builder[] = '$memcached = new Memcached;';
             }
-            foreach ($options['Memcached']['Servers'] as $server) {
-                $builder[] = new Statement(new MethodCall('$memcached', 'addServer', $server));
+            if (isset($options['Memcached']['Servers'])) {
+                foreach ($options['Memcached']['Servers'] as $server) {
+                    $builder[] = new Statement(new MethodCall('$memcached', 'addServer', $server));
+                }
             }
             $builder[] = new Statement(new MethodCall('$cache', 'addBackend', ['$memcached']));
         }
@@ -70,7 +77,6 @@ class CacheServiceProvider extends BaseServiceProvider
 
         $builder[] = 'return $cache;';
         $className = get_called_class();
-
         return new NewObject($className, [$options, $builder]);
     }
 

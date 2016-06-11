@@ -27,6 +27,9 @@ ServiceProviders:
       - en
       - zh_TW
   CacheServiceProvider:
+    APC: true
+    FileSystem: true
+    Memcached: true
   SessionServiceProvider:
   TwigServiceProvider:
     TemplateDirs:
