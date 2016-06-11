@@ -34,6 +34,10 @@ ServiceProviders:
   AssetServiceProvider:
     BaseUrl: /assets
     BaseDir: webroot/assets
+  PredisServiceProvider:
+  RedisServiceProvider:
+  AesCryptorServiceProvider:
+  FirePHPServiceProvider:
   BundleServiceProvider:
     Paths:
       - bundles
