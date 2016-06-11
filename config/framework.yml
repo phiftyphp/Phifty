@@ -29,6 +29,7 @@ ServiceProviders:
   CacheServiceProvider:
   SessionServiceProvider:
   PredisServiceProvider:
+  RedisServiceProvider:
   TwigServiceProvider:
     TemplateDirs:
       - design/production
