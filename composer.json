@@ -9,9 +9,9 @@
         "corneltek/genphp": "^1",
         "corneltek/twig-react-directive": "1.0.x-dev",
         "corneltek/sessionkit": "~1",
+        "corneltek/cliframework": "^3",
         "corneltek/locale": "^2.0.0",
         "corneltek/lazyrecord": "^3.0.0",
-        "corneltek/cliframework": "^3.0.0",
         "corneltek/sqlbuilder": "^3.0.0",
         "corneltek/actionkit": "^3.0.0",
         "corneltek/assetkit": "^3.4.0",
@@ -35,8 +35,7 @@
     },
     "bin": ["bin/phifty"],
     "require-dev": {
-        "corneltek/phpunit-testmore": "dev-master",
-        "satooshi/php-coveralls": "^1"
+        "corneltek/phpunit-testmore": "dev-master"
     },
     "license": "MIT",
     "autoload-dev":{

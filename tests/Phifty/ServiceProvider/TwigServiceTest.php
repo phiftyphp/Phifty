@@ -11,7 +11,7 @@ class TwigServiceTest extends PHPUnit_Framework_TestCase
                 'cache' => 'cache/path',
                 'autoload' => 'auto_reload',
             ),
-            'TemplateDirs' => array('applications','bundles'),
+            'TemplateDirs' => array('app','bundles'),
         ]);
         $twig->register($kernel, array(
             'Environment' => array(
@@ -19,7 +19,7 @@ class TwigServiceTest extends PHPUnit_Framework_TestCase
                 'cache' => 'cache/path',
                 'autoload' => 'auto_reload',
             ),
-            'TemplateDirs' => array('applications','bundles'),
+            'TemplateDirs' => array('app','bundles'),
         ));
         $this->assertNotNull($kernel->twig);
         $this->assertNotNull($kernel->twig->env,'get environment');

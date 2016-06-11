@@ -1,28 +1,35 @@
 language: php
 php:
-- 5.4
+# pekkis/mime-types v1.0.0 requires php >=5.5.0
+# - 5.4
 - 5.5
 - 5.6
+- 7.0
 services:
 - memcached
 - redis
 install:
-- phpenv config-add tests/config/$TRAVIS_PHP_VERSION.ini
-- phpenv config-add tests/config/apc.ini
+- rm -rf composer.lock vendor
 - travis_retry composer self-update
 - travis_retry composer install
+- travis_retry composer require "satooshi/php-coveralls" "^1" --dev
 before_script:
+- bash scripts/install-apcu.sh
+- phpenv config-add tests/config/$TRAVIS_PHP_VERSION.ini
+- phpenv config-add tests/config/apc.ini
 - echo "extension = memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-- echo "extension = apcu.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 - echo "extension = redis.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-- mkdir -p app applications bundles cache
 - phpenv rehash
 - cp -v config/framework.dev.yml config/framework.yml
 - cp -v config/database.dev.yml config/database.yml
+- mkdir -p app cache bundles
+- rm -f bootstrap.php
 script:
-- php bin/phifty bootstrap && time php bootstrap.php
-- phpunit
+- php bin/phifty bootstrap
+- time php bootstrap.php
+- phpunit -c phpunit.xml.dist
 after_success:
+- php vendor/bin/coveralls -v
 cache:
   apt: true
   directories:
