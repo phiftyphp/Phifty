@@ -19,7 +19,7 @@
         "phpsgi/funk": "1.0.x-dev",
         "phpsgi/phpsgi": "1.0.x-dev",
         "cypresslab/gitelephant": "^1.0",
-        "twig/twig": "^1 >=1.23",
+        "twig/twig": "^1.23",
         "twig/extensions": "^1",
         "symfony/finder": "^2.7",
         "symfony/process": "^2.7",
@@ -29,7 +29,6 @@
         "corneltek/installers": "dev-master"
     },
     "suggest": {
-        "corneltek/roller": "*",
         "swiftmailer/swiftmailer": "^5.4",
         "symfony/css-selector": "^2.7",
         "corneltek/twig-markdown": "^1"
@@ -37,13 +36,12 @@
     "bin": ["bin/phifty"],
     "require-dev": {
         "corneltek/phpunit-testmore": "dev-master",
-        "corneltek/lazyrecord": "@dev",
+        "corneltek/pux": "@dev",
         "satooshi/php-coveralls": "^1"
     },
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "App\\": "app/",
             "Phifty\\": "Phifty/"
         }
     },
