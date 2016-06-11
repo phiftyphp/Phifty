@@ -23,7 +23,6 @@ class Console extends Application
     {
         parent::init();
         $this->command('init');
-        // $this->command('create');
         $this->command('bootstrap');
         $this->command('export');
         $this->command('locale');
@@ -40,10 +39,6 @@ class Console extends Application
         $this->command('migration-check','Phifty\\Command\\MigrationCheckCommand');
         $this->command('check');
         $this->command('cache:clean','Phifty\\Command\\CacheCleanCommand');
-
-        // Dissable this since we need to run "build"
-        // $this->command('build-schema','LazyRecord\Command\BuildSchemaCommand');
-        // $this->command('build-sql','LazyRecord\Command\BuildSqlCommand');
     }
 
     public static function getInstance()
