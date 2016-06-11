@@ -3,7 +3,7 @@
     "type": "phifty-framework",
     "require": {
         "php": ">=5.4.0",
-        "corneltek/universal": "1.8.x-dev",
+        "corneltek/universal": "^1.8",
         "corneltek/fileutil": "^1",
         "corneltek/configkit": "^1",
         "corneltek/genphp": "^1",
@@ -36,14 +36,14 @@
     "bin": ["bin/phifty"],
     "require-dev": {
         "corneltek/phpunit-testmore": "dev-master",
-        "corneltek/pux": "@dev",
         "satooshi/php-coveralls": "^1"
     },
     "license": "MIT",
+    "autoload-dev":{
+        "psr-4": { "App\\": "app/" }
+    },
     "autoload": {
-        "psr-4": {
-            "Phifty\\": "Phifty/"
-        }
+        "psr-4": { "Phifty\\": "Phifty/" }
     },
     "extra": { "branch-alias": { "dev-master": "3.0.x-dev" } }
 }
