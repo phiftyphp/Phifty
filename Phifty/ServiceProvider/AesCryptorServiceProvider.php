@@ -127,13 +127,18 @@ class AesCryptorServiceProvider extends BaseServiceProvider
         return 'AesCryptor';
     }
 
+    public static function canonicalizeConfig(Kernel $kernel, array $options)
+    {
+        if (!isset($options['Key'])) {
+            $options['Key'] = 'secretkey';
+        }
+        return $options;
+    }
+
     public function register(Kernel $kernel, $options = array())
     {
         $options = new Accessor($options);
         $kernel->aes = function () use ($options) {
-            if (!isset($options['Key'])) {
-                throw new Exception("Option 'Key' is required.");
-            }
 
             return new AesCryptor($options['Key']);
         };

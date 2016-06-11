@@ -20,7 +20,7 @@ class AssetServiceProvider extends BaseServiceProvider
     }
 
 
-    public static canonicalizeConfig(Kernel $kernel, array $options)
+    public static function canonicalizeConfig(Kernel $kernel, array $options)
     {
         if (!isset($options['BaseUrl'])) {
             $options['BaseUrl'] = '/assets';
