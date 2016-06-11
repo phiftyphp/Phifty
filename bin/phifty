@@ -13,11 +13,11 @@ if (file_exists('bootstrap.php')) {
     require 'bootstrap.php';
     $console = Phifty\Console::getInstance();
     $kernel->event->trigger( 'phifty.console.init_commands' , $console );
-    $console->runWithTry( $argv );
+    $console->run( $argv );
     $kernel->event->trigger( 'phifty.console.finish' , $console );
 } else {
     global $composerClassLoader;
     $composerClassLoader = require 'vendor/autoload.php';
     $console = Phifty\Console::getInstance();
-    $console->runWithTry( $argv );
+    $console->run( $argv );
 }

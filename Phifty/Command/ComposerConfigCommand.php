@@ -38,7 +38,7 @@ class ComposerConfigCommand extends Command
             }
         }
 
-        foreach ( $kernel->services as $service ) {
+        foreach ($kernel->getServices() as $service) {
             if ($service instanceof ComposerConfigBridge ) {
                 if ( $deps = $service->getComposerDependency() ) {
                     $this->mergeConfig($config, $deps);

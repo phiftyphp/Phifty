@@ -202,6 +202,14 @@ class Kernel extends ObjectContainer
         $this->services[$service->getId()] = $service;
     }
 
+
+    public function getServices()
+    {
+        return $this->services;
+    }
+
+
+
     /**
      * Run initialize after services were registered.
      */
