@@ -5,6 +5,7 @@ use Swift_Mailer;
 use ConfigKit\Accessor;
 use Swift_Plugins_AntiFloodPlugin;
 use Phifty\ComposerConfigBridge;
+use Phifty\Kernel;
 
 class MailerServiceProvider extends BaseServiceProvider implements ComposerConfigBridge
 {
@@ -62,7 +63,7 @@ class MailerServiceProvider extends BaseServiceProvider implements ComposerConfi
           AntiFloodPlugin: { EmailLimit: , PauseSeconds: }
 
     */
-    public function register($kernel, $options = array() )
+    public function register(Kernel $kernel, $options = array() )
     {
         $kernel->mailer = function() use ($kernel,$options) {
             $accessor = new Accessor($options);

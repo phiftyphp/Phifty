@@ -1,5 +1,7 @@
 <?php
 namespace Phifty\ServiceProvider;
+use Phifty\Kernel;
+
 
 class WKHtmlToPdf
 {
@@ -41,7 +43,7 @@ class WKHtmlToPdfServiceProvider extends BaseServiceProvider
 {
     public function getId() { return 'wkhtmltopdf'; }
 
-    public function register( $kernel , $options = array() )
+    public function register(Kernel $kernel, $options = array() )
     {
         $kernel->wkHtmlToPdf = function() use ($kernel,$options) {
             return new WKHtmlToPdf($options['Bin'], @$options['PageSize']);

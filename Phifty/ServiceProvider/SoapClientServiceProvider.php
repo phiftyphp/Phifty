@@ -2,12 +2,14 @@
 namespace Phifty\ServiceProvider;
 use Exception;
 use SoapClient;
+use Phifty\Kernel;
+
 
 class SoapClientServiceProvider extends BaseServiceProvider
 {
     public function getId() { return 'SoapClient'; }
 
-    public function register($kernel, $options = array() )
+    public function register(Kernel $kernel, $options = array() )
     {
         if ( ! isset($options["WSDL"]) ) {
             throw new Exception("WSDL is not defined.");

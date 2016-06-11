@@ -1,5 +1,6 @@
 <?php
 namespace Phifty\ServiceProvider;
+use Phifty\Kernel;
 
 class ClassLoaderServiceProvider extends BaseServiceProvider
 {
@@ -17,7 +18,7 @@ class ClassLoaderServiceProvider extends BaseServiceProvider
         $this->classloader = $classloader;
     }
 
-    public function register($kernel,$options = array())
+    public function register(Kernel $kernel,$options = array())
     {
         $self = $this;
         $kernel->classloader = function() use ($self) {

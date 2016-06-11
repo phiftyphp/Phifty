@@ -1,18 +1,10 @@
 <?php
 namespace Phifty\ServiceProvider;
 use Phifty\ServiceProvider\ServiceProvider;
-use CodeGen\Expr\NewObject;
 use Phifty\Kernel;
 
 class CurrentUserServiceProvider extends BaseServiceProvider
 {
-
-    public function __construct(array $config = array())
-    {
-        parent::__construct($config);
-    }
-
-
     public function getId() { return 'current_user'; }
 
     static public function canonicalizeConfig(Kernel $kernel, array $options)
@@ -39,7 +31,7 @@ class CurrentUserServiceProvider extends BaseServiceProvider
         return $options;
     }
 
-    public function register($kernel, $options = array() )
+    public function register(Kernel $kernel, $options = array() )
     {
         $kernel->event->register('view.init', function($view) use ($kernel) {
             $view['CurrentUser'] = $kernel->currentUser;

@@ -1,6 +1,7 @@
 <?php
 namespace Phifty\ServiceProvider;
 use Phifty\ComposerConfigBridge;
+use Phifty\Kernel;
 
 class FirePHPServiceProvider extends BaseServiceProvider
     implements ComposerConfigBridge
@@ -8,7 +9,7 @@ class FirePHPServiceProvider extends BaseServiceProvider
 
     public function getId() { return 'FirePHP'; }
 
-    public function register($kernel, $options = array() )
+    public function register(Kernel $kernel, $options = array() )
     {
         // skip this plugin if we are not in development mode
         // or if we are in command-line mode.

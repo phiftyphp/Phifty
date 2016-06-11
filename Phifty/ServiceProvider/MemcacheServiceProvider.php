@@ -2,15 +2,17 @@
 namespace Phifty\ServiceProvider;
 use Memcache;
 use Exception;
+use Phifty\Kernel;
+
 
 class MemcacheServiceProvider extends BaseServiceProvider
 {
 
     public function getId() { return 'Memcache'; }
 
-    public function register( $kernel , $options = array() )
+    public function register(Kernel $kernel , $options = array() )
     {
-        if ( ! extension_loaded('memcache') ) {
+        if (! extension_loaded('memcache')) {
             throw new Exception('memcache extension is required');
         }
 

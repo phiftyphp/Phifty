@@ -12,21 +12,19 @@ use UniversalCache\ApcuCache;
 use UniversalCache\FileSystemCache;
 use UniversalCache\UniversalCache;
 use Exception;
+use Phifty\Kernel;
 
 class AssetServiceProvider extends BaseServiceProvider
 {
 
-    public function getId()
-    {
-        return 'asset';
-    }
+    public function getId() { return 'Asset'; }
 
     /**
      *
      * $kernel->asset->loader
      * $kernel->asset->writer
      */
-    public function register($kernel, $options = array())
+    public function register(Kernel $kernel, $options = array())
     {
         $self = $this;
         $kernel->asset = function() use ($kernel, $options, $self) {

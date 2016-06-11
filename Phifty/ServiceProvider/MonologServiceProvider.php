@@ -7,14 +7,14 @@ use Monolog\Formatter\HtmlFormatter;
 use Monolog\Handler\SwiftMailerHandler;
 use Monolog\Handler\StreamHandler;
 use Pimple\Container;
+use Phifty\Kernel;
+
 
 class MonologServiceProvider extends BaseServiceProvider
 {
     public function getId() { return 'monolog'; }
 
-    /**
-     */
-    public function register($kernel , $options = array())
+    public function register(Kernel $kernel , $options = array())
     {
         $kernel->monolog = function() use ($kernel,$options) {
             // create sub container for monolog

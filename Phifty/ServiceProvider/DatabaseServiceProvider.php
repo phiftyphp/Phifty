@@ -2,12 +2,13 @@
 namespace Phifty\ServiceProvider;
 use LazyRecord\ConnectionManager;
 use ConfigKit\ConfigLoader;
+use Phifty\Kernel;
 
 class DatabaseServiceProvider extends BaseServiceProvider
 {
     public function getId() { return 'database'; }
 
-    public function register($kernel, $options = array() )
+    public function register(Kernel $kernel, $options = array() )
     {
         // TODO: move to generate prepare...
         $loader = \LazyRecord\ConfigLoader::getInstance();

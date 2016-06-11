@@ -1,13 +1,15 @@
 <?php
 namespace Phifty\ServiceProvider;
 use Phifty\ServiceProvider\ServiceProvider;
+use Phifty\Kernel;
 use Roller\Router;
+
 
 class RollerRouterServiceProvider extends BaseServiceProvider
 {
     public function getId() { return 'Router'; }
 
-    public function register($kernel, $options = array() )
+    public function register(Kernel $kernel, $options = array() )
     {
         $kernel->restful = function() use($kernel) {
             $restful = new \Roller\Plugin\RESTful(array( 

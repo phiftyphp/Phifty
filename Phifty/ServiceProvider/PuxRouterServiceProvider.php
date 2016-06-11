@@ -1,6 +1,7 @@
 <?php
 namespace Phifty\ServiceProvider;
 use Phifty\ServiceProvider\ServiceProvider;
+use Phifty\Kernel;
 use Universal\Http\HttpRequest;
 use Pux\Mux;
 use Pux\Dispatcher\Dispatcher;
@@ -14,9 +15,9 @@ class PuxRouterServiceProvider extends BaseServiceProvider
         return 'router';
     }
 
-    public function register($kernel, $options = array() )
+    public function register(Kernel $kernel, $options = array() )
     {
-        $kernel->rootMux = function() use ($kernel) {
+        $kernel->rootMux = function() {
             return new Mux;
         };
         $kernel->restful = function() use ($kernel) {

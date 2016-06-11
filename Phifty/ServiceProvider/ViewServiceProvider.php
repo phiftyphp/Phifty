@@ -1,8 +1,8 @@
 <?php
 namespace Phifty\ServiceProvider;
 use Phifty\View\Engine;
-use CodeGen\Expr\NewObject;
 use Phifty\Kernel;
+use CodeGen\Expr\NewObject;
 
 /**
  * Usage:
@@ -59,7 +59,7 @@ class ViewServiceProvider extends BaseServiceProvider
         return $options;
     }
 
-    public function register($kernel, $options = array())
+    public function register(Kernel $kernel, $options = array())
     {
         $kernel->registerFactory('view', new ViewFactory($kernel, $options));
     }

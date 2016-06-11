@@ -1,6 +1,7 @@
 <?php
 namespace Phifty\ServiceProvider;
 use Phifty\Config\ConfigLoader;
+use Phifty\Kernel;
 
 /**
  * Config service usage
@@ -23,7 +24,7 @@ class ConfigServiceProvider extends BaseServiceProvider
 
     public function getId() { return 'config'; }
 
-    public function register($kernel, $options = array() )
+    public function register(Kernel $kernel, $options = array() )
     {
         $self = $this;
         $kernel->config = function() use ($self) {

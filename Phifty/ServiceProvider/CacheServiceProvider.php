@@ -12,15 +12,7 @@ use Phifty\Kernel;
 
 class CacheServiceProvider extends BaseServiceProvider
 {
-    protected $builder;
-
     public function getId() { return 'cache'; }
-
-    public function __construct(array $config = array(), $builder)
-    {
-        $this->config = $config;
-        $this->builder = $builder;
-    }
 
     static public function canonicalizeConfig(Kernel $kernel, array $options = array())
     {
@@ -47,7 +39,6 @@ class CacheServiceProvider extends BaseServiceProvider
 
     static public function generateNew(Kernel $kernel, array & $options = array())
     {
-
         $builder = new UserClosure([], ['$kernel']);
         $builder[] = '$cache = new UniversalCache(array());';
 
@@ -81,10 +72,9 @@ class CacheServiceProvider extends BaseServiceProvider
         return new NewObject($className, [$options, $builder]);
     }
 
-    // XXX: we should provide config for get the cache object.
-    public function register($kernel, $options = array() )
+    public function register(Kernel $kernel, $options = array() )
     {
-        $kernel->cache = $this->builder || function() use ($kernel) {
+        $kernel->cache = $this->builder || function() {
             return new UniversalCache(array());
         };
     }

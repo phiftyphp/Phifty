@@ -7,9 +7,12 @@ abstract class BaseServiceProvider implements ServiceProvider
 {
     protected $config;
 
-    public function __construct(array $config = array())
+    protected $builder;
+
+    public function __construct(array $config = array(), $builder = null)
     {
         $this->config = $config;
+        $this->builder = $builder;
     }
 
     abstract public function getId();
@@ -21,7 +24,7 @@ abstract class BaseServiceProvider implements ServiceProvider
      *
      * XXX: we should set options in constructor
      */
-    abstract public function register($kernel, $options = array());
+    abstract public function register(Kernel $kernel, $options = array());
 
 
     /**

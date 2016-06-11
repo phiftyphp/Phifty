@@ -30,10 +30,9 @@ class LocaleServiceProvider extends BaseServiceProvider
         return $options;
     }
 
-    public function register($kernel, $options = array())
+    public function register(Kernel $kernel, $options = array())
     {
-        $self = $this;
-        $kernel->locale = function() use ($kernel, $self, $options) {
+        $kernel->locale = function() use ($options) {
             $locale = new Locale($options['Domain'], $options['LocaleDir'], $options['Langs']);
             $locale->setDefaultLanguage($options['Default']);
             $locale->init();

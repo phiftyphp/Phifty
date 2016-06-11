@@ -3,12 +3,13 @@ namespace Phifty\ServiceProvider;
 use Phifty\ComposerConfigBridge;
 use PredisClient;
 use Exception;
+use Phifty\Kernel;
 
 class RedisServiceProvider extends BaseServiceProvider implements ComposerConfigBridge
 {
     public function getId() { return 'Redis'; }
 
-    public function register($kernel, $options = array() )
+    public function register(Kernel $kernel, $options = array() )
     {
         $kernel->redis = function() use ($kernel, $options) {
             /*

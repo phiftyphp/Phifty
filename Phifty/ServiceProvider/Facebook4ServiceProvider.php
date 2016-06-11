@@ -6,6 +6,7 @@ use ConfigKit\Accessor;
 use Universal\Container\ObjectContainer;
 use Exception;
 use Facebook\FacebookSession;
+use Phifty\Kernel;
 
 /*
   Facebook4ServiceProvider:
@@ -17,7 +18,7 @@ class Facebook4ServiceProvider extends BaseServiceProvider implements ServiceOpt
 {
     public function getId() { return 'Facebook'; }
 
-    public function register($kernel, $options = array())
+    public function register(Kernel $kernel, $options = array())
     {
         FacebookSession::setDefaultApplication($options['AppId'], $options['AppSecret']);
         $kernel->facebookSession = function() use ($options) {

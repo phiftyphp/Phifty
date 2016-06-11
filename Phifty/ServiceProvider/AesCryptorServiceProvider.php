@@ -2,6 +2,7 @@
 namespace Phifty\ServiceProvider;
 use Exception;
 use ConfigKit\Accessor;
+use Phifty\Kernel;
 
 class AesCryptor {
 
@@ -119,7 +120,7 @@ class AesCryptorServiceProvider extends BaseServiceProvider
 {
     public function getId() { return 'AesCryptor'; }
 
-    public function register($kernel, $options = array() )
+    public function register(Kernel $kernel, $options = array() )
     {
         $options = new Accessor($options);
         $kernel->aes = function() use ($options) {

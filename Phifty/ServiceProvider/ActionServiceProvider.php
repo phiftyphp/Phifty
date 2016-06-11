@@ -9,6 +9,7 @@ use ActionKit\ActionTemplate\RecordActionTemplate;
 use ActionKit\ActionTemplate\UpdateOrderingRecordActionTemplate;
 use ActionKit\ActionRequest;
 use ActionKit\Action;
+use Phifty\Kernel;
 
 class ActionServiceProvider extends BaseServiceProvider
 {
@@ -23,7 +24,7 @@ class ActionServiceProvider extends BaseServiceProvider
         return ['locale'];
     }
 
-    public function register($kernel, $options = array())
+    public function register(Kernel $kernel, $options = array())
     {
         $kernel->actionService = function() use ($kernel, $options) {
             $container = new ServiceContainer;
