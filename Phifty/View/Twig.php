@@ -14,7 +14,7 @@ function newObject($class)
 {
     $args = func_get_args();
     array_shift($args);
-    return ClassUtils::new_class($class,$args);
+    return ClassUtils::newClass($class,$args);
 }
 
 class Twig extends Engine
