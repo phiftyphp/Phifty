@@ -15,7 +15,6 @@ ServiceProviders:
   PuxRouterServiceProvider:
   LibraryServiceProvider:
   ViewServiceProvider:
-    Backend: twig
   MailerServiceProvider:
     Transport: MailTransport
   CacheServiceProvider: ~
