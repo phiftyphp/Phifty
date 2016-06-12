@@ -8,7 +8,6 @@ class ViewServiceTest extends PHPUnit_Framework_TestCase
         $service = new Phifty\ServiceProvider\ViewServiceProvider;
         $kernel->registerService($service,array(
             'Class' => 'Phifty\\View',
-            'TemplateDirs' => 'bundles/CoreBundle/template',
         ));
 
         $view = $kernel->view;
@@ -22,7 +21,6 @@ class ViewServiceTest extends PHPUnit_Framework_TestCase
         $service = new Phifty\ServiceProvider\ViewServiceProvider;
         $kernel->registerService($service,array(
             'Class' => 'Phifty\\View\\Page',
-            'TemplateDirs' => 'bundles/CoreBundle/template',
         ));
 
         $view = $kernel->view;

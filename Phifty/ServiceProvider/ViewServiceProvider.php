@@ -40,24 +40,6 @@ class ViewServiceProvider extends BaseServiceProvider
         if (!isset($options['Class'])) {
             $options['Class'] = 'Phifty\\View';
         }
-        if (!isset($options['Backend'])) {
-            $options['Backend'] = 'twig';
-        }
-        if (!isset($options['TemplateDirs'])) {
-            if (PH_APP_ROOT != PH_ROOT) {
-                $options['TemplateDirs'] = [PH_APP_ROOT, PH_ROOT];
-            } else {
-                $options['TemplateDirs'] = [PH_APP_ROOT];
-            }
-        } else {
-            // Rewrite template directories with realpath
-            $dirs = [];
-            foreach ($options['TemplateDirs'] as $dir) {
-                $dirs[] = realpath($dir);
-            }
-            $options['TemplateDirs'] = $dirs;
-        }
-
         return $options;
     }
 
