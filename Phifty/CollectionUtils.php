@@ -3,7 +3,7 @@ namespace Phifty;
 
 class CollectionUtils
 {
-    static function aggregateByLang( $langs , $collectionClass ) {
+    static public function aggregateByLang($langs , $collectionClass) {
         $collectionsByLangCode = array();
         foreach( $langs as $code => $name ) {
             $collection = new $collectionClass;
