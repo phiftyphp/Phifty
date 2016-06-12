@@ -7,6 +7,7 @@
 - Renamed Phifty\Service to Phifty\ServiceProvider
 - Renamed all Service classes with suffix `ServiceProvider`
 - Updated config key `Services` to `ServiceProviders`
+- `Web::include_assets` is removed, please use `{% assets ... %}` instead.
 
 Bundle
 
