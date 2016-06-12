@@ -37,8 +37,6 @@ ServiceProviders:
     TemplateDirs:
       - design/production
   AssetServiceProvider:
-    BaseUrl: /assets
-    BaseDir: webroot/assets
   AesCryptorServiceProvider:
   FirePHPServiceProvider:
   BundleServiceProvider:

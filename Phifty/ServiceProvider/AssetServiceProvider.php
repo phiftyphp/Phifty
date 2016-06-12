@@ -37,9 +37,7 @@ class AssetServiceProvider extends BaseServiceProvider
      */
     public function register(Kernel $kernel, $options = array())
     {
-        $self = $this;
-        $kernel->asset = function () use ($kernel, $options, $self) {
-            // $assetFile = PH_APP_ROOT . DIRECTORY_SEPARATOR . 'config/assetkit.yml';
+        $kernel->asset = function () use ($kernel, $options) {
             $config = new AssetConfig($options);
             $config->setEnvironment($kernel->environment);
             $config->setNamespace($kernel->getApplicationUUID());
@@ -55,7 +53,6 @@ class AssetServiceProvider extends BaseServiceProvider
             $compiler = $render->getCompiler();
             $compiler->defaultJsCompressor = 'uglifyjs';
             $compiler->defaultCssCompressor = null;
-
             return (object) array(
                 'loader' => $loader,
                 'config' => $config,
