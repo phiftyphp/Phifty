@@ -6,11 +6,10 @@ use Phifty\Kernel;
 use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
 use Phifty\FileUtils;
-use Phifty;
+use Exception;
 
 class LocaleParseCommand extends Command
 {
-
     public function brief() { return 'parse and update message catalogs.'; }
 
     public function options($opts)
@@ -21,13 +20,13 @@ class LocaleParseCommand extends Command
     public function execute()
     {
         $kernel = kernel();
-        $localeDir = $kernel->config->get('framework','Services.LocaleService.Directory') ?: 'locale';
+        $localeDir = $kernel->config->get('framework','ServiceProviders.LocaleService.Directory') ?: 'locale';
         $frameworkLocaleDir = PH_ROOT . DIRECTORY_SEPARATOR . $localeDir;
 
-        if ( $langsConfig = $kernel->config->get('framework','Services.LocaleService.Langs') ) {
+        if ( $langsConfig = $kernel->config->get('framework','ServiceProviders.LocaleService.Langs') ) {
             $langs = $langsConfig->config;
         } else {
-            $this->logger->warn("Services.LocaleService.Langs is required.");
+            $this->logger->warn("ServiceProviders.LocaleService.Langs is required.");
             $this->logger->warn("Using default lang 'en' for locale");
             $langs= array('en');
         }
@@ -42,16 +41,16 @@ class LocaleParseCommand extends Command
 
         // prepare po files from framework po source files,
         // if we don't have one for the specific language.
-        foreach( $langs as $langId ) {
+        foreach ($langs as $langId) {
             $poDir        = $localeDir . DIRECTORY_SEPARATOR . $langId . DIRECTORY_SEPARATOR . 'LC_MESSAGES';
             $sourcePoPath = $frameworkLocaleDir . DIRECTORY_SEPARATOR . $langId . DIRECTORY_SEPARATOR . 'LC_MESSAGES' . DIRECTORY_SEPARATOR . $frameworkId . '.po';
             $targetPoPath = $localeDir . DIRECTORY_SEPARATOR . $langId . DIRECTORY_SEPARATOR . 'LC_MESSAGES' . DIRECTORY_SEPARATOR . $appId . '.po';
 
-            if ( ! file_exists($poDir) ) {
+            if (! file_exists($poDir)) {
                 mkdir($poDir, 0755, true);
             }
 
-            if ( $this->options && $this->options->force || file_exists( $sourcePoPath ) && ! file_exists( $targetPoPath ) ) {
+            if ($this->options && $this->options->force || file_exists( $sourcePoPath ) && ! file_exists( $targetPoPath )) {
                 $this->logger->info("Creating $targetPoPath");
 
                 if ( $sourcePoPath != $targetPoPath ) {
@@ -60,20 +59,24 @@ class LocaleParseCommand extends Command
             }
         }
 
-        $engine = new Phifty\View\Twig;
+        $engine = new \Phifty\View\Twig(kernel());
         $twig = $engine->getRenderer();
 
         $designTemplateDir = 'design/production';
-        if ( file_exists($designTemplateDir) ) {
+        if (file_exists($designTemplateDir)) {
             $this->logger->info("Compiling design templates...");
             foreach (new RecursiveIteratorIterator(
                     new RecursiveDirectoryIterator($designTemplateDir),
                     RecursiveIteratorIterator::LEAVES_ONLY) as $file) 
             {
                 // force compilation
-                if( preg_match( '/\.(html?|twig)$/', $file ) ) {
+                if (preg_match( '/\.(html?|twig)$/', $file )) {
                     $this->logger->info( "Compiling " . $file->getPathname() ,1);
-                    $twig->loadTemplate( substr($file, strlen($designTemplateDir) + 1) );
+                    try {
+                        $twig->loadTemplate( substr($file, strlen($designTemplateDir) + 1) );
+                    } catch (Exception $e) {
+                        $this->logger->error($e->getMessage());
+                    }
                 }
             }
         }
@@ -92,9 +95,13 @@ class LocaleParseCommand extends Command
                     RecursiveIteratorIterator::LEAVES_ONLY) as $file) 
             {
                 // force compilation
-                if( preg_match( '/\.(html?|twig)$/', $file ) ) {
+                if (preg_match( '/\.(html?|twig)$/', $file ) ) {
                     $this->logger->info( FileUtils::remove_cwd($file->getPathname()) ,1);
-                    $twig->loadTemplate( substr($file, strlen(dirname($pluginDir)) + 1) );
+                    try {
+                        $twig->loadTemplate( substr($file, strlen(dirname($pluginDir)) + 1) );
+                    } catch (Exception $e) {
+                        $this->logger->error($e->getMessage());
+                    }
                 }
             }
         }
@@ -131,9 +138,9 @@ class LocaleParseCommand extends Command
             $cmd = sprintf("xgettext -j --no-location --sort-output --package-name=%s -o %s --from-code=UTF-8 --language PHP " . join(" ",$phpFiles)
                 ,kernel()->applicationID, $potFile);
             $this->logger->debug($cmd,1);
-            system($cmd, $retval);
-            if ( $retval != 0 ) {
-                die('xgettext error');
+            $lastline = system($cmd, $retval);
+            if ($retval != 0) {
+                die("xgettext error: $lastline");
             }
         }
 
@@ -147,9 +154,9 @@ class LocaleParseCommand extends Command
             $this->logger->info("Updating $shortPathname");
             $cmd = sprintf('msgmerge --no-location --previous --verbose --no-fuzzy-matching --update %s %s', $shortPathname, $potFile);
             $this->logger->debug($cmd);
-            system($cmd, $retval);
-            if ( $retval != 0 ) {
-                die('xgettext error');
+            $lastline = system($cmd, $retval);
+            if ($retval != 0) {
+                die("xgettext error: $lastline");
             }
             /*
             $this->logger->info("Removing obsolete messages for $shortPathname");
@@ -166,9 +173,9 @@ class LocaleParseCommand extends Command
             $this->logger->info("Compiling messages $shortPathname");
             $cmd = sprintf('msgfmt -v -o %s %s', $moPathname, $shortPathname);
             $this->logger->debug($cmd);
-            system($cmd, $retval);
+            $lastline = system($cmd, $retval);
             if ( $retval != 0 ) {
-                die('xgettext error');
+                die("xgettext error: $lastline");
             }
         }
 
@@ -196,9 +203,14 @@ class LocaleParseCommand extends Command
                 );
             }
         }
+
         // write dictionary to po file.
-        foreach( $dictionary as $lang => $subdictionary ) {
+        foreach ($dictionary as $lang => $subdictionary ) {
             $poFile = kernel()->locale->getLocalePoFile($lang);
+            if (!file_exists($poFile)) {
+                continue;
+            }
+
             $fp = fopen($poFile, 'a+');
             foreach( $subdictionary as $msgId => $msgStr ) {
                 $idStrs = explode("\n",$msgId);
