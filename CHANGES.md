@@ -1,8 +1,8 @@
 CHANGELOG
 =========
 
-3.0.x
------
+Version 3.0.x
+-------------
 
 ### Incompatible changes
 
@@ -110,9 +110,11 @@ Phifty\Controller
 2. feature/seoplugin    - seo mixin model and editor.
 3. fix/editor-close     - fix front-end record saving behavior.
 
-## Major Version 2.1
 
-Version 2.1.26 - Thu Oct 18 13:37:35 2012
+
+
+2.1.26 - Thu Oct 18 13:37:35 2012
+---------------------------------
 
 - Bug fixes (site/modelshop)
 
