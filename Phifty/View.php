@@ -19,15 +19,15 @@ class View implements ArrayAccess, IteratorAggregate
 
     protected $engine;
 
-    public function __construct(Kernel $kernel, array $engineOpts = array())
+    public function __construct(Kernel $kernel)
     {
         $this->kernel = $kernel;
-        $this->engine = new \Phifty\View\Twig($kernel, $engineOpts);
+        $this->engine = new \Phifty\View\Twig($kernel);
         $this->init();
 
         // register args
         $this->args['Kernel']      = $kernel;
-        $this->args['Request'] = new HttpRequest;
+        $this->args['Request']     = new HttpRequest;
 
         // helper functions
         // TODO: refactor to event

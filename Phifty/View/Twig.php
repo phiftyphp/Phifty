@@ -25,18 +25,15 @@ class Twig
 
     protected $kernel;
 
-    protected $options = array();
-
     private $renderer;
 
     /*
      * Contructor
      *   TemplateDirs
      */
-    public function __construct(Kernel $kernel, array $options = array())
+    public function __construct(Kernel $kernel)
     {
         $this->kernel = $kernel;
-        $this->options = $options;
     }
 
     public function newRenderer()
