@@ -1,11 +1,13 @@
 <?php
+use Phifty\ServiceProvider\ViewServiceProvider;
+use Phifty\Kernel;
 
 class ViewServiceTest extends PHPUnit_Framework_TestCase
 {
     public function testBaseView()
     {
-        $kernel = new Phifty\Kernel;
-        $service = new Phifty\ServiceProvider\ViewServiceProvider;
+        $kernel = new Kernel;
+        $service = new ViewServiceProvider;
         $kernel->registerService($service,array(
             'Class' => 'Phifty\\View',
         ));
@@ -17,8 +19,8 @@ class ViewServiceTest extends PHPUnit_Framework_TestCase
 
     public function testPageView()
     {
-        $kernel = new Phifty\Kernel;
-        $service = new Phifty\ServiceProvider\ViewServiceProvider;
+        $kernel = new Kernel;
+        $service = new ViewServiceProvider;
         $kernel->registerService($service,array(
             'Class' => 'Phifty\\View\\Page',
         ));
