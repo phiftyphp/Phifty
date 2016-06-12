@@ -1,6 +1,5 @@
 <?php
 namespace Phifty\View;
-use Phifty\View\Engine;
 use Phifty\ClassUtils;
 use Phifty\Kernel;
 use Twig_Environment;
@@ -18,7 +17,7 @@ function newObject($class)
     return ClassUtils::newClass($class,$args);
 }
 
-class Twig extends Engine
+class Twig
 {
     protected $loader;
 
