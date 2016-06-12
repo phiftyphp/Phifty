@@ -19,8 +19,6 @@ function newObject($class)
 
 class Twig
 {
-    protected $loader;
-
     protected $env;
 
     protected $kernel;
@@ -36,22 +34,12 @@ class Twig
         $this->kernel = $kernel;
     }
 
-    public function newRenderer()
-    {
-        $this->env = $this->kernel->twig->env;
-        $this->loader = $this->kernel->twig->loader;
-        return $this->env;
-    }
-
     /*
      * Return Renderer object, statical
      */
     public function getRenderer()
     {
-        if ($this->renderer) {
-            return $this->renderer;
-        }
-        return $this->renderer = $this->newRenderer();
+        return $this->kernel->twig->env;
     }
 
     public function render($template, array $args = array())
