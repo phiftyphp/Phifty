@@ -1,6 +1,8 @@
-# Changelog
+CHANGELOG
+=========
 
-## Version 3.0
+3.0.x
+-----
 
 ### Incompatible changes
 
@@ -38,22 +40,30 @@ Phifty\Controller
 - Move roller router to suggest dependency
 
 
-## Version 2.9
+
+
+
+
+2.9.0
+-----
 
 - Added bin/phifty-bootstrap
 
-## Version 2.8
+2.8.0
+-----
 
 1. Rename 'User' bundle to 'UserBundle'
 2. Remove old 'Pages'
 3. Remove old 'Product'
 
-Version 2.7.11
+2.7.11
+------
 
 1. Add Product Chooser for related product.
 2. FileBundle improvement.
 
-Version 2.7.5
+2.7.5
+-----
 
 1. Rename `plugins` to `bundles`, we simply change the name, need to refactor the bundle stuff out.
 2. Define `PH_APP_ROOT` in bin/phifty and webroot/index.php, index.php should be updated to the application.
@@ -74,7 +84,8 @@ Version 2.7.5
 11. Add animate.css support.
 
 
-Version 2.4.0 - Sun Nov 18 18:31:38 2012
+2.4.0 - Sun Nov 18 18:31:38 2012
+--------------------------------
 
 1. Improve AdminUI panel js.
 2. Improve AdminUI menu style for other browsers.
@@ -85,13 +96,15 @@ Version 2.4.0 - Sun Nov 18 18:31:38 2012
 7. Quicksearch field
 8. Image cropper improvement.
 
-Version 2.2.1 - Tue Oct 30 17:46:07 2012
+2.2.1 - Tue Oct 30 17:46:07 2012
+--------------------------------
 
 1. Add jQuery 1.8.2 core version.
 
-Version 2.2.0 - Thu Oct 18 17:38:20 2012
+2.2.0 - Thu Oct 18 17:38:20 2012
+--------------------------------
 
-### merged branches
+### Merged branches
 
 1. feature/statusplugin - status mixin model and filter.
 2. feature/seoplugin    - seo mixin model and editor.
