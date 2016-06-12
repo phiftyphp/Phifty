@@ -18,34 +18,6 @@ class Web
         return $html;
     }
 
-    /**
-     * @param string $target
-     */
-    public function include_loaded_assets($target = null)
-    {
-        $kernel = kernel();
-        // Instead of loading assets by triggering asset.load event
-        // the flow (plugin service->init, appliation->init) can
-        // not load the assets with the correct sequence.
-        /*
-        foreach ($kernel->applications as $app) {
-            // load application assets
-            $app->loadAssets();
-        }
-        */
-        foreach ($kernel->bundles as $bundle) {
-            $bundle->loadAssets();
-        }
-
-        // call asset.load trigger to load global assets
-        // $kernel->event->trigger('asset.load');
-
-        // get all loaded assets
-        $assets = array_values($kernel->asset->loader->objects);
-
-        // use renderAssets to render html
-        return $kernel->asset->render->renderAssets($assets, $target);
-    }
 
     /**
      * @param string[] $assets asset names
