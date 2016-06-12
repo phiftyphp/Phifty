@@ -23,7 +23,7 @@ class View implements ArrayAccess, IteratorAggregate
     public function __construct(Kernel $kernel, $engineOpts = null)
     {
         $this->kernel = $kernel;
-        $this->engine = Engine::createEngine($this->kernel, $engineOpts);
+        $this->engine = new \Phifty\View\Twig($kernel, $engineOpts);
         $this->init();
 
         // register args
