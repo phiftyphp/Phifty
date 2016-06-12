@@ -6,6 +6,7 @@ use ConfigKit\Accessor;
 use LogicException;
 use Phifty\Kernel;
 use Phifty\Controller;
+use ConfigKit\ConfigCompiler;
 
 class AppActionGenerator
 {
@@ -558,8 +559,8 @@ class Bundle
     public function getTranslation($locale)
     {
         $file = $this->getTranslationDir() . DIRECTORY_SEPARATOR . $locale . '.yml';
-        if ( file_exists($file) ) {
-            return yaml_parse( file_get_contents( $file ) );
+        if (file_exists($file)) {
+            return ConfigCompiler::parse($file);
         }
         return array();
     }
@@ -567,7 +568,7 @@ class Bundle
     public function saveTranslation($locale, $dict)
     {
         $file = $this->getTranslationDir() . DIRECTORY_SEPARATOR . $locale . '.yml';
-        return file_put_contents($file, yaml_emit($dict, YAML_UTF8_ENCODING) );
+        return ConfigCompiler::write_yaml($file, $dict);
     }
 
 
