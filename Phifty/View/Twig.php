@@ -19,16 +19,8 @@ function newObject($class)
 
 class Twig
 {
-    protected $env;
-
     protected $kernel;
 
-    private $renderer;
-
-    /*
-     * Contructor
-     *   TemplateDirs
-     */
     public function __construct(Kernel $kernel)
     {
         $this->kernel = $kernel;
