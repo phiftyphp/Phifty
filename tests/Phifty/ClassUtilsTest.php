@@ -20,14 +20,13 @@ class ClassUtilsTest extends \PHPUnit_Framework_TestCase
 {
     function testClassUtils()
     {
-        $obj = ClassUtils::new_class('test_classutils\foo',array( 1,2,3,4,5 ));
-        ok( $obj );
-        isa_ok( 'test_classutils\foo', $obj );
-        is( 1 , $obj->v1 );
-        is( 2 , $obj->v2 );
+        $obj = ClassUtils::newClass('test_classutils\foo',array( 1,2,3,4,5 ));
+        isa_ok('test_classutils\foo', $obj);
+        $this->assertEquals(1 , $obj->v1);
+        $this->assertEquals(2 , $obj->v2);
 
-        $obj = ClassUtils::new_class('test_classutils\bar');
-        isa_ok( 'test_classutils\bar', $obj );
+        $obj = ClassUtils::newClass('test_classutils\bar');
+        isa_ok('test_classutils\bar', $obj );
     }
 }
 

@@ -2,6 +2,7 @@
 namespace Phifty\View;
 use Phifty\View\Engine;
 use Phifty\ClassUtils;
+use Phifty\Kernel;
 use Twig_Environment;
 
 /**
@@ -52,8 +53,20 @@ class Twig extends Engine
         return $this->env;
     }
 
+    /*
+     * Return Renderer object, statical
+     */
+    public function getRenderer()
+    {
+        if ($this->renderer) {
+            return $this->renderer;
+        }
+        return $this->renderer = $this->newRenderer();
+    }
+
     public function render($template, array $args = array())
     {
-        return $this->getRenderer()->loadTemplate($template)->render($args);
+        $env = $this->kernel->twig->env;
+        return $env->loadTemplate($template)->render($args);
     }
 }

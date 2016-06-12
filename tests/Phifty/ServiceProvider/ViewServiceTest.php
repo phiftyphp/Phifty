@@ -2,7 +2,7 @@
 
 class ViewServiceTest extends PHPUnit_Framework_TestCase
 {
-    public function testTwigViewService()
+    public function testBaseView()
     {
         $kernel = new Phifty\Kernel;
         $service = new Phifty\ServiceProvider\ViewServiceProvider;
@@ -15,8 +15,22 @@ class ViewServiceTest extends PHPUnit_Framework_TestCase
         $view = $kernel->view;
         $this->assertNotNull($view);
         $this->assertInstanceOf('Phifty\View', $view);
-        // $adminUIView = $kernel->getObject('view', array('AdminUI\\View'));
-        // ok($adminUIView);
     }
+
+    public function testPageView()
+    {
+        $kernel = new Phifty\Kernel;
+        $service = new Phifty\ServiceProvider\ViewServiceProvider;
+        $kernel->registerService($service,array(
+            'Backend' => 'twig',
+            'Class' => 'Phifty\\View\\Page',
+            'TemplateDirs' => 'bundles/CoreBundle/template',
+        ));
+
+        $view = $kernel->view;
+        $this->assertNotNull($view);
+        $this->assertInstanceOf('Phifty\View\Page', $view);
+    }
+
 }
 

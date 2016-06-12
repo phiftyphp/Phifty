@@ -7,7 +7,6 @@ use Universal\Http\HttpRequest;
 use InvalidArgumentException;
 use Phifty\Web;
 use Phifty\Kernel;
-use Phifty\View\Engine;
 
 class View implements ArrayAccess, IteratorAggregate
 {
@@ -20,7 +19,7 @@ class View implements ArrayAccess, IteratorAggregate
 
     protected $engine;
 
-    public function __construct(Kernel $kernel, $engineOpts = null)
+    public function __construct(Kernel $kernel, array $engineOpts = array())
     {
         $this->kernel = $kernel;
         $this->engine = new \Phifty\View\Twig($kernel, $engineOpts);
@@ -33,7 +32,6 @@ class View implements ArrayAccess, IteratorAggregate
         // helper functions
         // TODO: refactor to event
         $this->args['Web']         = new Web;
-
         kernel()->event->trigger('view.init', $this);
     }
 
@@ -94,11 +92,6 @@ class View implements ArrayAccess, IteratorAggregate
     public function setArgs($args)
     {
         $this->args = $args;
-    }
-
-    public function getEngine()
-    {
-        return $this->engine;
     }
 
     /*
