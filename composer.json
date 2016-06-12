@@ -5,7 +5,7 @@
         "php": ">=5.4.0",
         "corneltek/universal": "^1.8",
         "corneltek/fileutil": "^1",
-        "corneltek/configkit": "^1",
+        "corneltek/configkit": "^1.6",
         "corneltek/genphp": "^1",
         "corneltek/twig-react-directive": "1.0.x-dev",
         "corneltek/sessionkit": "~1",
