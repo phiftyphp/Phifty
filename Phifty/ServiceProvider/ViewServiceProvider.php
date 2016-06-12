@@ -24,7 +24,6 @@ class ViewFactory
     public function __invoke($class = null)
     {
         $viewClass = $class ?: $this->options['Class'];
-
         return new $viewClass($this->kernel, [
             'template_dirs' => $this->options['TemplateDirs'],
         ]);
