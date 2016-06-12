@@ -27,22 +27,16 @@ class Twig
 
     protected $options = array();
 
-    protected $templateDirs = array();
-
     private $renderer;
 
     /*
      * Contructor
-     *   template_dirs
-     *   cache_dir
+     *   TemplateDirs
      */
     public function __construct(Kernel $kernel, array $options = array())
     {
         $this->kernel = $kernel;
         $this->options = $options;
-        if (isset($options['template_dirs'])) {
-            $this->templateDirs = (array) $options['template_dirs'];
-        }
     }
 
     public function newRenderer()
