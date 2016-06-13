@@ -3,6 +3,7 @@
 namespace Phifty\ServiceProvider;
 
 use CodeGen\Expr\NewObject;
+use Phifty\ComposerConfigBridge;
 use Phifty\Kernel;
 
 abstract class BaseServiceProvider implements ServiceProvider, ComposerConfigBridge
