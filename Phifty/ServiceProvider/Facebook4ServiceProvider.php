@@ -7,12 +7,14 @@ use Facebook\FacebookSession;
 use Phifty\Kernel;
 
 /*
-  Facebook4ServiceProvider:
-    AppId: {appId}
-    AppSecret: {app secret}
-*/
-
-class Facebook4ServiceProvider extends BaseServiceProvider implements ServiceOptionValidator
+ * The official facebook service provider
+ * Facebook4ServiceProvider:
+ *   AppId: {appId}
+ *   AppSecret: {app secret}
+ */
+class Facebook4ServiceProvider 
+    extends BaseServiceProvider 
+    implements ServiceOptionValidator
 {
     public function getId()
     {
@@ -32,5 +34,10 @@ class Facebook4ServiceProvider extends BaseServiceProvider implements ServiceOpt
         if (!isset($options['AppId']) || !isset($options['AppSecret'])) {
             throw new Exception('AppId or AppSecret is not defined.');
         }
+    }
+
+    public function getComposerDependency()
+    {
+        return ["facebook/php-sdk-v4" => "~5.0"];
     }
 }
