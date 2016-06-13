@@ -36,22 +36,20 @@ class Facebook4ServiceProvider
                     'default_graph_version' => $options['DefaultGraphVersion'],
                 ]);
             };
-            $container['login_helper'] = function($c) {
+            // make this factory?
+            $container['redirect_login_helper'] = $c->factory(function($c) {
                 return $c['session']->getRedirectLoginHelper();
-            };
+            });
             $container['login_url'] = $c->factory(function($c) use ($options) {
                 if (preg_match('#^https?://#',$options['DefaultLoginCallbackUrl'])) {
                     $url = $options['DefaultLoginCallbackUrl'];
                 } else {
                     $url = $kernel->getBaseUrl() . $options['DefaultLoginCallbackUrl'];
                 }
+                $helper = $c['redirect_login_helper'];
                 return $helper->getLoginUrl($url, $options['DefaultPermissions']);
             });
             return $container;
-        };
-
-        $kernel->facebookSession = function () use ($options) {
-            return FacebookSession::newAppSession();
         };
     }
 
