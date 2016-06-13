@@ -12,20 +12,22 @@ use Exception;
  * Facebook4ServiceProvider:
  *   AppId: {appId}
  *   AppSecret: {app secret}
+ *   DefaultPermissions: ['email']
+ *   DefaultLoginCallbackUrl: '/oauth/facebook/callback'
  */
 class Facebook4ServiceProvider
     extends BaseServiceProvider
 {
     public function getId()
     {
-        return 'Facebook';
+        return 'facebook4';
     }
 
     public function register(Kernel $kernel, $options = array())
     {
         FacebookSession::setDefaultApplication($options['AppId'], $options['AppSecret']);
 
-        $kernel->facebook = function() use ($options) {
+        $kernel->facebook = function() use ($options, $kernel) {
             $container = new Container;
             $container['session'] = function($c) use ($options) {
                 return new Facebook([
@@ -37,10 +39,14 @@ class Facebook4ServiceProvider
             $container['login_helper'] = function($c) {
                 return $c['session']->getRedirectLoginHelper();
             };
-            /*
-            $permissions = ['email', 'user_likes']; // optional
-            return $helper->getLoginUrl('http://{your-website}/login-callback.php', $permissions);
-            */
+            $container['login_url'] = $c->factory(function($c) use ($options) {
+                if (preg_match('#^https?://#',$options['DefaultLoginCallbackUrl'])) {
+                    $url = $options['DefaultLoginCallbackUrl'];
+                } else {
+                    $url = $kernel->getBaseUrl() . $options['DefaultLoginCallbackUrl'];
+                }
+                return $helper->getLoginUrl($url, $options['DefaultPermissions']);
+            });
             return $container;
         };
 
@@ -56,6 +62,12 @@ class Facebook4ServiceProvider
         }
         if (!isset($options['DefaultGraphVersion'])) {
             $options['DefaultGraphVersion'] = 'v2.5';
+        }
+        if (!isset($options['DefaultPermissions'])) {
+            $options['DefaultPermissions'] = ['email'];
+        }
+        if (!isset($options['DefaultLoginCallback'])) {
+            $options['DefaultLoginCallbackUrl'] = '/oauth/facebook/callback';
         }
         return $options;
     }
