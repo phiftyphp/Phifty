@@ -8,6 +8,7 @@ use Phifty\Kernel;
   FacebookServiceProvider:
     appId: {appId}
     secret: {app secret}
+  This class is @deprecated
 */
 
 class FacebookServiceProvider extends BaseServiceProvider

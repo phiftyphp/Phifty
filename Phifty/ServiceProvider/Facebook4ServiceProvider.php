@@ -2,9 +2,9 @@
 
 namespace Phifty\ServiceProvider;
 
-use Exception;
-use Facebook\FacebookSession;
 use Phifty\Kernel;
+use Facebook\FacebookSession;
+use Exception;
 
 /*
  * The official facebook service provider
@@ -13,8 +13,7 @@ use Phifty\Kernel;
  *   AppSecret: {app secret}
  */
 class Facebook4ServiceProvider 
-    extends BaseServiceProvider 
-    implements ServiceOptionValidator
+    extends BaseServiceProvider
 {
     public function getId()
     {
@@ -29,11 +28,15 @@ class Facebook4ServiceProvider
         };
     }
 
-    public function validateOptions($options = array())
+    public function canonicalizeConfig(Kernel $kernel, array $options)
     {
         if (!isset($options['AppId']) || !isset($options['AppSecret'])) {
             throw new Exception('AppId or AppSecret is not defined.');
         }
+        if (!isset($options['DefaultGraphVersion'])) {
+            $options['DefaultGraphVersion'] = 'v2.5';
+        }
+        return $options;
     }
 
     public function getComposerDependency()
