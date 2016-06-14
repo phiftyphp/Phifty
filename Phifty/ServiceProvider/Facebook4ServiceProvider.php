@@ -7,6 +7,7 @@ use Facebook\Facebook;
 use Pimple\Container;
 use Exception;
 
+
 /*
  * The official facebook service provider
  * Facebook4ServiceProvider:
@@ -26,32 +27,7 @@ class Facebook4ServiceProvider
     public function register(Kernel $kernel, $options = array())
     {
         $kernel->facebook = function() use ($options, $kernel) {
-            $container = new Container;
-            $container['app_id'] = $options['AppId'];
-            $container['session'] = function($c) use ($options) {
-                return new Facebook([
-                    'app_id'                => $options['AppId'],
-                    'app_secret'            => $options['AppSecret'],
-                    'default_graph_version' => $options['DefaultGraphVersion'],
-                ]);
-            };
-            // make this factory?
-            $container['redirect_login_helper'] = $container->factory(function($c) {
-                return $c['session']->getRedirectLoginHelper();
-            });
-            $container['login_url'] = $container->factory(function($c) use ($options) {
-                if (preg_match('#^https?://#',$options['DefaultLoginCallbackUrl'])) {
-                    $url = $options['DefaultLoginCallbackUrl'];
-                } else {
-                    $url = $kernel->getBaseUrl() . $options['DefaultLoginCallbackUrl'];
-                }
-                $helper = $c['redirect_login_helper'];
-                return $helper->getLoginUrl($url, $options['DefaultPermissions']);
-            });
-            $container['oauth2_client'] = $container->factory(function($c) use ($options) {
-                return $c['session']->getOAuth2Client();;
-            });
-            return $container;
+            return new Facebook4Service($kernel, $options);
         };
     }
 
