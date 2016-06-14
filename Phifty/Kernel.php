@@ -106,6 +106,18 @@ class Kernel extends ObjectContainer
     }
 
 
+    /**
+     * @version 3.1.0
+     */
+    public function buildUrl($path, array $params = null)
+    {
+        $url = $this->getBaseUrl() . $path;
+        if ($params) {
+            $url .= '?' . http_build_query($params);
+        }
+        return $url;
+    }
+
     public function getBaseUrl()
     {
         $scheme = $this->config->get('framework','SSL') ? 'https://' : 'http://';
@@ -113,13 +125,15 @@ class Kernel extends ObjectContainer
         return $scheme . $this->getHost() . $port;
     }
 
-    public function getHostBaseUrl() {
+    public function getHostBaseUrl()
+    {
         return $this->getBaseUrl();
     }
 
-    public function getSystemMail() {
+    public function getSystemMail()
+    {
         $mailConfig = $this->config->get('framework','Mail');
-        if ( isset($mailConfig['System']) ) {
+        if (isset($mailConfig['System'])) {
             $mail = $mailConfig['System'];
             if( preg_match( '#"?(.*?)"??\s+<(.*?)>#i' , $mail ,$regs ) ) {
                 return array( $regs[2] => $regs[1] );
@@ -135,11 +149,12 @@ class Kernel extends ObjectContainer
         );
     }
 
-    public function getAdminMail() {
+    public function getAdminMail()
+    {
         $mailConfig = $this->config->get('framework','Mail');
-        if ( isset($mailConfig['Admin']) ) {
+        if (isset($mailConfig['Admin'])) {
             $mail = $mailConfig['Admin'];
-            if( preg_match( '#"?(.*?)"??\s+<(.*?)>#i' , $mail ,$regs ) ) {
+            if (preg_match( '#"?(.*?)"??\s+<(.*?)>#i' , $mail ,$regs )) {
                 return array(
                     /* address => name */
                     $regs[2] => $regs[1],
