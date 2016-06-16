@@ -43,11 +43,12 @@ class MailerServiceProvider extends BaseServiceProvider implements ComposerConfi
                 case 'SmtpTransport':
                     $host = $accessor->Host ?: 'localhost';
                     $port = $accessor->Port ?: 25;
-                    $username = $accessor->Username;
-                    $password = $accessor->Password;
-                    $transport = $transportClass::newInstance($host, $port);
-                    $transport->setUsername($username);
-                    $transport->setPassword($password);
+                    $transport = $transportClass::newInstance($host, $port, $accessor->Encryption);
+                    $transport->setUsername($accessor->Username);
+                    $transport->setPassword($accessor->Password);
+                    if ($mode = $accessor->AuthMode) {
+                        $transport->setAuthMode($mode);
+                    }
                 break;
 
                 default:
