@@ -43,5 +43,5 @@
     "autoload": {
         "psr-4": { "Phifty\\": "Phifty/" }
     },
-    "extra": { "branch-alias": { "dev-master": "3.0.x-dev" } }
+    "extra": { "branch-alias": { "dev-master": "3.1.x-dev" } }
 }
