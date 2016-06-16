@@ -25,7 +25,7 @@
         "symfony/yaml": "^2.8|3.0",
         "corneltek/kendo": "dev-master",
         "pimple/pimple": "^3.0",
-        "corneltek/installers": "dev-master"
+        "composer/installers": "~1.0.0"
     },
     "suggest": {
         "swiftmailer/swiftmailer": "^5.4",
