@@ -20,6 +20,7 @@ use CodeGen\Variable;
 use CodeGen\Comment;
 use CodeGen\CommentBlock;
 use ReflectionClass;
+use Exception;
 use LogicException;
 use Universal\ClassLoader\Psr4ClassLoader;
 
@@ -258,7 +259,7 @@ class BootstrapCommand extends Command
                 if (!class_exists($bundleClass, true)) {
                     $bundleClassFile = $bundleLoader->findBundleClass($bundleName);
                     if (!$bundleClassFile) {
-                        throw new Exception("bundle class file '$bundleClassFile' doesn't exist.");
+                        throw new Exception("Bundle $bundleName class file '$bundleClassFile' doesn't exist.");
                     }
                     require $bundleClassFile;
                 }
