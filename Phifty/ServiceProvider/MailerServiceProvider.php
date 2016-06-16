@@ -89,9 +89,12 @@ class MailerServiceProvider extends BaseServiceProvider implements ComposerConfi
                     $port = $accessor->Port ?: 25;
                     $username = $accessor->Username;
                     $password = $accessor->Password;
-                    $transport = $transportClass::newInstance($host, $port);
+                    $transport = $transportClass::newInstance($host, $port, $accessor->Encryption);
                     $transport->setUsername($username);
                     $transport->setPassword($password);
+                    if ($mode = $accessor->AuthMode) {
+                        $transport->setAuthMode($mode);
+                    }
                 break;
 
                 default:
