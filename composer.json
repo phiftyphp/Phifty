@@ -1,5 +1,5 @@
 {
-    "name": "corneltek/phifty",
+    "name": "phifty/phifty",
     "type": "phifty-framework",
     "require": {
         "php": ">=5.4.0",
