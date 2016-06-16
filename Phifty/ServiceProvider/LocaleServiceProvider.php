@@ -24,15 +24,8 @@ class LocaleServiceProvider extends BaseServiceProvider
             $domain      = isset($self->config['Domain'])    ? $self->config['Domain'] : $kernel->getApplicationID();
             $langs       = isset($self->config['Langs'])     ? $self->config['Langs'] : array('en');
 
-            $locale = new Locale;
+            $locale = new Locale($domain,  $kernel->rootDir . DIRECTORY_SEPARATOR . $localeDir, $langs);
             $locale->setDefault($defaultLang);
-            $locale->setDomain($domain); # use application id for domain name.
-            $locale->setLocaleDir( $kernel->rootDir . DIRECTORY_SEPARATOR . $localeDir);
-
-            // add languages to list
-            foreach ( $langs as $localeName) {
-                $locale->add( $localeName );
-            }
 
             # _('en');
             # _('zh_TW');
