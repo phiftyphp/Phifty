@@ -2,10 +2,15 @@
 
 namespace Phifty\ServiceProvider;
 
-use Swift_Mailer;
-use ConfigKit\Accessor;
 use Phifty\ComposerConfigBridge;
 use Phifty\Kernel;
+use ConfigKit\Accessor;
+use Swift_Mailer;
+use Swift_MailTransport;
+use Swift_SendmailTransport;
+use Swift_SmtpTransport;
+use Swift_Plugins_AntiFloodPlugin;
+use Exception;
 
 class MailerServiceProvider extends BaseServiceProvider implements ComposerConfigBridge
 {
@@ -14,51 +19,83 @@ class MailerServiceProvider extends BaseServiceProvider implements ComposerConfi
         return 'Mailer';
     }
 
-    /**
-     
-     */
+    public static function canonicalizeConfig(Kernel $kernel, array $options)
+    {
+        if (isset($options['SmtpTransport'])) {
+            $transportType = 'SmtpTransport';
+        }
+
+        $accessor = new Accessor($options);
+
+        // build TransportClass from Transport key
+        if (isset($options['Transport'])) {
+            $transportType = $options['Transport'];
+            unset($options['Transport']);
+            $options['TransportClass'] = 'Swift_'.$transportType;
+            if (!class_exists($cls = $options['TransportClass'],true)) {
+                throw new Exception("$cls doesn't exist.");
+            }
+            $options[$transportType] = $options;
+        }
+
+        switch ($transportType) {
+            case "SendmailTransport":
+                $options[$transportType] = array_merge([
+                    'Command' => 'sendmail -bs'
+                ], $options[$transportType]);
+                break;
+            case "SmtpTransport":
+                $options[$transportType] = array_merge([
+                    'Host' => 'localhost',
+                    'Port' => 25,
+                    'Encryption' => null,
+                ], $options[$transportType]);
+                break;
+        }
+        return $options;
+    }
+
+    public function createTransport(array $options)
+    {
+        if (isset($options['SmtpTransport'])) {
+            $transportOptions = $options['SmtpTransport'];
+            $transport = Swift_SmtpTransport::newInstance(
+                $transportOptions['Host'],
+                $transportOptions['Port'],
+                $transportOptions['Encryption']
+            );
+            if (isset($transportOptions['Username'])) {
+                $transport->setUsername($transportOptions['Username']);
+            }
+            if (isset($transportOptions['Password'])) {
+                $transport->setPassword($transportOptions['Password']);
+            }
+            if (isset($transportOptions['AuthMode'])) {
+                $transport->setAuthMode($transportOptions['AuthMode']);
+            }
+            return $transport;
+        } else if (isset($options['MailTransport'])) {
+            return Swift_MailTransport::newInstance();
+        } else if (isset($options['SendmailTransport'])) {
+            $transportOptions = $options['SendmailTransport'];
+            return Swift_SendmailTransport::newInstance($transportOptions['Command']);
+        }
+        return Swift_MailTransport::newInstance();
+    }
+
     public function register(Kernel $kernel, $options = array())
     {
-        $kernel->mailer = function () use ($kernel, $options) {
-            $accessor = new Accessor($options);
-            $transportType = $accessor->Transport ?: 'MailTransport';
-            $transportClass = 'Swift_'.$transportType;
-            $transport = null;
+        $self = $this;
+        $kernel->mailer = function () use ($kernel, $options, $self) {
+            $transport = $self->createTransport($options);
 
-            switch ($transportType) {
-
-                case 'MailTransport':
-                    $transport = $transportClass::newInstance();
-                break;
-
-                case 'SendmailTransport':
-                    // sendmail transport has defined a built-in default command.
-                    if ($command = $accessor->Command) {
-                        $transport = $transportClass::newInstance($command);
-                    } else {
-                        $transport = $transportClass::newInstance();
-                    }
-                break;
-
-                case 'SmtpTransport':
-                    $host = $accessor->Host ?: 'localhost';
-                    $port = $accessor->Port ?: 25;
-                    $transport = $transportClass::newInstance($host, $port, $accessor->Encryption);
-                    $transport->setUsername($accessor->Username);
-                    $transport->setPassword($accessor->Password);
-                    if ($mode = $accessor->AuthMode) {
-                        $transport->setAuthMode($mode);
-                    }
-                break;
-
-                default:
-                    throw new Exception("Unsupported transport type: $transportType");
-            }
+            // $container = new Container;
+            // $container['transport'] = function() {  };
 
             // Create the Mailer using your created Transport
             // return Swift_Mailer::newInstance($transport);
             $mailer = Swift_Mailer::newInstance($transport); // $mailer
-
+            $accessor = new Accessor($options);
             if ($accessor->Plugins) {
                 foreach ($accessor->Plugins as $pluginName => $options) {
                     $pluginOptions = new Accessor($options);
@@ -73,7 +110,6 @@ class MailerServiceProvider extends BaseServiceProvider implements ComposerConfi
                     $mailer->registerPlugin($plugin);
                 }
             }
-
             return $mailer;
         };
     }
