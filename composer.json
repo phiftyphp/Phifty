@@ -10,7 +10,7 @@
         "corneltek/twig-react-directive": "^1.0",
         "corneltek/sessionkit": "~1",
         "corneltek/cliframework": "^3",
-        "corneltek/locale": "^2.0.0",
+        "corneltek/locale": "^3.1.0",
         "corneltek/lazyrecord": "^3.1.0",
         "corneltek/actionkit": "^3.0.0",
         "corneltek/assetkit": "^3.4.0",
