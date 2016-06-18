@@ -25,10 +25,10 @@
         "symfony/yaml": "^2.8|3.0",
         "corneltek/kendo": "2.0.x-dev",
         "pimple/pimple": "^3.0",
-        "composer/installers": "dev-master"
+        "composer/installers": "dev-master",
+        "swiftmailer/swiftmailer": "^5.4"
     },
     "suggest": {
-        "swiftmailer/swiftmailer": "^5.4",
         "symfony/css-selector": "^2.8|3.0",
         "predis/predis": "^1.1",
         "corneltek/twig-markdown": "^1"
