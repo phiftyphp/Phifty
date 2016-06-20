@@ -45,6 +45,7 @@ class InstallCommand extends AssetBaseCommand
                     if (file_exists($target)) {
                         unlink($target);
                     }
+                    $this->logger->debug("Linking $rootAssetEntryFile to $target");
                     symlink($rootAssetEntryFile, $target);
                 }
                 if ($hasRootNodeModule) {
@@ -53,6 +54,7 @@ class InstallCommand extends AssetBaseCommand
                     if (file_exists($target)) {
                         unlink($target);
                     }
+                    $this->logger->debug("Linking $rootNodeModules to $target");
                     symlink($rootNodeModules, $target);
                 }
             }
