@@ -11,12 +11,9 @@ if ($bundles = kernel()->bundles) {
         $finder->in($bundle->locate() . DIRECTORY_SEPARATOR . 'Model');
     }
 }
-
-if (file_exists('tests')) {
-    $finder->in('tests');
-}
 $finder->find();
 if (method_exists($finder,"getSchemas")) {
     return $finder->getSchemas();
 }
+return $finder;
 return SchemaLoader::loadDeclaredSchemas();

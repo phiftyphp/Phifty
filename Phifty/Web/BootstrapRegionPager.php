@@ -1,6 +1,7 @@
 <?php
 namespace Phifty\Web;
 use WebUI\Components\Pager\BootstrapPager;
+use WebUI\Core\Element;
 
 class BootstrapRegionPager extends BootstrapPager
 {
@@ -32,5 +33,4 @@ EOF;
 <li class="disabled"><a class="pager-link pager-disabled $moreclass">$text</a></li>
 EOF;
     }
-
 }
