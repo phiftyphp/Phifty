@@ -12,7 +12,7 @@
         "corneltek/sessionkit": "~1",
         "corneltek/cliframework": "^3",
         "corneltek/lazyrecord": "^3.3.0",
-        "corneltek/actionkit": "^3.0.0",
+        "corneltek/actionkit": "^3.1.0",
         "corneltek/assetkit": "^3.4.0",
         "corneltek/pux": "2.0.x-dev",
         "phpsgi/funk": "1.0.x-dev",
