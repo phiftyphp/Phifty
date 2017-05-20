@@ -23,7 +23,6 @@ class Application extends \CLIFramework\Application
         $this->command('console');
         $this->command('server');
         $this->command('asset');
-        $this->command('bundle');
 
         $this->command('composer-config');
         $this->command('server-config');
