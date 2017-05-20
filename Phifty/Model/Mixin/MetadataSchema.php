@@ -1,6 +1,6 @@
 <?php
 namespace Phifty\Model\Mixin;
-use LazyRecord\Schema\MixinSchemaDeclare;
+use Maghead\Schema\MixinDeclareSchema;
 
 class MetadataSchema extends MixinSchemaDeclare
 {

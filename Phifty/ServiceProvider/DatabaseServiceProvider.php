@@ -2,7 +2,10 @@
 
 namespace Phifty\ServiceProvider;
 
-use LazyRecord\ConnectionManager;
+use Maghead\Manager\ConnectionManager;
+use Maghead\Manager\DatabaseManager;
+use Maghead\Runtime\Config\FileConfigLoader;
+use Maghead\Runtime\Bootstrap;
 use Phifty\Kernel;
 
 class DatabaseServiceProvider extends BaseServiceProvider
@@ -14,14 +17,10 @@ class DatabaseServiceProvider extends BaseServiceProvider
 
     public function register(Kernel $kernel, $options = array())
     {
-        // TODO: move to generate prepare...
-        $loader = \LazyRecord\ConfigLoader::getInstance();
-        if (!$loader->loaded) {
-            $loader->load($this->config);
-            $loader->init();  // init data source and connection
-        }
+        $config = FileConfigLoader::load($this->config);
+        Bootstrap::setup($config);
         $kernel->db = function () {
-            return ConnectionManager::getInstance()->getConnection('default');
+            return DatabaseManager::getInstance()->getConnection('default');
         };
     }
 }

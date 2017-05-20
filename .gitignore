@@ -20,3 +20,4 @@ build/
 *.swp
 manifest.php
 /node_modules/
+/vendor

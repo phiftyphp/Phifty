@@ -5,7 +5,7 @@ use Exception;
 use LogicException;
 use RuntimeException;
 use BadMethodCallException;
-use LazyRecord\BaseModel;
+use Maghead\Runtime\Model;
 use Kendo\IdentifierProvider\ActorIdentifierProvider;
 use Kendo\IdentifierProvider\RoleIdentifierProvider;
 use Kendo\IdentifierProvider\RecordIdentifierProvider;

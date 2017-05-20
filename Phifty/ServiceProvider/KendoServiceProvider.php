@@ -6,7 +6,7 @@ use Kendo\RuleLoader\RuleLoader;
 use Kendo\RuleLoader\PDORuleLoader;
 use Kendo\RuleMatcher\AccessRuleMatcher;
 use Kendo\Authorizer\Authorizer;
-use LazyRecord\ConnectionManager;
+use Maghead\Manager\ConnectionManager;
 use Phifty\Kernel;
 use Exception;
 

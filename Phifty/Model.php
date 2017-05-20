@@ -1,6 +1,6 @@
 <?php
 namespace Phifty;
-use LazyRecord\BaseModel;
+use Maghead\Runtime\Model;
 use ActionKit\RecordAction\BaseRecordAction;
 
 class Model extends BaseModel
