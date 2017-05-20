@@ -1,23 +1,27 @@
 #!/usr/bin/env php
 <?php
-if( isset($argv[1]) && $argv[1] == 'build-conf' ) {
+
+use Phifty\Console\Application;
+
+if (isset($argv[1]) && $argv[1] == 'build-conf') {
     // remove old php config files
     $phpfiles = glob('config/*.php');
-    foreach( $phpfiles as $file ) {
+    foreach ($phpfiles as $file) {
         unlink($file);
     }
 }
 
+
 # vim:filetype=php:
 if (file_exists('bootstrap.php')) {
     require 'bootstrap.php';
-    $console = Phifty\Console::getInstance();
-    $kernel->event->trigger( 'phifty.console.init_commands' , $console );
-    $console->run( $argv );
-    $kernel->event->trigger( 'phifty.console.finish' , $console );
+    $console = Application::getInstance();
+    $kernel->event->trigger( 'phifty.console.init_commands', $console);
+    $console->run($argv);
+    $kernel->event->trigger( 'phifty.console.finish', $console);
 } else {
     global $composerClassLoader;
     $composerClassLoader = require 'vendor/autoload.php';
-    $console = Phifty\Console::getInstance();
+    $console = Application::getInstance();
     $console->run( $argv );
 }
