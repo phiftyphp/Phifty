@@ -9,6 +9,9 @@ services:
 install:
 - travis_retry composer require "satooshi/php-coveralls" "^1" --dev --no-update
 - travis_retry composer install
+- ./travis/install-apcu
+- ./travis/install-cssmin
+- ./travis/install-yaml
 before_script:
 - bash scripts/install-apcu.sh
 - phpenv config-add tests/config/$TRAVIS_PHP_VERSION.ini
