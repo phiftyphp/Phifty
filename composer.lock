@@ -281,12 +281,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/c9s/CLIFramework.git",
-                "reference": "05afe67af35c21ffcce3b5511aae14486232aaaf"
+                "reference": "b557dbfeba951376b9819d29335a34d42607ca36"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c9s/CLIFramework/zipball/05afe67af35c21ffcce3b5511aae14486232aaaf",
-                "reference": "05afe67af35c21ffcce3b5511aae14486232aaaf",
+                "url": "https://api.github.com/repos/c9s/CLIFramework/zipball/b557dbfeba951376b9819d29335a34d42607ca36",
+                "reference": "b557dbfeba951376b9819d29335a34d42607ca36",
                 "shasum": ""
             },
             "require": {
@@ -333,7 +333,7 @@
                 "getopt",
                 "zsh"
             ],
-            "time": "2017-05-20 15:43:08"
+            "time": "2017-05-20 16:22:50"
         },
         {
             "name": "corneltek/codegen",
@@ -1285,12 +1285,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/maghead/maghead.git",
-                "reference": "70e9f5f206209aa017028458661175f35385ab7a"
+                "reference": "3a438ca89c31a66d7deec45b494976804475cb35"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maghead/maghead/zipball/70e9f5f206209aa017028458661175f35385ab7a",
-                "reference": "70e9f5f206209aa017028458661175f35385ab7a",
+                "url": "https://api.github.com/repos/maghead/maghead/zipball/3a438ca89c31a66d7deec45b494976804475cb35",
+                "reference": "3a438ca89c31a66d7deec45b494976804475cb35",
                 "shasum": ""
             },
             "require": {
@@ -1354,7 +1354,7 @@
                 "orm",
                 "sql"
             ],
-            "time": "2017-05-20 16:09:26"
+            "time": "2017-05-20 16:21:22"
         },
         {
             "name": "maghead/magsql",
@@ -1362,12 +1362,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/maghead/magsql.git",
-                "reference": "103f74802d2882c5d3dc3bfc415775300ddcdc36"
+                "reference": "3b5aeb90328588f3552621fa96db19992211b662"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maghead/magsql/zipball/103f74802d2882c5d3dc3bfc415775300ddcdc36",
-                "reference": "103f74802d2882c5d3dc3bfc415775300ddcdc36",
+                "url": "https://api.github.com/repos/maghead/magsql/zipball/3b5aeb90328588f3552621fa96db19992211b662",
+                "reference": "3b5aeb90328588f3552621fa96db19992211b662",
                 "shasum": ""
             },
             "require-dev": {
@@ -1395,7 +1395,7 @@
                 }
             ],
             "description": "Fast and Powerful SQL for PHP",
-            "time": "2017-05-18 17:10:25"
+            "time": "2017-05-20 16:22:02"
         },
         {
             "name": "maghead/sqlite-parser",
