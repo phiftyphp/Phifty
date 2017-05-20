@@ -13,8 +13,8 @@ install:
 - ./travis/install-cssmin
 - ./travis/install-yaml
 before_script:
-- phpenv config-add tests/config/$TRAVIS_PHP_VERSION.ini
-- phpenv config-add tests/config/apc.ini
+- phpenv config-add travis/config/$TRAVIS_PHP_VERSION.ini
+- phpenv config-add travis/config/apc.ini
 - echo "extension = memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 - echo "extension = redis.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 - phpenv rehash
