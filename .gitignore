@@ -21,3 +21,4 @@ build/
 manifest.php
 /node_modules/
 /vendor
+/.asset-entries.*
