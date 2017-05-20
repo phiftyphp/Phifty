@@ -1,17 +1,21 @@
 language: php
+
 php:
 # pekkis/mime-types v1.0.0 requires php >=5.5.0
 - 7.0
 - 7.1
+
 services:
 - memcached
 - redis
+
 install:
 - travis_retry composer require "satooshi/php-coveralls" "^1" --dev --no-update
 - travis_retry composer install
 # - ./travis/install-apcu
 - ./travis/install-cssmin
 - ./travis/install-yaml
+
 before_script:
 - phpenv config-add travis/config/$TRAVIS_PHP_VERSION.ini
 - phpenv config-add travis/config/apc.ini
@@ -26,12 +30,11 @@ script:
 - php bin/phifty bootstrap
 - time php bootstrap.php
 - phpunit -c phpunit.xml.dist
+
 after_success:
 - php vendor/bin/coveralls -v
+
 cache:
   apt: true
   directories:
   - vendor
-notifications:
-  slack:
-    secure: OwI7PtL9OGmGvwJ8SRObkTvl0cMQqRssLJ+fWwrAUQ4HW/CxAg95q0jPZ4YHmUk6eFTp23HtYrV62icVUiw0dmbGOnsKBPKW5fMs8+rXTXcKi4lu5sP8lsak8ORBLcp75pagiMrviMS6nvAJO/l0U7XMGGGHJjbfyLa5bRkXdRo=
