@@ -2,7 +2,7 @@
 namespace Phifty\Model\Mixin;
 use Maghead\Schema\MixinDeclareSchema;
 
-class I18NSchema extends MixinSchemaDeclare
+class I18NSchema extends MixinDeclareSchema
 {
     public function schema()
     {

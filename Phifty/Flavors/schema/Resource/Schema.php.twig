@@ -2,7 +2,7 @@
 namespace {{namespace}}\Model;
 use Maghead\Schema\DeclareSchema;
 
-class {{schemaName}} extends SchemaDeclare
+class {{schemaName}} extends DeclareSchema
 {
     function schema() {
 {% for column in schemaColumns %}

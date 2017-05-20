@@ -2,7 +2,7 @@
 namespace Phifty\Model\Mixin;
 use Maghead\Schema\MixinDeclareSchema;
 
-class MetadataSchema extends MixinSchemaDeclare
+class MetadataSchema extends MixinDeclareSchema
 {
     public function schema()
     {

@@ -2,7 +2,7 @@
 namespace Phifty\Model\Mixin;
 use Maghead\Schema\MixinDeclareSchema;
 
-class FakeDeleteSchema extends MixinSchemaDeclare
+class FakeDeleteSchema extends MixinDeclareSchema
 {
     public function schema()
     {
