@@ -10,33 +10,32 @@
         "corneltek/genphp": "^1",
         "corneltek/twig-react-directive": "^1.0",
         "corneltek/sessionkit": "~1",
-        "corneltek/cliframework": "^3",
-        "corneltek/lazyrecord": "^3.3.0",
-        "corneltek/actionkit": "^3.1.0",
-        "corneltek/assetkit": "^3.4.0",
+        "corneltek/cliframework": "4.0.x-dev",
+        "maghead/maghead": "4.0.x-dev",
+        "maghead/magsql": "@dev",
+        "corneltek/actionkit": "4.0.x-dev",
+        "corneltek/assetkit": "4.0.x-dev",
+        "corneltek/kendo": "4.0.x-dev",
         "corneltek/pux": "2.0.x-dev",
         "phpsgi/funk": "1.0.x-dev",
         "phpsgi/phpsgi": "1.0.x-dev",
         "cypresslab/gitelephant": "^1.0",
-        "twig/twig": "^1.23",
-        "twig/extensions": "^1",
-        "symfony/finder": "^2.8|3.0",
-        "symfony/process": "^2.8|3.0",
-        "symfony/yaml": "^2.8|3.0",
-        "corneltek/kendo": "2.0.x-dev",
+        "twig/twig": "^2.3",
+        "twig/extensions": "^1.4",
+        "symfony/finder": "^2.8|^3.0|^3.2",
+        "symfony/process": "^2.8|^3.0|^3.2",
         "pimple/pimple": "^3.0",
-        "composer/installers": "dev-master",
-        "swiftmailer/swiftmailer": "^5.4"
+        "composer/installers": "^1",
+        "swiftmailer/swiftmailer": "^5.4",
+        "corneltek/codegen": "@dev"
     },
     "suggest": {
-        "symfony/css-selector": "^2.8|3.0",
+        "symfony/css-selector": "^2.8|^3.0|^3.2",
         "predis/predis": "^1.1",
         "corneltek/twig-markdown": "^1"
     },
     "bin": ["bin/phifty"],
-    "require-dev": {
-        "corneltek/phpunit-testmore": "dev-master"
-    },
+    "require-dev": { },
     "license": "MIT",
     "autoload-dev":{
         "psr-4": { "App\\": "app/" }
@@ -44,5 +43,5 @@
     "autoload": {
         "psr-4": { "Phifty\\": "Phifty/" }
     },
-    "extra": { "branch-alias": { "dev-master": "3.1.x-dev" } }
+    "extra": { "branch-alias": { "dev-master": "4.0.x-dev" } }
 }
