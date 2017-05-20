@@ -32,12 +32,13 @@ use Phifty\ServiceProvider\BundleServiceProvider;
 function find_db_config($baseDir)
 {
     $paths = [
+        "{$baseDir}/.maghead-cli.yml",
         "{$baseDir}/config/database.yml",
         "{$baseDir}/db/config/database.yml",
     ];
     foreach ($paths as $path) {
         if (file_exists($path)) {
-            return FileConfigLoader::compile($path, true);
+            return FileConfigLoader::compile(realpath($path), true);
         }
     }
     return false;
