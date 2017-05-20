@@ -15,10 +15,10 @@ class ActionServiceTest extends \PHPUnit\Framework\TestCase
 
         $service = new ActionServiceProvider;
         $kernel->registerService($service);
-        ok($kernel->action instanceof ActionRunner);
-        ok($kernel->actionRunner instanceof ActionRunner);
-        ok($kernel->actionService instanceof Container);
-        ok($kernel->actionService['generator'] instanceof ActionGenerator);
+        $this->assertNotNull($kernel->action instanceof ActionRunner);
+        $this->assertNotNull($kernel->actionRunner instanceof ActionRunner);
+        $this->assertNotNull($kernel->actionService instanceof Container);
+        $this->assertNotNull($kernel->actionService['generator'] instanceof ActionGenerator);
     }
 }
 

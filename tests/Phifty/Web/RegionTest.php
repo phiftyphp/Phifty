@@ -9,8 +9,8 @@ class RegionTest extends \PHPUnit\Framework\TestCase
             'id' => 1
         ));
         $id = $region->getRegionId();
-        ok($id);
-        ok($region->render());
+        $this->assertNotNull($id);
+        $this->assertNotNull($region->render());
     }
 
     public function testRegionWithPath()

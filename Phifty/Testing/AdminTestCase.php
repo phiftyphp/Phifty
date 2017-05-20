@@ -27,7 +27,7 @@ class AdminTestCase extends Selenium2TestCase
         find_element_ok('input[name=password]')->value('admin');
         find_element_ok('.submit')->click();
 
-        // ok( ! find_element('.message.error') , 'login error' );
+        // $this->assertNotNull( ! find_element('.message.error') , 'login error' );
         wait_for('#aimMenuStart');
 
         if ($transferTo) {

@@ -26,7 +26,7 @@ class FileUtilsTest extends \PHPUnit\Framework\TestCase
     public function testRelativePath()
     {
         $path2 = FileUtils::relative_path( __FILE__ );
-        ok( $path2 );
+        $this->assertNotNull( $path2 );
         $this->assertEquals( $path2 , 'tests/Phifty/FileUtilsTest.php' );
     }
 

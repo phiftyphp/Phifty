@@ -22,45 +22,45 @@ class JsonStoreFileTest extends \PHPUnit\Framework\TestCase
     function test()
     {
         $store = $this->getStore();
-        ok( $store );
+        $this->assertNotNull( $store );
 
 		$store->destroy();
         $store->load();
 
         $user = new \Phifty\JsonStore\FileJsonModel( 'User' , $store );
         $id = $user->save(array( 'name' => 123 ));
-        ok( $id );
+        $this->assertNotNull( $id );
 
 		$store->save();
 
 		$items = $store->items();
-		ok( $items );
-		count_ok( 1 , $items );
+		$this->assertNotNull( $items );
+		$this->assertCount( 1 , $items );
 
 
         $user = new \Phifty\JsonStore\FileJsonModel( 'User' , $store );
         $id = $user->save(array( 'name' => 333 ));
-        ok( $id );
+        $this->assertNotNull( $id );
 
 		$items = $store->items();
-		ok( $items );
-		count_ok( 2 , $items );
+		$this->assertNotNull( $items );
+		$this->assertCount( 2 , $items );
 
 
         $user = new \Phifty\JsonStore\FileJsonModel( 'User' , $store );
         $id = $user->save(array( 'id' => 99 , 'name' => 'with Id' ));
-        ok( $id );
+        $this->assertNotNull( $id );
 
-		ok( $store->get(99) );
-		ok( $store->get("99") );
+		$this->assertNotNull( $store->get(99) );
+		$this->assertNotNull( $store->get("99") );
 
 
 		$items = $store->items();
-		ok( $items );
-		count_ok( 3 , $items );
+		$this->assertNotNull( $items );
+		$this->assertCount( 3 , $items );
 
 
-		ok( $store->destroy() );
+		$this->assertNotNull( $store->destroy() );
     }
 	
 	function teardown()

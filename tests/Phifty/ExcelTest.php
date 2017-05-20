@@ -11,7 +11,7 @@ class ExcelTest extends \PHPUnit\Framework\TestCase
         $excel = new ExcelExporter;
         $excel->setSheet(0);
         $excel->putCells( array('Test','Foo','Bar') );
-        ok( $excel );
+        $this->assertNotNull( $excel );
     }
 }
 

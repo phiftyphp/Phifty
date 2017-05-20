@@ -39,7 +39,7 @@ class CRUDTestCase extends AdminTestCase
 
         $elements = $this->getDeleteBtnElements();
         foreach ($elements as $element) {
-            ok($element,'Found delete button');
+            $this->assertNotNull($element,'Found delete button');
             $element->click();
             contains_ok('確認刪除', get_alert_text() );
             accept_alert();
