@@ -24,8 +24,24 @@ use Exception;
 use LogicException;
 use Universal\ClassLoader\Psr4ClassLoader;
 
+use Maghead\Runtime\Config\FileConfigLoader;
+
 use Phifty\Bundle\BundleLoader;
 use Phifty\ServiceProvider\BundleServiceProvider;
+
+function find_db_config($baseDir)
+{
+    $paths = [
+        "{$baseDir}/config/database.yml",
+        "{$baseDir}/db/config/database.yml",
+    ];
+    foreach ($paths as $path) {
+        if (file_exists($path)) {
+            return FileConfigLoader::compile($path, true);
+        }
+    }
+    return false;
+}
 
 class BootstrapCommand extends Command
 {
@@ -84,16 +100,14 @@ class BootstrapCommand extends Command
 
         // XXX: connect to differnt config by using environment variable (PHIFTY_ENV)
         $this->logger->info("===> Building config files...");
-        $configPaths = array_filter(
-            array(
+        $configPaths = array_filter([
                 'config/application.yml',
                 'config/framework.yml',
-                'config/database.yml',
                 'config/testing.yml'
-            ), 'file_exists');
+            ], 'file_exists');
         foreach ($configPaths as $configPath) {
-            $this->logger->info("Building $configPath");
-            ConfigCompiler::compile($configPath);
+            $this->logger->info("Precompiling $configPath ...");
+            ConfigCompiler::compile($configPath, true);
         }
 
 
@@ -310,9 +324,23 @@ class BootstrapCommand extends Command
 
         // Kernel initialization after bootstrap script
         if ($configLoader->isLoaded('framework')) {
+
+
+            // This is for DatabaseService
+            $dbConfig = find_db_config($baseDir);
+            $block[] = '$kernel->registerService(new \Phifty\ServiceProvider\DatabaseServiceProvider(' . var_export([
+                'configPath' => $dbConfig,
+            ], true) . '));';
+
+            /*
+            $block[] = new Statement(new MethodCall('$kernel', 'registerService', [
+                $class::generateNew($runtimeKernel, $options),
+                $options,
+            ]));
+             */
+
             if ($configLoader->isLoaded('database')) {
                 $dbConfig = $configLoader->getSection('database');
-                $block[] = '$kernel->registerService(new \Phifty\ServiceProvider\DatabaseServiceProvider(' . var_export($dbConfig, true) . '));';
             }
 
             // Require application classes directly, we need applications to be registered before services
@@ -450,12 +478,6 @@ class BootstrapCommand extends Command
             $loader->load('framework', $baseDir.'/config/framework.yml');
         }
 
-        // This is for DatabaseService
-        if (file_exists($baseDir.'/db/config/database.yml')) {
-            $loader->load('database', $baseDir.'/db/config/database.yml');
-        } elseif (file_exists($baseDir.'/config/database.yml')) {
-            $loader->load('database', $baseDir.'/config/database.yml');
-        }
 
         // Config for application, services does not depends on this config file.
         if (file_exists($baseDir.'/config/application.yml')) {

@@ -5,6 +5,7 @@ namespace Phifty\ServiceProvider;
 use Maghead\Manager\ConnectionManager;
 use Maghead\Manager\DatabaseManager;
 use Maghead\Runtime\Config\FileConfigLoader;
+use Maghead\Runtime\Config\Config;
 use Maghead\Runtime\Bootstrap;
 use Phifty\Kernel;
 
@@ -17,7 +18,7 @@ class DatabaseServiceProvider extends BaseServiceProvider
 
     public function register(Kernel $kernel, $options = array())
     {
-        $config = FileConfigLoader::load($this->config);
+        $config = FileConfigLoader::load($this->config['configPath']);
         Bootstrap::setup($config);
         $kernel->db = function () {
             return DatabaseManager::getInstance()->getConnection('default');

@@ -1,6 +1,10 @@
 <?php
 
-class TwigServiceTest extends PHPUnit_Framework_TestCase
+namespace Phifty\ServiceProvider;
+
+use PHPUnit\Framework\TestCase;
+
+class TwigServiceTest extends TestCase
 {
     public function testRegisterTwigService()
     {
