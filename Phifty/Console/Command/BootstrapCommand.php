@@ -1,5 +1,7 @@
 <?php
+
 namespace Phifty\Console\Command;
+
 use CLIFramework\Command;
 use ConfigKit\ConfigCompiler;
 use ConfigKit\ConfigLoader;
@@ -319,8 +321,7 @@ class BootstrapCommand extends Command
 
         // Include bootstrap class
         $block[] = new Comment('Bootstrap.php nows only contains kernel() function.');
-        $block[] = new RequireStatement(dirname(__DIR__) . DIRECTORY_SEPARATOR . 'Bootstrap.php' );
-
+        $block[] = new RequireStatement(dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . 'Bootstrap.php' );
 
 
         // Kernel initialization after bootstrap script
