@@ -22,7 +22,6 @@ class Application extends \CLIFramework\Application
         $this->command('locale');
         $this->command('console');
         $this->command('server');
-        $this->command('router');
         $this->command('asset');
         $this->command('bundle');
 
