@@ -5,7 +5,7 @@ use Pimple\Container;
 use Phifty\ServiceProvider\EventServiceProvider;
 use Phifty\ServiceProvider\ActionServiceProvider;
 
-class ActionServiceTest extends PHPUnit_Framework_TestCase
+class ActionServiceTest extends \PHPUnit\Framework\TestCase
 {
     public function testActionService()
     {

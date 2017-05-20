@@ -1,7 +1,7 @@
 <?php
 use Phifty\Session;
 
-class SessionTest extends PHPUnit_Framework_TestCase 
+class SessionTest extends \PHPUnit\Framework\TestCase 
 {
     /* test method */
     function testSession()
@@ -11,7 +11,7 @@ class SessionTest extends PHPUnit_Framework_TestCase
 
         $session->test = 123;
 
-        is( $_SESSION['test'] , 123 );
+        $this->assertEquals( $_SESSION['test'] , 123 );
 
         $session->remove('test');
 

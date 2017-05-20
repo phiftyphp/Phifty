@@ -10,7 +10,7 @@
  */
 namespace Phifty\JsonStore;
 
-class JsonStoreFileTest extends \PHPUnit_Framework_TestCase
+class JsonStoreFileTest extends \PHPUnit\Framework\TestCase
 {
 
 	function getStore()

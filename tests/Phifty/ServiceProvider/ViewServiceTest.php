@@ -2,7 +2,7 @@
 use Phifty\ServiceProvider\ViewServiceProvider;
 use Phifty\Kernel;
 
-class ViewServiceTest extends PHPUnit_Framework_TestCase
+class ViewServiceTest extends \PHPUnit\Framework\TestCase
 {
     public function testBaseView()
     {

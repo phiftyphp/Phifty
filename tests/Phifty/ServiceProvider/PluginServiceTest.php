@@ -1,6 +1,6 @@
 <?php
 
-class PluginServiceTest extends PHPUnit_Framework_TestCase
+class PluginServiceTest extends \PHPUnit\Framework\TestCase
 {
     public function testPluginService()
     {

@@ -1,7 +1,7 @@
 <?php
 use Phifty\ExcelExporter;
 
-class ExcelTest extends PHPUnit_Framework_TestCase
+class ExcelTest extends \PHPUnit\Framework\TestCase
 {
     function testExcel()
     {

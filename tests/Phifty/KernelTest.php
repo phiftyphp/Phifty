@@ -1,6 +1,6 @@
 <?php
 
-class KernelTest extends PHPUnit_Framework_TestCase
+class KernelTest extends \PHPUnit\Framework\TestCase
 {
     public function testKernel()
     {

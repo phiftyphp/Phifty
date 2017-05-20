@@ -1,7 +1,7 @@
 <?php
 use Phifty\Web\Region;
 
-class RegionTest extends PHPUnit_Framework_TestCase
+class RegionTest extends \PHPUnit\Framework\TestCase
 {
     public function testGetRegionId()
     {

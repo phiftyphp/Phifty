@@ -1,7 +1,7 @@
 <?php
 use Phifty\CollectionFilter;
 
-class CollectionFilterTest extends PHPUnit_Framework_TestCase
+class CollectionFilterTest extends \PHPUnit\Framework\TestCase
 {
     public function test()
     {

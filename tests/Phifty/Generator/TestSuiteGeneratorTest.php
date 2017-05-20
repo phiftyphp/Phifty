@@ -3,7 +3,7 @@ use Phifty\Generator\TestSuiteGenerator;
 use CRUD\CRUD;
 use App\AppKernel;
 
-class TestSuiteGeneratorTest extends PHPUnit_Framework_TestCase
+class TestSuiteGeneratorTest extends \PHPUnit\Framework\TestCase
 {
     public function testGenerator()
     {

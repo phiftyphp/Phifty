@@ -1,6 +1,6 @@
 <?php
 
-class CurrentUserServiceTest extends PHPUnit_Framework_TestCase
+class CurrentUserServiceTest extends \PHPUnit\Framework\TestCase
 {
     public function testCurrentUserService()
     {
