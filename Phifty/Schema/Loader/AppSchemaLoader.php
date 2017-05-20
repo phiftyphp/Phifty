@@ -6,7 +6,8 @@ use Maghead\Schema\Loader\FileSchemaLoader;
 
 class AppSchemaLoader extends FileSchemaLoader
 {
-    function __construct(array $paths = []) {
+    public function __construct(array $paths = [])
+    {
         parent::__construct($paths);
 
         $kernel = kernel();

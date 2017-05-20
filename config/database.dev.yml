@@ -3,7 +3,9 @@ cli:
   bootstrap: 'main.php'
 schema:
   auto_id: true
-  loader: Phifty/SchemaLoader.php
+  loaders:
+  - Phifty::Schema::Loader::AppSchemaLoader
+  - { name: ComposerSchemaLoader, args: ["composer.json"] }
 seeds:
 databases:
   master:
