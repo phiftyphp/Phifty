@@ -1,6 +1,6 @@
 ---
 cli:
-  bootstrap: 'main.php'
+  bootstrap: "bootstrap.php"
 schema:
   auto_id: true
   loaders:
