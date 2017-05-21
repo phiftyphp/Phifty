@@ -424,9 +424,15 @@ class Bundle
         $this->kernel->rootMux->mount($path, $controller);
     }
 
+    public function expandRoute($path, $class)
+    {
+        @trigger_error('expandRoutes() is deprecated, please use mount() instead', E_USER_DEPRECATED);
+        $this->mount($path, $class);
+    }
+
     public function expandRoutes($path, $class)
     {
-        @trigger_error('expandRoutes() will be deprecated, please use mount() instead', E_USER_DEPRECATED);
+        @trigger_error('expandRoutes() is deprecated, please use mount() instead', E_USER_DEPRECATED);
         $this->mount($path, $class);
     }
 
