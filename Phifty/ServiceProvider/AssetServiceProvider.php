@@ -39,7 +39,9 @@ class AssetServiceProvider extends BaseServiceProvider
     {
         $kernel->asset = function () use ($kernel, $options) {
             $config = new AssetConfig($options);
-            $config->setEnvironment($kernel->environment);
+            if (!isset($options['Environment'])) {
+                $config->setEnvironment($kernel->environment);
+            }
             $config->setNamespace($kernel->getApplicationUUID());
             $cache = new UniversalCache(array(
                 new ApcuCache($kernel->getApplicationUUID()),
