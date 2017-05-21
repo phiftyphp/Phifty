@@ -110,9 +110,8 @@ class BootstrapCommand extends Command
             ], 'file_exists');
         foreach ($configPaths as $configPath) {
             $this->logger->info("Precompiling $configPath ...");
-            ConfigCompiler::compile($configPath, true);
+            ConfigCompiler::compile($configPath);
         }
-
 
         $appDirectory = 'app';
 
