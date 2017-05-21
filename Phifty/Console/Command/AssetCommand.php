@@ -39,12 +39,10 @@ class AssetCommand extends Command
         $app = Application::getInstance();
 
         $init = $this->createCommand(AssetCommand\InitCommand::class);
-        $init->application = $app;
         $init->options = $this->options;
         $init->executeWrapper(array());
 
         $install = $this->createCommand(AssetCommand\InstallCommand::class);
-        $install->application = $app;
         $install->options = $this->options;
         $install->logger = $this->logger;
         $install->executeWrapper(array());
