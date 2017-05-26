@@ -1,0 +1,3 @@
+#!/bin/bash
+./travis/install-cssmin
+./travis/install-yaml
