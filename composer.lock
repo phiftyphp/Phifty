@@ -281,12 +281,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/c9s/CLIFramework.git",
-                "reference": "3e2e11bcefc62a89624637f560108148128a1137"
+                "reference": "f69a19febc57f3d7fba7262be7d3bc3d4f8ad092"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c9s/CLIFramework/zipball/3e2e11bcefc62a89624637f560108148128a1137",
-                "reference": "3e2e11bcefc62a89624637f560108148128a1137",
+                "url": "https://api.github.com/repos/c9s/CLIFramework/zipball/f69a19febc57f3d7fba7262be7d3bc3d4f8ad092",
+                "reference": "f69a19febc57f3d7fba7262be7d3bc3d4f8ad092",
                 "shasum": ""
             },
             "require": {
@@ -333,7 +333,7 @@
                 "getopt",
                 "zsh"
             ],
-            "time": "2017-05-20 16:24:55"
+            "time": "2017-05-27 10:02:27"
         },
         {
             "name": "corneltek/codegen",
@@ -341,12 +341,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/c9s/CodeGen.git",
-                "reference": "6c407ea63296ef24a2ee8daac75ad2e840647b57"
+                "reference": "6c225eaba93508d674676ad4abe69803edac35e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c9s/CodeGen/zipball/6c407ea63296ef24a2ee8daac75ad2e840647b57",
-                "reference": "6c407ea63296ef24a2ee8daac75ad2e840647b57",
+                "url": "https://api.github.com/repos/c9s/CodeGen/zipball/6c225eaba93508d674676ad4abe69803edac35e5",
+                "reference": "6c225eaba93508d674676ad4abe69803edac35e5",
                 "shasum": ""
             },
             "require": {
@@ -377,20 +377,20 @@
             ],
             "description": "PHP Code Generation Library",
             "homepage": "http://github.com/c9s/CodeGen",
-            "time": "2017-05-18 17:21:51"
+            "time": "2017-05-25 14:49:13"
         },
         {
             "name": "corneltek/configkit",
-            "version": "1.6.3",
+            "version": "1.6.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/c9s/ConfigKit.git",
-                "reference": "55aaf1bf1b55ba06b41a3bc8d12a210dd1fce853"
+                "reference": "a10aaeeca3624e38bffcc9a0636c3bb62dec197d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c9s/ConfigKit/zipball/55aaf1bf1b55ba06b41a3bc8d12a210dd1fce853",
-                "reference": "55aaf1bf1b55ba06b41a3bc8d12a210dd1fce853",
+                "url": "https://api.github.com/repos/c9s/ConfigKit/zipball/a10aaeeca3624e38bffcc9a0636c3bb62dec197d",
+                "reference": "a10aaeeca3624e38bffcc9a0636c3bb62dec197d",
                 "shasum": ""
             },
             "require": {
@@ -419,7 +419,7 @@
                 "config",
                 "yaml"
             ],
-            "time": "2017-05-18T17:34:15+00:00"
+            "time": "2017-05-27T07:41:50+00:00"
         },
         {
             "name": "corneltek/fileutil",
@@ -853,20 +853,24 @@
         },
         {
             "name": "corneltek/serializerkit",
-            "version": "1.0.1",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/c9s/php-SerializerKit.git",
-                "reference": "61737d9243605b21f0c7349894e788c44f50fb58"
+                "reference": "d6f222c252fcf5f7dde788173ceb4a41a92136dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c9s/php-SerializerKit/zipball/61737d9243605b21f0c7349894e788c44f50fb58",
-                "reference": "61737d9243605b21f0c7349894e788c44f50fb58",
+                "url": "https://api.github.com/repos/c9s/php-SerializerKit/zipball/d6f222c252fcf5f7dde788173ceb4a41a92136dd",
+                "reference": "d6f222c252fcf5f7dde788173ceb4a41a92136dd",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0"
+                "php": ">=5.3.0",
+                "symfony/yaml": "~2"
+            },
+            "require-dev": {
+                "corneltek/phpunit-testmore": "dev-master"
             },
             "type": "library",
             "autoload": {
@@ -875,7 +879,7 @@
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
-            "time": "2013-03-24T02:01:02+00:00"
+            "time": "2013-12-01T14:32:14+00:00"
         },
         {
             "name": "corneltek/sessionkit",
@@ -1285,12 +1289,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/maghead/maghead.git",
-                "reference": "3a438ca89c31a66d7deec45b494976804475cb35"
+                "reference": "32ad2f0fd69526db47cc7415ae360a8224543690"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maghead/maghead/zipball/3a438ca89c31a66d7deec45b494976804475cb35",
-                "reference": "3a438ca89c31a66d7deec45b494976804475cb35",
+                "url": "https://api.github.com/repos/maghead/maghead/zipball/32ad2f0fd69526db47cc7415ae360a8224543690",
+                "reference": "32ad2f0fd69526db47cc7415ae360a8224543690",
                 "shasum": ""
             },
             "require": {
@@ -1354,7 +1358,7 @@
                 "orm",
                 "sql"
             ],
-            "time": "2017-05-20 16:21:22"
+            "time": "2017-05-27 14:00:12"
         },
         {
             "name": "maghead/magsql",
@@ -2393,31 +2397,25 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.2.8",
+            "version": "v2.8.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "acec26fcf7f3031e094e910b94b002fa53d4e4d6"
+                "reference": "93ccdde79f4b079c7558da4656a3cb1c50c68e02"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/acec26fcf7f3031e094e910b94b002fa53d4e4d6",
-                "reference": "acec26fcf7f3031e094e910b94b002fa53d4e4d6",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/93ccdde79f4b079c7558da4656a3cb1c50c68e02",
+                "reference": "93ccdde79f4b079c7558da4656a3cb1c50c68e02",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.5.9"
-            },
-            "require-dev": {
-                "symfony/console": "~2.8|~3.0"
-            },
-            "suggest": {
-                "symfony/console": "For validating YAML files using the lint command"
+                "php": ">=5.3.9"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.2-dev"
+                    "dev-master": "2.8-dev"
                 }
             },
             "autoload": {
@@ -2444,27 +2442,28 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2017-05-01T14:55:58+00:00"
+            "time": "2017-05-01T14:31:55+00:00"
         },
         {
             "name": "twig/extensions",
-            "version": "v1.4.1",
+            "version": "v1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig-extensions.git",
-                "reference": "f0bb8431c8691f5a39f1017d9a5967a082bf01ff"
+                "reference": "d6d74d6f3213a9574c460c4390c25a1a67c17cc3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig-extensions/zipball/f0bb8431c8691f5a39f1017d9a5967a082bf01ff",
-                "reference": "f0bb8431c8691f5a39f1017d9a5967a082bf01ff",
+                "url": "https://api.github.com/repos/twigphp/Twig-extensions/zipball/d6d74d6f3213a9574c460c4390c25a1a67c17cc3",
+                "reference": "d6d74d6f3213a9574c460c4390c25a1a67c17cc3",
                 "shasum": ""
             },
             "require": {
-                "twig/twig": "~1.20|~2.0"
+                "twig/twig": "~1.27|~2.0"
             },
             "require-dev": {
-                "symfony/translation": "~2.3"
+                "symfony/phpunit-bridge": "~3.3@dev",
+                "symfony/translation": "~2.3|~3.0"
             },
             "suggest": {
                 "symfony/translation": "Allow the time_diff output to be translated"
@@ -2472,12 +2471,15 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.4-dev"
+                    "dev-master": "1.5-dev"
                 }
             },
             "autoload": {
                 "psr-0": {
                     "Twig_Extensions_": "lib/"
+                },
+                "psr-4": {
+                    "Twig\\Extensions\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -2496,7 +2498,7 @@
                 "i18n",
                 "text"
             ],
-            "time": "2016-10-25T17:34:14+00:00"
+            "time": "2017-05-24T06:24:07+00:00"
         },
         {
             "name": "twig/twig",
