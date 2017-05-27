@@ -328,17 +328,8 @@ class Kernel extends ObjectContainer
                 // header('HTTP/1.0 404 Not Found');
                 echo "<h3>Page not found.</h3>";
             }
-        }
-        // Cache Twig Template Error
-        /*
-        catch ( Twig_Error_Runtime $e ) {
-            # twig error exception
-        
-        }
-        */
-        catch ( Exception $e ) {
-            if ($this->isDev ) 
-            {
+        } catch (Exception $e) {
+            if ($this->isDev ) {
                 if( class_exists('CoreBundle\\Controller\\ExceptionController',true) ) {
                     $controller = new \CoreBundle\Controller\ExceptionController;
                     echo $controller->indexAction($e);
@@ -346,17 +337,11 @@ class Kernel extends ObjectContainer
                     // simply throw exception
                     throw $e;
                 }
-            }
-            else {
+            } else {
                 @header('HTTP/1.1 500 Internal Server Error');
                 die($e->getMessage());
             }
         }
-        catch ( \Roller\Exception\RouteException $e ) {
-            @header('HTTP/1.1 403');
-            die( $e->getMessage() );
-        }
-
     }
 
 
