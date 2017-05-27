@@ -1,5 +1,6 @@
 <?php
 namespace Phifty\Console\Command\AssetCommand;
+
 use CLIFramework\Command;
 use AssetKit\Installer;
 use AssetKit\LinkInstaller;
@@ -15,7 +16,7 @@ class InstallCommand extends AssetBaseCommand
 {
     public function options($opts)
     {
-        $opts->add('l|link','use symbolic link');
+        $opts->add('l|link', 'use symbolic link');
     }
 
 
@@ -84,10 +85,10 @@ class InstallCommand extends AssetBaseCommand
 
 
         $compiledDir = $config->getCompiledDir();
-        if ( ! file_exists($compiledDir) ) {
+        if (! file_exists($compiledDir)) {
             $this->logger->info("Creating asset compiled dir: $compiledDir");
             $this->logger->info("Please chmod this directory as you need.");
-            mkdir($compiledDir,0777,true);
+            mkdir($compiledDir, 0777, true);
         }
 
         $this->logger->info("Done");

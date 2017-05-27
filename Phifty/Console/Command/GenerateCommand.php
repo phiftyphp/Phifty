@@ -8,7 +8,10 @@ use GenPHP\GeneratorRunner;
 
 class GenerateCommand extends Command
 {
-    public function brief() { return 'template generator command'; }
+    public function brief()
+    {
+        return 'template generator command';
+    }
 
     public function execute($flavor)
     {
@@ -16,12 +19,12 @@ class GenerateCommand extends Command
         array_shift($args);
 
         $loader = new FlavorLoader(array( dirname(__DIR__) . '/Flavors'));
-        if ( $flavor = $loader->load($flavor) ) {
+        if ($flavor = $loader->load($flavor)) {
             $generator = $flavor->getGenerator();
             $generator->setLogger($this->logger);
             $runner = new GeneratorRunner;
             $runner->logger = $this->logger;
-            $runner->run($generator,$args);
+            $runner->run($generator, $args);
         } else {
             throw new Exception("Flavor $flavor not found.");
         }

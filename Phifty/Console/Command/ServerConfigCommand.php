@@ -1,5 +1,6 @@
 <?php
 namespace Phifty\Console\Command;
+
 use CLIFramework\Command;
 use CodeGen\Frameworks\Apache2\VirtualHost;
 use CodeGen\Frameworks\Apache2\Directory;
@@ -7,7 +8,6 @@ use Phifty\Kernel;
 
 class ServerConfigCommand extends Command
 {
-
     public function options($opts)
     {
         $opts->add('apache2');
@@ -44,7 +44,6 @@ class ServerConfigCommand extends Command
 
     public function execute()
     {
-
         $kernel = kernel();
         if ($this->options->apache2) {
             $config = $this->generateApache2Config($kernel);
@@ -96,6 +95,3 @@ OUT;
         }
     }
 }
-
-
-

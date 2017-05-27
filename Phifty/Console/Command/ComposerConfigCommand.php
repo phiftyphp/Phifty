@@ -1,21 +1,24 @@
 <?php
 namespace Phifty\Console\Command;
+
 use CLIFramework\Command;
 use Phifty\ComposerConfigBridge;
 use Exception;
 
 class ComposerConfigCommand extends Command
 {
-    public function brief() {
+    public function brief()
+    {
         return 'Build composer config for web application.';
     }
 
-    public function mergeConfig(& $config, $deps ) {
-        if ( ! is_array($deps) ) {
+    public function mergeConfig(& $config, $deps)
+    {
+        if (! is_array($deps)) {
             throw new Exception("Returned dependency data is not an array.");
         }
-        foreach( $deps as $pkgName => $versionConstraint ) {
-            if ( isset($config['require'][$pkgName]) ) {
+        foreach ($deps as $pkgName => $versionConstraint) {
+            if (isset($config['require'][$pkgName])) {
                 throw new Exception("$pkgName is already defined.");
             }
             $config['require'][$pkgName] = $versionConstraint;
@@ -30,17 +33,17 @@ class ComposerConfigCommand extends Command
         $config['name'] = 'site/' . strtolower($kernel->getApplicationId());
         $config['version'] = '1.0';
         $config['require'] = [];
-        foreach( $bundles as $bundle ) {
-            if ($bundle instanceof ComposerConfigBridge ) {
-                if ( $deps = $bundle->getComposerRequire() ) {
+        foreach ($bundles as $bundle) {
+            if ($bundle instanceof ComposerConfigBridge) {
+                if ($deps = $bundle->getComposerRequire()) {
                     $this->mergeConfig($config, $deps);
                 }
             }
         }
 
         foreach ($kernel->getServices() as $service) {
-            if ($service instanceof ComposerConfigBridge ) {
-                if ( $deps = $service->getComposerRequire() ) {
+            if ($service instanceof ComposerConfigBridge) {
+                if ($deps = $service->getComposerRequire()) {
                     $this->mergeConfig($config, $deps);
                 }
             }
@@ -56,6 +59,3 @@ class ComposerConfigCommand extends Command
         echo json_encode($config, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
     }
 }
-
-
-

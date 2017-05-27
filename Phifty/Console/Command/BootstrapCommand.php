@@ -219,7 +219,7 @@ class BootstrapCommand extends Command
         $kernelClassGenerator = new AppClassGenerator([
             'namespace' => 'App',
             'prefix' => 'App',
-            'property_filter' => function($property) {
+            'property_filter' => function ($property) {
                 return !preg_match('/^(applications|services|environment|isDev|_.*)$/i', $property->getName());
             }
         ]);
@@ -227,7 +227,7 @@ class BootstrapCommand extends Command
         // The runtime kernel will only contains "configLoader" and "classLoader" services
         $runtimeKernel = new \Phifty\Kernel;
         $runtimeKernel->prepare($configLoader);
-        $runtimeKernel->config = function() use ($configLoader) {
+        $runtimeKernel->config = function () use ($configLoader) {
             return $configLoader;
         };
 
@@ -240,13 +240,13 @@ class BootstrapCommand extends Command
         //       Paths:
         //       - app_bundles
         //       - bundles
-        $bundleLoaderConfig = $configLoader->get('framework','BundleLoader') ?: [ 'Paths' => ['app_bundles','bundles'] ];
+        $bundleLoaderConfig = $configLoader->get('framework', 'BundleLoader') ?: [ 'Paths' => ['app_bundles','bundles'] ];
         // Load bundle objects into the runtimeKernel
         $bundleLoader = new BundleLoader($runtimeKernel, [
             PH_ROOT . DIRECTORY_SEPARATOR . 'app_bundles',
             PH_ROOT . DIRECTORY_SEPARATOR . 'bundles'
         ]);
-        $bundleList = $configLoader->get('framework','Bundles');
+        $bundleList = $configLoader->get('framework', 'Bundles');
 
         $bundleService = new BundleServiceProvider();
         $bundleService->register($runtimeKernel, $bundleLoaderConfig);
@@ -296,8 +296,8 @@ class BootstrapCommand extends Command
         $block[] = new AssignStatement('$kernel', new NewObject('App\\AppKernel'));
 
         // Generates: $kernel->registerService(new \Phifty\ServiceProvider\ClassLoaderServiceProvider($splClassLoader));
-        $block[] = new Statement(new MethodCall('$kernel', 'registerService', [ 
-            new NewObject('\\Phifty\\ServiceProvider\\ClassLoaderServiceProvider',[ new Variable('$splClassLoader') ]),
+        $block[] = new Statement(new MethodCall('$kernel', 'registerService', [
+            new NewObject('\\Phifty\\ServiceProvider\\ClassLoaderServiceProvider', [ new Variable('$splClassLoader') ]),
         ]));
 
 
@@ -306,7 +306,7 @@ class BootstrapCommand extends Command
 
         // Generates: $kernel->registerService(new \Phifty\ServiceProvider\ConfigServiceProvider($configLoader));
         $block[] = new RequireClassStatement('Phifty\\ServiceProvider\\ConfigServiceProvider');
-        $block[] = new Statement(new MethodCall('$kernel', 'registerService', [ 
+        $block[] = new Statement(new MethodCall('$kernel', 'registerService', [
             new NewObject('\\Phifty\\ServiceProvider\\ConfigServiceProvider', [ new Variable('$configLoader') ]),
         ]));
 
@@ -314,13 +314,13 @@ class BootstrapCommand extends Command
         // Generates: $kernel->registerService(new \Phifty\ServiceProvider\EventServiceProvider());
         $block[] = new Comment('The event service is required for every component.');
         $block[] = new RequireClassStatement('Phifty\\ServiceProvider\\EventServiceProvider');
-        $block[] = new Statement(new MethodCall('$kernel', 'registerService', [ 
+        $block[] = new Statement(new MethodCall('$kernel', 'registerService', [
             new NewObject('\\Phifty\\ServiceProvider\\EventServiceProvider'),
         ]));
 
         // Include bootstrap class
         $block[] = new Comment('Bootstrap.php nows only contains kernel() function.');
-        $block[] = new RequireStatement(dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . 'Bootstrap.php' );
+        $block[] = new RequireStatement(dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . 'Bootstrap.php');
 
 
         // Kernel initialization after bootstrap script
@@ -396,8 +396,7 @@ class BootstrapCommand extends Command
                     }
 
                     if (is_subclass_of($class, 'Phifty\\ServiceProvider\\BaseServiceProvider')
-                        && $class::isGeneratable($runtimeKernel, $options))
-                    {
+                        && $class::isGeneratable($runtimeKernel, $options)) {
                         if ($prepareStm = $class::generatePrepare($runtimeKernel, $options)) {
                             $block[] = $prepareStm;
                         }
@@ -448,7 +447,7 @@ class BootstrapCommand extends Command
             }
             foreach ($bundleList as $bundleName => $bundleConfig) {
                 $bundleClass = "$bundleName\\$bundleName";
-                $block[] = "\$kernel->bundles['$bundleName'] = $bundleClass::getInstance(\$kernel, " . var_export($bundleConfig,true) . ");";
+                $block[] = "\$kernel->bundles['$bundleName'] = $bundleClass::getInstance(\$kernel, " . var_export($bundleConfig, true) . ");";
             }
         }
 

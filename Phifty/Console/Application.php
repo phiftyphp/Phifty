@@ -35,7 +35,7 @@ class Application extends \CLIFramework\Application
     public static function getInstance()
     {
         static $instance;
-        if ( $instance ) {
+        if ($instance) {
             return $instance;
         }
         return $instance = new static;

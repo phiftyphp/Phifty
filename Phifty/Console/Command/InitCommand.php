@@ -1,12 +1,13 @@
 <?php
 namespace Phifty\Console\Command;
+
 use CLIFramework\Command;
 use Phifty\FileUtils;
 
-function copy_if_not_exists($source,$dest)
+function copy_if_not_exists($source, $dest)
 {
-    if ( ! file_exists($dest) ) {
-        copy($source,$dest);
+    if (! file_exists($dest)) {
+        copy($source, $dest);
     }
 }
 
@@ -27,8 +28,8 @@ class InitCommand extends Command
     {
         $kernel = kernel();
         $dirs = array();
-        $dirs[] = FileUtils::path_join( PH_APP_ROOT, 'cache', 'view' );
-        $dirs[] = FileUtils::path_join( PH_APP_ROOT, 'cache', 'config' );
+        $dirs[] = FileUtils::path_join(PH_APP_ROOT, 'cache', 'view');
+        $dirs[] = FileUtils::path_join(PH_APP_ROOT, 'cache', 'config');
         $dirs[] = 'locale';
         $dirs[] = 'app';
         $dirs[] = 'bin';
@@ -42,11 +43,11 @@ class InitCommand extends Command
         $dirs[] = 'webroot' . DIRECTORY_SEPARATOR . 'static' . DIRECTORY_SEPARATOR . 'js';
         $dirs[] = 'webroot' . DIRECTORY_SEPARATOR . 'static' . DIRECTORY_SEPARATOR . 'upload';
         $dirs[] = 'webroot' . DIRECTORY_SEPARATOR . 'upload';
-        FileUtils::mkpath($dirs,true);
+        FileUtils::mkpath($dirs, true);
 
         // TODO: create .htaccess file
 
-        $this->logger->info( "Changing permissions..." );
+        $this->logger->info("Changing permissions...");
         $chmods = [];
         $chmods[] = ["0777", "cache"];
         $chmods[] = ["0777", "cache/view"];
@@ -54,7 +55,7 @@ class InitCommand extends Command
         $chmods[] = ["0777", $kernel->webroot . DIRECTORY_SEPARATOR . 'static' . DIRECTORY_SEPARATOR . 'upload' ];
         $chmods[] = ["0777", $kernel->webroot . DIRECTORY_SEPARATOR . 'upload' ];
         foreach ($chmods as $mod) {
-            $this->logger->info("Changing mode to {$mod[0]} on {$mod[1]}", 1 );
+            $this->logger->info("Changing mode to {$mod[0]} on {$mod[1]}", 1);
             if ($this->options->system) {
                 system("chmod -R {$mod[0]} {$mod[1]}");
             } else {

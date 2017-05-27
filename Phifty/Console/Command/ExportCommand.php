@@ -1,5 +1,6 @@
 <?php
 namespace Phifty\Console\Command;
+
 use Phifty\FileUtils;
 use Phifty\Plugin\Plugin;
 use CLIFramework\Command;
@@ -9,7 +10,6 @@ use CLIFramework\Command;
  */
 class ExportCommand extends Command
 {
-
     public function usage()
     {
         return 'export';
@@ -24,7 +24,7 @@ class ExportCommand extends Command
     {
         $kernel       = kernel();
         $webroot      = $kernel->webroot;
-        foreach ( kernel()->plugins as $plugin ) {
+        foreach (kernel()->plugins as $plugin) {
             // Exporting Web directory
         }
     }

@@ -1,5 +1,6 @@
 <?php
 namespace Phifty\Console\Command\AssetCommand;
+
 use CLIFramework\Command;
 
 class ListCommand extends AssetBaseCommand

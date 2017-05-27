@@ -1,5 +1,6 @@
 <?php
 namespace Phifty\Console\Command;
+
 use CLIFramework\Command;
 use Symfony\Component\Finder\Finder;
 use Phifty\Kernel;
@@ -7,7 +8,6 @@ use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
 use Phifty\FileUtils;
 use Phifty;
-
 
 /*
 function proc_read($command)
@@ -33,17 +33,16 @@ function proc_read($command)
  */
 class LocaleCommand extends Command
 {
-
     public function options($opts)
     {
-        $opts->add('f|force','force');
+        $opts->add('f|force', 'force');
     }
 
     public function init()
     {
         parent::init();
-        $this->command('parse','Phifty\Console\Command\LocaleParseCommand');
-        $this->command('update','Phifty\Console\Command\LocaleUpdateCommand');
+        $this->command('parse', 'Phifty\Console\Command\LocaleParseCommand');
+        $this->command('update', 'Phifty\Console\Command\LocaleUpdateCommand');
     }
 
     public function execute()
@@ -56,5 +55,4 @@ class LocaleCommand extends Command
         $update->options = $this->options;
         $update->executeWrapper(array());
     }
-
 }

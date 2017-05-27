@@ -1,28 +1,31 @@
 <?php
 namespace Phifty\Console\Command;
+
 use CLIFramework\Command;
 
 class ConsoleCommand extends Command
 {
-
-    public function brief() { return 'Simple REPL Console.'; }
+    public function brief()
+    {
+        return 'Simple REPL Console.';
+    }
 
     public function execute()
     {
-        set_error_handler(function( $errno, $errstr, $errfile, $errline, $errcontext ) {
-            print_r( $errno, $errstr );
+        set_error_handler(function ($errno, $errstr, $errfile, $errline, $errcontext) {
+            print_r($errno, $errstr);
 
             return false;
         });
 
-        if ( extension_loaded('xdebug') ) {
-            ini_set('xdebug.cli_color', true );
-            ini_set('xdebug.show_local_vars', true );
-            ini_set('xdebug.var_display_max_data', 64 );
+        if (extension_loaded('xdebug')) {
+            ini_set('xdebug.cli_color', true);
+            ini_set('xdebug.show_local_vars', true);
+            ini_set('xdebug.var_display_max_data', 64);
         }
 
         $commands = array();
-        $commands['q'] = $commands['exit'] = function() {
+        $commands['q'] = $commands['exit'] = function () {
             exit(0);
         };
 
@@ -31,8 +34,8 @@ class ConsoleCommand extends Command
             try {
                 $text = $this->ask('>>');
 
-                if ( isset($commands[$text]) ) {
-                    call_user_func( $commands[$text] );
+                if (isset($commands[$text])) {
+                    call_user_func($commands[$text]);
                 }
 
                 $text = 'return ' . $text . ';';
@@ -41,13 +44,13 @@ class ConsoleCommand extends Command
                     // parse text and dump the value.
                     var_dump($return);
                 } else {
-                    if ( preg_match('#^\s*\$(\w+)#i',$text,$regs) ) {
+                    if (preg_match('#^\s*\$(\w+)#i', $text, $regs)) {
                         $__n = $regs[1];
-                        var_dump( $$__n );
+                        var_dump($$__n);
                     }
                 }
-            } catch ( Exception $e ) {
-                $printer = new \Exception\ConsolePrinter( $e );
+            } catch (Exception $e) {
+                $printer = new \Exception\ConsolePrinter($e);
                 echo $printer;
             }
         }
