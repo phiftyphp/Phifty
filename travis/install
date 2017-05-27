@@ -2,5 +2,3 @@
 dir=$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)
 $dir/install-cssmin
 $dir/install-yaml
-composer install
-composer require "satooshi/php-coveralls" "^1" --dev --no-update
