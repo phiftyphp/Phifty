@@ -28,7 +28,6 @@ class Application extends \CLIFramework\Application
         $this->command('server-config');
 
         $this->command('new', Command\GenerateCommand::class);
-        $this->command('check');
         $this->command('cache:clean', Command\CacheCleanCommand::class);
     }
 
