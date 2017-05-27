@@ -15,13 +15,11 @@ services:
 - redis
 
 install:
-- travis_retry composer install
-- travis_retry composer require "satooshi/php-coveralls" "^1" --dev --no-update
 - ./travis/install
 
 before_script:
-- travis/before_script
 - phpenv rehash
+- ./travis/before_script
 - cp -v config/framework.dev.yml config/framework.yml
 - cp -v config/database.dev.yml config/database.yml
 
