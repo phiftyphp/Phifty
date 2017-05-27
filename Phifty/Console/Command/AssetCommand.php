@@ -26,7 +26,6 @@ class AssetCommand extends Command
     {
         // Create options from install command
         $init = $this->createCommand(AssetCommand\InstallCommand::class);
-        $init->logger = $this->logger;
         $init->options($opts);
     }
 
