@@ -35,7 +35,7 @@ class RedisServiceProvider extends BaseServiceProvider implements ComposerConfig
         };
     }
 
-    public function getComposerDependency()
+    public function getComposerRequire()
     {
         // https://github.com/phpredis/phpredis
         return ['ext-redis' => '*'];

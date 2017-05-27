@@ -32,7 +32,7 @@ class ComposerConfigCommand extends Command
         $config['require'] = [];
         foreach( $bundles as $bundle ) {
             if ($bundle instanceof ComposerConfigBridge ) {
-                if ( $deps = $bundle->getComposerDependency() ) {
+                if ( $deps = $bundle->getComposerRequire() ) {
                     $this->mergeConfig($config, $deps);
                 }
             }
@@ -40,7 +40,7 @@ class ComposerConfigCommand extends Command
 
         foreach ($kernel->getServices() as $service) {
             if ($service instanceof ComposerConfigBridge ) {
-                if ( $deps = $service->getComposerDependency() ) {
+                if ( $deps = $service->getComposerRequire() ) {
                     $this->mergeConfig($config, $deps);
                 }
             }

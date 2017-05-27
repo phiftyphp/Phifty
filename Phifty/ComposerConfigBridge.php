@@ -6,7 +6,5 @@ interface ComposerConfigBridge {
     /**
      * @return array
      */
-    public function getComposerDependency();
-
+    public function getComposerRequire();
 }
-

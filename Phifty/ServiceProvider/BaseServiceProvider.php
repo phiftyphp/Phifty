@@ -79,7 +79,7 @@ abstract class BaseServiceProvider implements ServiceProvider, ComposerConfigBri
         return new NewObject($className, []);
     }
 
-    public function getComposerDependency()
+    public function getComposerRequire()
     {
         return [];
     }

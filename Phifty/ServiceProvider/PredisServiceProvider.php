@@ -25,7 +25,7 @@ class PredisServiceProvider extends BaseServiceProvider implements ComposerConfi
         };
     }
 
-    public function getComposerDependency()
+    public function getComposerRequire()
     {
         return ['predis/predis' => '@stable'];
     }

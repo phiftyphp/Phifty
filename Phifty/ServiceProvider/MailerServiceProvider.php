@@ -114,7 +114,7 @@ class MailerServiceProvider extends BaseServiceProvider implements ComposerConfi
         };
     }
 
-    public function getComposerDependency()
+    public function getComposerRequire()
     {
         return ['swiftmailer/swiftmailer' => '@stable'];
     }

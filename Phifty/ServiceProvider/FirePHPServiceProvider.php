@@ -36,7 +36,7 @@ class FirePHPServiceProvider extends BaseServiceProvider
         });
     }
 
-    public function getComposerDependency()
+    public function getComposerRequire()
     {
         return ['firephp/firephp-core' => 'dev-master'];
     }

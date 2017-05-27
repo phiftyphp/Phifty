@@ -48,7 +48,7 @@ class Facebook4ServiceProvider
         return $options;
     }
 
-    public function getComposerDependency()
+    public function getComposerRequire()
     {
         return ["facebook/php-sdk-v4" => "~5.0"];
     }
