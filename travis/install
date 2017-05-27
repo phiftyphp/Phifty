@@ -1,3 +1,4 @@
 #!/bin/bash
-./travis/install-cssmin
-./travis/install-yaml
+dir=$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)
+$dir/install-cssmin
+$dir/install-yaml
