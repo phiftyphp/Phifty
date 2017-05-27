@@ -20,15 +20,10 @@ install:
 - ./travis/install
 
 before_script:
-- phpenv config-add travis/config/$TRAVIS_PHP_VERSION.ini
-- phpenv config-add travis/config/apc.ini
-- echo "extension = memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-- echo "extension = redis.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+- travis/before_script
 - phpenv rehash
 - cp -v config/framework.dev.yml config/framework.yml
 - cp -v config/database.dev.yml config/database.yml
-- mkdir -p app cache bundles
-- rm -f bootstrap.php
 
 script:
 - php bin/phifty bootstrap
