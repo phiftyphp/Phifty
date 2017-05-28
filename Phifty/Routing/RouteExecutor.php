@@ -6,6 +6,8 @@ use ReflectionClass;
 use Closure;
 use Phifty\Controller;
 
+// This implementation was copied from Pux\RouteExecutor with some extra
+// specific controller instance check.
 class RouteExecutor
 {
 
