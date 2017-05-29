@@ -22,6 +22,7 @@
         "cypresslab/gitelephant": "^1.0",
         "twig/twig": "^2.3",
         "twig/extensions": "^1.4",
+        "doctrine/inflector": "^1.0",
         "symfony/finder": "^2.8|^3.0|^3.2",
         "symfony/process": "^2.8|^3.0|^3.2",
         "pimple/pimple": "^3.0",
