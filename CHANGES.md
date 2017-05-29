@@ -48,19 +48,12 @@ Update RESTful controller
      <?php
      namespace ProductBundle\RESTful;
     -use CRUD\RESTful\ResourceHandler;
+    +use CRUD\Controller\RESTfulResourceController;
 
     -class ProductHandler extends ResourceHandler
-    +use CRUD\Controller\RESTfulResourceController;
-    +
     +class ProductHandler extends RESTfulResourceController
      {
          public $recordClass = 'ProductBundle\\Model\\Product';
-
-    @@ -38,7 +40,4 @@ class ProductHandler extends ResourceHandler
-             $this->codeForbidden();
-             die($ret->message);
-         }
-    -
      }
 
 
