@@ -1,10 +1,17 @@
 CHANGELOG
 =========
 
+Version 4.0.x
+-------------
+
+### Incompatible Changes
+
+- Removed Inflector, use doctrine/inflector instead.
+
 Version 3.0.x
 -------------
 
-### Incompatible changes
+### Incompatible Changes
 
 - Renamed Phifty\Service to Phifty\ServiceProvider
 - Renamed all Service classes with suffix `ServiceProvider`

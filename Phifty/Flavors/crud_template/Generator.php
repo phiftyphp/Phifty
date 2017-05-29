@@ -1,8 +1,10 @@
 <?php
+
 namespace crud_template;
+
 use GenPHP\Flavor\BaseGenerator;
 use Exception;
-use Phifty\Inflector;
+use Doctrine\Common\Inflector\Inflector;
 
 class Generator extends BaseGenerator
 {
@@ -15,7 +17,7 @@ class Generator extends BaseGenerator
             throw new Exception("$ns application or plugin not found.");
         }
 
-        $crudId = Inflector::getInstance()->underscore($crudId);
+        $crudId = Inflector::tableize($crudId);
         $templateDir = $bundle->getTemplateDir() . DIRECTORY_SEPARATOR . $crudId;
         $this->copyDir( 'template' , $templateDir );
     }

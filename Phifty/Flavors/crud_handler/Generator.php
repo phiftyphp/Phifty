@@ -1,8 +1,9 @@
 <?php
 namespace crud_handler;
+
 use GenPHP\Flavor\BaseGenerator;
 use Exception;
-use Phifty\Inflector;
+use Doctrine\Common\Inflector\Inflector;
 
 class Generator extends BaseGenerator
 {
@@ -15,8 +16,8 @@ class Generator extends BaseGenerator
             throw new Exception("$ns application or bundle not found.");
         }
 
-        if ( ! $crudId ) {
-            $crudId = Inflector::getInstance()->underscore($modelName);
+        if (! $crudId) {
+            $crudId = Inflector::tableize($modelName);
         }
 
         $bundleName = $bundle->getNamespace();

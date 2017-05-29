@@ -1,9 +1,10 @@
 <?php
+
 namespace email;
+
 use GenPHP\Flavor\BaseGenerator;
 use Exception;
-use Phifty\Inflector;
-
+use Doctrine\Common\Inflector\Inflector;
 
 /**
  * $ phifty new schema StaffBundle Staff name:varchar:30
@@ -20,7 +21,7 @@ class Generator extends BaseGenerator
         }
 
         $emailClassName = $name . 'Email';
-        $handle = Inflector::getInstance()->underscore($name);
+        $handle = Inflector::tableize($name);
 
         $dir = $app->locate();
         $className = $ns . '\\Email\\' . $emailClassName;
