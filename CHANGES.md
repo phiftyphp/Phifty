@@ -19,6 +19,7 @@ Bundle
 - getInstance method was removed from BundleManager.
 - Renamed `expandRoute` method to `mount`.
 
+
 TemplateController
 
 - Reconcile the constructor arguments of TemplateController. it now accepts:
@@ -29,6 +30,39 @@ TemplateController
 CRUD
 
 - Updated expand method with Pux\Controller\ExpandableController
+
+RESTful:
+
+update:
+
+    kernel()->restful->registerResource('product','ProductBundle\\RESTful\\ProductHandler');
+    kernel()->restful->registerResource('product_type','ProductBundle\\RESTful\\ProductTypeHandler');
+
+to
+
+    kernel()->restful->addResource('product','ProductBundle\\RESTful\\ProductHandler');
+    kernel()->restful->addResource('product_type','ProductBundle\\RESTful\\ProductTypeHandler');
+
+Update RESTful controller
+
+     <?php
+     namespace ProductBundle\RESTful;
+    -use CRUD\RESTful\ResourceHandler;
+
+    -class ProductHandler extends ResourceHandler
+    +use CRUD\Controller\RESTfulResourceController;
+    +
+    +class ProductHandler extends RESTfulResourceController
+     {
+         public $recordClass = 'ProductBundle\\Model\\Product';
+
+    @@ -38,7 +40,4 @@ class ProductHandler extends ResourceHandler
+             $this->codeForbidden();
+             die($ret->message);
+         }
+    -
+     }
+
 
 Phifty\Controller
 
