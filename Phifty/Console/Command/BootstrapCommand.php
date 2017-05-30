@@ -31,6 +31,8 @@ use Maghead\Runtime\Config\FileConfigLoader;
 use Phifty\Generator\BootstrapGenerator;
 use Phifty\Bundle\BundleLoader;
 use Phifty\ServiceProvider\BundleServiceProvider;
+use Phifty\ServiceProvider\ConfigServiceProvider;
+use Phifty\ServiceProvider\EventServiceProvider;
 use Phifty\Utils;
 
 function createRuntimeKernel(ConfigLoader $configLoader)
@@ -130,13 +132,13 @@ class BootstrapCommand extends Command
         $psr4Map = require "vendor/composer/autoload_psr4.php";
         $psr4ClassLoader = new Psr4ClassLoader;
 
-        $appDirectory = 'app';
 
         $outputFile = $this->options->output;
 
 
         $frameworkRoot = dirname(dirname(dirname(__DIR__)));
         $appRoot = getcwd();
+        $appDirectory = $appRoot . DIRECTORY_SEPARATOR . 'app';
 
         defined('PH_APP_ROOT') || define('PH_APP_ROOT', $appRoot);
         defined('PH_ROOT') || define('PH_ROOT', $frameworkRoot);
@@ -147,8 +149,8 @@ class BootstrapCommand extends Command
             $this->logger->info("Removing genereated files");
             Utils::unlink_files([
                 $outputFile,
-                $appRoot . DIRECTORY_SEPARATOR . $appDirectory . DIRECTORY_SEPARATOR . 'AppKernel.php',
-                $appRoot . DIRECTORY_SEPARATOR . $appDirectory . DIRECTORY_SEPARATOR . 'AppConfigLoader.php',
+                $appDirectory . DIRECTORY_SEPARATOR . 'AppKernel.php',
+                $appDirectory . DIRECTORY_SEPARATOR . 'AppConfigLoader.php',
             ]);
             $this->logger->info('Cached files are cleaned up');
             return;
@@ -198,8 +200,7 @@ class BootstrapCommand extends Command
         $block[] = '$psr4ClassLoader->register(false);';
 
         $block[] = new Statement(new MethodCall('$psr4ClassLoader', 'addPrefix', [
-            'App\\',
-            $appRoot . DIRECTORY_SEPARATOR . $appDirectory . DIRECTORY_SEPARATOR ]));
+            'App\\', $appDirectory . DIRECTORY_SEPARATOR ]));
 
         // Generate Spl Class loader section
         $block[] = new RequireClassStatement('Universal\\ClassLoader\\SplClassLoader');
@@ -238,7 +239,6 @@ class BootstrapCommand extends Command
         // Load bundle objects into the runtimeKernel
         $bundleLoader = new BundleLoader($runtimeKernel, $bundleLoaderConfig['Paths']->toArray());
         $bundleList = $configLoader->get('framework', 'Bundles');
-
 
         // the bundle service is used for getting bundle instance from service.
         $bundleService = new BundleServiceProvider();
@@ -300,21 +300,22 @@ class BootstrapCommand extends Command
         $block[] = new AssignStatement('$configLoader', new NewObject('App\\AppConfigLoader'));
 
         // Generates: $kernel->registerService(new \Phifty\ServiceProvider\ConfigServiceProvider($configLoader));
-        $block[] = new RequireClassStatement('Phifty\\ServiceProvider\\ConfigServiceProvider');
+        $block[] = new RequireClassStatement(ConfigServiceProvider::class);
         $block[] = new Statement(new MethodCall('$kernel', 'registerService', [
-            new NewObject('\\Phifty\\ServiceProvider\\ConfigServiceProvider', [ new Variable('$configLoader') ]),
+            new NewObject(ConfigServiceProvider::class, [ new Variable('$configLoader') ]),
         ]));
 
         // load event service, so that we can bind events in Phifty
         // Generates: $kernel->registerService(new \Phifty\ServiceProvider\EventServiceProvider());
-        $block[] = new Comment('The event service is required for every component.');
-        $block[] = new RequireClassStatement('Phifty\\ServiceProvider\\EventServiceProvider');
+        $block[] = new Comment("The event service is required for every component.");
+        $block[] = new RequireClassStatement(EventServiceProvider::class);
         $block[] = new Statement(new MethodCall('$kernel', 'registerService', [
-            new NewObject('\\Phifty\\ServiceProvider\\EventServiceProvider'),
+            new NewObject(EventServiceProvider::class),
         ]));
 
         // Include bootstrap class
-        $block[] = new Comment('Bootstrap.php nows only contains kernel() function.');
+        // TODO: move to global functions
+        $block[] = new Comment("Bootstrap.php nows only contains kernel() function.");
         $block[] = new RequireStatement(dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . 'Bootstrap.php');
 
 
@@ -339,14 +340,13 @@ class BootstrapCommand extends Command
             }
 
             // Require application classes directly, we need applications to be registered before services
-            $appDir = $appRoot . DIRECTORY_SEPARATOR . 'app';
             $appClassPath = $appRoot . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'App.php';
             if (file_exists($appClassPath)) {
                 $block[] = new RequireStatement($appClassPath);
             }
-            if (is_dir($appDir)) {
+            if (is_dir($appDirectory)) {
                 $block[] = new Statement(new MethodCall('$psr4ClassLoader', 'addPrefix', [
-                        'App\\', [$appDir . DIRECTORY_SEPARATOR],
+                        'App\\', [$appDirectory . DIRECTORY_SEPARATOR],
                 ]));
             }
 
