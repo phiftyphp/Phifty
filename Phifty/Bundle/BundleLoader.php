@@ -30,28 +30,47 @@ class BundleLoader
         $class = "$name\\$name";
 
         // if we could find the class, we don't need custom class loader for this.
+        // we can get the bundle from the composer config
         if (class_exists($class, true)) {
             $refl = new ReflectionClass($class);
             $classPath = $refl->getFileName();
-            $bundleDir = dirname($classPath);
+            $bundleDir = dirname($classPath); // realpath already
+
             $composerFile = $bundleDir . DIRECTORY_SEPARATOR . 'composer.json';
             if (file_exists($composerFile)) {
                 $composerConfig = json_decode(file_get_contents($composerFile), true);
                 if (isset($composerConfig['autoload']['psr-4'])) {
                     $config = [];
                     foreach ($composerConfig['autoload']['psr-4'] as $prefix => $subpath) {
-                        $config[$prefix] = $bundleDir . DIRECTORY_SEPARATOR . ltrim($subpath, DIRECTORY_SEPARATOR);
+                        $config[$prefix] = $bundleDir . DIRECTORY_SEPARATOR . trim($subpath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
                     }
                     return $config;
                 }
                 return false;
             }
         }
+
         if ($classPath = $this->findBundleClass($name)) {
             $bundleDir = dirname($classPath);
             return [ "$name\\" => realpath($bundleDir) . DIRECTORY_SEPARATOR ];
         }
+
+        return false;
     }
+
+    public function registerAutoload($name, Psr4ClassLoader $classLoader)
+    {
+        $prefixes = $this->getAutoloadConfig($name);
+        if (!$prefixes) {
+            return;
+        }
+
+        foreach ($prefixes as $prefix => $path) {
+            $classLoader->addPrefix($prefix, $path);
+        }
+        return $prefixes;
+    }
+
 
     /**
      * Load bundle by bundle name

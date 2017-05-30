@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "93f01333cb49eee4153be05850599233",
+    "content-hash": "b9c1badb0959ebf2425a893748eab87b",
     "packages": [
         {
             "name": "composer/installers",
@@ -126,12 +126,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/corneltek/ActionKit.git",
-                "reference": "28601b13dbb4f2499d08502fbd18252500c18165"
+                "reference": "874eb1b794866d017bd3cb85374322c0311db521"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/corneltek/ActionKit/zipball/28601b13dbb4f2499d08502fbd18252500c18165",
-                "reference": "28601b13dbb4f2499d08502fbd18252500c18165",
+                "url": "https://api.github.com/repos/corneltek/ActionKit/zipball/874eb1b794866d017bd3cb85374322c0311db521",
+                "reference": "874eb1b794866d017bd3cb85374322c0311db521",
                 "shasum": ""
             },
             "require": {
@@ -141,7 +141,6 @@
                 "corneltek/fileutil": "^1.7",
                 "corneltek/formkit": "^1",
                 "corneltek/imagekit": "^1",
-                "corneltek/sqlbuilder": "@dev",
                 "corneltek/universal": "^1.8",
                 "maghead/maghead": "4.0.x-dev",
                 "maghead/magsql": "@dev",
@@ -176,7 +175,7 @@
                     "email": "yoanlin93+composer@gmail.com"
                 }
             ],
-            "time": "2017-05-19 16:09:25"
+            "time": "2017-05-29 14:10:20"
         },
         {
             "name": "corneltek/assetkit",
@@ -381,16 +380,16 @@
         },
         {
             "name": "corneltek/configkit",
-            "version": "1.6.5",
+            "version": "1.6.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/c9s/ConfigKit.git",
-                "reference": "a10aaeeca3624e38bffcc9a0636c3bb62dec197d"
+                "reference": "8ecd955df6d2e45b041cce46ca27b86d45153770"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c9s/ConfigKit/zipball/a10aaeeca3624e38bffcc9a0636c3bb62dec197d",
-                "reference": "a10aaeeca3624e38bffcc9a0636c3bb62dec197d",
+                "url": "https://api.github.com/repos/c9s/ConfigKit/zipball/8ecd955df6d2e45b041cce46ca27b86d45153770",
+                "reference": "8ecd955df6d2e45b041cce46ca27b86d45153770",
                 "shasum": ""
             },
             "require": {
@@ -403,6 +402,11 @@
                 "corneltek/phpunit-testmore": "dev-master"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.6.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "ConfigKit\\": "src/"
@@ -419,7 +423,7 @@
                 "config",
                 "yaml"
             ],
-            "time": "2017-05-27T07:41:50+00:00"
+            "time": "2017-05-29T04:25:01+00:00"
         },
         {
             "name": "corneltek/fileutil",
@@ -908,47 +912,6 @@
             "time": "2014-11-16T15:32:04+00:00"
         },
         {
-            "name": "corneltek/sqlbuilder",
-            "version": "3.2.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/c9s/SQLBuilder.git",
-                "reference": "6450f355ab7198a77890be66335f4eaed5bbe190"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/c9s/SQLBuilder/zipball/6450f355ab7198a77890be66335f4eaed5bbe190",
-                "reference": "6450f355ab7198a77890be66335f4eaed5bbe190",
-                "shasum": ""
-            },
-            "require-dev": {
-                "corneltek/phpunit-testmore": "dev-master"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.2.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "SQLBuilder\\": "SQLBuilder/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "c9s",
-                    "email": "cornelius.howl@gmail.com"
-                }
-            ],
-            "description": "Fast and Powerful SQLBuilder for PHP",
-            "time": "2016-06-19T09:50:52+00:00"
-        },
-        {
             "name": "corneltek/twig-react-directive",
             "version": "1.1.3",
             "source": {
@@ -1289,23 +1252,23 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/maghead/maghead.git",
-                "reference": "32ad2f0fd69526db47cc7415ae360a8224543690"
+                "reference": "6831c46142d2aa0a155d23ff3b51776024952bcb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maghead/maghead/zipball/32ad2f0fd69526db47cc7415ae360a8224543690",
-                "reference": "32ad2f0fd69526db47cc7415ae360a8224543690",
+                "url": "https://api.github.com/repos/maghead/maghead/zipball/6831c46142d2aa0a155d23ff3b51776024952bcb",
+                "reference": "6831c46142d2aa0a155d23ff3b51776024952bcb",
                 "shasum": ""
             },
             "require": {
                 "corneltek/cascading-attribute": "^1.2",
                 "corneltek/cliframework": "4.0.x-dev",
                 "corneltek/codegen": "4.0.x-dev",
-                "corneltek/configkit": "^1.6.2",
+                "corneltek/configkit": "^1.6",
                 "corneltek/serializerkit": "^1",
                 "corneltek/validationkit": "^1",
                 "cypresslab/gitelephant": "^1.0",
-                "doctrine/inflector": "~1.0",
+                "doctrine/inflector": "^1.0",
                 "maghead/magsql": "4.0.x-dev",
                 "maghead/sqlite-parser": "^4.0",
                 "monolog/monolog": "^1.22",
@@ -1358,7 +1321,7 @@
                 "orm",
                 "sql"
             ],
-            "time": "2017-05-27 14:00:12"
+            "time": "2017-05-30 07:01:21"
         },
         {
             "name": "maghead/magsql",
@@ -1808,12 +1771,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpsgi/Funk.git",
-                "reference": "5a8cf9399f398816b0777afdedcf32387696671f"
+                "reference": "30e56d0843df9f994b105ff338fa27795af761b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpsgi/Funk/zipball/5a8cf9399f398816b0777afdedcf32387696671f",
-                "reference": "5a8cf9399f398816b0777afdedcf32387696671f",
+                "url": "https://api.github.com/repos/phpsgi/Funk/zipball/30e56d0843df9f994b105ff338fa27795af761b0",
+                "reference": "30e56d0843df9f994b105ff338fa27795af761b0",
                 "shasum": ""
             },
             "require": {
@@ -1821,13 +1784,12 @@
                 "phpsgi/phpsgi": "@dev"
             },
             "require-dev": {
-                "corneltek/cliframework": "^3.0",
-                "corneltek/phpunit-testmore": "dev-master",
                 "corneltek/pux": "2.0.x-dev",
                 "willdurand/geocoder": "^3.1",
                 "willdurand/negotiation": "^1.4"
             },
             "suggest": {
+                "corneltek/cliframework": "4.0.x-dev",
                 "corneltek/pux": "2.0.x-dev"
             },
             "type": "library",
@@ -1838,7 +1800,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Funk\\": "src/Funk/"
+                    "Funk\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1851,6 +1813,7 @@
                     "email": "cornelius.howl@gmail.com"
                 }
             ],
+            "description": "An implementation of PHPSGI middleware specification",
             "homepage": "https://github.com/phpsgi/Funk",
             "keywords": [
                 "http",
@@ -1858,7 +1821,7 @@
                 "phpsgi",
                 "server"
             ],
-            "time": "2016-06-11 11:48:35"
+            "time": "2017-05-28 15:45:15"
         },
         {
             "name": "phpsgi/phpsgi",
@@ -2135,16 +2098,16 @@
         },
         {
             "name": "symfony/class-loader",
-            "version": "v3.2.8",
+            "version": "v3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/class-loader.git",
-                "reference": "fc4c04bfd17130a9dccfded9578353f311967da7"
+                "reference": "b0aff75bf18e4bbf37209235227e6e50a5aec8f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/class-loader/zipball/fc4c04bfd17130a9dccfded9578353f311967da7",
-                "reference": "fc4c04bfd17130a9dccfded9578353f311967da7",
+                "url": "https://api.github.com/repos/symfony/class-loader/zipball/b0aff75bf18e4bbf37209235227e6e50a5aec8f5",
+                "reference": "b0aff75bf18e4bbf37209235227e6e50a5aec8f5",
                 "shasum": ""
             },
             "require": {
@@ -2160,7 +2123,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.2-dev"
+                    "dev-master": "3.3-dev"
                 }
             },
             "autoload": {
@@ -2187,20 +2150,20 @@
             ],
             "description": "Symfony ClassLoader Component",
             "homepage": "https://symfony.com",
-            "time": "2017-04-12T14:13:17+00:00"
+            "time": "2017-04-12T14:14:56+00:00"
         },
         {
             "name": "symfony/filesystem",
-            "version": "v3.2.8",
+            "version": "v3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "040651db13cf061827a460cc10f6e36a445c45b4"
+                "reference": "c709670bf64721202ddbe4162846f250735842c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/040651db13cf061827a460cc10f6e36a445c45b4",
-                "reference": "040651db13cf061827a460cc10f6e36a445c45b4",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/c709670bf64721202ddbe4162846f250735842c0",
+                "reference": "c709670bf64721202ddbe4162846f250735842c0",
                 "shasum": ""
             },
             "require": {
@@ -2209,7 +2172,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.2-dev"
+                    "dev-master": "3.3-dev"
                 }
             },
             "autoload": {
@@ -2236,20 +2199,20 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2017-04-12T14:13:17+00:00"
+            "time": "2017-05-28T14:08:56+00:00"
         },
         {
             "name": "symfony/finder",
-            "version": "v3.2.8",
+            "version": "v3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
-                "reference": "9cf076f8f492f4b1ffac40aae9c2d287b4ca6930"
+                "reference": "30cb2a2c09627823a7243638dd456de4e2748fed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/finder/zipball/9cf076f8f492f4b1ffac40aae9c2d287b4ca6930",
-                "reference": "9cf076f8f492f4b1ffac40aae9c2d287b4ca6930",
+                "url": "https://api.github.com/repos/symfony/finder/zipball/30cb2a2c09627823a7243638dd456de4e2748fed",
+                "reference": "30cb2a2c09627823a7243638dd456de4e2748fed",
                 "shasum": ""
             },
             "require": {
@@ -2258,7 +2221,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.2-dev"
+                    "dev-master": "3.3-dev"
                 }
             },
             "autoload": {
@@ -2285,7 +2248,7 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
-            "time": "2017-04-12T14:13:17+00:00"
+            "time": "2017-05-25T23:10:31+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -2348,16 +2311,16 @@
         },
         {
             "name": "symfony/process",
-            "version": "v2.8.20",
+            "version": "v2.8.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "aff35fb3dee799c84a7313c576b72208b046ef8d"
+                "reference": "d54232f5682fda2f8bbebff7c81b864646867ab9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/aff35fb3dee799c84a7313c576b72208b046ef8d",
-                "reference": "aff35fb3dee799c84a7313c576b72208b046ef8d",
+                "url": "https://api.github.com/repos/symfony/process/zipball/d54232f5682fda2f8bbebff7c81b864646867ab9",
+                "reference": "d54232f5682fda2f8bbebff7c81b864646867ab9",
                 "shasum": ""
             },
             "require": {
@@ -2393,11 +2356,11 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
-            "time": "2017-04-12T14:07:15+00:00"
+            "time": "2017-05-08T01:19:21+00:00"
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.8.20",
+            "version": "v2.8.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
@@ -2564,7 +2527,250 @@
             "time": "2017-04-21T00:13:02+00:00"
         }
     ],
-    "packages-dev": [],
+    "packages-dev": [
+        {
+            "name": "corneltek/sqlbuilder",
+            "version": "3.2.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/c9s/SQLBuilder.git",
+                "reference": "6450f355ab7198a77890be66335f4eaed5bbe190"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/c9s/SQLBuilder/zipball/6450f355ab7198a77890be66335f4eaed5bbe190",
+                "reference": "6450f355ab7198a77890be66335f4eaed5bbe190",
+                "shasum": ""
+            },
+            "require-dev": {
+                "corneltek/phpunit-testmore": "dev-master"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SQLBuilder\\": "SQLBuilder/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "c9s",
+                    "email": "cornelius.howl@gmail.com"
+                }
+            ],
+            "description": "Fast and Powerful SQLBuilder for PHP",
+            "time": "2016-06-19T09:50:52+00:00"
+        },
+        {
+            "name": "phifty/adminui",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phifty-framework/AdminUI.git",
+                "reference": "2fdb3edb71e79f8f0ef0780b5230f48b70533b8a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phifty-framework/AdminUI/zipball/2fdb3edb71e79f8f0ef0780b5230f48b70533b8a",
+                "reference": "2fdb3edb71e79f8f0ef0780b5230f48b70533b8a",
+                "shasum": ""
+            },
+            "require": {
+                "composer/installers": "^1",
+                "phifty/phifty": "4.0.x-dev"
+            },
+            "require-dev": {
+                "corneltek/actionkit": "@dev",
+                "corneltek/assetkit": "@dev",
+                "corneltek/cliframework": "@dev",
+                "corneltek/codegen": "@dev",
+                "corneltek/kendo": "@dev",
+                "corneltek/pux": "@dev",
+                "maghead/maghead": "@dev",
+                "maghead/magsql": "@dev",
+                "phpsgi/funk": "@dev",
+                "phpsgi/phpsgi": "@dev"
+            },
+            "type": "phifty-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "AdminUI\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "c9s",
+                    "email": "yoanlin93@gmail.com"
+                }
+            ],
+            "description": "admin ui bundle for phifty framework application",
+            "time": "2017-05-30T02:25:05+00:00"
+        },
+        {
+            "name": "phifty/commonbundle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phifty-framework/CommonBundle.git",
+                "reference": "feb630c98f9e9d92f93a6e063cf67f918a7ac800"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phifty-framework/CommonBundle/zipball/feb630c98f9e9d92f93a6e063cf67f918a7ac800",
+                "reference": "feb630c98f9e9d92f93a6e063cf67f918a7ac800",
+                "shasum": ""
+            },
+            "require": {
+                "composer/installers": "^1",
+                "phifty/phifty": "4.0.x-dev"
+            },
+            "require-dev": {
+                "corneltek/actionkit": "@dev",
+                "corneltek/assetkit": "@dev",
+                "corneltek/cliframework": "@dev",
+                "corneltek/codegen": "@dev",
+                "corneltek/kendo": "@dev",
+                "corneltek/pux": "@dev",
+                "maghead/maghead": "@dev",
+                "maghead/magsql": "@dev",
+                "phpsgi/funk": "@dev",
+                "phpsgi/phpsgi": "@dev"
+            },
+            "type": "phifty-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "CommonBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "c9s",
+                    "email": "yoanlin93@gmail.com"
+                }
+            ],
+            "description": "The common bundle",
+            "time": "2017-05-29T15:30:26+00:00"
+        },
+        {
+            "name": "phifty/corebundle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phifty-framework/CoreBundle.git",
+                "reference": "7295bd8cb3a15d8bcd15aae6bfc553bba5a4664f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phifty-framework/CoreBundle/zipball/7295bd8cb3a15d8bcd15aae6bfc553bba5a4664f",
+                "reference": "7295bd8cb3a15d8bcd15aae6bfc553bba5a4664f",
+                "shasum": ""
+            },
+            "require": {
+                "composer/installers": "^1",
+                "phifty/phifty": "4.0.x-dev"
+            },
+            "type": "phifty-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "CoreBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "c9s",
+                    "email": "yoanlin93@gmail.com"
+                }
+            ],
+            "description": "core bundle that includes commonly used assets",
+            "time": "2017-05-27T14:27:31+00:00"
+        },
+        {
+            "name": "phifty/userbundle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phifty-framework/UserBundle.git",
+                "reference": "76c7b3fa8fd59ce2e3c4bcf7ad21558b0a1d0f65"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phifty-framework/UserBundle/zipball/76c7b3fa8fd59ce2e3c4bcf7ad21558b0a1d0f65",
+                "reference": "76c7b3fa8fd59ce2e3c4bcf7ad21558b0a1d0f65",
+                "shasum": ""
+            },
+            "require": {
+                "composer/installers": "^1",
+                "phifty/phifty": "4.0.x-dev"
+            },
+            "require-dev": {
+                "corneltek/actionkit": "@dev",
+                "corneltek/assetkit": "@dev",
+                "corneltek/cliframework": "@dev",
+                "corneltek/codegen": "@dev",
+                "corneltek/kendo": "@dev",
+                "corneltek/pux": "@dev",
+                "maghead/maghead": "@dev",
+                "maghead/magsql": "@dev",
+                "phpsgi/funk": "@dev",
+                "phpsgi/phpsgi": "@dev"
+            },
+            "type": "phifty-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "UserBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "c9s",
+                    "email": "yoanlin93@gmail.com"
+                }
+            ],
+            "description": "user bundle for phifty framework application",
+            "time": "2017-05-29T09:28:19+00:00"
+        }
+    ],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
@@ -2577,7 +2783,11 @@
         "corneltek/pux": 20,
         "phpsgi/funk": 20,
         "phpsgi/phpsgi": 20,
-        "corneltek/codegen": 20
+        "corneltek/codegen": 20,
+        "phifty/corebundle": 20,
+        "phifty/commonbundle": 20,
+        "phifty/adminui": 20,
+        "phifty/userbundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

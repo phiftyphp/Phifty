@@ -44,3 +44,8 @@ ServiceProviders:
     Paths:
       - bundles
 Bundles:
+  CoreBundle:
+  CommonBundle:
+  AdminUI:
+  UserBundle:
+    UseAccount: true

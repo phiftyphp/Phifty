@@ -249,27 +249,22 @@ class BootstrapCommand extends Command
 
         // Generating registering code for bundle classes
         if ($bundleList) {
-            $bundleAutoloads = [];
+            $bundlePrefixes = [];
             foreach ($bundleList as $bundleName => $bundleConfig) {
-                $autoload = $bundleLoader->getAutoloadConfig($bundleName);
-                if ($autoload === false) {
+                $autoload = $bundleLoader->registerAutoload($bundleName, $psr4ClassLoader);
+                if (!$autoload) {
                     continue;
                 }
-
                 foreach ($autoload as $prefix => $path) {
                     if ($psr4Map && isset($psr4Map[$prefix])) {
                         continue;
                     }
-                    $bundleAutoloads[$prefix] = realpath($path) . DIRECTORY_SEPARATOR;
+                    $bundlePrefixes[$prefix] = $path;
                 }
             }
 
-            // Prepare the class loading for the runtime
-            foreach ($bundleAutoloads as $prefix => $path) {
-                $psr4ClassLoader->addPrefix($prefix, $path);
-            }
-            foreach ($bundleAutoloads as $prefix => $path) {
-                $block[] = new Statement(new MethodCall('$psr4ClassLoader', 'addPrefix', [ $prefix, $path ]));
+            foreach ($bundlePrefixes as $prefix => $path) {
+                $block[] = new Statement(new MethodCall('$psr4ClassLoader', 'addPrefix', [$prefix, $path]));
             }
 
             // Load the bundle class files into the Kernel
