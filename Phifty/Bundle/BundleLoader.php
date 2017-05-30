@@ -16,6 +16,15 @@ class BundleLoader
         $this->lookupDirectories = $lookupDirectories;
     }
 
+    /**
+     * Try to get the autoload config from composer json
+     *
+     * If not, just return a general PSR-4 class loading config.
+     *
+     * Currently we only support PSR-4 class loading.
+     *
+     * @return array
+     */
     public function getAutoloadConfig($name)
     {
         $class = "$name\\$name";

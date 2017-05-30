@@ -33,6 +33,14 @@ use Phifty\Bundle\BundleLoader;
 use Phifty\ServiceProvider\BundleServiceProvider;
 use Phifty\Utils;
 
+function createRuntimeKernel(ConfigLoader $configLoader)
+{
+    $runtimeKernel = new \Phifty\Kernel;
+    $runtimeKernel->prepare($configLoader);
+
+    return $runtimeKernel;
+}
+
 function createConfigLoader($baseDir)
 {
     // We load other services from the definitions in config file
@@ -216,15 +224,9 @@ class BootstrapCommand extends Command
 
 
         // The runtime kernel will only contains "configLoader" and "classLoader" services
-        $runtimeKernel = new \Phifty\Kernel;
-        $runtimeKernel->prepare($configLoader);
-        $runtimeKernel->config = function () use ($configLoader) {
-            return $configLoader;
-        };
+        $runtimeKernel = createRuntimeKernel($configLoader);
 
         // TODO: load services here?
-
-
         // Load the bundle list config
         // The config structure:
         //     BundleLoader:
@@ -232,6 +234,7 @@ class BootstrapCommand extends Command
         //       - app_bundles
         //       - bundles
         $bundleLoaderConfig = $configLoader->get('framework', 'BundleLoader') ?: [ 'Paths' => ['app_bundles','bundles'] ];
+
         // Load bundle objects into the runtimeKernel
         $bundleLoader = new BundleLoader($runtimeKernel, [
             $appRoot . DIRECTORY_SEPARATOR . 'app_bundles',
@@ -239,28 +242,37 @@ class BootstrapCommand extends Command
         ]);
         $bundleList = $configLoader->get('framework', 'Bundles');
 
+
+        // the bundle service is used for getting bundle instance from service.
         $bundleService = new BundleServiceProvider();
         $bundleService->register($runtimeKernel, $bundleLoaderConfig);
 
-
         // Generating registering code for bundle classes
         if ($bundleList) {
+            $bundleAutoloads = [];
             foreach ($bundleList as $bundleName => $bundleConfig) {
                 $autoload = $bundleLoader->getAutoloadConfig($bundleName);
-                if ($autoload == false) {
+                if ($autoload === false) {
                     continue;
                 }
-                foreach ($autoload as $prefix => $autoloadPath) {
+
+                foreach ($autoload as $prefix => $path) {
                     if ($psr4Map && isset($psr4Map[$prefix])) {
                         continue;
                     }
-
-                    $realAutoloadPath = realpath($autoloadPath) . DIRECTORY_SEPARATOR;
-                    $this->logger->info("Adding psr4 $prefix to $realAutoloadPath");
-                    $psr4ClassLoader->addPrefix($prefix, $realAutoloadPath);
-                    $block[] = new Statement(new MethodCall('$psr4ClassLoader', 'addPrefix', [ $prefix, $realAutoloadPath ]));
+                    $bundleAutoloads[$prefix] = realpath($path) . DIRECTORY_SEPARATOR;
                 }
             }
+
+            // Prepare the class loading for the runtime
+            foreach ($bundleAutoloads as $prefix => $path) {
+                $psr4ClassLoader->addPrefix($prefix, $path);
+            }
+            foreach ($bundleAutoloads as $prefix => $path) {
+                $block[] = new Statement(new MethodCall('$psr4ClassLoader', 'addPrefix', [ $prefix, $path ]));
+            }
+
+            // Load the bundle class files into the Kernel
             foreach ($bundleList as $bundleName => $bundleConfig) {
                 $bundleClass = "$bundleName\\$bundleName";
                 if (!class_exists($bundleClass, true)) {
@@ -275,11 +287,13 @@ class BootstrapCommand extends Command
         }
 
 
+
+
+
         $appKernelClassPath = $bGenerator->generateAppKernelClass($runtimeKernel);
         require_once $appKernelClassPath;
         $block[] = new RequireStatement($appKernelClassPath);
 
-        // $block[] = '';
 
         // Generates: $kernel = new \App\AppKernel;
         $block[] = new AssignStatement('$kernel', new NewObject('App\\AppKernel'));
