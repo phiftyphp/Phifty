@@ -1,4 +1,5 @@
 #!/bin/bash
 set -x
 set -e
+mkdir -p config app cache bundles
 rm -f bootstrap.php && php bin/phifty bootstrap && php bootstrap.php
