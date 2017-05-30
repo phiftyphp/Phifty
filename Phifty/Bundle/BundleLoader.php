@@ -52,7 +52,7 @@ class BundleLoader
 
         if ($classPath = $this->findBundleClass($name)) {
             $bundleDir = dirname($classPath);
-            return [ "$name\\" => realpath($bundleDir) . DIRECTORY_SEPARATOR ];
+            return [ "$name\\" => $bundleDir . DIRECTORY_SEPARATOR ];
         }
 
         return false;
