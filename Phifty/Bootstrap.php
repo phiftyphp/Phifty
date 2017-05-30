@@ -49,7 +49,7 @@ class Bootstrap
     /**
      * Create a minimal runtime Kernel instance
      *
-     * This runtime kernel instance only contains a bundle service provider.
+     * This runtime kernel instance load service providers and bundles
      *
      * @return Phifty\Kernel
      */
@@ -58,40 +58,13 @@ class Bootstrap
         $kernel = new \Phifty\Kernel;
         $kernel->prepare($configLoader);
 
-        // Load the bundle list config
-        // The config structure:
-        //     BundleLoader:
-        //       Paths:
-        //       - app_bundles
-        //       - bundles
-        $bundleLoaderConfig = $configLoader->get('framework', 'BundleLoader') ?: new \ConfigKit\Accessor([ 'Paths' => ['app_bundles','bundles'] ]);
 
-        // Load bundle objects into the runtimeKernel
-        $bundleLoader = new BundleLoader($kernel, $bundleLoaderConfig['Paths']->toArray());
-        $bundleList = $configLoader->get('framework', 'Bundles');
-
-        // the bundle service is used for getting bundle instance from service.
-        $bundleService = new BundleServiceProvider();
-        $bundleService->register($kernel, $bundleLoaderConfig);
-
-        // Generating registering code for bundle classes
-        if ($bundleList) {
-            foreach ($bundleList as $bundleName => $bundleConfig) {
-                $autoload = $bundleLoader->registerAutoload($bundleName, $psr4ClassLoader);
-                if (!$autoload) {
-                    continue;
-                }
-
-                // Load the bundle class files into the Kernel
-                $bundleClass = $bundleLoader->loadBundleClass($bundleName);
-                if (false === $bundleClass) {
-                    throw new Exception("Bundle $bundleName class file '$bundleClassFile' doesn't exist.");
-                }
-                $kernel->bundles[$bundleName] = $bundleClass::getInstance($kernel, $bundleConfig);
-            }
-        }
-
-        // Load core service providers
+        // Load core service providers:
+        //   1. config service provider
+        //   2. event service provider
+        //   3. bundle service provider
+        //   4. [ ] class loader service provider
+        //
         // $kernel->registerService(new \Phifty\ServiceProvider\ClassLoaderServiceProvider($splClassLoader));
         $kernel->registerService(new \Phifty\ServiceProvider\ConfigServiceProvider($configLoader));
         $kernel->registerService(new \Phifty\ServiceProvider\EventServiceProvider());
@@ -115,6 +88,42 @@ class Bootstrap
                 $kernel->registerService(new $serviceClass($config), $config);
             }
         }
+
+        // load bundle service provider
+        $bundleService = new BundleServiceProvider();
+
+        // Load the bundle list config
+        // The config structure:
+        //     BundleLoader:
+        //       Paths:
+        //       - app_bundles
+        //       - bundles
+        $bundleLoaderConfig = $configLoader->get('framework', 'BundleLoader') ?: new \ConfigKit\Accessor([ 'Paths' => ['app_bundles','bundles'] ]);
+
+        // Load bundle objects into the runtimeKernel
+        $bundleLoader = new BundleLoader($kernel, $bundleLoaderConfig['Paths']->toArray());
+        $bundleList = $configLoader->get('framework', 'Bundles');
+
+        $kernel->registerService($bundleService, $bundleLoaderConfig);
+
+        // Generating registering code for bundle classes
+        if ($bundleList) {
+            foreach ($bundleList as $bundleName => $bundleConfig) {
+                $autoload = $bundleLoader->registerAutoload($bundleName, $psr4ClassLoader);
+                if (!$autoload) {
+                    continue;
+                }
+
+                // Load the bundle class files into the Kernel
+                $bundleClass = $bundleLoader->loadBundleClass($bundleName);
+                if (false === $bundleClass) {
+                    throw new Exception("Bundle $bundleName class file '$bundleClassFile' doesn't exist.");
+                }
+                $kernel->bundles[$bundleName] = $bundleClass::getInstance($kernel, $bundleConfig);
+            }
+        }
+
+
 
         return $kernel;
     }
