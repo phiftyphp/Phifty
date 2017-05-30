@@ -144,7 +144,7 @@ class BootstrapCommand extends Command
 
         // The runtime kernel will only contains "configLoader" and "classLoader" services
         $psr4ClassLoader = new Psr4ClassLoader;
-        $runtimeKernel = Bootstrap::createRuntimeKernel($configLoader, $psr4ClassLoader);
+        $runtimeKernel = Bootstrap::createKernel($configLoader, $psr4ClassLoader);
         $appKernelClassPath = $bGenerator->generateAppKernelClass($runtimeKernel);
         require_once $appKernelClassPath;
 

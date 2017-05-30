@@ -53,7 +53,7 @@ class Bootstrap
      *
      * @return Phifty\Kernel
      */
-    public static function createRuntimeKernel(ConfigLoader $configLoader, Psr4ClassLoader $psr4ClassLoader)
+    public static function createKernel(ConfigLoader $configLoader, Psr4ClassLoader $psr4ClassLoader)
     {
         $kernel = new \Phifty\Kernel;
         $kernel->prepare($configLoader);
