@@ -3,12 +3,13 @@
 namespace Phifty\ServiceProvider;
 
 use PHPUnit\Framework\TestCase;
+use Phifty\Kernel;
 
-class TwigServiceTest extends TestCase
+class TwigServiceProviderTest extends TestCase
 {
     public function testRegisterTwigService()
     {
-        $kernel = kernel();
+        $kernel = new Kernel;
         $twig = new \Phifty\ServiceProvider\TwigServiceProvider([
             'Environment' => array(
                 'debug' => true,

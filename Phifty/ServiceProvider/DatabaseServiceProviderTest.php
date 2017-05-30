@@ -11,9 +11,10 @@ class DatabaseServiceProviderTest extends TestCase
 {
     public function testLoadDatabaseServiceConfig()
     {
-        $serviceProvider = new DatabaseServiceProvider([
-        ]);
+        $serviceProvider = new DatabaseServiceProvider();
+
         $kernel = new \App\AppKernel;
+
         $serviceProvider->register($kernel, [
             'config' => 'config/database.yml',
         ]);

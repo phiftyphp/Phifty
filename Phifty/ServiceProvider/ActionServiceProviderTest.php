@@ -1,15 +1,19 @@
 <?php
+
+namespace Phifty\ServiceProvider;
+
 use ActionKit\ActionRunner;
 use ActionKit\ActionGenerator;
 use Pimple\Container;
 use Phifty\ServiceProvider\EventServiceProvider;
 use Phifty\ServiceProvider\ActionServiceProvider;
+use Phifty\Kernel;
 
-class ActionServiceTest extends \PHPUnit\Framework\TestCase
+class ActionServiceProviderTest extends \PHPUnit\Framework\TestCase
 {
     public function testActionService()
     {
-        $kernel = new Phifty\Kernel;
+        $kernel = new Kernel;
         $event = new EventServiceProvider;
         $kernel->registerService($event);
 
