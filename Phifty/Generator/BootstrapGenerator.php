@@ -29,5 +29,45 @@ use Maghead\Runtime\Config\FileConfigLoader;
 
 use Phifty\Bundle\BundleLoader;
 use Phifty\ServiceProvider\BundleServiceProvider;
+use Phifty\Kernel;
 
+class BootstrapGenerator
+{
+    protected $rootDir;
 
+    protected $appDir;
+
+    protected $configLoader;
+
+    protected $appNamespace = 'App';
+
+    protected $appClassPrefix = 'App';
+
+    public function __construct($rootDir, ConfigLoader $configLoader)
+    {
+        $this->rootDir = realpath($rootDir);
+        $this->appDir = $rootDir . DIRECTORY_SEPARATOR . 'app';
+
+        $this->configLoader = $configLoader;
+    }
+
+    public function generateAppConfigClass()
+    {
+        $generator = new AppClassGenerator([ 'namespace' => $this->appNamespace, 'prefix' => $this->appClassPrefix ]);
+        $class = $generator->generate($this->configLoader);
+        return $class->generatePsr4ClassUnder($this->appDir);
+    }
+
+    public function generateAppKernelClass(Kernel $kernel)
+    {
+        $generator = new AppClassGenerator([
+            'namespace' => $this->appNamespace,
+            'prefix' => $this->appClassPrefix,
+            'property_filter' => function ($property) {
+                return !preg_match('/^(applications|services|environment|isDev|_.*)$/i', $property->getName());
+            }
+        ]);
+        $class = $generator->generate($kernel);
+        return $class->generatePsr4ClassUnder($this->appDir);
+    }
+}
