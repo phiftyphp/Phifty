@@ -159,9 +159,75 @@ class BootstrapCommand extends Command
             return;
         }
 
+
+
+        $this->logger->info("===> Generating config loader...");
+        // generating the config loader
+        $configLoader = createConfigLoader($appRoot);
+
+        $bGenerator = new BootstrapGenerator($appRoot, $configLoader);
+        $appConfigClassPath = $bGenerator->generateAppConfigClass('App', 'App');
+        require_once $appConfigClassPath;
+
+
+
+        // The runtime kernel will only contains "configLoader" and "classLoader" services
+        $runtimeKernel = createRuntimeKernel($configLoader);
+
+        // Load the bundle list config
+        // The config structure:
+        //     BundleLoader:
+        //       Paths:
+        //       - app_bundles
+        //       - bundles
+        $bundleLoaderConfig = $configLoader->get('framework', 'BundleLoader') ?: new \ConfigKit\Accessor([ 'Paths' => ['app_bundles','bundles'] ]);
+
+        // Load bundle objects into the runtimeKernel
+        $bundleLoader = new BundleLoader($runtimeKernel, $bundleLoaderConfig['Paths']->toArray());
+        $bundleList = $configLoader->get('framework', 'Bundles');
+
+        // the bundle service is used for getting bundle instance from service.
+        $bundleService = new BundleServiceProvider();
+        $bundleService->register($runtimeKernel, $bundleLoaderConfig);
+
+        // Generating registering code for bundle classes
+        if ($bundleList) {
+            $bundlePrefixes = [];
+            foreach ($bundleList as $bundleName => $bundleConfig) {
+                $autoload = $bundleLoader->registerAutoload($bundleName, $psr4ClassLoader);
+                if (!$autoload) {
+                    continue;
+                }
+                // Skip the prefixes that are already defined in the composer psr4 config.
+                foreach ($autoload as $prefix => $path) {
+                    if ($psr4Map && isset($psr4Map[$prefix])) {
+                        continue;
+                    }
+                    $bundlePrefixes[$prefix] = $path;
+                }
+
+                // Load the bundle class files into the Kernel
+
+                $bundleClass = $bundleLoader->loadBundleClass($bundleName);
+                if (false === $bundleClass) {
+                    throw new Exception("Bundle $bundleName class file '$bundleClassFile' doesn't exist.");
+                }
+                $runtimeKernel->bundles[$bundleName] = $bundleClass::getInstance($runtimeKernel, $bundleConfig);
+            }
+
+            foreach ($bundlePrefixes as $prefix => $path) {
+                $block[] = new Statement(new MethodCall('$psr4ClassLoader', 'addPrefix', [$prefix, $path]));
+            }
+        }
+
+        $appKernelClassPath = $bGenerator->generateAppKernelClass($runtimeKernel);
+        require_once $appKernelClassPath;
+
+
+
+
+
         $this->logger->info("===> Generating bootstrap file: $outputFile");
-
-
 
         $block = new Block;
         $block[] = '<?php';
@@ -214,79 +280,8 @@ class BootstrapCommand extends Command
         $block[] = new RequireClassStatement(ObjectContainer::class);
         $block[] = new RequireClassStatement(Kernel::class);
 
-        $this->logger->info("Generating config loader...");
-        // generating the config loader
-        $configLoader = createConfigLoader($appRoot);
-
-        $bGenerator = new BootstrapGenerator($appRoot, $configLoader);
-        $appConfigClassPath = $bGenerator->generateAppConfigClass('App', 'App');
-
         $block[] = new RequireStatement($appConfigClassPath);
-        require_once $appConfigClassPath;
-
-
-        // The runtime kernel will only contains "configLoader" and "classLoader" services
-        $runtimeKernel = createRuntimeKernel($configLoader);
-
-        // TODO: load services here?
-        // Load the bundle list config
-        // The config structure:
-        //     BundleLoader:
-        //       Paths:
-        //       - app_bundles
-        //       - bundles
-        $bundleLoaderConfig = $configLoader->get('framework', 'BundleLoader') ?: new \ConfigKit\Accessor([ 'Paths' => ['app_bundles','bundles'] ]);
-
-        // Load bundle objects into the runtimeKernel
-        $bundleLoader = new BundleLoader($runtimeKernel, $bundleLoaderConfig['Paths']->toArray());
-        $bundleList = $configLoader->get('framework', 'Bundles');
-
-        // the bundle service is used for getting bundle instance from service.
-        $bundleService = new BundleServiceProvider();
-        $bundleService->register($runtimeKernel, $bundleLoaderConfig);
-
-        // Generating registering code for bundle classes
-        if ($bundleList) {
-            $bundlePrefixes = [];
-            foreach ($bundleList as $bundleName => $bundleConfig) {
-                $autoload = $bundleLoader->registerAutoload($bundleName, $psr4ClassLoader);
-                if (!$autoload) {
-                    continue;
-                }
-                foreach ($autoload as $prefix => $path) {
-                    if ($psr4Map && isset($psr4Map[$prefix])) {
-                        continue;
-                    }
-                    $bundlePrefixes[$prefix] = $path;
-                }
-            }
-
-            foreach ($bundlePrefixes as $prefix => $path) {
-                $block[] = new Statement(new MethodCall('$psr4ClassLoader', 'addPrefix', [$prefix, $path]));
-            }
-
-            // Load the bundle class files into the Kernel
-            foreach ($bundleList as $bundleName => $bundleConfig) {
-                $bundleClass = "$bundleName\\$bundleName";
-                if (!class_exists($bundleClass, true)) {
-                    $bundleClassFile = $bundleLoader->findBundleClass($bundleName);
-                    if (!$bundleClassFile) {
-                        throw new Exception("Bundle $bundleName class file '$bundleClassFile' doesn't exist.");
-                    }
-                    require $bundleClassFile;
-                }
-                $runtimeKernel->bundles[$bundleName] = $bundleClass::getInstance($runtimeKernel, $bundleConfig);
-            }
-        }
-
-
-
-
-
-        $appKernelClassPath = $bGenerator->generateAppKernelClass($runtimeKernel);
-        require_once $appKernelClassPath;
         $block[] = new RequireStatement($appKernelClassPath);
-
 
         // Generates: $kernel = new \App\AppKernel;
         $block[] = new AssignStatement('$kernel', new NewObject('App\\AppKernel'));
@@ -319,7 +314,6 @@ class BootstrapCommand extends Command
         $block[] = new Comment("Bootstrap.php nows only contains kernel() function.");
         $block[] = new RequireStatement(dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . 'Bootstrap.php');
 
-
         // Kernel initialization after bootstrap script
         if ($configLoader->isLoaded('framework')) {
 
@@ -340,11 +334,6 @@ class BootstrapCommand extends Command
                 $dbConfig = $configLoader->getSection('database');
             }
 
-            // Require application classes directly, we need applications to be registered before services
-            $appClassPath = $appRoot . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'App.php';
-            if (file_exists($appClassPath)) {
-                $block[] = new RequireStatement($appClassPath);
-            }
             if (is_dir($appDirectory)) {
                 $block[] = new Statement(new MethodCall('$psr4ClassLoader', 'addPrefix', [
                         'App\\', [$appDirectory . DIRECTORY_SEPARATOR],
@@ -404,10 +393,11 @@ class BootstrapCommand extends Command
             break;
         }
 
-
-        // BundleServiceProvider
-
-        // Init bundle objects in the bootstrap.php script
+        // Generate script for initializing the bundle objects in the
+        // bootstrap.php script
+        $bundleLoaderConfig = $configLoader->get('framework', 'BundleLoader') ?: new \ConfigKit\Accessor([ 'Paths' => ['app_bundles','bundles'] ]);
+        $bundleLoader = new BundleLoader($runtimeKernel, $bundleLoaderConfig['Paths']->toArray());
+        $bundleList = $configLoader->get('framework', 'Bundles');
         if ($bundleList) {
             foreach ($bundleList as $bundleName => $bundleConfig) {
                 $bundleClass = "$bundleName\\$bundleName";
@@ -415,7 +405,7 @@ class BootstrapCommand extends Command
                     $reflection = new ReflectionClass($bundleClass);
                     $bundleClassFile = $reflection->getFileName();
                 } else {
-                    $bundleClassFile = $bundleLoader->findBundleClass($bundleName);
+                    $bundleClassFile = $bundleLoader->findBundleClassFile($bundleName);
                 }
                 if ($bundleClassFile) {
                     $block[] = new RequireStatement($bundleClassFile);

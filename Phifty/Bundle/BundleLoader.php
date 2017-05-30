@@ -49,7 +49,7 @@ class BundleLoader
             }
         }
 
-        if ($classPath = $this->findBundleClass($name)) {
+        if ($classPath = $this->findBundleClassFile($name)) {
             $bundleDir = dirname($classPath);
             return [ "$name\\" => $bundleDir . DIRECTORY_SEPARATOR ];
         }
@@ -89,7 +89,7 @@ class BundleLoader
      * @param string $name
      * @return string $className
      */
-    public function findBundleClass($name)
+    public function findBundleClassFile($name)
     {
         $subpath = $name . DIRECTORY_SEPARATOR . $name . '.php';
         foreach ($this->lookupDirectories as $dir) {
@@ -100,6 +100,12 @@ class BundleLoader
         }
         return false;
     }
+
+    public function getBundleClass()
+    {
+        return "$bundleName\\$bundleName";
+    }
+
 
     /**
      * Require bundle class file and return the class name
@@ -112,10 +118,13 @@ class BundleLoader
         if (class_exists($class,true)) {
             return $class;
         }
-        if ($classPath = $this->findBundleClass($name)) {
+
+        if ($classPath = $this->findBundleClassFile($name)) {
             require $classPath;
             return $class;
         }
+
+        return false;
     }
 
     /*
