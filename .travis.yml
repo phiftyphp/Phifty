@@ -13,6 +13,8 @@ matrix:
 services:
 - memcached
 - redis
+- postgresql
+- mysql
 
 install:
 - composer install
