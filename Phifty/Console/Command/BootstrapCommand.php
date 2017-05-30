@@ -21,9 +21,6 @@ use CodeGen\Expr\StaticMethodCall;
 use CodeGen\Variable;
 use CodeGen\Comment;
 use CodeGen\CommentBlock;
-use ReflectionClass;
-use Exception;
-use LogicException;
 use Universal\ClassLoader\Psr4ClassLoader;
 use Universal\ClassLoader\SplClassLoader;
 use Universal\Container\ObjectContainer;
@@ -33,17 +30,68 @@ use Maghead\Runtime\Config\FileConfigLoader;
 use Phifty\Generator\BootstrapGenerator;
 use Phifty\Bundle\BundleLoader;
 use Phifty\ServiceProvider\BundleServiceProvider;
+use Phifty\ServiceProvider\DatabaseServiceProvider;
 use Phifty\ServiceProvider\ConfigServiceProvider;
 use Phifty\ServiceProvider\EventServiceProvider;
 use Phifty\Kernel;
 use Phifty\Utils;
 
-function createRuntimeKernel(ConfigLoader $configLoader)
-{
-    $runtimeKernel = new \Phifty\Kernel;
-    $runtimeKernel->prepare($configLoader);
+use Phifty\Environment\Production;
+use Phifty\Environment\Development;
 
-    return $runtimeKernel;
+use ReflectionClass;
+use Exception;
+use LogicException;
+
+
+
+
+/**
+ * Create a minimal runtime Kernel instance
+ *
+ * This runtime kernel instance only contains a bundle service provider.
+ *
+ * @return Phifty\Kernel
+ */
+function createRuntimeKernel(ConfigLoader $configLoader, Psr4ClassLoader $psr4ClassLoader)
+{
+    $kernel = new \Phifty\Kernel;
+    $kernel->prepare($configLoader);
+
+    // Load the bundle list config
+    // The config structure:
+    //     BundleLoader:
+    //       Paths:
+    //       - app_bundles
+    //       - bundles
+    $bundleLoaderConfig = $configLoader->get('framework', 'BundleLoader') ?: new \ConfigKit\Accessor([ 'Paths' => ['app_bundles','bundles'] ]);
+
+    // Load bundle objects into the runtimeKernel
+    $bundleLoader = new BundleLoader($kernel, $bundleLoaderConfig['Paths']->toArray());
+    $bundleList = $configLoader->get('framework', 'Bundles');
+
+    // the bundle service is used for getting bundle instance from service.
+    $bundleService = new BundleServiceProvider();
+    $bundleService->register($kernel, $bundleLoaderConfig);
+
+    // Generating registering code for bundle classes
+    if ($bundleList) {
+        foreach ($bundleList as $bundleName => $bundleConfig) {
+            $autoload = $bundleLoader->registerAutoload($bundleName, $psr4ClassLoader);
+            if (!$autoload) {
+                continue;
+            }
+
+            // Load the bundle class files into the Kernel
+            $bundleClass = $bundleLoader->loadBundleClass($bundleName);
+            if (false === $bundleClass) {
+                throw new Exception("Bundle $bundleName class file '$bundleClassFile' doesn't exist.");
+            }
+            $kernel->bundles[$bundleName] = $bundleClass::getInstance($kernel, $bundleConfig);
+        }
+    }
+
+    return $kernel;
 }
 
 function createConfigLoader($baseDir)
@@ -170,56 +218,8 @@ class BootstrapCommand extends Command
         require_once $appConfigClassPath;
 
 
-
         // The runtime kernel will only contains "configLoader" and "classLoader" services
-        $runtimeKernel = createRuntimeKernel($configLoader);
-
-        // Load the bundle list config
-        // The config structure:
-        //     BundleLoader:
-        //       Paths:
-        //       - app_bundles
-        //       - bundles
-        $bundleLoaderConfig = $configLoader->get('framework', 'BundleLoader') ?: new \ConfigKit\Accessor([ 'Paths' => ['app_bundles','bundles'] ]);
-
-        // Load bundle objects into the runtimeKernel
-        $bundleLoader = new BundleLoader($runtimeKernel, $bundleLoaderConfig['Paths']->toArray());
-        $bundleList = $configLoader->get('framework', 'Bundles');
-
-        // the bundle service is used for getting bundle instance from service.
-        $bundleService = new BundleServiceProvider();
-        $bundleService->register($runtimeKernel, $bundleLoaderConfig);
-
-        // Generating registering code for bundle classes
-        if ($bundleList) {
-            $bundlePrefixes = [];
-            foreach ($bundleList as $bundleName => $bundleConfig) {
-                $autoload = $bundleLoader->registerAutoload($bundleName, $psr4ClassLoader);
-                if (!$autoload) {
-                    continue;
-                }
-                // Skip the prefixes that are already defined in the composer psr4 config.
-                foreach ($autoload as $prefix => $path) {
-                    if ($psr4Map && isset($psr4Map[$prefix])) {
-                        continue;
-                    }
-                    $bundlePrefixes[$prefix] = $path;
-                }
-
-                // Load the bundle class files into the Kernel
-
-                $bundleClass = $bundleLoader->loadBundleClass($bundleName);
-                if (false === $bundleClass) {
-                    throw new Exception("Bundle $bundleName class file '$bundleClassFile' doesn't exist.");
-                }
-                $runtimeKernel->bundles[$bundleName] = $bundleClass::getInstance($runtimeKernel, $bundleConfig);
-            }
-
-            foreach ($bundlePrefixes as $prefix => $path) {
-                $block[] = new Statement(new MethodCall('$psr4ClassLoader', 'addPrefix', [$prefix, $path]));
-            }
-        }
-
+        $runtimeKernel = createRuntimeKernel($configLoader, $psr4ClassLoader);
         $appKernelClassPath = $bGenerator->generateAppKernelClass($runtimeKernel);
         require_once $appKernelClassPath;
 
@@ -318,17 +318,13 @@ class BootstrapCommand extends Command
         if ($configLoader->isLoaded('framework')) {
 
             // This is for DatabaseService
-            $dbConfig = Utils::find_db_config($baseDir);
-            $block[] = '$kernel->registerService(new \Phifty\ServiceProvider\DatabaseServiceProvider(' . var_export([
-                'configPath' => $dbConfig,
-            ], true) . '));';
+            $dbConfigPath = Utils::find_db_config($baseDir);
 
-            /*
             $block[] = new Statement(new MethodCall('$kernel', 'registerService', [
-                $class::generateNew($runtimeKernel, $options),
-                $options,
+                new NewObject(DatabaseServiceProvider::class, [
+                    ['configPath' => $dbConfigPath],
+                ]),
             ]));
-             */
 
             if ($configLoader->isLoaded('database')) {
                 $dbConfig = $configLoader->getSection('database');
@@ -343,35 +339,34 @@ class BootstrapCommand extends Command
             if ($services = $configLoader->get('framework', 'ServiceProviders')) {
                 foreach ($services as $name => $options) {
                     if (!$options) {
-                        $options = array();
+                        $options = [];
                     }
 
-                    // Not full qualified classname
-                    $class = (false === strpos($name, '\\')) ? ('Phifty\\ServiceProvider\\'.$name) : $name;
-                    if (!class_exists($class, true)) {
-                        throw new LogicException("$class does not exist.");
+                    $serviceClass = \Maghead\Utils::resolveClass($name, ["App\\ServiceProvider","Phifty\\ServiceProvider"]);
+                    if (!$serviceClass) {
+                        throw new LogicException("service class '$serviceClass' does not exist.");
                     }
-                    $block[] = new RequireClassStatement($class);
+                    $block[] = new RequireClassStatement($serviceClass);
 
-                    $this->logger->info("Generating $class ...");
+                    $this->logger->info("Generating registration for $serviceClass ...");
 
-                    $options = $class::canonicalizeConfig($runtimeKernel, $options);
+                    $options = $serviceClass::canonicalizeConfig($runtimeKernel, $options);
                     if ($options === null) {
-                        throw new LogicException("$class::canonicalizeConfig should return an array for service config.");
+                        throw new LogicException("$serviceClass::canonicalizeConfig should return an array for service config.");
                     }
 
-                    if (is_subclass_of($class, 'Phifty\\ServiceProvider\\BaseServiceProvider')
-                        && $class::isGeneratable($runtimeKernel, $options)) {
-                        if ($prepareStm = $class::generatePrepare($runtimeKernel, $options)) {
+                    if (is_subclass_of($serviceClass, 'Phifty\\ServiceProvider\\BaseServiceProvider')
+                        && $serviceClass::isGeneratable($runtimeKernel, $options)) {
+                        if ($prepareStm = $serviceClass::generatePrepare($runtimeKernel, $options)) {
                             $block[] = $prepareStm;
                         }
                         $block[] = new Statement(new MethodCall('$kernel', 'registerService', [
-                            $class::generateNew($runtimeKernel, $options),
+                            $serviceClass::generateNew($runtimeKernel, $options),
                             $options,
                         ]));
                     } else {
                         $block[] = new Statement(new MethodCall('$kernel', 'registerService', [
-                            new NewObject($class, []),
+                            new NewObject($serviceClass, []),
                             $options,
                         ]));
                     }
@@ -385,11 +380,11 @@ class BootstrapCommand extends Command
         // Generate environment setup
         switch ($env) {
         case "production":
-            $block[] = new Statement(new StaticMethodCall('Phifty\Environment\Production', 'init', [new Variable('$kernel')]));
+            $block[] = new Statement(new StaticMethodCall(Production::class, 'init', [new Variable('$kernel')]));
             break;
         case "development":
         default:
-            $block[] = new Statement(new StaticMethodCall('Phifty\Environment\Development', 'init', [new Variable('$kernel')]));
+            $block[] = new Statement(new StaticMethodCall(Development::class, 'init', [new Variable('$kernel')]));
             break;
         }
 
@@ -399,6 +394,12 @@ class BootstrapCommand extends Command
         $bundleLoader = new BundleLoader($runtimeKernel, $bundleLoaderConfig['Paths']->toArray());
         $bundleList = $configLoader->get('framework', 'Bundles');
         if ($bundleList) {
+
+            $bundlePrefixes = $bundleLoader->getBundlePrefixes($bundleList);
+            foreach ($bundlePrefixes as $prefix => $path) {
+                $block[] = new Statement(new MethodCall('$psr4ClassLoader', 'addPrefix', [$prefix, $path]));
+            }
+
             foreach ($bundleList as $bundleName => $bundleConfig) {
                 $bundleClass = "$bundleName\\$bundleName";
                 if (class_exists($bundleClass, true)) {

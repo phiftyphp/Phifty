@@ -71,6 +71,28 @@ class BundleLoader
     }
 
 
+    public function getBundlePrefixes($bundleList, array $psr4Map = null)
+    {
+        $bundlePrefixes = [];
+        foreach ($bundleList as $bundleName => $bundleConfig) {
+            $autoload = $this->getAutoloadConfig($bundleName);
+            if (!$autoload) {
+                continue;
+            }
+            // Skip the prefixes that are already defined in the composer psr4 config.
+            foreach ($autoload as $prefix => $path) {
+                if ($psr4Map && isset($psr4Map[$prefix])) {
+                    continue;
+                }
+                $bundlePrefixes[$prefix] = $path;
+            }
+        }
+        return $bundlePrefixes;
+    }
+
+
+
+
     /**
      * Load bundle by bundle name
      *
