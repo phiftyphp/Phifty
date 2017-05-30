@@ -22,3 +22,5 @@ manifest.php
 /node_modules/
 /vendor
 /.asset-entries.*
+/app/AppConfigLoader.php
+/app/AppKernel.php
