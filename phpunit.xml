@@ -18,6 +18,7 @@
     <whitelist>
       <directory suffix=".php">Phifty</directory>
       <exclude>
+        <directory suffix="Test.php">Phifty</directory>
         <directory>bundles</directory>
         <directory>vendor</directory>
         <directory>frameworks</directory>
