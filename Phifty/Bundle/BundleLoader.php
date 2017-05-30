@@ -40,13 +40,12 @@ class BundleLoader
             if (file_exists($composerFile)) {
                 $composerConfig = json_decode(file_get_contents($composerFile), true);
                 if (isset($composerConfig['autoload']['psr-4'])) {
-                    $config = [];
+                    $prefixes = [];
                     foreach ($composerConfig['autoload']['psr-4'] as $prefix => $subpath) {
-                        $config[$prefix] = $bundleDir . DIRECTORY_SEPARATOR . trim($subpath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+                        $prefixes[$prefix] = $bundleDir . DIRECTORY_SEPARATOR . trim($subpath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
                     }
-                    return $config;
+                    return $prefixes;
                 }
-                return false;
             }
         }
 
