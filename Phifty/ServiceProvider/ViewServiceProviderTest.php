@@ -1,5 +1,7 @@
 <?php
-use Phifty\ServiceProvider\ViewServiceProvider;
+
+namespace Phifty\ServiceProvider;
+
 use Phifty\Kernel;
 
 class ViewServiceTest extends \PHPUnit\Framework\TestCase
