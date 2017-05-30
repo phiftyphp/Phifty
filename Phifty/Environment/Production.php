@@ -10,14 +10,17 @@
  */
 namespace Phifty\Environment;
 
+use Phifty\Kernel;
+
 class Production
 {
-    public static function init($kernel)
+    public static function init(Kernel $kernel)
     {
         // if we are in command-line mode,
         /* for production mode */
-        if ( extension_loaded('xdebug') )
+        if (extension_loaded('xdebug')) {
             xdebug_disable();
+        }
 
         # error_reporting(0);
 

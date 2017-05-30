@@ -1,9 +1,11 @@
 <?php
 namespace Phifty\Environment;
 
+use Phifty\Kernel;
+
 class CommandLine
 {
-    public static function init($kernel)
+    public static function init(Kernel $kernel)
     {
         if (CLI) {
             ini_set('output_buffering ', '0');
@@ -13,6 +15,5 @@ class CommandLine
             ob_start();
             $s = $kernel->session; // build session object
         }
-
     }
 }

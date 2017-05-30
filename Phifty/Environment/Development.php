@@ -9,12 +9,13 @@
  * file that was distributed with this source code.
  */
 namespace Phifty\Environment;
+
 use Exception;
 use ErrorException;
+use Phifty\Kernel;
 
 class Development
 {
-
     public static function exception_error_handler($errno, $errstr, $errfile, $errline )
     {
         throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
@@ -34,7 +35,7 @@ class Development
         }
     }
 
-    public static function init($kernel)
+    public static function init(Kernel $kernel)
     {
         error_reporting(E_ALL);
 
