@@ -30,21 +30,8 @@ use Maghead\Runtime\Config\FileConfigLoader;
 
 use Phifty\Bundle\BundleLoader;
 use Phifty\ServiceProvider\BundleServiceProvider;
+use Phifty\Utils;
 
-function find_db_config($baseDir)
-{
-    $paths = [
-        "{$baseDir}/.maghead-cli.yml",
-        "{$baseDir}/config/database.yml",
-        "{$baseDir}/db/config/database.yml",
-    ];
-    foreach ($paths as $path) {
-        if (file_exists($path)) {
-            return FileConfigLoader::compile(realpath($path), true);
-        }
-    }
-    return false;
-}
 
 class BootstrapCommand extends Command
 {
@@ -71,53 +58,52 @@ class BootstrapCommand extends Command
     }
 
 
+
     /*
-        Build command generates the bootstrap.php script in the following sections:
-
-        ----------------------------
-        Predefined Constants
-        ----------------------------
-        Global variable definitions
-        ----------------------------
-        Require & init class loaders
-        ----------------------------
-        Create config loader object
-        ----------------------------
-        Create Kernel object
-        ----------------------------
-        Register ServiceProviders
-        ----------------------------
-        Register Apps
-        ----------------------------
-        Register Bundles
-        ----------------------------
-        Init Kernel object
-        ----------------------------
-
+     * To generate the bootstrap script, we need to prepare few things:
+     *
+     *  1. class loader (can be loaded from composer autoloader)
+     *  2. config loader
+     *
+     * Build command generates the bootstrap.php script in the following sections:
+     *
+     *  ----------------------------
+     *  Predefined Constants
+     *  ----------------------------
+     *  Global variable definitions
+     *  ----------------------------
+     *  Require & init class loaders
+     *  ----------------------------
+     *  Create config loader object
+     *  ----------------------------
+     *  Create Kernel object
+     *  ----------------------------
+     *  Register ServiceProviders
+     *  ----------------------------
+     *  Register Apps
+     *  ----------------------------
+     *  Register Bundles
+     *  ----------------------------
+     *  Init Kernel object
+     *  ----------------------------
      */
     public function execute()
     {
-        $psr4Map = require "vendor/composer/autoload_psr4.php";
 
-        $psr4ClassLoader = new Psr4ClassLoader;
-
-        // XXX: connect to differnt config by using environment variable (PHIFTY_ENV)
+        // TODO: connect to differnt config by using environment variable (PHIFTY_ENV)
         $this->logger->info("===> Building config files...");
-        $configPaths = array_filter([
-                'config/application.yml',
-                'config/framework.yml',
-                'config/testing.yml'
-            ], 'file_exists');
-        foreach ($configPaths as $configPath) {
-            $this->logger->info("Precompiling $configPath ...");
-            ConfigCompiler::compile($configPath);
-        }
+        $configPaths = Utils::find_framework_config(getcwd());
+        Utils::compile_framework_configs($configPaths);
+
+        $psr4Map = require "vendor/composer/autoload_psr4.php";
+        $psr4ClassLoader = new Psr4ClassLoader;
 
         $appDirectory = 'app';
 
         $outputFile = $this->options->output;
 
         defined('PH_APP_ROOT') || define('PH_APP_ROOT', getcwd());
+
         // PH_ROOT is deprecated, but kept for backward compatibility
         defined('PH_ROOT') || define('PH_ROOT', getcwd());
         $this->logger->info('Using PH_APP_ROOT:' . PH_APP_ROOT);
@@ -171,10 +157,6 @@ class BootstrapCommand extends Command
 
         $env = $this->options->env ?: getenv('PHIFTY_ENV') ?: 'development';
         $block[] = new ConstStatement('PH_ENV', $env);
-
-        // $block[] = sprintf("define('PH_ROOT', %s);", var_export(PH_ROOT, true));
-        // $block[] = sprintf("define('PH_APP_ROOT', %s);", var_export(PH_APP_ROOT, true));
-        // $block[] = "defined('DS') || define('DS', DIRECTORY_SEPARATOR);";
 
 
         // CLI mode should be dynamic
@@ -326,9 +308,8 @@ class BootstrapCommand extends Command
         // Kernel initialization after bootstrap script
         if ($configLoader->isLoaded('framework')) {
 
-
             // This is for DatabaseService
-            $dbConfig = find_db_config($baseDir);
+            $dbConfig = Utils::find_db_config($baseDir);
             $block[] = '$kernel->registerService(new \Phifty\ServiceProvider\DatabaseServiceProvider(' . var_export([
                 'configPath' => $dbConfig,
             ], true) . '));';

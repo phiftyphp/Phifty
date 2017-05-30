@@ -2,6 +2,9 @@
 
 namespace Phifty;
 
+use Maghead\Runtime\Config\FileConfigLoader;
+use ConfigKit\ConfigCompiler;
+
 class Utils
 {
 
@@ -67,4 +70,35 @@ class Utils
             }, $unencoded_url);
     }
 
+    public static function find_db_config($baseDir)
+    {
+        $paths = [
+            "{$baseDir}/.maghead-cli.yml",
+            "{$baseDir}/config/database.yml",
+            "{$baseDir}/db/config/database.yml",
+        ];
+        foreach ($paths as $path) {
+            if (file_exists($path)) {
+                return FileConfigLoader::compile(realpath($path), true);
+            }
+        }
+        return false;
+    }
+
+    public static function find_framework_config($baseDir)
+    {
+        return array_filter([
+                "$baseDir/config/application.yml",
+                "$baseDir/config/framework.yml",
+                "$baseDir/config/testing.yml"
+            ], "file_exists");
+    }
+
+    public static function compile_framework_configs(array $configFiles)
+    {
+        return array_map(function($p) {
+            ConfigCompiler::compile($p);
+            return $p;
+        }, $configFiles);
+    }
 }
