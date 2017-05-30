@@ -18,7 +18,7 @@ services:
 
 install:
 - composer install
-- composer require "satooshi/php-coveralls" "^1" --dev --no-update
+- composer require "satooshi/php-coveralls" "^1"
 - ./travis/install
 
 before_script:
