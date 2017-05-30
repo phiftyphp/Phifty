@@ -8,6 +8,9 @@ Mail:
   Admin: "\"Admin\" <admin@localhost>"
 Applications:
 ServiceProviders:
+  BundleServiceProvider:
+    Paths:
+      - bundles
   CurrentUserServiceProvider:
     Class: Phifty\Security\CurrentUser
     Model: UserBundle\Model\User
@@ -40,9 +43,6 @@ ServiceProviders:
   RedisServiceProvider:
   AesCryptorServiceProvider:
   FirePHPServiceProvider:
-  BundleServiceProvider:
-    Paths:
-      - bundles
 Bundles:
   CoreBundle:
   CommonBundle:

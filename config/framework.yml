@@ -7,7 +7,14 @@ Mail:
   System: "\"System\" <noreply@localhost>"
   Admin: "\"Admin\" <admin@localhost>"
 Applications:
+BundleLoader:
+  Paths:
+  - app_bundles
+  - bundles
 ServiceProviders:
+  BundleServiceProvider:
+    Paths:
+      - bundles
   CurrentUserServiceProvider:
     Class: Phifty\Security\CurrentUser
     Model: UserBundle\Model\User
@@ -38,9 +45,6 @@ ServiceProviders:
   AssetServiceProvider:
   AesCryptorServiceProvider:
   FirePHPServiceProvider:
-  BundleServiceProvider:
-    Paths:
-      - bundles
 Bundles:
   CoreBundle:
   CommonBundle:

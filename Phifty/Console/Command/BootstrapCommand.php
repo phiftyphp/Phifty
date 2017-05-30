@@ -233,13 +233,10 @@ class BootstrapCommand extends Command
         //       Paths:
         //       - app_bundles
         //       - bundles
-        $bundleLoaderConfig = $configLoader->get('framework', 'BundleLoader') ?: [ 'Paths' => ['app_bundles','bundles'] ];
+        $bundleLoaderConfig = $configLoader->get('framework', 'BundleLoader') ?: new \ConfigKit\Accessor([ 'Paths' => ['app_bundles','bundles'] ]);
 
         // Load bundle objects into the runtimeKernel
-        $bundleLoader = new BundleLoader($runtimeKernel, [
-            $appRoot . DIRECTORY_SEPARATOR . 'app_bundles',
-            $appRoot . DIRECTORY_SEPARATOR . 'bundles'
-        ]);
+        $bundleLoader = new BundleLoader($runtimeKernel, $bundleLoaderConfig['Paths']->toArray());
         $bundleList = $configLoader->get('framework', 'Bundles');
 
 
