@@ -1,6 +1,6 @@
 <?php
+
 namespace test_classutils;
-use Phifty\ClassUtils;
 
 class foo {
     public $v1;
@@ -13,21 +13,21 @@ class foo {
 
 class bar {
     public $var;
-
 }
+
+namespace Phifty;
+
 
 class ClassUtilsTest extends \PHPUnit\Framework\TestCase
 {
-    function testClassUtils()
+    public function testNewClass()
     {
-        $obj = ClassUtils::newClass('test_classutils\foo',array( 1,2,3,4,5 ));
+        $obj = ClassUtils::newClass(\test_classutils\foo::class,array( 1,2,3,4,5 ));
         $this->assertInstanceOf('test_classutils\foo', $obj);
         $this->assertEquals(1 , $obj->v1);
         $this->assertEquals(2 , $obj->v2);
 
-        $obj = ClassUtils::newClass('test_classutils\bar');
+        $obj = ClassUtils::newClass(\test_classutils\bar::class);
         $this->assertInstanceOf('test_classutils\bar', $obj );
     }
 }
-
-

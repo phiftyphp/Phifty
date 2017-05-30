@@ -1,5 +1,6 @@
 <?php
-use Phifty\Web\Region;
+
+namespace Phifty\Web;
 
 class RegionTest extends \PHPUnit\Framework\TestCase
 {

@@ -1,5 +1,6 @@
 <?php
-use Phifty\FileUtils as FileUtils;  # alias \Phifty\FileUtils class to FileUtils
+
+namespace Phifty;
 
 class FileUtilsTest extends \PHPUnit\Framework\TestCase
 {
@@ -27,7 +28,7 @@ class FileUtilsTest extends \PHPUnit\Framework\TestCase
     {
         $path2 = FileUtils::relative_path( __FILE__ );
         $this->assertNotNull( $path2 );
-        $this->assertEquals( $path2 , 'tests/Phifty/FileUtilsTest.php' );
+        $this->assertEquals( $path2 , 'Phifty/FileUtilsTest.php' );
     }
 
     public function testexpand()
