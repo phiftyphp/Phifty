@@ -107,9 +107,6 @@ class BootstrapCommand extends Command
         $configPaths = Utils::find_framework_config(getcwd());
         Utils::compile_framework_configs($configPaths);
 
-        $psr4Map = require "vendor/composer/autoload_psr4.php";
-        $psr4ClassLoader = new Psr4ClassLoader;
-
 
         $outputFile = $this->options->output;
 
@@ -146,6 +143,7 @@ class BootstrapCommand extends Command
 
 
         // The runtime kernel will only contains "configLoader" and "classLoader" services
+        $psr4ClassLoader = new Psr4ClassLoader;
         $runtimeKernel = Bootstrap::createRuntimeKernel($configLoader, $psr4ClassLoader);
         $appKernelClassPath = $bGenerator->generateAppKernelClass($runtimeKernel);
         require_once $appKernelClassPath;
