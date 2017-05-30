@@ -9,6 +9,6 @@
  *
  */
 require 'bootstrap.php';
-// require 'selenium_helpers.php';
+
 kernel()->classloader->addFallback('tests');
 kernel()->classloader->addFallback( dirname(__DIR__) . '/src' );
