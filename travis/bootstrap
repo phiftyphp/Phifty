@@ -1,0 +1,4 @@
+#!/bin/bash
+set -x
+set -e
+rm -f bootstrap.php && php bin/phifty bootstrap && php bootstrap.php

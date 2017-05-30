@@ -1,8 +1,8 @@
 #!/bin/bash
 dir=$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)
 
-mkdir -p config app cache bundles
 rm -f bootstrap.php
+mkdir -p config app cache bundles
 
 phpenv config-add $dir/config/$TRAVIS_PHP_VERSION.ini
 phpenv config-add $dir/config/apc.ini
