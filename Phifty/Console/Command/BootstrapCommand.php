@@ -25,6 +25,8 @@ use ReflectionClass;
 use Exception;
 use LogicException;
 use Universal\ClassLoader\Psr4ClassLoader;
+use Universal\ClassLoader\SplClassLoader;
+use Universal\Container\ObjectContainer;
 
 use Maghead\Runtime\Config\FileConfigLoader;
 
@@ -33,6 +35,7 @@ use Phifty\Bundle\BundleLoader;
 use Phifty\ServiceProvider\BundleServiceProvider;
 use Phifty\ServiceProvider\ConfigServiceProvider;
 use Phifty\ServiceProvider\EventServiceProvider;
+use Phifty\Kernel;
 use Phifty\Utils;
 
 function createRuntimeKernel(ConfigLoader $configLoader)
@@ -195,7 +198,7 @@ class BootstrapCommand extends Command
 
 
         // Generate Psr4 class loader section
-        $block[] = new RequireClassStatement('Universal\\ClassLoader\\Psr4ClassLoader');
+        $block[] = new RequireClassStatement(Psr4ClassLoader::class);
         $block[] = '$psr4ClassLoader = new \Universal\ClassLoader\Psr4ClassLoader();';
         $block[] = '$psr4ClassLoader->register(false);';
 
@@ -203,15 +206,13 @@ class BootstrapCommand extends Command
             'App\\', $appDirectory . DIRECTORY_SEPARATOR ]));
 
         // Generate Spl Class loader section
-        $block[] = new RequireClassStatement('Universal\\ClassLoader\\SplClassLoader');
+        $block[] = new RequireClassStatement(SplClassLoader::class);
         $block[] = '$splClassLoader = new \Universal\ClassLoader\SplClassLoader();';
         $block[] = '$splClassLoader->useIncludePath(false);';
         $block[] = '$splClassLoader->register(false);';
 
-        $block[] = new RequireClassStatement('Universal\\Container\\ObjectContainer');
-        $block[] = new RequireClassStatement('Phifty\\Kernel');
-
-
+        $block[] = new RequireClassStatement(ObjectContainer::class);
+        $block[] = new RequireClassStatement(Kernel::class);
 
         $this->logger->info("Generating config loader...");
         // generating the config loader
