@@ -194,11 +194,12 @@ class BootstrapGenerator
         $block[] = new Statement(new MethodCall('$kernel', 'init'));
 
         if ($this->xhprofEnabled) {
-            $block[] = "$xhprofNamespace = \"{$this->xhprofConfig['namespace']}\";";
-            $block[] = '$xhprofData = xhprof_disable();';
+            $block[] = "\$xhprofNamespace = \"{$this->xhprofConfig['namespace']}\";";
+            $block[] = "\$xhprofData = xhprof_disable();";
 
-            $block[] = '$xhprofRuns = new XHProfRuns_Default();';
-            $block[] = '$runId = $xhprofRuns->save_run($xhprofData, $xhprofNamespace);';
+            $block[] = "\$xhprofRuns = new XHProfRuns_Default();";
+            $block[] = "\$runId = \$xhprofRuns->save_run(\$xhprofData, \$xhprofNamespace);";
+
             $block[] = 'header("X-XHPROF-RUN: $runId");';
             $block[] = 'header("X-XHPROF-NS: $xhprofNamespace");';
         }
