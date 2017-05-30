@@ -1,5 +1,7 @@
 <?php
+
 namespace Phifty\Bundle;
+
 use Exception;
 use ArrayAccess;
 use IteratorAggregate;

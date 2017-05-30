@@ -51,6 +51,11 @@ class Bootstrap
      *
      * This runtime kernel instance load service providers and bundles
      *
+     * 1. inject the config loader
+     * 2. register core services
+     * 3. register services from config
+     * 4. load the bundles
+     *
      * @return Phifty\Kernel
      */
     public static function createKernel(ConfigLoader $configLoader, Psr4ClassLoader $psr4ClassLoader)
@@ -66,8 +71,8 @@ class Bootstrap
         //   4. [ ] class loader service provider
         //
         // $kernel->registerService(new \Phifty\ServiceProvider\ClassLoaderServiceProvider($splClassLoader));
-        $kernel->registerService(new \Phifty\ServiceProvider\ConfigServiceProvider($configLoader));
-        $kernel->registerService(new \Phifty\ServiceProvider\EventServiceProvider());
+        $kernel->registerService(new ConfigServiceProvider($configLoader));
+        $kernel->registerService(new EventServiceProvider);
 
         // Load extra service providers
         if ($services = $configLoader->get('framework', 'ServiceProviders')) {
@@ -103,12 +108,12 @@ class Bootstrap
         //       - app_bundles
         //       - bundles
         $bundleLoaderConfig = $configLoader->get('framework', 'BundleLoader') ?: new \ConfigKit\Accessor([ 'Paths' => ['app_bundles','bundles'] ]);
+        $kernel->registerService($bundleService, $bundleLoaderConfig);
 
         // Load bundle objects into the runtimeKernel
         $bundleLoader = new BundleLoader($kernel, $bundleLoaderConfig['Paths']->toArray());
         $bundleList = $configLoader->get('framework', 'Bundles');
 
-        $kernel->registerService($bundleService, $bundleLoaderConfig);
 
         // Generating registering code for bundle classes
         if ($bundleList) {
