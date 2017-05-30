@@ -91,6 +91,31 @@ class Bootstrap
             }
         }
 
+        // Load core service providers
+        // $kernel->registerService(new \Phifty\ServiceProvider\ClassLoaderServiceProvider($splClassLoader));
+        $kernel->registerService(new \Phifty\ServiceProvider\ConfigServiceProvider($configLoader));
+        $kernel->registerService(new \Phifty\ServiceProvider\EventServiceProvider());
+
+        // Load extra service providers
+        if ($services = $configLoader->get('framework', 'ServiceProviders')) {
+            foreach ($services as $name => $config) {
+                if (!$config) {
+                    $config = [];
+                }
+
+                $serviceClass = \Maghead\Utils::resolveClass($name, ["App\\ServiceProvider","Phifty\\ServiceProvider"]);
+                if (!$serviceClass) {
+                    throw new LogicException("service class '$serviceClass' does not exist.");
+                }
+
+                $config = $serviceClass::canonicalizeConfig($kernel, $config);
+                if ($config === null) {
+                    throw new LogicException("$serviceClass::canonicalizeConfig should return an array for service config.");
+                }
+                $kernel->registerService(new $serviceClass($config), $config);
+            }
+        }
+
         return $kernel;
     }
 

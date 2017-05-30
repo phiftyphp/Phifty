@@ -40,7 +40,7 @@ abstract class BaseServiceProvider implements ServiceProvider, ComposerConfigBri
      *
      * @return bool
      */
-    public static function isGeneratable(Kernel $kernel, array $options = array())
+    public static function Generatable(Kernel $kernel, array $options = array())
     {
         return true;
     }

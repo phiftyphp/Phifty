@@ -11,6 +11,8 @@ ServiceProviders:
   BundleServiceProvider:
     Paths:
       - bundles
+  DatabaseServiceProvider:
+    config: config/database.yml
   CurrentUserServiceProvider:
     Class: Phifty\Security\CurrentUser
     Model: UserBundle\Model\User
@@ -34,8 +36,7 @@ ServiceProviders:
     Memcached: true
   SessionServiceProvider:
   TwigServiceProvider:
-    TemplateDirs:
-      - design/production
+    TemplateDirs: []
   AssetServiceProvider:
     BaseUrl: /assets
     BaseDir: webroot/assets

@@ -242,18 +242,6 @@ class BootstrapCommand extends Command
         // Kernel initialization after bootstrap script
         if ($configLoader->isLoaded('framework')) {
 
-            // This is for DatabaseService
-            $dbConfigPath = Utils::find_db_config($baseDir);
-
-            $block[] = new Statement(new MethodCall('$kernel', 'registerService', [
-                new NewObject(DatabaseServiceProvider::class, [
-                    ['configPath' => $dbConfigPath],
-                ]),
-            ]));
-
-            if ($configLoader->isLoaded('database')) {
-                $dbConfig = $configLoader->getSection('database');
-            }
 
             if (is_dir($appDirectory)) {
                 $block[] = new Statement(new MethodCall('$psr4ClassLoader', 'addPrefix', [
@@ -281,7 +269,7 @@ class BootstrapCommand extends Command
                     }
 
                     if (is_subclass_of($serviceClass, 'Phifty\\ServiceProvider\\BaseServiceProvider')
-                        && $serviceClass::isGeneratable($runtimeKernel, $options)) {
+                        && $serviceClass::Generatable($runtimeKernel, $options)) {
                         if ($prepareStm = $serviceClass::generatePrepare($runtimeKernel, $options)) {
                             $block[] = $prepareStm;
                         }
