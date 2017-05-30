@@ -32,6 +32,7 @@ use Maghead\Runtime\Config\FileConfigLoader;
 use Phifty\Bootstrap;
 use Phifty\Generator\BootstrapGenerator;
 use Phifty\Bundle\BundleLoader;
+use Phifty\ServiceProvider\ClassLoaderServiceProvider;
 use Phifty\ServiceProvider\BundleServiceProvider;
 use Phifty\ServiceProvider\DatabaseServiceProvider;
 use Phifty\ServiceProvider\ConfigServiceProvider;
@@ -115,45 +116,41 @@ class BootstrapGenerator
             "For more information, please visit https://github.com/c9s/Phifty",
         ]);
 
+
         if (extension_loaded('mbstring')) {
             $block[] = "mb_internal_encoding('UTF-8');";
         }
-
-        $block[] = new ConstStatement('PH_ROOT', $this->frameworkRoot);
-        $block[] = new ConstStatement('PH_APP_ROOT', $this->rootDir);
-        $block[] = new ConstStatement('DS', DIRECTORY_SEPARATOR);
-
-
         if ($this->xhprofEnabled) {
             $block[] = 'xhprof_enable(XHPROF_FLAGS_CPU + XHPROF_FLAGS_MEMORY);';
         }
 
-        $block[] = new ConstStatement('PH_ENV', $this->env);
 
-        // CLI mode should be dynamic
-        $block[] = new DefineStatement('CLI', new Raw("isset(\$_SERVER['argc']) && !isset(\$_SERVER['HTTP_HOST'])"));
-        $block[] = new DefineStatement('CLI_MODE', new Raw("CLI"));
-
+        // Generate the require statements
         $block[] = 'global $kernel, $composerClassLoader, $psr4ClassLoader, $splClassLoader;';
-        $block[] = new AssignStatement('$composerClassLoader', new RequireComposerAutoloadStatement());
-
-        // Generate Psr4 class loader section
+        $block[] = new AssignStatement('$composerClassLoader', new RequireComposerAutoloadStatement([$this->rootDir]));
         $block[] = new RequireClassStatement(Psr4ClassLoader::class);
-        $block[] = '$psr4ClassLoader = new \Universal\ClassLoader\Psr4ClassLoader();';
-        $block[] = '$psr4ClassLoader->register(false);';
-
-        $block[] = new Statement(new MethodCall('$psr4ClassLoader', 'addPrefix', [
-            'App\\', $this->appDir . DIRECTORY_SEPARATOR ]));
-
-        // Generate Spl Class loader section
         $block[] = new RequireClassStatement(SplClassLoader::class);
-        $block[] = '$splClassLoader = new \Universal\ClassLoader\SplClassLoader();';
-        $block[] = '$splClassLoader->useIncludePath(false);';
-        $block[] = '$splClassLoader->register(false);';
-
         $block[] = new RequireClassStatement(ObjectContainer::class);
         $block[] = new RequireClassStatement(Kernel::class);
         $block[] = new RequireClassStatement(Bootstrap::class);
+
+        // Define global constants
+        $block[] = new ConstStatement('PH_ROOT', $this->frameworkRoot);
+        $block[] = new ConstStatement('PH_APP_ROOT', $this->rootDir);
+        $block[] = new ConstStatement('DS', DIRECTORY_SEPARATOR);
+        $block[] = new ConstStatement('PH_ENV', $this->env);
+        $block[] = new DefineStatement('CLI', new Raw("isset(\$_SERVER['argc']) && !isset(\$_SERVER['HTTP_HOST'])"));
+        $block[] = new DefineStatement('CLI_MODE', new Raw("CLI"));
+
+        // Generate Psr4 class loader section
+        $block[] = new AssignStatement('$psr4ClassLoader', new NewObject(Psr4ClassLoader::class));
+        $block[] = new Statement(new MethodCall('$psr4ClassLoader', 'register', [false]));
+        $block[] = new Statement(new MethodCall('$psr4ClassLoader', 'addPrefix', [ 'App\\', $this->appDir . DIRECTORY_SEPARATOR ]));
+
+        // Generate Spl Class loader section
+        $block[] = new AssignStatement('$splClassLoader', new NewObject(SplClassLoader::class));
+        $block[] = new Statement(new MethodCall('$splClassLoader', 'useIncludePath', [false]));
+        $block[] = new Statement(new MethodCall('$splClassLoader', 'register', [false]));
     }
 
     public function generateBootstrapInitSection(Block $block)
@@ -163,7 +160,7 @@ class BootstrapGenerator
 
         // Generates: $kernel->registerService(new \Phifty\ServiceProvider\ClassLoaderServiceProvider($splClassLoader));
         $block[] = new Statement(new MethodCall('$kernel', 'registerService', [
-            new NewObject('\\Phifty\\ServiceProvider\\ClassLoaderServiceProvider', [ new Variable('$splClassLoader') ]),
+            new NewObject(ClassLoaderServiceProvider::class, [ new Variable('$splClassLoader') ]),
         ]));
 
         // Generates: $configLoader = new \App\AppConfigLoader;
@@ -192,6 +189,10 @@ class BootstrapGenerator
 
     public function generateBootstrapFooter(Block $block)
     {
+        // Everything is ready
+        // $block[] = new Statement(new MethodCall('$kernel->bundles', 'init'));
+        $block[] = new Statement(new MethodCall('$kernel', 'init'));
+
         if ($this->xhprofEnabled) {
             $block[] = "$xhprofNamespace = \"{$this->xhprofConfig['namespace']}\";";
             $block[] = '$xhprofData = xhprof_disable();';

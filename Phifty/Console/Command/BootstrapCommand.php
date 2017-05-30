@@ -241,9 +241,6 @@ class BootstrapCommand extends Command
             }
         }
 
-        // $block[] = new Statement(new MethodCall('$kernel->bundles', 'init'));
-        $block[] = new Statement(new MethodCall('$kernel', 'init'));
-
         $bGenerator->generateBootstrapFooter($block);
 
 
