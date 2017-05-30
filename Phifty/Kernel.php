@@ -1,6 +1,7 @@
 <?php
+
 namespace Phifty;
-use Phifty\Kernel;
+
 use Phifty\Locale;
 use Phifty\Web;
 use Universal\Container\ObjectContainer;
@@ -8,6 +9,22 @@ use Phifty\ServiceProvider\ServiceProvider;
 use Exception;
 use ConfigKit\ConfigLoader;
 use Phifty\Environment\CommandLine;
+
+
+global $kernel;
+
+/**
+ * kernel() is a global shorter helper function to get Phifty\Kernel instance.
+ *
+ * Initialize kernel instance, classloader, bundles and services.
+ *
+ * @return Phifty\Kernel
+ */
+function kernel()
+{
+    global $kernel;
+    return $kernel;
+}
 
 class Kernel extends ObjectContainer
 {
@@ -346,3 +363,4 @@ class Kernel extends ObjectContainer
 
 
 }
+

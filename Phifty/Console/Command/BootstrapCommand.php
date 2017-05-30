@@ -27,6 +27,7 @@ use Universal\Container\ObjectContainer;
 
 use Maghead\Runtime\Config\FileConfigLoader;
 
+use Phifty\Bootstrap;
 use Phifty\Generator\BootstrapGenerator;
 use Phifty\Bundle\BundleLoader;
 use Phifty\ServiceProvider\BundleServiceProvider;
@@ -44,80 +45,6 @@ use Exception;
 use LogicException;
 
 
-
-
-/**
- * Create a minimal runtime Kernel instance
- *
- * This runtime kernel instance only contains a bundle service provider.
- *
- * @return Phifty\Kernel
- */
-function createRuntimeKernel(ConfigLoader $configLoader, Psr4ClassLoader $psr4ClassLoader)
-{
-    $kernel = new \Phifty\Kernel;
-    $kernel->prepare($configLoader);
-
-    // Load the bundle list config
-    // The config structure:
-    //     BundleLoader:
-    //       Paths:
-    //       - app_bundles
-    //       - bundles
-    $bundleLoaderConfig = $configLoader->get('framework', 'BundleLoader') ?: new \ConfigKit\Accessor([ 'Paths' => ['app_bundles','bundles'] ]);
-
-    // Load bundle objects into the runtimeKernel
-    $bundleLoader = new BundleLoader($kernel, $bundleLoaderConfig['Paths']->toArray());
-    $bundleList = $configLoader->get('framework', 'Bundles');
-
-    // the bundle service is used for getting bundle instance from service.
-    $bundleService = new BundleServiceProvider();
-    $bundleService->register($kernel, $bundleLoaderConfig);
-
-    // Generating registering code for bundle classes
-    if ($bundleList) {
-        foreach ($bundleList as $bundleName => $bundleConfig) {
-            $autoload = $bundleLoader->registerAutoload($bundleName, $psr4ClassLoader);
-            if (!$autoload) {
-                continue;
-            }
-
-            // Load the bundle class files into the Kernel
-            $bundleClass = $bundleLoader->loadBundleClass($bundleName);
-            if (false === $bundleClass) {
-                throw new Exception("Bundle $bundleName class file '$bundleClassFile' doesn't exist.");
-            }
-            $kernel->bundles[$bundleName] = $bundleClass::getInstance($kernel, $bundleConfig);
-        }
-    }
-
-    return $kernel;
-}
-
-function createConfigLoader($baseDir)
-{
-    // We load other services from the definitions in config file
-    // Simple load three config files (framework.yml, database.yml, application.yml)
-    $loader = new ConfigLoader;
-
-    if (file_exists( "$baseDir/config/framework.yml")) {
-        $loader->load('framework', "$baseDir/config/framework.yml");
-    }
-
-    // Config for application, services does not depends on this config file.
-    if (file_exists( "$baseDir/config/application.yml")) {
-        $loader->load('application', "$baseDir/config/application.yml");
-    }
-
-    // Only load testing configuration when environment
-    // is 'testing'
-    if (getenv('PHIFTY_ENV') === 'testing') {
-        if (file_exists("$baseDir/config/testing.yml")) {
-            $loader->load('testing', "$baseDir/config/testing.yml");
-        }
-    }
-    return $loader;
-}
 
 class BootstrapCommand extends Command
 {
@@ -211,7 +138,7 @@ class BootstrapCommand extends Command
 
         $this->logger->info("===> Generating config loader...");
         // generating the config loader
-        $configLoader = createConfigLoader($appRoot);
+        $configLoader = Bootstrap::createConfigLoader($appRoot);
 
         $bGenerator = new BootstrapGenerator($appRoot, $configLoader);
         $appConfigClassPath = $bGenerator->generateAppConfigClass('App', 'App');
@@ -219,7 +146,7 @@ class BootstrapCommand extends Command
 
 
         // The runtime kernel will only contains "configLoader" and "classLoader" services
-        $runtimeKernel = createRuntimeKernel($configLoader, $psr4ClassLoader);
+        $runtimeKernel = Bootstrap::createRuntimeKernel($configLoader, $psr4ClassLoader);
         $appKernelClassPath = $bGenerator->generateAppKernelClass($runtimeKernel);
         require_once $appKernelClassPath;
 
@@ -310,8 +237,6 @@ class BootstrapCommand extends Command
         ]));
 
         // Include bootstrap class
-        // TODO: move to global functions
-        $block[] = new Comment("Bootstrap.php nows only contains kernel() function.");
         $block[] = new RequireStatement(dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . 'Bootstrap.php');
 
         // Kernel initialization after bootstrap script
