@@ -101,4 +101,13 @@ class Utils
             return $p;
         }, $configFiles);
     }
+
+    public static function unlink_files(array $files)
+    {
+        foreach ($files as $file) {
+            if (file_exists($file)) {
+                unlink($file);
+            }
+        }
+    }
 }

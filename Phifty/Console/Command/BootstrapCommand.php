@@ -89,7 +89,6 @@ class BootstrapCommand extends Command
      */
     public function execute()
     {
-
         // TODO: connect to differnt config by using environment variable (PHIFTY_ENV)
         $this->logger->info("===> Building config files...");
         $configPaths = Utils::find_framework_config(getcwd());
@@ -106,27 +105,19 @@ class BootstrapCommand extends Command
 
         // PH_ROOT is deprecated, but kept for backward compatibility
         defined('PH_ROOT') || define('PH_ROOT', getcwd());
+
         $this->logger->info('Using PH_APP_ROOT:' . PH_APP_ROOT);
 
         if ($this->options->clean) {
             $this->logger->info("Removing genereated files");
-            $cleanFiles = [
+            Utils::unlink_files([
                 $outputFile,
                 PH_APP_ROOT . $appDirectory . 'AppKernel.php',
                 PH_APP_ROOT . $appDirectory . 'AppConfigLoader.php',
-            ];
-
-            foreach ($cleanFiles as $cleanFile) {
-                $this->logger->debug("Checking $cleanFile");
-                if (file_exists($cleanFile)) {
-                    $this->logger->debug("Removing $cleanFile");
-                    unlink($cleanFile);
-                }
-            }
+            ]);
             $this->logger->info('Cached files are cleaned up');
             return;
         }
-
 
         $this->logger->info("===> Generating bootstrap file: $outputFile");
 
@@ -135,7 +126,7 @@ class BootstrapCommand extends Command
         $block = new Block;
         $block[] = '<?php';
         $block[] = new CommentBlock([
-            "This file is auto-generated through 'bin/phifty bootstrap' command.",
+            "This file is auto @generated through 'bin/phifty bootstrap' command.",
             "Don't modify this file directly",
             "",
             "For more information, please visit https://github.com/c9s/Phifty",
@@ -179,9 +170,6 @@ class BootstrapCommand extends Command
         $block[] = '$splClassLoader = new \Universal\ClassLoader\SplClassLoader();';
         $block[] = '$splClassLoader->useIncludePath(false);';
         $block[] = '$splClassLoader->register(false);';
-
-
-
 
         $block[] = new RequireClassStatement('Universal\\Container\\ObjectContainer');
         $block[] = new RequireClassStatement('Phifty\\Kernel');
