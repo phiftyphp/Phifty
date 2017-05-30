@@ -8,14 +8,6 @@ Phifty Web Framework
 [![Latest Unstable Version](https://poser.pugx.org/corneltek/phifty/v/unstable)](https://packagist.org/packages/phifty/phifty)
 [![License](https://poser.pugx.org/corneltek/phifty/license)](https://packagist.org/packages/phifty/phifty)
 
-Requirements
---------------------
-- libyaml
-- php extensions
-  - `apcu`
-  - `yaml`
-
-
 Documentation
 --------------------
 
