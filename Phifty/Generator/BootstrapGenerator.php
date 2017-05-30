@@ -113,7 +113,7 @@ class BootstrapGenerator
             "This file is auto @generated through 'bin/phifty bootstrap' command.",
             "Don't modify this file directly",
             "",
-            "For more information, please visit https://github.com/c9s/Phifty",
+            "For more information, please visit https://github.com/phifty-framework/Phifty",
         ]);
 
 
