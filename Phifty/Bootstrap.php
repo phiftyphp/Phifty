@@ -76,7 +76,11 @@ class Bootstrap
                     $config = [];
                 }
 
-                $serviceClass = \Maghead\Utils::resolveClass($name, ["App\\ServiceProvider","Phifty\\ServiceProvider"]);
+                $serviceClass = \Maghead\Utils::resolveClass($name, [
+                    "App\\ServiceProvider",
+                    "Phifty\\ServiceProvider"
+                ]);
+
                 if (!$serviceClass) {
                     throw new LogicException("service class '$serviceClass' does not exist.");
                 }
