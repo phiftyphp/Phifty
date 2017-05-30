@@ -138,7 +138,7 @@ class BootstrapCommand extends Command
 
         $this->logger->info("===> Generating config loader...");
         // generating the config loader
-        $configLoader = Bootstrap::createConfigLoader($appRoot);
+        $configLoader = Bootstrap::createConfigLoader($appRoot, getenv('PHIFTY_ENV'));
 
         $bGenerator = new BootstrapGenerator($appRoot, $configLoader);
         $appConfigClassPath = $bGenerator->generateAppConfigClass('App', 'App');
@@ -242,7 +242,6 @@ class BootstrapCommand extends Command
         // Kernel initialization after bootstrap script
         if ($configLoader->isLoaded('framework')) {
 
-
             if (is_dir($appDirectory)) {
                 $block[] = new Statement(new MethodCall('$psr4ClassLoader', 'addPrefix', [
                         'App\\', [$appDirectory . DIRECTORY_SEPARATOR],
@@ -270,8 +269,8 @@ class BootstrapCommand extends Command
 
                     if (is_subclass_of($serviceClass, 'Phifty\\ServiceProvider\\BaseServiceProvider')
                         && $serviceClass::Generatable($runtimeKernel, $options)) {
-                        if ($prepareStm = $serviceClass::generatePrepare($runtimeKernel, $options)) {
-                            $block[] = $prepareStm;
+                        if ($stm = $serviceClass::generatePrepare($runtimeKernel, $options)) {
+                            $block[] = $stm;
                         }
                         $block[] = new Statement(new MethodCall('$kernel', 'registerService', [
                             $serviceClass::generateNew($runtimeKernel, $options),

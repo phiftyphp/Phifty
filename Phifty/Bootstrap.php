@@ -119,7 +119,7 @@ class Bootstrap
         return $kernel;
     }
 
-    public static function createConfigLoader($baseDir)
+    public static function createConfigLoader($baseDir, $env = null)
     {
         // We load other services from the definitions in config file
         // Simple load three config files (framework.yml, database.yml, application.yml)
@@ -136,11 +136,12 @@ class Bootstrap
 
         // Only load testing configuration when environment
         // is 'testing'
-        if (getenv('PHIFTY_ENV') === 'testing') {
+        if ($env === 'testing') {
             if (file_exists("$baseDir/config/testing.yml")) {
                 $loader->load('testing', "$baseDir/config/testing.yml");
             }
         }
+
         return $loader;
     }
 }
