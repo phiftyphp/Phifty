@@ -10,7 +10,7 @@
   verbose="true">
   <testsuites>
     <testsuite name="Phifty">
-      <directory suffix="Test.php">tests/Phifty</directory>
+      <directory suffix="Test.php">Phifty</directory>
       <exclude>_old</exclude>
     </testsuite>
   </testsuites>

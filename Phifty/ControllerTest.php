@@ -1,12 +1,13 @@
 <?php
-use Phifty\Controller;
+
+namespace Phifty;
 
 class ControllerTest extends \PHPUnit\Framework\TestCase
 {
     public function testRenderYaml()
     {
         $controller = new Controller;
-        $yaml = $controller->toYaml([ 
+        $yaml = $controller->toYaml([
             'foo' => 1,
             'bar' => [ 'zoo' => 123 ],
         ]);
@@ -23,4 +24,3 @@ class ControllerTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf('Phifty\View', $view);
     }
 }
-
