@@ -123,7 +123,7 @@ class BundleLoader
         return false;
     }
 
-    public function getBundleClass()
+    public function getBundleClass($bundleName)
     {
         return "$bundleName\\$bundleName";
     }

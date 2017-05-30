@@ -111,6 +111,7 @@ class BootstrapCommand extends Command
         $outputFile = $this->options->output;
 
 
+        $env = $this->options->env ?: getenv('PHIFTY_ENV') ?: 'development';
         $frameworkRoot = dirname(dirname(dirname(__DIR__)));
         $appRoot = getcwd();
         $appDirectory = $appRoot . DIRECTORY_SEPARATOR . 'app';
@@ -131,121 +132,35 @@ class BootstrapCommand extends Command
             return;
         }
 
-
-
-        $this->logger->info("===> Generating config loader...");
-        // generating the config loader
         $configLoader = Bootstrap::createConfigLoader($appRoot, getenv('PHIFTY_ENV'));
 
-        $bGenerator = new BootstrapGenerator($appRoot, $configLoader);
-        $appConfigClassPath = $bGenerator->generateAppConfigClass('App', 'App');
-        require_once $appConfigClassPath;
+        $bGenerator = new BootstrapGenerator($appRoot, $frameworkRoot, $env, $configLoader);
+        if ($this->options->xhprof) {
+            $bGenerator->enableXhprof();
+        }
 
+        $this->logger->info("===> Generating config loader...");
+        $appConfigClassPath = $bGenerator->generateAppConfigClass();
 
         // The runtime kernel will only contains "configLoader" and "classLoader" services
         $psr4ClassLoader = new Psr4ClassLoader;
         $runtimeKernel = Bootstrap::createKernel($configLoader, $psr4ClassLoader);
         $appKernelClassPath = $bGenerator->generateAppKernelClass($runtimeKernel);
-        require_once $appKernelClassPath;
-
-
-
-
 
         $this->logger->info("===> Generating bootstrap file: $outputFile");
 
         $block = new Block;
-        $block[] = '<?php';
-        $block[] = new CommentBlock([
-            "This file is auto @generated through 'bin/phifty bootstrap' command.",
-            "Don't modify this file directly",
-            "",
-            "For more information, please visit https://github.com/c9s/Phifty",
-        ]);
-
-        if (extension_loaded('mbstring')) {
-            $block[] = "mb_internal_encoding('UTF-8');";
-        }
+        $bGenerator->generateBootstrapHeader($block);
 
         $xhprof = extension_loaded('xhprof') && $this->options->xhprof;
-        if ($xhprof) {
-            $block[] = 'xhprof_enable(XHPROF_FLAGS_CPU + XHPROF_FLAGS_MEMORY);';
-        }
-
-        // autoload script from composer
-        $block[] = new ConstStatement('PH_ROOT', $frameworkRoot);
-        $block[] = new ConstStatement('PH_APP_ROOT', $appRoot);
-        $block[] = new ConstStatement('DS', DIRECTORY_SEPARATOR);
-
-        $env = $this->options->env ?: getenv('PHIFTY_ENV') ?: 'development';
-        $block[] = new ConstStatement('PH_ENV', $env);
-
-        // CLI mode should be dynamic
-        $block[] = new DefineStatement('CLI', new Raw("isset(\$_SERVER['argc']) && !isset(\$_SERVER['HTTP_HOST'])"));
-        $block[] = new DefineStatement('CLI_MODE', new Raw("CLI"));
-
-        $block[] = 'global $kernel, $composerClassLoader, $psr4ClassLoader, $splClassLoader;';
-        $block[] = new AssignStatement('$composerClassLoader', new RequireComposerAutoloadStatement());
-
-
-        // Generate Psr4 class loader section
-        $block[] = new RequireClassStatement(Psr4ClassLoader::class);
-        $block[] = '$psr4ClassLoader = new \Universal\ClassLoader\Psr4ClassLoader();';
-        $block[] = '$psr4ClassLoader->register(false);';
-
-        $block[] = new Statement(new MethodCall('$psr4ClassLoader', 'addPrefix', [
-            'App\\', $appDirectory . DIRECTORY_SEPARATOR ]));
-
-        // Generate Spl Class loader section
-        $block[] = new RequireClassStatement(SplClassLoader::class);
-        $block[] = '$splClassLoader = new \Universal\ClassLoader\SplClassLoader();';
-        $block[] = '$splClassLoader->useIncludePath(false);';
-        $block[] = '$splClassLoader->register(false);';
-
-        $block[] = new RequireClassStatement(ObjectContainer::class);
-        $block[] = new RequireClassStatement(Kernel::class);
 
         $block[] = new RequireStatement($appConfigClassPath);
         $block[] = new RequireStatement($appKernelClassPath);
 
-        // Generates: $kernel = new \App\AppKernel;
-        $block[] = new AssignStatement('$kernel', new NewObject('App\\AppKernel'));
-
-        // Generates: $kernel->registerService(new \Phifty\ServiceProvider\ClassLoaderServiceProvider($splClassLoader));
-        $block[] = new Statement(new MethodCall('$kernel', 'registerService', [
-            new NewObject('\\Phifty\\ServiceProvider\\ClassLoaderServiceProvider', [ new Variable('$splClassLoader') ]),
-        ]));
-
-
-        // Generates: $configLoader = new \App\AppConfigLoader;
-        $block[] = new AssignStatement('$configLoader', new NewObject('App\\AppConfigLoader'));
-
-        // Generates: $kernel->registerService(new \Phifty\ServiceProvider\ConfigServiceProvider($configLoader));
-        $block[] = new RequireClassStatement(ConfigServiceProvider::class);
-        $block[] = new Statement(new MethodCall('$kernel', 'registerService', [
-            new NewObject(ConfigServiceProvider::class, [ new Variable('$configLoader') ]),
-        ]));
-
-        // load event service, so that we can bind events in Phifty
-        // Generates: $kernel->registerService(new \Phifty\ServiceProvider\EventServiceProvider());
-        $block[] = new Comment("The event service is required for every component.");
-        $block[] = new RequireClassStatement(EventServiceProvider::class);
-        $block[] = new Statement(new MethodCall('$kernel', 'registerService', [
-            new NewObject(EventServiceProvider::class),
-        ]));
-
-        // Include bootstrap class
-        $block[] = new RequireStatement(dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . 'Bootstrap.php');
+        $bGenerator->generateBootstrapInitSection($block);
 
         // Kernel initialization after bootstrap script
         if ($configLoader->isLoaded('framework')) {
-
-            if (is_dir($appDirectory)) {
-                $block[] = new Statement(new MethodCall('$psr4ClassLoader', 'addPrefix', [
-                        'App\\', [$appDirectory . DIRECTORY_SEPARATOR],
-                ]));
-            }
-
             if ($services = $configLoader->get('framework', 'ServiceProviders')) {
                 foreach ($services as $name => $options) {
                     if (!$options) {
@@ -284,9 +199,6 @@ class BootstrapCommand extends Command
             }
         }
 
-
-
-
         // Generate environment setup
         switch ($env) {
         case "production":
@@ -311,7 +223,7 @@ class BootstrapCommand extends Command
             }
 
             foreach ($bundleList as $bundleName => $bundleConfig) {
-                $bundleClass = "$bundleName\\$bundleName";
+                $bundleClass = $bundleLoader->getBundleClass($bundleName);
                 if (class_exists($bundleClass, true)) {
                     $reflection = new ReflectionClass($bundleClass);
                     $bundleClassFile = $reflection->getFileName();
@@ -322,8 +234,9 @@ class BootstrapCommand extends Command
                     $block[] = new RequireStatement($bundleClassFile);
                 }
             }
+
             foreach ($bundleList as $bundleName => $bundleConfig) {
-                $bundleClass = "$bundleName\\$bundleName";
+                $bundleClass = $bundleLoader->getBundleClass($bundleName);
                 $block[] = "\$kernel->bundles['$bundleName'] = $bundleClass::getInstance(\$kernel, " . var_export($bundleConfig, true) . ");";
             }
         }
@@ -331,14 +244,8 @@ class BootstrapCommand extends Command
         // $block[] = new Statement(new MethodCall('$kernel->bundles', 'init'));
         $block[] = new Statement(new MethodCall('$kernel', 'init'));
 
-        if ($xhprof) {
-            $block[] = '$xhprofNamespace = "phifty-bootstrap";';
-            $block[] = '$xhprofData = xhprof_disable();';
-            $block[] = '$xhprofRuns = new XHProfRuns_Default();';
-            $block[] = '$runId = $xhprofRuns->save_run($xhprofData,$xhprofNamespace);';
-            $block[] = 'header("X-XHPROF-RUN: $runId");';
-            $block[] = 'header("X-XHPROF-NS: $xhprofNamespace");';
-        }
+        $bGenerator->generateBootstrapFooter($block);
+
 
         $this->logger->info("===> Compiling code to $outputFile");
         $code = $block->render();
