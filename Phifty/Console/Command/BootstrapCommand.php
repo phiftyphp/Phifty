@@ -101,19 +101,21 @@ class BootstrapCommand extends Command
 
         $outputFile = $this->options->output;
 
-        defined('PH_APP_ROOT') || define('PH_APP_ROOT', getcwd());
 
-        // PH_ROOT is deprecated, but kept for backward compatibility
-        defined('PH_ROOT') || define('PH_ROOT', getcwd());
+        $frameworkRoot = dirname(dirname(dirname(__DIR__)));
+        $appRoot = getcwd();
 
-        $this->logger->info('Using PH_APP_ROOT:' . PH_APP_ROOT);
+        defined('PH_APP_ROOT') || define('PH_APP_ROOT', $appRoot);
+        defined('PH_ROOT') || define('PH_ROOT', $frameworkRoot);
+
+        $this->logger->info('Application root directory:' . $appRoot);
 
         if ($this->options->clean) {
             $this->logger->info("Removing genereated files");
             Utils::unlink_files([
                 $outputFile,
-                PH_APP_ROOT . $appDirectory . 'AppKernel.php',
-                PH_APP_ROOT . $appDirectory . 'AppConfigLoader.php',
+                $appRoot . DIRECTORY_SEPARATOR . $appDirectory . DIRECTORY_SEPARATOR . 'AppKernel.php',
+                $appRoot . DIRECTORY_SEPARATOR . $appDirectory . DIRECTORY_SEPARATOR . 'AppConfigLoader.php',
             ]);
             $this->logger->info('Cached files are cleaned up');
             return;
@@ -142,13 +144,12 @@ class BootstrapCommand extends Command
         }
 
         // autoload script from composer
-        $block[] = new ConstStatement('PH_ROOT', PH_ROOT);
-        $block[] = new ConstStatement('PH_APP_ROOT', PH_ROOT);
+        $block[] = new ConstStatement('PH_ROOT', $frameworkRoot);
+        $block[] = new ConstStatement('PH_APP_ROOT', $appRoot);
         $block[] = new ConstStatement('DS', DIRECTORY_SEPARATOR);
 
         $env = $this->options->env ?: getenv('PHIFTY_ENV') ?: 'development';
         $block[] = new ConstStatement('PH_ENV', $env);
-
 
         // CLI mode should be dynamic
         $block[] = new DefineStatement('CLI', new Raw("isset(\$_SERVER['argc']) && !isset(\$_SERVER['HTTP_HOST'])"));
@@ -158,14 +159,16 @@ class BootstrapCommand extends Command
         $block[] = new AssignStatement('$composerClassLoader', new RequireComposerAutoloadStatement());
 
 
+        // Generate Psr4 class loader section
         $block[] = new RequireClassStatement('Universal\\ClassLoader\\Psr4ClassLoader');
         $block[] = '$psr4ClassLoader = new \Universal\ClassLoader\Psr4ClassLoader();';
         $block[] = '$psr4ClassLoader->register(false);';
 
         $block[] = new Statement(new MethodCall('$psr4ClassLoader', 'addPrefix', [
             'App\\',
-            PH_APP_ROOT . DIRECTORY_SEPARATOR . $appDirectory . DIRECTORY_SEPARATOR ]));
+            $appRoot . DIRECTORY_SEPARATOR . $appDirectory . DIRECTORY_SEPARATOR ]));
 
+        // Generate Spl Class loader section
         $block[] = new RequireClassStatement('Universal\\ClassLoader\\SplClassLoader');
         $block[] = '$splClassLoader = new \Universal\ClassLoader\SplClassLoader();';
         $block[] = '$splClassLoader->useIncludePath(false);';
@@ -174,13 +177,15 @@ class BootstrapCommand extends Command
         $block[] = new RequireClassStatement('Universal\\Container\\ObjectContainer');
         $block[] = new RequireClassStatement('Phifty\\Kernel');
 
+
+
         $this->logger->info("Generating config loader...");
         // generating the config loader
-        $configLoader = $this->createConfigLoader(PH_APP_ROOT);
+        $configLoader = $this->createConfigLoader($appRoot);
         $configClassGenerator = new AppClassGenerator([ 'namespace' => 'App', 'prefix' => 'App' ]);
         $configClass = $configClassGenerator->generate($configLoader);
         $classPath = $configClass->generatePsr4ClassUnder($appDirectory);
-        $block[] = new RequireStatement(PH_APP_ROOT . DIRECTORY_SEPARATOR . $classPath);
+        $block[] = new RequireStatement($appRoot . DIRECTORY_SEPARATOR . $classPath);
         require_once $classPath;
 
 
@@ -213,8 +218,8 @@ class BootstrapCommand extends Command
         $bundleLoaderConfig = $configLoader->get('framework', 'BundleLoader') ?: [ 'Paths' => ['app_bundles','bundles'] ];
         // Load bundle objects into the runtimeKernel
         $bundleLoader = new BundleLoader($runtimeKernel, [
-            PH_ROOT . DIRECTORY_SEPARATOR . 'app_bundles',
-            PH_ROOT . DIRECTORY_SEPARATOR . 'bundles'
+            $appRoot . DIRECTORY_SEPARATOR . 'app_bundles',
+            $appRoot . DIRECTORY_SEPARATOR . 'bundles'
         ]);
         $bundleList = $configLoader->get('framework', 'Bundles');
 
@@ -258,7 +263,7 @@ class BootstrapCommand extends Command
         $appKernelClass = $kernelClassGenerator->generate($runtimeKernel);
         $classPath = $appKernelClass->generatePsr4ClassUnder($appDirectory);
         require_once $classPath;
-        $block[] = new RequireStatement(PH_APP_ROOT . DIRECTORY_SEPARATOR . $classPath);
+        $block[] = new RequireStatement($appRoot . DIRECTORY_SEPARATOR . $classPath);
 
         // $block[] = '';
 
@@ -314,34 +319,15 @@ class BootstrapCommand extends Command
             }
 
             // Require application classes directly, we need applications to be registered before services
-            if ($appConfigs = $configLoader->get('framework', 'Applications')) {
-                $appDir = PH_APP_ROOT . DIRECTORY_SEPARATOR . 'applications';
-                foreach ($appConfigs as $appName => $appconfig) {
-                    $appClassDir = PH_APP_ROOT . DIRECTORY_SEPARATOR . 'applications' . DIRECTORY_SEPARATOR . $appName;
-                    $appClassPath = PH_APP_ROOT . DIRECTORY_SEPARATOR . 'applications' . DIRECTORY_SEPARATOR . $appName . DIRECTORY_SEPARATOR . 'Application.php';
-                    if (file_exists($appClassPath)) {
-                        $block[] = new RequireStatement($appClassPath);
-                    }
-                    if (file_exists($appClassDir)) {
-                        /*
-                        $block[] = new Statement(new MethodCall('$splClassLoader', 'addNamespace', [
-                            [ $appName => $appDir ],
-                        ]));
-                         */
-                    }
-                }
-            } else {
-                // TODO: load "App\App" by default
-                $appDir = PH_APP_ROOT . DIRECTORY_SEPARATOR . 'app';
-                $appClassPath = PH_APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'App.php';
-                if (file_exists($appClassPath)) {
-                    $block[] = new RequireStatement($appClassPath);
-                }
-                if (is_dir($appDir)) {
-                    $block[] = new Statement(new MethodCall('$psr4ClassLoader', 'addPrefix', [
-                         'App\\', [$appDir . DIRECTORY_SEPARATOR],
-                    ]));
-                }
+            $appDir = $appRoot . DIRECTORY_SEPARATOR . 'app';
+            $appClassPath = $appRoot . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'App.php';
+            if (file_exists($appClassPath)) {
+                $block[] = new RequireStatement($appClassPath);
+            }
+            if (is_dir($appDir)) {
+                $block[] = new Statement(new MethodCall('$psr4ClassLoader', 'addPrefix', [
+                        'App\\', [$appDir . DIRECTORY_SEPARATOR],
+                ]));
             }
 
             if ($services = $configLoader->get('framework', 'ServiceProviders')) {
@@ -442,22 +428,22 @@ class BootstrapCommand extends Command
     {
         // We load other services from the definitions in config file
         // Simple load three config files (framework.yml, database.yml, application.yml)
-        $loader = new ConfigLoader();
-        if (file_exists($baseDir.'/config/framework.yml')) {
-            $loader->load('framework', $baseDir.'/config/framework.yml');
+        $loader = new ConfigLoader;
+
+        if (file_exists( "$baseDir/config/framework.yml")) {
+            $loader->load('framework', "$baseDir/config/framework.yml");
         }
 
-
         // Config for application, services does not depends on this config file.
-        if (file_exists($baseDir.'/config/application.yml')) {
-            $loader->load('application', $baseDir.'/config/application.yml');
+        if (file_exists( "$baseDir/config/application.yml")) {
+            $loader->load('application', "$baseDir/config/application.yml");
         }
 
         // Only load testing configuration when environment
         // is 'testing'
         if (getenv('PHIFTY_ENV') === 'testing') {
-            if (file_exists($baseDir.'/config/testing.yml')) {
-                $loader->load('testing', ConfigCompiler::compile($baseDir.'/config/testing.yml'));
+            if (file_exists("$baseDir/config/testing.yml")) {
+                $loader->load('testing', "$baseDir/config/testing.yml");
             }
         }
         return $loader;
