@@ -26,16 +26,6 @@
     </whitelist>
   </filter>
 
-  <listeners>
-    <listeners>
-      <listener class="PHPUnit_Extensions_Selenium2TestCase_ScreenshotListener" file="PHPUnit/Extensions/Selenium2TestCase/ScreenshotListener.php">
-        <arguments>
-          <string>build/screenshots</string>
-        </arguments>
-      </listener>
-    </listeners>
-  </listeners>
-
   <logging>
     <log type="coverage-text" target="php://stdout" showUncoveredFiles="true"/>
 
