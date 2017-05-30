@@ -25,7 +25,7 @@ class BundleLoader
      *
      * @return array
      */
-    public function getAutoloadConfig($name)
+    private function getAutoloadConfig($name)
     {
         $class = "$name\\$name";
 
