@@ -11,13 +11,17 @@
   <testsuites>
     <testsuite name="Phifty">
       <directory suffix="Test.php">Phifty</directory>
-      <exclude>_old</exclude>
     </testsuite>
   </testsuites>
 
   <filter>
     <whitelist>
       <directory suffix=".php">Phifty</directory>
+      <exclude>
+        <directory>bundles</directory>
+        <directory>vendor</directory>
+        <directory>frameworks</directory>
+      </exclude>
     </whitelist>
   </filter>
 

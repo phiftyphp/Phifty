@@ -17,6 +17,11 @@
   <filter>
     <whitelist>
       <directory suffix=".php">Phifty</directory>
+      <exclude>
+        <directory>bundles</directory>
+        <directory>vendor</directory>
+        <directory>frameworks</directory>
+      </exclude>
     </whitelist>
   </filter>
 
