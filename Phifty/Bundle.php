@@ -9,17 +9,16 @@ use LogicException;
 use Phifty\Kernel;
 use Phifty\Controller;
 use ConfigKit\ConfigCompiler;
+
 use Phifty\Generator\AppActionGenerator;
+use Phifty\Bundle\BundleActionCreators;
 
 /**
  *  Bundle is the base class of App, Core, {Plugin} class.
  */
 class Bundle
 {
-    /**
-     * @var Phifty\Generator\AppActionGenerator
-     */
-    private $_actionGenerator;
+    use BundleActionCreators;
 
 
     /**
@@ -51,6 +50,9 @@ class Bundle
      */
     public $exportTemplates = true;
 
+    /**
+     * TODO: force config to be array.
+     */
     public function __construct(Kernel $kernel, $config = null)
     {
         $this->kernel = $kernel;
@@ -77,15 +79,6 @@ class Bundle
         }
     }
 
-    protected function getActionGenerator()
-    {
-        if ($this->_actionGenerator) {
-            return $this->_actionGenerator;
-        }
-        return $this->_actionGenerator = new AppActionGenerator($this->kernel, $this);
-    }
-
-
     public function getConfig()
     {
         return $this->config;
@@ -105,7 +98,6 @@ class Bundle
     {
         return array();
     }
-
 
     public function init()
     {
@@ -380,68 +372,6 @@ class Bundle
 
 
 
-    // =================================
-    // Action Generator API
-    // =================================
-
-    public function addCRUDAction($modelName, $types = array())
-    {
-        @trigger_error('addCRUDAction will be deprecated, please use addRecordAction instead', E_USER_DEPRECATED);
-        return $this->addRecordAction($modelName, $types);
-    }
-
-
-    /**
-     *
-     *
-     * This method provides an API to register the user defined action class that can
-     * be generated in the runtime.
-     *
-     * phifty.before_action will be triggered when users send the action request.
-     *
-     * @param string $modelName model class
-     * @param array  $types action types (Create, Update, Delete, BulkCopy, BulkDelete.....)
-     */
-    public function addRecordAction($modelName, $types = null)
-    {
-        $self = $this;
-        $this->kernel->event->register('phifty.before_action', function () use ($self, $types, $modelName) {
-            $generator = $self->getActionGenerator();
-            $generator->addRecordAction($modelName, $types);
-        });
-    }
-
-
-    /**
-     * Register import action for an record.
-     *
-     * @param string $modelName the model name Org
-     */
-    public function addImportAction($modelName)
-    {
-        $self = $this;
-        $this->kernel->event->register('phifty.before_action', function () use ($self, $modelName) {
-            $generator = $self->getActionGenerator();
-            $generator->addSimpleImportAction($modelName);
-        });
-    }
-
-
-
-    /**
-     * Register/Generate update ordering action
-     *
-     * @param string $modelName model class
-     */
-    public function addUpdateOrderingAction($modelName)
-    {
-        $self = $this;
-        $this->kernel->event->register('phifty.before_action', function () use ($self, $modelName) {
-            $generator = $self->getActionGenerator();
-            $generator->addUpdateOrderingAction($modelName);
-        });
-    }
-
     /**
      * Returns template directory path.
      *
@@ -537,6 +467,9 @@ class Bundle
         return array();
     }
 
+    /**
+     * Get the asset list for loading
+     */
     public function getAssets()
     {
         $assetConfig = $this->config('Assets');
@@ -558,6 +491,8 @@ class Bundle
 
     /**
      * Get the asset loader and load these assets.
+     *
+     * TODO: move this behavior out.
      */
     public function loadAssets()
     {
