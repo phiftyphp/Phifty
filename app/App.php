@@ -1,8 +1,8 @@
 <?php
-namespace App;
-use Phifty\Bundle;
 
-class App extends Bundle
+namespace App;
+
+class App extends \Phifty\App
 {
 
 }

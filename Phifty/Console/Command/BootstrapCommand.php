@@ -5,7 +5,6 @@ namespace Phifty\Console\Command;
 use CLIFramework\Command;
 use ConfigKit\ConfigCompiler;
 use ConfigKit\ConfigLoader;
-use CodeGen\Generator\AppClassGenerator;
 use CodeGen\Block;
 use CodeGen\Raw;
 use CodeGen\Statement\RequireStatement;

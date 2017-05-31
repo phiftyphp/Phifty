@@ -1,15 +1,15 @@
 <?php
+
 namespace Phifty;
+
 use Funk\Compositor;
 
-class App implements \Funk\App
+class App extends Bundle implements \PHPSGI\App
 {
-
-    public function call(array $environment, array $response)
+    public function call(array & $environment, array $response)
     {
         return $response;
     }
-
 
     /**
      * The default PHPSGI application builder (logics for wrapping application with middlewares)
