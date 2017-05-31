@@ -3,7 +3,6 @@
 namespace Phifty\Http;
 
 use BrowscapPHP\Browscap;
-// use Phifty\Http\Browscap;
 
 /**
  * Debian system:
