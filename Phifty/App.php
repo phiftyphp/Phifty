@@ -29,6 +29,18 @@ class App extends Bundle implements \PHPSGI\App
                     return $app($environment, $response);
                 };
             });
+
+            $compositor->app(function(array & $environment, array $response) {
+                $request = RouteRequest::createFromEnv($environment);
+                if ($request->pathStartWith('/foo')) {
+
+                }
+
+                $response[0] = 200;
+                return $response;
+            });
+
+            $response = $compositor($env, []);
         */
         return new static($kernel, $config);
     }
