@@ -73,7 +73,6 @@ class BootstrapGenerator
         $this->env = $env;
 
         $this->configLoader = $configLoader;
-
     }
 
     public function enableXhprof(array $config = null)
@@ -82,8 +81,6 @@ class BootstrapGenerator
             $this->xhprofConfig = array_merge($this->xhprofConfig, $config);
         }
         return $this->xhprofEnabled = extension_loaded('xhprof');
-
-
     }
 
     public function generateAppConfigClass()
@@ -204,5 +201,4 @@ class BootstrapGenerator
             $block[] = 'header("X-XHPROF-NS: $xhprofNamespace");';
         }
     }
-
 }

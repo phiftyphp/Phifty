@@ -1,5 +1,7 @@
 <?php
+
 namespace Phifty;
+
 use ReflectionObject;
 use Exception;
 use ConfigKit\Accessor;
@@ -7,86 +9,7 @@ use LogicException;
 use Phifty\Kernel;
 use Phifty\Controller;
 use ConfigKit\ConfigCompiler;
-
-class AppActionGenerator
-{
-    protected $kernel;
-
-    protected $bundle;
-
-    /**
-     *  The default action types is used in CRUD action generator.
-     */
-    public $defaultActionTypes = array(
-        ['prefix' => 'Create'],
-        ['prefix' => 'Update'],
-        ['prefix' => 'Delete'],
-        ['prefix' => 'BulkDelete'],
-    );
-
-    public function __construct(Kernel $kernel, Bundle $bundle)
-    {
-        $this->kernel = $kernel;
-        $this->bundle = $bundle;
-    }
-
-    /**
-     * Register/Generate update ordering action
-     *
-     * @param string $modelName model class
-     */
-    public function addUpdateOrderingAction($modelName)
-    {
-        $this->kernel->action->registerAction('UpdateOrderingRecordActionTemplate', array(
-            'namespace' => $this->bundle->getNamespace(),
-            'model' => $modelName,
-        ));
-    }
-
-
-    /**
-     * Register/Generate CRUD actions
-     *
-     *
-     * This method provides an API to register the user defined action class that can 
-     * be generated in the runtime.
-     *
-     * phifty.before_action will be triggered when users send the action request.
-     *
-     * @param string $modelName model class
-     * @param array  $types action types (Create, Update, Delete, BulkCopy, BulkDelete.....)
-     */
-    public function addRecordAction($modelName, $types = array())
-    {
-        if (!$types || empty($types)) {
-            $types = $this->defaultActionTypes;
-        }
-        $this->kernel->action->registerAction('RecordActionTemplate', array(
-            'namespace' => $this->bundle->getNamespace(),
-            'model' => $modelName,
-            'types' => (array) $types,
-        ));
-    }
-
-
-    /**
-     * Register import action for an record.
-     *
-     * @param string $modelName the model name Org
-     */
-    public function addSimpleImportAction($modelName)
-    {
-        $className = $this->bundle->getNamespace() . '\\Action\\Import' . $modelName . 'Simple';
-        $recordClass = $this->bundle->getNamespace() . '\\Model\\' . $modelName;
-        $this->kernel->action->registerAction('CodeGenActionTemplate', array(
-            "action_class" => $className,
-            "extends"      => "\\CRUD\\Action\\ImportSimple",
-            "properties"   => [ "recordClass" => $recordClass, ],
-        ));
-    }
-
-
-}
+use Phifty\Generator\AppActionGenerator;
 
 /**
  *  Bundle is the base class of App, Core, {Plugin} class.
@@ -94,7 +17,7 @@ class AppActionGenerator
 class Bundle
 {
     /**
-     * @var AppActionGenerator
+     * @var Phifty\Generator\AppActionGenerator
      */
     private $_actionGenerator;
 
@@ -149,7 +72,7 @@ class Bundle
             // register the loader to events
             $dir = $this->getTemplateDir();
             if (file_exists($dir)) {
-                $this->kernel->twig->loader->addPath($dir, $this->getNamespace() );
+                $this->kernel->twig->loader->addPath($dir, $this->getNamespace());
             }
         }
     }
@@ -175,7 +98,7 @@ class Bundle
 
     public function mergeWithDefaultConfig(array $config = array())
     {
-        return array_merge($this->defaultConfig() , $config);
+        return array_merge($this->defaultConfig(), $config);
     }
 
     public function defaultConfig()
@@ -219,10 +142,10 @@ class Bundle
      * @param string $path
      * @param string $template file
      */
-    public function page( $path , $template , $args = array() )
+    public function page($path, $template, $args = array())
     {
         $router = $this->kernel->router;
-        $router->add( $path , array(
+        $router->add($path, array(
             'template' => $template,
             'args' => $args,  // template args
         ));
@@ -247,7 +170,7 @@ class Bundle
      *
      * @param string $name Model Name
      */
-    public function getModel( $name )
+    public function getModel($name)
     {
         $class = $this->getNamespace() . "\\Model\\$name";
         return new $class;
@@ -259,14 +182,14 @@ class Bundle
      *
      * @param string $name Controller Name
      */
-    public function getController( $name )
+    public function getController($name)
     {
         $class = $this->getNamespace() . "\\Controller\\$name";
         return new $class;
     }
 
 
-    public function getAction( $name )
+    public function getAction($name)
     {
         $class = $this->getNamespace() . "\\Action\\$name";
         return new $class;
@@ -281,26 +204,26 @@ class Bundle
      * @param string $key config key
      * @return mixed
      */
-    public function config( $key )
+    public function config($key)
     {
-        if ( isset($this->config[ $key ]) ) {
-            if ( is_array( $this->config[ $key ] ) ) {
+        if (isset($this->config[ $key ])) {
+            if (is_array($this->config[ $key ])) {
                 return new Accessor($this->config[ $key ]);
             }
             return $this->config[ $key ];
         }
-        if ( strchr( $key , '.' ) !== false ) {
-            $parts = explode( '.' , $key );
+        if (strchr($key, '.') !== false) {
+            $parts = explode('.', $key);
             $ref = $this->config;
-            while ( $refKey = array_shift( $parts ) ) {
-                if ( is_array($ref) && isset($ref[ $refKey ]) ) {
+            while ($refKey = array_shift($parts)) {
+                if (is_array($ref) && isset($ref[ $refKey ])) {
                     $ref = & $ref[ $refKey ];
                     continue;
                 } else {
                     return null;
                 }
             }
-            if ( is_array($ref) ) {
+            if (is_array($ref)) {
                 return new Accessor($ref);
             }
             return $ref;
@@ -353,9 +276,9 @@ class Bundle
 
             // the default action method name
             $action = 'indexAction';
-            if (false !== ($pos = strrpos($args,':'))) {
-                list($class,$action) = explode(':',$args);
-                if (false === strrpos( $action , 'Action' )) {
+            if (false !== ($pos = strrpos($args, ':'))) {
+                list($class, $action) = explode(':', $args);
+                if (false === strrpos($action, 'Action')) {
                     $action .= 'Action';
                 }
             } else {
@@ -365,43 +288,37 @@ class Bundle
             // Convert controlelr class name to full-qualified name
             // If it's not full-qualified classname, we should prepend our base namespace.
             if ($class[0] === '+' || $class[0] === '\\') {
-                $class = substr( $class , 1 );
+                $class = substr($class, 1);
             } else {
                 $class = $this->getNamespace() . "\\Controller\\$class";
             }
 
-            if (! method_exists($class,$action) ) {
+            if (! method_exists($class, $action)) {
                 // FIXME, it's broken if class is not loaded.
                 // throw new Exception("Controller action <$class:$action>' does not exist.");
             }
 
             $router->add($path, array($class,$action), $options);
-
-        } else if (is_array($args)) {
+        } elseif (is_array($args)) {
 
             // route to template controller ?
-            if (isset($args['template']) ) {
+            if (isset($args['template'])) {
                 $options['args'] = array(
                     'template' => $args['template'],
-                    'template_args' => ( isset($args['args']) ? $args['args'] : null),
+                    'template_args' => (isset($args['args']) ? $args['args'] : null),
                 );
-                $router->add( $path , '\Phifty\Routing\TemplateController' , $options );
+                $router->add($path, '\Phifty\Routing\TemplateController', $options);
+            } elseif (isset($args['controller'])) { // route to normal controller ?
 
-            } else if ( isset($args['controller']) ) { // route to normal controller ?
+                $router->add($path, $args['controller'], $options);
+            } elseif (isset($args[0]) && count($args) == 2) { // simply treat it as a callback
 
-                $router->add( $path , $args['controller'], $options );
-
-            } else if ( isset($args[0]) && count($args) == 2 ) { // simply treat it as a callback
-
-                $router->add( $path , $args , $options );
-
+                $router->add($path, $args, $options);
             } else {
-
                 throw new LogicException('Unsupport route argument.');
-
             }
         } else {
-            throw new LogicException( "Unsupported route argument." );
+            throw new LogicException("Unsupported route argument.");
         }
     }
 
@@ -414,10 +331,10 @@ class Bundle
     public function mount($path, $className)
     {
         $class = $className;
-        if (!class_exists($class,true)) {
+        if (!class_exists($class, true)) {
             $class = $this->getNamespace() . '\\' . $className;
         }
-        if (!class_exists($class,true)) {
+        if (!class_exists($class, true)) {
             $class = $this->getNamespace() . '\\Controller\\' . $className;
         }
         $controller = new $class;
@@ -439,12 +356,16 @@ class Bundle
     /**
      * Route definition method, users define bundle routes in this method.
      */
-    public function routes() { }
+    public function routes()
+    {
+    }
 
     /**
      * overridable method for defining user action classes.
      */
-    public function actions() { }
+    public function actions()
+    {
+    }
 
     /**
      * Return assets for asset loader.
@@ -463,17 +384,17 @@ class Bundle
     // Action Generator API
     // =================================
 
-    public function addCRUDAction($modelName, $types = array() )
+    public function addCRUDAction($modelName, $types = array())
     {
         @trigger_error('addCRUDAction will be deprecated, please use addRecordAction instead', E_USER_DEPRECATED);
-        return $this->addRecordAction($modelName, $types );
+        return $this->addRecordAction($modelName, $types);
     }
 
 
     /**
      *
      *
-     * This method provides an API to register the user defined action class that can 
+     * This method provides an API to register the user defined action class that can
      * be generated in the runtime.
      *
      * phifty.before_action will be triggered when users send the action request.
@@ -484,7 +405,7 @@ class Bundle
     public function addRecordAction($modelName, $types = null)
     {
         $self = $this;
-        $this->kernel->event->register('phifty.before_action', function() use ($self, $types, $modelName) {
+        $this->kernel->event->register('phifty.before_action', function () use ($self, $types, $modelName) {
             $generator = $self->getActionGenerator();
             $generator->addRecordAction($modelName, $types);
         });
@@ -499,7 +420,7 @@ class Bundle
     public function addImportAction($modelName)
     {
         $self = $this;
-        $this->kernel->event->register('phifty.before_action', function() use ($self, $modelName) {
+        $this->kernel->event->register('phifty.before_action', function () use ($self, $modelName) {
             $generator = $self->getActionGenerator();
             $generator->addSimpleImportAction($modelName);
         });
@@ -515,7 +436,7 @@ class Bundle
     public function addUpdateOrderingAction($modelName)
     {
         $self = $this;
-        $this->kernel->event->register('phifty.before_action', function() use ($self, $modelName) {
+        $this->kernel->event->register('phifty.before_action', function () use ($self, $modelName) {
             $generator = $self->getActionGenerator();
             $generator->addUpdateOrderingAction($modelName);
         });
@@ -584,7 +505,8 @@ class Bundle
      *
      * @return Schema[]
      */
-    public function getSchemas() {
+    public function getSchemas()
+    {
         return [];
     }
 
@@ -609,7 +531,7 @@ class Bundle
         // XXX: Here we got a absolute path,
         // should return relative path here.
         $assetDir = $this->locate() . DIRECTORY_SEPARATOR . 'Assets';
-        if ( $list = futil_scanpath_dir($assetDir) ) {
+        if ($list = futil_scanpath_dir($assetDir)) {
             return $list;
         }
         return array();
@@ -641,7 +563,7 @@ class Bundle
     {
         $loader = $this->kernel->asset->loader;
         $assetNames = $this->getAssets();
-        if (! empty($assetNames) ) {
+        if (! empty($assetNames)) {
             $loader->loadAssets($assetNames);
         }
     }
@@ -654,5 +576,4 @@ class Bundle
         }
         return $instance;
     }
-
 }

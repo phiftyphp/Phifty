@@ -1,5 +1,6 @@
 <?php
 namespace Phifty\Generator;
+
 use Phifty\Bundle;
 use ReflectionObject;
 
@@ -32,5 +33,3 @@ class TestSuiteGenerator
         return join("\n", $lines);
     }
 }
-
-
