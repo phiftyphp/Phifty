@@ -80,23 +80,23 @@ class BrowserClient
 
         if ($userAgentStr) {
             $this->userAgent = $userAgentStr;
-        } elseif ( isset($_SERVER['HTTP_USER_AGENT']) ) {
+        } elseif (isset($_SERVER['HTTP_USER_AGENT'])) {
             $this->userAgent = $_SERVER['HTTP_USER_AGENT'];
         }
 
         $this->host = $this->getHostname();
 
-        if ( isset($_SERVER['HTTP_REFERER']) ) {
+        if (isset($_SERVER['HTTP_REFERER'])) {
             $this->referer = $_SERVER['HTTP_REFERER'];
         }
 
         // get extended informations
-        if ( extension_loaded('geoip') ) {
+        if (extension_loaded('geoip')) {
             $this->geoipSupports = true;
         }
 
         if ($this->ip && $this->geoipSupports) {
-            if ( $record = @geoip_record_by_name($this->ip) ) {
+            if ($record = @geoip_record_by_name($this->ip)) {
                 $this->continent     = @$record['continent_code'];
                 $this->countryCode   = @$record['country_code'];
                 $this->country       = @$record['country_name'];
@@ -108,7 +108,7 @@ class BrowserClient
 
         // if browscap string is set in php.ini, we can use get_browser function
         if ($browscapStr = ini_get('browscap')) {
-            $this->browser = (object) get_browser( $userAgentStr , true);
+            $this->browser = (object) get_browser($userAgentStr, true);
         } else {
             $browscap = new Browscap();
             $this->browser = $browscap->getBrowser();
@@ -117,20 +117,19 @@ class BrowserClient
 
     public function getIp()
     {
-        if ( isset( $_SERVER['HTTP_CLIENT_IP']) ) {
+        if (isset($_SERVER['HTTP_CLIENT_IP'])) {
             return $_SERVER['HTTP_CLIENT_IP'];
         } elseif (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             return $_SERVER['HTTP_X_FORWARDED_FOR'];
-        } elseif ( isset($_SERVER['REMOTE_ADDR']) ) {
+        } elseif (isset($_SERVER['REMOTE_ADDR'])) {
             return $_SERVER['REMOTE_ADDR'];
         }
     }
 
     public function getHostname()
     {
-        if ( $this->ip && function_exists('gethostbyaddr') ) {
-            return gethostbyaddr( $this->ip );
+        if ($this->ip && function_exists('gethostbyaddr')) {
+            return gethostbyaddr($this->ip);
         }
     }
-
 }
