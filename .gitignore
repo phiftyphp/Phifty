@@ -24,3 +24,5 @@ manifest.php
 /.asset-entries.*
 /app/AppConfigLoader.php
 /app/AppKernel.php
+.maghead-cli.yml
+.php_cs.cache
