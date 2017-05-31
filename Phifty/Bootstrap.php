@@ -128,7 +128,10 @@ class Bootstrap
                 if (false === $bundleClass) {
                     throw new Exception("Bundle $bundleName class file '$bundleClassFile' doesn't exist.");
                 }
-                $kernel->bundles[$bundleName] = $bundleClass::getInstance($kernel, $bundleConfig);
+
+                // TODO: This line seems could be removed.
+                $bundleConfigArray = ($bundleConfig instanceof \ConfigKit\Accessor) ? $bundleConfig->toArray() : $bundleConfig;
+                $kernel->bundles[$bundleName] = $bundleClass::getInstance($kernel, $bundleConfigArray);
             }
         }
 

@@ -236,6 +236,9 @@ class BootstrapCommand extends Command
 
             foreach ($bundleList as $bundleName => $bundleConfig) {
                 $bundleClass = $bundleLoader->getBundleClass($bundleName);
+
+                // TODO: This line seems could be removed.
+                $bundleConfigArray = $bundleConfig instanceof \ConfigKit\Accessor ? $bundleConfig->toArray() : $bundleConfig;
                 $block[] = "\$kernel->bundles['$bundleName'] = $bundleClass::getInstance(\$kernel, " . var_export($bundleConfig, true) . ");";
             }
         }
