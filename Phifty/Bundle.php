@@ -53,15 +53,11 @@ class Bundle
     /**
      * TODO: force config to be array.
      */
-    public function __construct(Kernel $kernel, $config = null)
+    public function __construct(Kernel $kernel, array $config = null)
     {
         $this->kernel = $kernel;
         if ($config) {
-            if ($config instanceof Accessor) {
-                $this->config = $this->mergeWithDefaultConfig($config->toArray());
-            } else {
-                $this->config = $this->mergeWithDefaultConfig($config);
-            }
+            $this->config = $this->mergeWithDefaultConfig($config);
         } else {
             $this->config = $this->defaultConfig();
         }
