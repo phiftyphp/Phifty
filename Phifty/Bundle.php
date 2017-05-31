@@ -485,7 +485,7 @@ class Bundle
 
     public function getTranslation($locale)
     {
-        $file = $this->getTranslationDir() . DIRECTORY_SEPARATOR . $locale . '.yml';
+        $file = $this->getTranslationDir() . DIRECTORY_SEPARATOR . "$locale.yml";
         if (file_exists($file)) {
             return ConfigCompiler::parse($file);
         }
@@ -494,7 +494,7 @@ class Bundle
 
     public function saveTranslation($locale, $dict)
     {
-        $file = $this->getTranslationDir() . DIRECTORY_SEPARATOR . $locale . '.yml';
+        $file = $this->getTranslationDir() . DIRECTORY_SEPARATOR . "$locale.yml";
         return ConfigCompiler::write_yaml($file, $dict);
     }
 
