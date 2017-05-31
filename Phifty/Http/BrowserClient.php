@@ -1,6 +1,9 @@
 <?php
+
 namespace Phifty\Http;
-use Phifty\Http\Browscap;
+
+use BrowscapPHP\Browscap;
+// use Phifty\Http\Browscap;
 
 /**
  * Debian system:
@@ -105,11 +108,11 @@ class BrowserClient
         }
 
         // if browscap string is set in php.ini, we can use get_browser function
-        if ( $browscapStr = ini_get('browscap') ) {
+        if ($browscapStr = ini_get('browscap')) {
             $this->browser = (object) get_browser( $userAgentStr , true);
         } else {
-            // $browscap = new Browscap( kernel()->cacheDir );
-            // $this->browser = (object) $browscap->getBrowser( $userAgentStr , true);
+            $browscap = new Browscap();
+            $this->browser = $browscap->getBrowser();
         }
     }
 
