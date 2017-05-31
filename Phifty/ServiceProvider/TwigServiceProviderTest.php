@@ -27,8 +27,7 @@ class TwigServiceProviderTest extends TestCase
             'TemplateDirs' => array('app','bundles'),
         ));
         $this->assertNotNull($kernel->twig);
-        $this->assertNotNull($kernel->twig->env,'get environment');
-        $this->assertNotNull($kernel->twig->loader,'get loader');
+        $this->assertNotNull($kernel->twig->env, 'get environment');
+        $this->assertNotNull($kernel->twig->loader, 'get loader');
     }
 }
-

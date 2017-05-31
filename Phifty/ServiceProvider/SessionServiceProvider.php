@@ -4,6 +4,9 @@ namespace Phifty\ServiceProvider;
 
 use SessionKit;
 use Phifty\Kernel;
+use SessionKit\Session;
+use SessionKit\State\NativeState;
+use SessionKit\Storage\NativeStorage;
 
 class SessionServiceProvider extends BaseServiceProvider
 {
@@ -16,12 +19,10 @@ class SessionServiceProvider extends BaseServiceProvider
     {
         // XXX: customize this for $options
         $kernel->session = function () {
-            $session = new SessionKit\Session(array(
-                'state' => new SessionKit\State\NativeState(),
-                'storage' => new SessionKit\Storage\NativeStorage(),
-            ));
-
-            return $session;
+            return new Session([
+                'state' => new NativeState(),
+                'storage' => new NativeStorage(),
+            ]);
         };
     }
 }

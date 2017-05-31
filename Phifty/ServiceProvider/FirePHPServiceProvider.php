@@ -5,8 +5,7 @@ namespace Phifty\ServiceProvider;
 use Phifty\ComposerConfigBridge;
 use Phifty\Kernel;
 
-class FirePHPServiceProvider extends BaseServiceProvider
-    implements ComposerConfigBridge
+class FirePHPServiceProvider extends BaseServiceProvider implements ComposerConfigBridge
 {
     public function getId()
     {

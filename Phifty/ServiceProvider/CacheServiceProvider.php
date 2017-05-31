@@ -20,7 +20,6 @@ class CacheServiceProvider extends BaseServiceProvider
     {
         // handle Memcache initialization
         if (isset($options['Memcached'])) {
-
             if ($options['Memcached'] === true) {
                 $options['Memcached'] = [];
             }
@@ -34,7 +33,6 @@ class CacheServiceProvider extends BaseServiceProvider
                             return [$item['Host'], $item['Port']];
                         }
                     }
-
                 }, $options['Memcached']['Servers']);
             } else {
                 $options['Memcached']['Servers'] = [['localhost', 11211]];

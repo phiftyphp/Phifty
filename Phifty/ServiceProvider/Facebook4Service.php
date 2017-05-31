@@ -13,7 +13,7 @@ class Facebook4Service extends Container
     {
         parent::__construct();
         $this['app_id'] = $options['AppId'];
-        $this['session'] = function($c) use ($options) {
+        $this['session'] = function ($c) use ($options) {
             return new Facebook([
                 'app_id'                => $options['AppId'],
                 'app_secret'            => $options['AppSecret'],
@@ -21,11 +21,11 @@ class Facebook4Service extends Container
             ]);
         };
         // make this factory?
-        $this['redirect_login_helper'] = $this->factory(function($c) {
+        $this['redirect_login_helper'] = $this->factory(function ($c) {
             return $c['session']->getRedirectLoginHelper();
         });
-        $this['login_url'] = $this->factory(function($c) use ($options) {
-            if (preg_match('#^https?://#',$options['DefaultLoginCallbackUrl'])) {
+        $this['login_url'] = $this->factory(function ($c) use ($options) {
+            if (preg_match('#^https?://#', $options['DefaultLoginCallbackUrl'])) {
                 $url = $options['DefaultLoginCallbackUrl'];
             } else {
                 $url = $kernel->getBaseUrl() . $options['DefaultLoginCallbackUrl'];
@@ -33,10 +33,9 @@ class Facebook4Service extends Container
             $helper = $c['redirect_login_helper'];
             return $helper->getLoginUrl($url, $options['DefaultPermissions']);
         });
-        $this['oauth2_client'] = $this->factory(function($c) use ($options) {
-            return $c['session']->getOAuth2Client();;
+        $this['oauth2_client'] = $this->factory(function ($c) use ($options) {
+            return $c['session']->getOAuth2Client();
+            ;
         });
     }
 }
-
-

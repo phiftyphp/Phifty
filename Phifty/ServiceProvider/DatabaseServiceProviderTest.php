@@ -24,4 +24,3 @@ class DatabaseServiceProviderTest extends TestCase
         $this->assertNotNull($dsManager->getMasterConnection());
     }
 }
-

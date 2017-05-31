@@ -7,7 +7,6 @@ use Facebook\Facebook;
 use Pimple\Container;
 use Exception;
 
-
 /*
  * The official facebook service provider
  * Facebook4ServiceProvider:
@@ -16,8 +15,7 @@ use Exception;
  *   DefaultPermissions: ['email']
  *   DefaultLoginCallbackUrl: '/oauth/facebook/callback'
  */
-class Facebook4ServiceProvider
-    extends BaseServiceProvider
+class Facebook4ServiceProvider extends BaseServiceProvider
 {
     public function getId()
     {
@@ -26,12 +24,12 @@ class Facebook4ServiceProvider
 
     public function register(Kernel $kernel, $options = array())
     {
-        $kernel->facebook = function() use ($options, $kernel) {
+        $kernel->facebook = function () use ($options, $kernel) {
             return new Facebook4Service($kernel, $options);
         };
     }
 
-    static public function canonicalizeConfig(Kernel $kernel, array $options)
+    public static function canonicalizeConfig(Kernel $kernel, array $options)
     {
         if (!isset($options['AppId']) || !isset($options['AppSecret'])) {
             throw new Exception('AppId or AppSecret is not defined.');

@@ -10,7 +10,7 @@ class ViewServiceTest extends \PHPUnit\Framework\TestCase
     {
         $kernel = new Kernel;
         $service = new ViewServiceProvider;
-        $kernel->registerService($service,array(
+        $kernel->registerService($service, array(
             'Class' => 'Phifty\\View',
         ));
 
@@ -23,7 +23,7 @@ class ViewServiceTest extends \PHPUnit\Framework\TestCase
     {
         $kernel = new Kernel;
         $service = new ViewServiceProvider;
-        $kernel->registerService($service,array(
+        $kernel->registerService($service, array(
             'Class' => 'Phifty\\View\\Page',
         ));
 
@@ -31,6 +31,4 @@ class ViewServiceTest extends \PHPUnit\Framework\TestCase
         $this->assertNotNull($view);
         $this->assertInstanceOf('Phifty\View\Page', $view);
     }
-
 }
-

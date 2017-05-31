@@ -25,4 +25,3 @@ class ActionServiceProviderTest extends \PHPUnit\Framework\TestCase
         $this->assertNotNull($kernel->actionService['generator'] instanceof ActionGenerator);
     }
 }
-

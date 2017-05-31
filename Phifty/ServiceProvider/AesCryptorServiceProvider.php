@@ -78,7 +78,7 @@ class AesCryptor
         if ($em !== $mac) {                                 # authenticate mac
             return false;
         }
-        if (mcrypt_generic_init($td, $k, $iv) !== 0) {    # initialize buffers 
+        if (mcrypt_generic_init($td, $k, $iv) !== 0) {    # initialize buffers
             return false;
         }
         $msg = mdecrypt_generic($td, $msg);                 # decrypt
@@ -139,7 +139,6 @@ class AesCryptorServiceProvider extends BaseServiceProvider
     {
         $options = new Accessor($options);
         $kernel->aes = function () use ($options) {
-
             return new AesCryptor($options['Key']);
         };
     }

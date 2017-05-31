@@ -285,7 +285,7 @@ class Kernel extends ObjectContainer
      */
     public function service($id)
     {
-        if ( isset($this->services[ $id ] ) ) {
+        if (isset($this->services[ $id ])) {
             return $this->services[ $id ];
         }
     }

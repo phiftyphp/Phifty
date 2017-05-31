@@ -19,10 +19,9 @@ class CurrentUserProviderServiceTest extends \PHPUnit\Framework\TestCase
         $config = CurrentUserServiceProvider::canonicalizeConfig($kernel, $config);
 
         $service = new CurrentUserServiceProvider;
-        $service->register($kernel , $config);
+        $service->register($kernel, $config);
 
         $this->assertNotNull($service);
         $this->assertNotNull($kernel->currentUser);
     }
 }
-

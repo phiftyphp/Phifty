@@ -32,7 +32,7 @@ class MailerServiceProvider extends BaseServiceProvider implements ComposerConfi
             $transportType = $options['Transport'];
             unset($options['Transport']);
             $options['TransportClass'] = 'Swift_'.$transportType;
-            if (!class_exists($cls = $options['TransportClass'],true)) {
+            if (!class_exists($cls = $options['TransportClass'], true)) {
                 throw new Exception("$cls doesn't exist.");
             }
             $options[$transportType] = $options;
@@ -74,9 +74,9 @@ class MailerServiceProvider extends BaseServiceProvider implements ComposerConfi
                 $transport->setAuthMode($transportOptions['AuthMode']);
             }
             return $transport;
-        } else if (isset($options['MailTransport'])) {
+        } elseif (isset($options['MailTransport'])) {
             return Swift_MailTransport::newInstance();
-        } else if (isset($options['SendmailTransport'])) {
+        } elseif (isset($options['SendmailTransport'])) {
             $transportOptions = $options['SendmailTransport'];
             return Swift_SendmailTransport::newInstance($transportOptions['Command']);
         }
