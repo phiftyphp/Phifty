@@ -6,5 +6,3 @@ class App extends \Phifty\App
 {
 
 }
-
-

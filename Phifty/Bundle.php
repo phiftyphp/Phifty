@@ -646,13 +646,13 @@ class Bundle
         }
     }
 
-    public static function getInstance(Kernel $kernel = null, $config = array())
+    public static function getInstance(Kernel $kernel = null, $config = [])
     {
         static $instance;
-        if ( $instance ) {
-            return $instance;
+        if (!$instance) {
+            return $instance = new static($kernel, $config);
         }
-        return $instance = new static($kernel, $config);
+        return $instance;
     }
 
 }

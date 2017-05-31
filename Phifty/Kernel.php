@@ -265,8 +265,9 @@ class Kernel extends ObjectContainer
         if (isset($this->locale)) {
             $this->locale;
         }
-        $this->app = \App\App::getInstance($this, [ ]);
+        $this->app = \App\App::getInstance($this);
         $this->app->init();
+
         $this->bundles->init();
         $this->event->trigger('phifty.after_init');
     }

@@ -6,6 +6,7 @@ use Funk\Compositor;
 
 class App extends Bundle implements \PHPSGI\App
 {
+
     public function call(array & $environment, array $response)
     {
         return $response;
@@ -16,15 +17,21 @@ class App extends Bundle implements \PHPSGI\App
      *
      * @return callable
      */
-    static public function build()
+    static public function build(Kernel $kernel, array $config)
     {
-        return new static;
+        return new static($kernel, $config);
         /*
         $compositor = new Compositor(new static);
         return $compositor->wrap();
         */
     }
+
+    static public function getInstance(Kernel $kernel = null, $config = [])
+    {
+        static $singleton;
+        if (!$singleton) {
+            $singleton = static::build($kernel, $config);
+        }
+        return $singleton;
+    }
 }
-
-
-
