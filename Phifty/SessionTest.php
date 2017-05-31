@@ -1,5 +1,6 @@
 <?php
-use Phifty\Session;
+
+namespace Phifty;
 
 class SessionTest extends \PHPUnit\Framework\TestCase 
 {
@@ -7,7 +8,7 @@ class SessionTest extends \PHPUnit\Framework\TestCase
     function testSession()
     {
         $session = new Session;
-        $this->assertNotNull( $session );
+        $this->assertNotNull($session);
 
         $session->test = 123;
 
@@ -23,14 +24,14 @@ class SessionTest extends \PHPUnit\Framework\TestCase
         $session->remove('foo');
     }
 
-    function testSessionPrefix()
+    public function testSessionPrefix()
     {
         $sen = new Session( '_prefix_' );
         $this->assertNotNull( $sen );
         $sen->account = 'admin';
-        $this->assertNotNull( isset($_SESSION['_prefix_account']) );
+        $this->assertNotNull(isset($_SESSION['_prefix_account']));
         $sen->remove('account');
-        $this->assertNotNull( ! isset($_SESSION['_prefix_account']) );
+        $this->assertNotNull(!isset($_SESSION['_prefix_account']));
     }
 
 }

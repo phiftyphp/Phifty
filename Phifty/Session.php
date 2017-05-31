@@ -1,9 +1,14 @@
 <?php
 namespace Phifty;
 
+/**
+ * Session class is a helper class of $_SESSION
+ *
+ * This is currently used by CurrentUser
+ */
 class Session
 {
-    public $sessionPrefix;
+    protected $sessionPrefix;
 
     public function __construct( $sessionPrefix = '' )
     {

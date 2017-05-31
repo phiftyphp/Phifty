@@ -91,7 +91,7 @@ class CurrentUser implements RoleIdentifierProvider, ActorIdentifierProvider, Re
         /**
          * Initialize a session pool with prefix 'user_'
          */
-        $this->session = new Session( $this->sessionPrefix );
+        $this->session = new Session($this->sessionPrefix);
 
         /* if record is specified, update session from record */
         if ($record) {
