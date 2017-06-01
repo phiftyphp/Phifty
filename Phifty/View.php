@@ -28,10 +28,6 @@ class View implements ArrayAccess, IteratorAggregate
         // register args
         $this->args['Kernel']      = $kernel;
         $this->args['Request']     = new HttpRequest;
-
-        // helper functions
-        // TODO: refactor to event
-        $this->args['Web']         = new Web;
         kernel()->event->trigger('view.init', $this);
     }
 
