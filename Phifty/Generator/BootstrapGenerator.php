@@ -155,7 +155,8 @@ class BootstrapGenerator
         // Generates: $configLoader = new \App\AppConfigLoader;
         $block[] = new AssignStatement('$configLoader', new NewObject('App\\AppConfigLoader'));
 
-        // Generates: $kernel = new \App\AppKernel($configLoader);
+        // Generates: $kernel = new \App\AppKernel($configLoader, $environment);
+        // TODO: generate the environment name here.
         $block[] = new AssignStatement('$kernel', new NewObject('App\\AppKernel',[new Variable('$configLoader')]));
 
         // Generates: $kernel->registerService(new \Phifty\ServiceProvider\ClassLoaderServiceProvider($splClassLoader));
