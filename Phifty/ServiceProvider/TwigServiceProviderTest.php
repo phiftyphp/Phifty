@@ -2,22 +2,26 @@
 
 namespace Phifty\ServiceProvider;
 
-use PHPUnit\Framework\TestCase;
+use Phifty\Testing\TestCase;
 use Phifty\Kernel;
 
 class TwigServiceProviderTest extends TestCase
 {
     public function testRegisterTwigService()
     {
-        $kernel = new Kernel;
-        $twig = new \Phifty\ServiceProvider\TwigServiceProvider([
-            'Environment' => array(
+        $kernel = Kernel::dynamic($this->configLoader);
+
+        $config = [
+            'Environment' => [
                 'debug' => true,
                 'cache' => 'cache/path',
                 'autoload' => 'auto_reload',
-            ),
-            'TemplateDirs' => array('app','bundles'),
-        ]);
+            ],
+            'TemplateDirs' => ['app','bundles'],
+        ];
+        $config = TwigServiceProvider::canonicalizeConfig($kernel, $config);
+        $twig = new TwigServiceProvider($config);
+
         $twig->register($kernel, array(
             'Environment' => array(
                 'debug' => true,

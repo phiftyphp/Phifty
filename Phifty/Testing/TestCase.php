@@ -16,8 +16,14 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     {
         $configLoader = new ConfigLoader;
         $configLoader->load('framework', "config/framework.yml");
-        $configLoader->load('application', "config/application.yml");
-        $configLoader->load('testing', "config/testing.yml");
+
+        if (file_exists('config/application.yml')) {
+            $configLoader->load('application', "config/application.yml");
+        }
+        if (file_exists('config/testing.yml')) {
+            $configLoader->load('testing', "config/testing.yml");
+        }
+
         $this->configLoader = $configLoader;
 
         // TODO: load Kernel from the generated app (global).

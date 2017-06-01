@@ -3,12 +3,13 @@
 namespace Phifty\ServiceProvider;
 
 use Phifty\Kernel;
+use Phifty\Testing\TestCase;
 
-class ViewServiceTest extends \PHPUnit\Framework\TestCase
+class ViewServiceTest extends TestCase
 {
     public function testBaseView()
     {
-        $kernel = new Kernel;
+        $kernel = Kernel::dynamic($this->configLoader);
         $service = new ViewServiceProvider;
         $kernel->registerService($service, array(
             'Class' => 'Phifty\\View',
@@ -21,7 +22,7 @@ class ViewServiceTest extends \PHPUnit\Framework\TestCase
 
     public function testPageView()
     {
-        $kernel = new Kernel;
+        $kernel = Kernel::dynamic($this->configLoader);
         $service = new ViewServiceProvider;
         $kernel->registerService($service, array(
             'Class' => 'Phifty\\View\\Page',

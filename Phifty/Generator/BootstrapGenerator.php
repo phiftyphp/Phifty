@@ -152,16 +152,17 @@ class BootstrapGenerator
 
     public function generateBootstrapInitSection(Block $block)
     {
-        // Generates: $kernel = new \App\AppKernel;
-        $block[] = new AssignStatement('$kernel', new NewObject('App\\AppKernel'));
+        // Generates: $configLoader = new \App\AppConfigLoader;
+        $block[] = new AssignStatement('$configLoader', new NewObject('App\\AppConfigLoader'));
+
+        // Generates: $kernel = new \App\AppKernel($configLoader);
+        $block[] = new AssignStatement('$kernel', new NewObject('App\\AppKernel',[new Variable('$configLoader')]));
 
         // Generates: $kernel->registerService(new \Phifty\ServiceProvider\ClassLoaderServiceProvider($splClassLoader));
         $block[] = new Statement(new MethodCall('$kernel', 'registerService', [
             new NewObject(ClassLoaderServiceProvider::class, [ new Variable('$splClassLoader') ]),
         ]));
 
-        // Generates: $configLoader = new \App\AppConfigLoader;
-        $block[] = new AssignStatement('$configLoader', new NewObject('App\\AppConfigLoader'));
 
 
         // Generate Core Serivces

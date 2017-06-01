@@ -8,12 +8,13 @@ use Pimple\Container;
 use Phifty\ServiceProvider\EventServiceProvider;
 use Phifty\ServiceProvider\ActionServiceProvider;
 use Phifty\Kernel;
+use Phifty\Testing\TestCase;
 
-class ActionServiceProviderTest extends \PHPUnit\Framework\TestCase
+class ActionServiceProviderTest extends TestCase
 {
     public function testActionService()
     {
-        $kernel = new Kernel;
+        $kernel = Kernel::dynamic($this->configLoader);
         $event = new EventServiceProvider;
         $kernel->registerService($event);
 

@@ -3,7 +3,7 @@
 namespace Phifty\ServiceProvider;
 
 use Phifty\Kernel;
-use PHPUnit\Framework\TestCase;
+use Phifty\Testing\TestCase;
 
 use Maghead\Manager\DataSourceManager;
 
@@ -11,10 +11,9 @@ class DatabaseServiceProviderTest extends TestCase
 {
     public function testLoadDatabaseServiceConfig()
     {
+        $kernel = Kernel::dynamic($this->configLoader);
+
         $serviceProvider = new DatabaseServiceProvider();
-
-        $kernel = new \App\AppKernel;
-
         $serviceProvider->register($kernel, [
             'config' => 'config/database.yml',
         ]);

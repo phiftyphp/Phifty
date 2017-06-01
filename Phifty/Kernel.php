@@ -81,33 +81,43 @@ class Kernel extends ObjectContainer
 
     protected $app;
 
+    /**
+     * private properties will not be exported in AppKernel
+     */
     private $configLoader;
 
-    public function __construct($environment = null)
+    public function __construct(ConfigLoader $configLoader, $environment = null)
     {
         // define framework environment
+        $this->configLoader = $configLoader;
         $this->environment  = $environment ?: getenv('PHIFTY_ENV') ?: 'development';
         $this->isDev = $this->environment === 'development';
     }
 
     /**
-     * To run prepare method, please define the PH_ROOT and PH_APP_ROOT first.
+     * Create the dynamic kernel.
+     *
+     * TODO: extract path parameters to config.
      */
-    public function prepare(ConfigLoader $configLoader) 
+    public static function dynamic(ConfigLoader $configLoader)
     {
+        $kernel = new static($configLoader);
+
         // build path info
-        $this->frameworkDir       = PH_APP_ROOT;
-        $this->frameworkAppDir    = PH_APP_ROOT . DIRECTORY_SEPARATOR . 'applications';
-        $this->rootDir            = PH_APP_ROOT;      // Application root.
-        $this->rootAppDir         = PH_APP_ROOT . DIRECTORY_SEPARATOR . 'applications';
-        $this->webroot            = PH_APP_ROOT . DIRECTORY_SEPARATOR . 'webroot';
-        $this->cacheDir           = PH_APP_ROOT . DIRECTORY_SEPARATOR . 'cache';
+        $kernel->frameworkDir       = PH_ROOT;
+        $kernel->frameworkAppDir    = PH_ROOT . DIRECTORY_SEPARATOR . 'app';
 
-        $this->applicationUUID = $configLoader->framework->ApplicationUUID;
-        $this->applicationID   = $configLoader->framework->ApplicationID;
-        $this->applicationName = $configLoader->framework->ApplicationName;
+        $kernel->rootDir            = PH_APP_ROOT;
+        $kernel->rootAppDir         = PH_APP_ROOT . DIRECTORY_SEPARATOR . 'app';
 
-        $this->configLoader = $configLoader;
+        $kernel->webroot            = PH_APP_ROOT . DIRECTORY_SEPARATOR . 'webroot';
+        $kernel->cacheDir           = PH_APP_ROOT . DIRECTORY_SEPARATOR . 'cache';
+
+        $kernel->applicationUUID = $configLoader->framework->ApplicationUUID;
+        $kernel->applicationID   = $configLoader->framework->ApplicationID;
+        $kernel->applicationName = $configLoader->framework->ApplicationName;
+        $kernel->configLoader    = $configLoader;
+        return $kernel;
     }
 
 

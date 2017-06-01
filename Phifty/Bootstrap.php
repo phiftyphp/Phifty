@@ -33,8 +33,10 @@ use Phifty\ServiceProvider\BundleServiceProvider;
 use Phifty\ServiceProvider\DatabaseServiceProvider;
 use Phifty\ServiceProvider\ConfigServiceProvider;
 use Phifty\ServiceProvider\EventServiceProvider;
+use Phifty\ServiceProvider\ClassLoaderServiceProvider;
 use Phifty\Kernel;
 use Phifty\Utils;
+
 
 use Phifty\Environment\Production;
 use Phifty\Environment\Development;
@@ -47,9 +49,9 @@ class Bootstrap
 {
 
     /**
-     * Create a minimal runtime Kernel instance
+     * Create a minimal dynamic Kernel instance
      *
-     * This runtime kernel instance load service providers and bundles
+     * This dynamic kernel instance load service providers and bundles
      *
      * 1. inject the config loader
      * 2. register core services
@@ -60,16 +62,23 @@ class Bootstrap
      */
     public static function createKernel(ConfigLoader $configLoader, Psr4ClassLoader $psr4ClassLoader)
     {
-        $kernel = new \Phifty\Kernel;
-        $kernel->prepare($configLoader);
+        $kernel = Kernel::dynamic($configLoader);
+        static::loadServices($kernel, $configLoader, $psr4ClassLoader);
+        static::loadBundleService($kernel, $configLoader, $psr4ClassLoader);
+        return $kernel;
+    }
 
-
-        // Load core service providers:
-        //   1. config service provider
-        //   2. event service provider
-        //   3. bundle service provider
-        //   4. [ ] class loader service provider
-        //
+    /**
+     * Load core service providers:
+     *
+     * 1. config service provider
+     * 2. event service provider
+     * 3. bundle service provider
+     * 4. [ ] class loader service provider
+     *
+     */
+    private static function loadServices(Kernel $kernel, ConfigLoader $configLoader, Psr4ClassLoader $psr4ClassLoader)
+    {
         // $kernel->registerService(new \Phifty\ServiceProvider\ClassLoaderServiceProvider($splClassLoader));
         $kernel->registerService(new ConfigServiceProvider($configLoader));
         $kernel->registerService(new EventServiceProvider);
@@ -98,6 +107,10 @@ class Bootstrap
             }
         }
 
+    }
+
+    private static function loadBundleService(Kernel $kernel, ConfigLoader $configLoader, Psr4ClassLoader $psr4ClassLoader)
+    {
         // load bundle service provider
         $bundleService = new BundleServiceProvider();
 
@@ -113,7 +126,6 @@ class Bootstrap
         // Load bundle objects into the runtimeKernel
         $bundleLoader = new BundleLoader($kernel, $bundleLoaderConfig['Paths']->toArray());
         $bundleList = $configLoader->get('framework', 'Bundles');
-
 
         // Generating registering code for bundle classes
         if ($bundleList) {
@@ -134,11 +146,8 @@ class Bootstrap
                 $kernel->bundles[$bundleName] = $bundleClass::getInstance($kernel, $bundleConfigArray);
             }
         }
-
-
-
-        return $kernel;
     }
+
 
     public static function createConfigLoader($baseDir, $env = null)
     {

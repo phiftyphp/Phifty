@@ -3,12 +3,13 @@
 namespace Phifty\ServiceProvider;
 
 use Phifty\Kernel;
+use Phifty\Testing\TestCase;
 
-class CurrentUserProviderServiceTest extends \PHPUnit\Framework\TestCase
+class CurrentUserProviderServiceTest extends TestCase
 {
     public function testCurrentUserService()
     {
-        $kernel = new Kernel;
+        $kernel = Kernel::dynamic($this->configLoader);
         $kernel->registerService(new EventServiceProvider, []);
 
         $config = [
