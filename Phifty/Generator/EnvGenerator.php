@@ -104,11 +104,6 @@ class EnvGenerator
             }
         }
 
-
-        foreach ($envs as $name => $value)
-        {
-        }
-
         return file_put_contents($output, $block->render());
     }
 }
