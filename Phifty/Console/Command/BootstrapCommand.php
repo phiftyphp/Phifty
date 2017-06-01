@@ -125,6 +125,7 @@ class BootstrapCommand extends Command
         Utils::unlink_files([
             $outputFile,
             $appDirectory . DIRECTORY_SEPARATOR . 'BaseKernel.php',
+            $appDirectory . DIRECTORY_SEPARATOR . 'ConfigLoader.php',
             $appDirectory . DIRECTORY_SEPARATOR . 'AppKernel.php',
             $appDirectory . DIRECTORY_SEPARATOR . 'AppBaseKernel.php',
             $appDirectory . DIRECTORY_SEPARATOR . 'AppConfigLoader.php',
