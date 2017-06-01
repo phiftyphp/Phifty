@@ -17,6 +17,7 @@ build/
 *SchemaProxy.php
 *CollectionBase.php
 *ModelBase.php
+*RepoBase.php
 *.swp
 manifest.php
 /node_modules/
