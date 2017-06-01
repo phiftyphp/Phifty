@@ -87,7 +87,10 @@ class BootstrapGenerator
 
     public function generateAppConfigClass()
     {
-        $generator = new AppClassGenerator([ 'namespace' => $this->appNamespace, 'prefix' => $this->appClassPrefix ]);
+        $generator = new AppClassGenerator([
+            'namespace' => $this->appNamespace,
+            'prefix' => '',
+        ]);
         $class = $generator->generate($this->configLoader);
         return $class->generatePsr4ClassUnder($this->appDir);
     }
@@ -167,8 +170,8 @@ class BootstrapGenerator
 
     public function generateBootstrapInitSection(Block $block)
     {
-        // Generates: $configLoader = new \App\AppConfigLoader;
-        $block[] = new AssignStatement('$configLoader', new NewObject('App\\AppConfigLoader'));
+        // Generates: $configLoader = new \App\ConfigLoader;
+        $block[] = new AssignStatement('$configLoader', new NewObject('App\\ConfigLoader'));
 
         // Generates: $kernel = new \App\Kernel($configLoader, $environment);
         // TODO: generate the environment name here.
