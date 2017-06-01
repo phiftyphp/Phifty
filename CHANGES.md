@@ -8,6 +8,12 @@ Version 4.0.x
 
 - Removed Inflector, use doctrine/inflector instead.
 
+- Rename Kernel::prepare method
+
+        $kernel = Kernel::dynamic($configLoader);
+
+  The code above will return the dynamic kernel object with services.
+
 Version 3.0.x
 -------------
 

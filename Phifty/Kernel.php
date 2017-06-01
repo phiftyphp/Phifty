@@ -260,7 +260,6 @@ class Kernel extends ObjectContainer
      */
     public function init()
     {
-        $this->event->trigger('phifty.before_init');
         $self = $this;
         $this->web = function() use ($self) {
             return new Web($self);
@@ -277,9 +276,7 @@ class Kernel extends ObjectContainer
         }
         $this->app = \App\App::getInstance($this);
         $this->app->init();
-
         $this->bundles->init();
-        $this->event->trigger('phifty.after_init');
     }
 
     public function getApp()
