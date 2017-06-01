@@ -97,8 +97,6 @@ class Bundle
 
     public function init()
     {
-        // bind before action to self->actions method
-        $this->kernel->event->register('phifty.prepare_actions', [$this, 'actions']);
     }
 
     public function getId()
