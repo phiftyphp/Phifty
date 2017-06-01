@@ -151,10 +151,11 @@ class BootstrapGenerator
 
         $block[] = new AssignStatement('$composerClassLoader', new RequireComposerAutoloadStatement([$this->rootDir]));
 
-        $block[] = new RequireClassStatement(\Universal\Event\PhpEvent::class);
-        $block[] = new RequireClassStatement(\ConfigKit\ConfigLoader::class);
-        $block[] = new RequireClassStatement(\ConfigKit\ConfigCompiler::class);
-        $block[] = new RequireClassStatement(\ConfigKit\Accessor::class);
+        // maghead loads these classes before everything
+        // $block[] = new RequireClassStatement(\Universal\Event\PhpEvent::class);
+        // $block[] = new RequireClassStatement(\ConfigKit\ConfigLoader::class);
+        // $block[] = new RequireClassStatement(\ConfigKit\ConfigCompiler::class);
+        // $block[] = new RequireClassStatement(\ConfigKit\Accessor::class);
 
         $block[] = new RequireClassStatement(ObjectContainer::class);
         $block[] = new RequireClassStatement(Kernel::class);
