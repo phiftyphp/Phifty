@@ -1,0 +1,9 @@
+<?php
+if (function_exists('apache_getenv') && function_exists('apache_setenv')) {
+apache_setenv('FOO', 'BAR');
+}
+if (function_exists('putenv')) {
+putenv('FOO=BAR');
+}
+$_ENV['FOO'] = 'BAR';
+$_SERVER['FOO'] = 'BAR';

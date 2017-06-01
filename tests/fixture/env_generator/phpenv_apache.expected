@@ -1,0 +1,4 @@
+<?php
+if (function_exists('apache_getenv') && function_exists('apache_setenv')) {
+apache_setenv('FOO', 'BAR');
+}
