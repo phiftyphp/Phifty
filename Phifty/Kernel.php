@@ -97,9 +97,9 @@ class Kernel extends ObjectContainer
      *
      * TODO: extract path parameters to config.
      */
-    public static function dynamic(ConfigLoader $configLoader)
+    public static function dynamic(ConfigLoader $configLoader, $environment = null)
     {
-        $kernel = new static($configLoader);
+        $kernel = new static($configLoader, $environment);
 
         // build path info
         $kernel->frameworkDir       = PH_ROOT;
