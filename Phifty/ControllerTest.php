@@ -18,9 +18,9 @@ class ControllerTest extends \PHPUnit\Framework\TestCase
     {
         $controller = new Controller;
         $view = $controller->view();
-        $this->assertInstanceOf('Phifty\View', $view);
+        $this->assertInstanceOf(View::class, $view);
 
         $view = $controller->createView();
-        $this->assertInstanceOf('Phifty\View', $view);
+        $this->assertInstanceOf(View::class, $view);
     }
 }

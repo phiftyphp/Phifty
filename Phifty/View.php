@@ -3,8 +3,11 @@
 namespace Phifty;
 
 use ArrayObject;
+
 use Universal\Http\HttpRequest;
+
 use InvalidArgumentException;
+
 use Phifty\Web;
 use Phifty\Kernel;
 
