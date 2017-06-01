@@ -152,7 +152,7 @@ class BootstrapGenerator
         $block[] = new ConstStatement('PH_ROOT', $this->frameworkRoot);
         $block[] = new ConstStatement('PH_APP_ROOT', $this->rootDir);
         $block[] = new ConstStatement('DS', DIRECTORY_SEPARATOR);
-        $block[] = new ConstStatement('PH_ENV', $this->env);
+        $block[] = new ConstStatement('PHIFTY_ENV', $this->env);
         $block[] = new DefineStatement('CLI', new Raw("isset(\$_SERVER['argc']) && !isset(\$_SERVER['HTTP_HOST'])"));
         $block[] = new DefineStatement('CLI_MODE', new Raw("CLI"));
 
