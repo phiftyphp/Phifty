@@ -23,7 +23,9 @@ manifest.php
 /vendor
 /.asset-entries.*
 /app/AppConfigLoader.php
+/app/ConfigLoader.php
 /app/AppKernel.php
+/app/BaseKernel.php
 /.maghead-cli.yml
 /.php_cs.cache
 /config/framework.yml
