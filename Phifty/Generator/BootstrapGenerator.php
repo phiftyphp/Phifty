@@ -5,7 +5,6 @@ namespace Phifty\Generator;
 use ConfigKit\ConfigCompiler;
 use ConfigKit\ConfigLoader;
 use CodeGen\Generator\AppClassGenerator;
-use CodeGen\ClassFile;
 use CodeGen\UserClass;
 use CodeGen\Block;
 use CodeGen\Raw;
