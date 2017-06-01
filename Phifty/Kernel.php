@@ -97,25 +97,35 @@ class Kernel extends ObjectContainer
      *
      * TODO: extract path parameters to config.
      */
-    public static function dynamic(ConfigLoader $configLoader, $environment = null)
+    public static function dynamic(ConfigLoader $configLoader, $environment = null, $appRoot = PH_APP_ROOT)
     {
         $kernel = new static($configLoader, $environment);
 
         // build path info
-        $kernel->frameworkDir       = PH_ROOT;
-        $kernel->frameworkAppDir    = PH_ROOT . DIRECTORY_SEPARATOR . 'app';
+        $kernel->frameworkDir       = self::getFrameworkRoot();
+        $kernel->frameworkAppDir    = self::getFrameworkRoot() . DIRECTORY_SEPARATOR . 'app';
 
-        $kernel->rootDir            = PH_APP_ROOT;
-        $kernel->rootAppDir         = PH_APP_ROOT . DIRECTORY_SEPARATOR . 'app';
+        $kernel->rootDir            = $appRoot;
+        $kernel->rootAppDir         = $appRoot . DIRECTORY_SEPARATOR . 'app';
 
-        $kernel->webroot            = PH_APP_ROOT . DIRECTORY_SEPARATOR . 'webroot';
-        $kernel->cacheDir           = PH_APP_ROOT . DIRECTORY_SEPARATOR . 'cache';
+        $kernel->webroot            = $appRoot . DIRECTORY_SEPARATOR . 'webroot';
+        $kernel->cacheDir           = $appRoot . DIRECTORY_SEPARATOR . 'cache';
 
         $kernel->applicationUUID = $configLoader->framework->ApplicationUUID;
         $kernel->applicationID   = $configLoader->framework->ApplicationID;
         $kernel->applicationName = $configLoader->framework->ApplicationName;
         $kernel->configLoader    = $configLoader;
         return $kernel;
+    }
+
+    /**
+     * Dynamically get the framework root dir.
+     *
+     * @return path
+     */
+    public static function getFrameworkRoot()
+    {
+        return dirname(__DIR__);
     }
 
 

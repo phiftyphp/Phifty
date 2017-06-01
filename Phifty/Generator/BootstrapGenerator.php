@@ -5,6 +5,8 @@ namespace Phifty\Generator;
 use ConfigKit\ConfigCompiler;
 use ConfigKit\ConfigLoader;
 use CodeGen\Generator\AppClassGenerator;
+use CodeGen\ClassFile;
+use CodeGen\UserClass;
 use CodeGen\Block;
 use CodeGen\Raw;
 use CodeGen\Statement\RequireStatement;
@@ -90,17 +92,30 @@ class BootstrapGenerator
         return $class->generatePsr4ClassUnder($this->appDir);
     }
 
-    public function generateAppKernelClass(Kernel $kernel)
+    public function generateAppBaseKernelClass(Kernel $kernel)
     {
         $generator = new AppClassGenerator([
-            'namespace' => $this->appNamespace,
-            'prefix' => $this->appClassPrefix,
-            'property_filter' => function ($property) {
+            "namespace" => $this->appNamespace,
+            "prefix" => "Base",
+            "property_filter" => function ($property) {
                 return !preg_match('/^(applications|services|environment|isDev|_.*)$/i', $property->getName());
             }
         ]);
         $class = $generator->generate($kernel);
         return $class->generatePsr4ClassUnder($this->appDir);
+    }
+
+    public function generateAppKernelClass(Kernel $kernel)
+    {
+        $class = new UserClass("\\{$this->appNamespace}\\Kernel");
+        $class->extendClass("\\{$this->appNamespace}\\BaseKernel");
+
+        $classPath = $class->getPsr4ClassPathUnder($this->appDir);
+        if (!file_exists($classPath)) {
+            $class->generatePsr4ClassUnder($this->appDir);
+        }
+
+        return $classPath;
     }
 
     public function generateBootstrapHeader(Block $block)
@@ -155,9 +170,9 @@ class BootstrapGenerator
         // Generates: $configLoader = new \App\AppConfigLoader;
         $block[] = new AssignStatement('$configLoader', new NewObject('App\\AppConfigLoader'));
 
-        // Generates: $kernel = new \App\AppKernel($configLoader, $environment);
+        // Generates: $kernel = new \App\Kernel($configLoader, $environment);
         // TODO: generate the environment name here.
-        $block[] = new AssignStatement('$kernel', new NewObject('App\\AppKernel',[new Variable('$configLoader')]));
+        $block[] = new AssignStatement('$kernel', new NewObject('App\\Kernel',[new Variable('$configLoader')]));
 
         // Generates: $kernel->registerService(new \Phifty\ServiceProvider\ClassLoaderServiceProvider($splClassLoader));
         $block[] = new Statement(new MethodCall('$kernel', 'registerService', [

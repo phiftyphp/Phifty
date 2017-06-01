@@ -120,16 +120,15 @@ class BootstrapCommand extends Command
 
         $this->logger->info('Application root directory:' . $appRoot);
 
-        if ($this->options->clean) {
-            $this->logger->info("Removing genereated files");
-            Utils::unlink_files([
-                $outputFile,
-                $appDirectory . DIRECTORY_SEPARATOR . 'AppKernel.php',
-                $appDirectory . DIRECTORY_SEPARATOR . 'AppConfigLoader.php',
-            ]);
-            $this->logger->info('Cached files are cleaned up');
-            return;
-        }
+
+        $this->logger->info("Removing genereated files");
+        Utils::unlink_files([
+            $outputFile,
+            $appDirectory . DIRECTORY_SEPARATOR . 'BaseKernel.php',
+            $appDirectory . DIRECTORY_SEPARATOR . 'AppKernel.php',
+            $appDirectory . DIRECTORY_SEPARATOR . 'AppBaseKernel.php',
+            $appDirectory . DIRECTORY_SEPARATOR . 'AppConfigLoader.php',
+        ]);
 
         $configLoader = Bootstrap::createConfigLoader($appRoot, getenv('PHIFTY_ENV'));
 
@@ -144,6 +143,8 @@ class BootstrapCommand extends Command
         // The runtime kernel will only contains "configLoader" and "classLoader" services
         $psr4ClassLoader = new Psr4ClassLoader;
         $runtimeKernel = Bootstrap::createKernel($configLoader, $psr4ClassLoader);
+
+        $appBaseKernelClassPath = $bGenerator->generateAppBaseKernelClass($runtimeKernel);
         $appKernelClassPath = $bGenerator->generateAppKernelClass($runtimeKernel);
 
         $this->logger->info("===> Generating bootstrap file: $outputFile");
@@ -154,6 +155,7 @@ class BootstrapCommand extends Command
         $xhprof = extension_loaded('xhprof') && $this->options->xhprof;
 
         $block[] = new RequireStatement($appConfigClassPath);
+        $block[] = new RequireStatement($appBaseKernelClassPath);
         $block[] = new RequireStatement($appKernelClassPath);
 
         $bGenerator->generateBootstrapInitSection($block);
