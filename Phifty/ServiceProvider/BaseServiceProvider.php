@@ -3,10 +3,9 @@
 namespace Phifty\ServiceProvider;
 
 use CodeGen\Expr\NewObject;
-use Phifty\ComposerConfigBridge;
 use Phifty\Kernel;
 
-abstract class BaseServiceProvider implements ServiceProvider, ComposerConfigBridge
+abstract class BaseServiceProvider implements ServiceProvider
 {
     protected $config;
 
@@ -77,10 +76,5 @@ abstract class BaseServiceProvider implements ServiceProvider, ComposerConfigBri
         $className = get_called_class();
         // Use late static binding to call the canonicalizeConfig from different instance.
         return new NewObject($className, []);
-    }
-
-    public function getComposerRequire()
-    {
-        return [];
     }
 }

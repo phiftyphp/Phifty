@@ -26,6 +26,7 @@ use Exception;
 use LogicException;
 use Universal\ClassLoader\Psr4ClassLoader;
 use Universal\ClassLoader\SplClassLoader;
+use Universal\ClassLoader\ClassLoader;
 use Universal\Container\ObjectContainer;
 
 use Maghead\Runtime\Config\FileConfigLoader;
@@ -33,11 +34,14 @@ use Maghead\Runtime\Config\FileConfigLoader;
 use Phifty\Bootstrap;
 use Phifty\Generator\BootstrapGenerator;
 use Phifty\Bundle\BundleLoader;
+use Phifty\ServiceProvider\ServiceProvider;
 use Phifty\ServiceProvider\ClassLoaderServiceProvider;
 use Phifty\ServiceProvider\BundleServiceProvider;
 use Phifty\ServiceProvider\DatabaseServiceProvider;
 use Phifty\ServiceProvider\ConfigServiceProvider;
+use Phifty\ServiceProvider\BaseServiceProvider;
 use Phifty\ServiceProvider\EventServiceProvider;
+use Phifty\ComposerConfigBridge;
 use Phifty\Kernel;
 use Phifty\Utils;
 
@@ -141,12 +145,26 @@ class BootstrapGenerator
 
         // Generate the require statements
         $block[] = 'global $kernel, $composerClassLoader, $psr4ClassLoader, $splClassLoader;';
-        $block[] = new AssignStatement('$composerClassLoader', new RequireComposerAutoloadStatement([$this->rootDir]));
-        $block[] = new RequireClassStatement(Psr4ClassLoader::class);
+        $block[] = new RequireClassStatement(ClassLoader::class);
         $block[] = new RequireClassStatement(SplClassLoader::class);
+        $block[] = new RequireClassStatement(Psr4ClassLoader::class);
+
+        $block[] = new AssignStatement('$composerClassLoader', new RequireComposerAutoloadStatement([$this->rootDir]));
+
+        $block[] = new RequireClassStatement(\Universal\Event\PhpEvent::class);
+        $block[] = new RequireClassStatement(\ConfigKit\ConfigLoader::class);
+        $block[] = new RequireClassStatement(\ConfigKit\ConfigCompiler::class);
+        $block[] = new RequireClassStatement(\ConfigKit\Accessor::class);
+
         $block[] = new RequireClassStatement(ObjectContainer::class);
         $block[] = new RequireClassStatement(Kernel::class);
         $block[] = new RequireClassStatement(Bootstrap::class);
+        $block[] = new RequireClassStatement(ServiceProvider::class);
+        $block[] = new RequireClassStatement(BaseServiceProvider::class);
+        $block[] = new RequireClassStatement(ClassLoaderServiceProvider::class);
+        $block[] = new RequireClassStatement(\Phifty\Environment\Environment::class);
+        $block[] = new RequireClassStatement(\Phifty\Bundle\BundleActionCreators::class);
+        $block[] = new RequireClassStatement(\Phifty\Bundle::class);
 
         // Define global constants
         $block[] = new ConstStatement('PH_ROOT', $this->frameworkRoot);

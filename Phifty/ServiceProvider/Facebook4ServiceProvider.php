@@ -6,6 +6,7 @@ use Phifty\Kernel;
 use Facebook\Facebook;
 use Pimple\Container;
 use Exception;
+use Phifty\ComposerConfigBridge;
 
 /*
  * The official facebook service provider
@@ -15,7 +16,7 @@ use Exception;
  *   DefaultPermissions: ['email']
  *   DefaultLoginCallbackUrl: '/oauth/facebook/callback'
  */
-class Facebook4ServiceProvider extends BaseServiceProvider
+class Facebook4ServiceProvider extends BaseServiceProvider implements ComposerConfigBridge
 {
     public function getId()
     {
