@@ -1,14 +1,14 @@
 <?php
+
 namespace Phifty;
-use ArrayAccess;
-use ArrayIterator;
-use IteratorAggregate;
+
+use ArrayObject;
 use Universal\Http\HttpRequest;
 use InvalidArgumentException;
 use Phifty\Web;
 use Phifty\Kernel;
 
-class View implements ArrayAccess, IteratorAggregate
+class View extends ArrayObject
 {
     /**
      * @var array template args
@@ -25,9 +25,11 @@ class View implements ArrayAccess, IteratorAggregate
         $this->engine = new \Phifty\View\Twig($kernel);
         $this->init();
 
+        parent::__construct([], ArrayObject::ARRAY_AS_PROPS);
+
         // register args
-        $this->args['Kernel']      = $kernel;
-        $this->args['Request']     = new HttpRequest;
+        $this['Kernel']      = $kernel;
+        $this['Request']     = new HttpRequest;
         kernel()->event->trigger('view.init', $this);
     }
 
@@ -36,15 +38,10 @@ class View implements ArrayAccess, IteratorAggregate
 
     }
 
-    public function __set($name , $value)
-    {
-        $this->args[$name] = $value;
-    }
-
     public function __get($name)
     {
-        if (isset($this->args[$name])) {
-            return $this->args[ $name ];
+        if (isset($this[$name])) {
+            return $this[ $name ];
         }
     }
 
@@ -60,11 +57,11 @@ class View implements ArrayAccess, IteratorAggregate
         $args = func_get_args();
         if ( is_array( $args[0] ) ) {
             foreach ($args[0] as $k => $v) {
-                $this->args[ $k ] = $v;
+                $this[ $k ] = $v;
             }
-        } elseif ( count($args) == 2 ) {
+        } else if ( count($args) == 2 ) {
             list($name,$value) = $args;
-            $this->args[ $name ] = $value;
+            $this[ $name ] = $value;
         } else {
             throw new InvalidArgumentException( "Unknown assignment of " . __CLASS__ );
         }
@@ -77,7 +74,7 @@ class View implements ArrayAccess, IteratorAggregate
      */
     public function getArgs()
     {
-        return $this->args;
+        return $this;
     }
 
     /*
@@ -85,9 +82,9 @@ class View implements ArrayAccess, IteratorAggregate
      *
      * @param array $args
      */
-    public function setArgs($args)
+    public function setArgs(array $args)
     {
-        $this->args = $args;
+        $this->exchangeArray($args);
     }
 
     /*
@@ -98,49 +95,11 @@ class View implements ArrayAccess, IteratorAggregate
      */
     public function render($template)
     {
-        return $this->engine->render( $template , $this->args );
+        return $this->engine->render($template, $this);
     }
 
-    /*
-     * Render template from string
-     * @param string $stringTemplate template content
-     * */
-    public function renderString( $stringTemplate )
-    {
-        return $this->engine->renderString( $stringTemplate , $this->args );
-    }
-
-    /*
-     * Call render method to render
-     */
     public function __toString()
     {
         return $this->render();
     }
-
-    public function offsetSet($name,$value)
-    {
-        $this->args[ $name ] = $value;
-    }
-
-    public function offsetExists($name)
-    {
-        return isset($this->args[ $name ]);
-    }
-
-    public function offsetGet($name)
-    {
-        return $this->args[ $name ];
-    }
-
-    public function offsetUnset($name)
-    {
-        unset($this->args[$name]);
-    }
-
-    public function getIterator()
-    {
-        return new ArrayIterator( $this->args );
-    }
-
 }
