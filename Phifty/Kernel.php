@@ -283,10 +283,6 @@ class Kernel extends ObjectContainer
      */
     public function init()
     {
-        $self = $this;
-        $this->web = function() use ($self) {
-            return new Web($self);
-        };
         if (CLI) {
             CommandLine::init($this);
         } else {

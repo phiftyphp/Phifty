@@ -15,7 +15,6 @@ class AppTest extends TestCase
         $kernel = Bootstrap::createKernel($configLoader, $classLoader, 'development');
         $app = App::build($kernel, []);
         $this->assertNotNull($app);
-
         return $app;
     }
 

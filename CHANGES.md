@@ -14,6 +14,8 @@ Version 4.0.x
 
   The code above will return the dynamic kernel object with services.
 
+- Removed Kernel::web
+
 Version 3.0.x
 -------------
 
