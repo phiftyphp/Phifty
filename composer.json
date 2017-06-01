@@ -28,7 +28,8 @@
         "symfony/process": "^2.8|^3.0|^3.2",
         "pimple/pimple": "^3.0",
         "corneltek/codegen": "@dev",
-        "swiftmailer/swiftmailer": "^5.4"
+        "swiftmailer/swiftmailer": "^5.4",
+        "vlucas/phpdotenv": "^2.4"
     },
     "require-dev": {
         "phifty/corebundle": "4.0.x-dev",
