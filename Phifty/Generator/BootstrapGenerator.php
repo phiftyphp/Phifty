@@ -174,7 +174,13 @@ class BootstrapGenerator
 
         // Generates: $kernel = new \App\Kernel($configLoader, $environment);
         // TODO: generate the environment name here.
-        $block[] = new AssignStatement('$kernel', new NewObject('App\\Kernel',[new Variable('$configLoader')]));
+        //
+        // $this->environment  = $environment ?: getenv('PHIFTY_ENV') ?: self::DEV;
+        $block[] = new AssignStatement('$env',  getenv('PHIFTY_ENV') ?: 'development' );
+        $block[] = new AssignStatement('$kernel', new NewObject('App\\Kernel',[
+            new Variable('$configLoader'),
+            new Variable('$env'),
+        ]));
 
         // Generates: $kernel->registerService(new \Phifty\ServiceProvider\ClassLoaderServiceProvider($splClassLoader));
         $block[] = new Statement(new MethodCall('$kernel', 'registerService', [

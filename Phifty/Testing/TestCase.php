@@ -26,8 +26,10 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 
         $this->configLoader = $configLoader;
 
+        $env = getenv("PHIFTY_ENV") ?: 'development';
+
         // TODO: load Kernel from the generated app (global).
-        $this->kernel = Bootstrap::createKernel($configLoader, new Psr4ClassLoader);
+        $this->kernel = Bootstrap::createKernel($configLoader, new Psr4ClassLoader, $env);
     }
 
     protected function createPostRequest($path, $parameters)

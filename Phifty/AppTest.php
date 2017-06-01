@@ -12,7 +12,7 @@ class AppTest extends TestCase
     {
         $configLoader = Bootstrap::createConfigLoader(PH_APP_ROOT);
         $classLoader = new Psr4ClassLoader;
-        $kernel = Bootstrap::createKernel($configLoader, $classLoader);
+        $kernel = Bootstrap::createKernel($configLoader, $classLoader, 'development');
         $app = App::build($kernel, []);
         $this->assertNotNull($app);
 

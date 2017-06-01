@@ -12,7 +12,7 @@ namespace Phifty\Environment;
 
 use Phifty\Kernel;
 
-class Production
+class Production extends Environment
 {
     public static function init(Kernel $kernel)
     {

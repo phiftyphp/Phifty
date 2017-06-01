@@ -131,7 +131,7 @@ class BootstrapCommand extends Command
             $appDirectory . DIRECTORY_SEPARATOR . 'AppConfigLoader.php',
         ]);
 
-        $configLoader = Bootstrap::createConfigLoader($appRoot, getenv('PHIFTY_ENV'));
+        $configLoader = Bootstrap::createConfigLoader($appRoot, $env);
 
         $bGenerator = new BootstrapGenerator($appRoot, $frameworkRoot, $env, $configLoader);
         if ($this->options->xhprof) {
@@ -143,7 +143,7 @@ class BootstrapCommand extends Command
 
         // The runtime kernel will only contains "configLoader" and "classLoader" services
         $psr4ClassLoader = new Psr4ClassLoader;
-        $runtimeKernel = Bootstrap::createKernel($configLoader, $psr4ClassLoader);
+        $runtimeKernel = Bootstrap::createKernel($configLoader, $psr4ClassLoader, $env);
 
         $appBaseKernelClassPath = $bGenerator->generateAppBaseKernelClass($runtimeKernel);
         $appKernelClassPath = $bGenerator->generateAppKernelClass($runtimeKernel);

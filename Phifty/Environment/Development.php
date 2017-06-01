@@ -14,7 +14,7 @@ use Exception;
 use ErrorException;
 use Phifty\Kernel;
 
-class Development
+class Development extends Environment
 {
     public static function exception_error_handler($errno, $errstr, $errfile, $errline )
     {

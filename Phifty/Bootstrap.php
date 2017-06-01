@@ -60,9 +60,9 @@ class Bootstrap
      *
      * @return Phifty\Kernel
      */
-    public static function createKernel(ConfigLoader $configLoader, Psr4ClassLoader $psr4ClassLoader)
+    public static function createKernel(ConfigLoader $configLoader, Psr4ClassLoader $psr4ClassLoader, $environment)
     {
-        $kernel = Kernel::dynamic($configLoader);
+        $kernel = Kernel::dynamic($configLoader, $environment);
         static::loadServices($kernel, $configLoader, $psr4ClassLoader);
         static::loadBundleService($kernel, $configLoader, $psr4ClassLoader);
         return $kernel;

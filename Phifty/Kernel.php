@@ -28,6 +28,17 @@ use Phifty\ServiceProvider\ServiceProvider;
 use Exception;
 use ConfigKit\ConfigLoader;
 use Phifty\Environment\CommandLine;
+use Phifty\Environment\Production;
+use Phifty\Environment\Development;
+
+/*
+Types for environment
+
+abstract class Environment {}
+class Development extends Environment { }
+class Staging     extends Environment { }
+class Production  extends Environment { }
+*/
 
 class Kernel extends ObjectContainer
 {
@@ -61,7 +72,7 @@ class Kernel extends ObjectContainer
     /* boolean: is in development mode ? */
     public $isDev = true;
 
-    public $environment = 'development';
+    public $environment;
 
     /**
      * @param ServiceProvider[string serviceId]
@@ -84,11 +95,11 @@ class Kernel extends ObjectContainer
      */
     private $configLoader;
 
-    public function __construct(ConfigLoader $configLoader, $environment = null)
+    public function __construct(ConfigLoader $configLoader, $environment)
     {
         // define framework environment
         $this->configLoader = $configLoader;
-        $this->environment  = $environment ?: getenv('PHIFTY_ENV') ?: 'development';
+        $this->environment  = $environment;
         $this->isDev = $this->environment === 'development';
     }
 
@@ -99,6 +110,10 @@ class Kernel extends ObjectContainer
      */
     public static function dynamic(ConfigLoader $configLoader, $environment = null, $appRoot = PH_APP_ROOT)
     {
+        if (!$environment) {
+            $environment = getenv("PHIFTY_ENV") ?: 'development';
+        }
+
         $kernel = new static($configLoader, $environment);
 
         // build path info

@@ -21,7 +21,7 @@ class BootstrapTest extends TestCase
     public function testCreateKernel($configLoader)
     {
         $classLoader = new Psr4ClassLoader;
-        $kernel = Bootstrap::createKernel($configLoader, $classLoader);
+        $kernel = Bootstrap::createKernel($configLoader, $classLoader, 'development');
         $this->assertInstanceOf(Kernel::class, $kernel);
     }
 }
