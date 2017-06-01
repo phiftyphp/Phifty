@@ -16,6 +16,8 @@ Version 4.0.x
 
 - Removed Kernel::web
 
+- Removed Bundle::getModel
+
 Version 3.0.x
 -------------
 

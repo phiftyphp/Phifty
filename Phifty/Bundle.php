@@ -62,8 +62,10 @@ class Bundle
             $this->config = $this->defaultConfig();
         }
 
-        // XXX: currently we are triggering the loadAssets from Phifty\Web
+        // TODO: currently we are triggering the loadAssets from Phifty\Web
         // $this->kernel->event->register('asset.load', array($this,'loadAssets'));
+        //
+        // Move the template registration to the TwigServiceProvider
 
         // we should have twig service
         if ($this->exportTemplates && isset($this->kernel->twig)) {
@@ -95,9 +97,7 @@ class Bundle
         return array();
     }
 
-    public function init()
-    {
-    }
+    public function init() { }
 
     public function getId()
     {
@@ -151,16 +151,6 @@ class Bundle
 
 
 
-    /**
-     * Get the model in the namespace of current microapp
-     *
-     * @param string $name Model Name
-     */
-    public function getModel($name)
-    {
-        $class = $this->getNamespace() . "\\Model\\$name";
-        return new $class;
-    }
 
 
     /**
