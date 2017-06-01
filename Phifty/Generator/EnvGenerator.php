@@ -74,7 +74,6 @@ class EnvGenerator
         $loader = new EnvLoader($filepath, true);
         $envs = $loader->load();
 
-
         $block = new Block;
         $block[] = '<?php';
         $block[] = new Comment("This file is @generated. Please see EnvGenerator for more details.");

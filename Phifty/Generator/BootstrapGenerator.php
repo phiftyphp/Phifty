@@ -90,38 +90,17 @@ class BootstrapGenerator
 
     public function generateAppConfigClass()
     {
-        $generator = new AppClassGenerator([
-            'namespace' => $this->appNamespace,
-            'prefix' => '',
-        ]);
-        $class = $generator->generate($this->configLoader);
-        return $class->generatePsr4ClassUnder($this->appDir);
+        return AppConfigLoaderGenerator::generate($this->configLoader, $this->appNamespace, $this->appDir);
     }
 
     public function generateAppBaseKernelClass(Kernel $kernel)
     {
-        $generator = new AppClassGenerator([
-            "namespace" => $this->appNamespace,
-            "prefix" => "Base",
-            "property_filter" => function ($property) {
-                return !preg_match('/^(applications|services|environment|isDev|_.*)$/i', $property->getName());
-            }
-        ]);
-        $class = $generator->generate($kernel);
-        return $class->generatePsr4ClassUnder($this->appDir);
+        return AppBaseKernelGenerator::generate($kernel, $this->appNamespace, $this->appDir);
     }
 
     public function generateAppKernelClass(Kernel $kernel)
     {
-        $class = new UserClass("\\{$this->appNamespace}\\Kernel");
-        $class->extendClass("\\{$this->appNamespace}\\BaseKernel");
-
-        $classPath = $class->getPsr4ClassPathUnder($this->appDir);
-        if (!file_exists($classPath)) {
-            $class->generatePsr4ClassUnder($this->appDir);
-        }
-
-        return $classPath;
+        return AppKernelGenerator::generate($kernel, $this->appNamespace, $this->appDir);
     }
 
     public function generateBootstrapHeader(Block $block)
