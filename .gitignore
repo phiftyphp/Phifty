@@ -31,3 +31,4 @@ manifest.php
 /config/framework.yml
 /config/database.yml
 *.actual
+bootstrap.php
