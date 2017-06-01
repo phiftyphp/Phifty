@@ -61,14 +61,12 @@ class Kernel extends ObjectContainer
     /* boolean: is in development mode ? */
     public $isDev = true;
 
-
     public $environment = 'development';
 
-
     /**
-     * @param ServiceProvider
+     * @param ServiceProvider[string serviceId]
      */
-    protected $services = array();
+    protected $services = [];
 
     /**
      * application object pool
@@ -77,7 +75,7 @@ class Kernel extends ObjectContainer
      *
      * @deprecated
      */
-    protected $applications = array();
+    protected $applications = [];
 
     protected $app;
 
