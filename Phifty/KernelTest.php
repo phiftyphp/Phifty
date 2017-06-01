@@ -8,7 +8,7 @@ class KernelTest extends TestCase
 {
     public function testKernel()
     {
-        $kernel = new \App\AppKernel($this->configLoader);
+        $kernel = Kernel::dynamic($this->configLoader, 'development');
         $this->assertNotNull($kernel);
         $this->assertFileExists($kernel->webroot);
         $this->assertFileExists($kernel->rootDir);
