@@ -8,6 +8,7 @@ use CodeGen\Statement\AssignStatement;
 use CodeGen\Block;
 use CodeGen\Expr\MethodCall;
 use CodeGen\Expr\FunctionCall;
+use CodeGen\Comment;
 
 class EnvLoader extends Loader
 {
@@ -76,6 +77,7 @@ class EnvGenerator
 
         $block = new Block;
         $block[] = '<?php';
+        $block[] = new Comment("This file is @generated. Please see EnvGenerator for more details.");
 
         foreach ($this->setters as $setter) {
             switch ($setter) {

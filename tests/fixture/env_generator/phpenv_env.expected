@@ -1,2 +1,3 @@
 <?php
+// This file is @generated. Please see EnvGenerator for more details.
 $_ENV['FOO'] = 'BAR';
