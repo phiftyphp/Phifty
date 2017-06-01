@@ -30,3 +30,4 @@ manifest.php
 /.php_cs.cache
 /config/framework.yml
 /config/database.yml
+*.actual
