@@ -107,6 +107,13 @@ class Kernel extends ObjectContainer
         return \App\App::getInstance($this, []);
     }
 
+    public function boot()
+    {
+        foreach ($this->services as $spId => $sp) {
+            $sp->boot($this);
+        }
+    }
+
     /**
      * Create the dynamic kernel.
      *

@@ -100,7 +100,10 @@ class Bundle
         return array();
     }
 
-    public function init() { }
+    public function boot()
+    {
+
+    }
 
     public function getId()
     {

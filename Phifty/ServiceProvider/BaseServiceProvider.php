@@ -10,6 +10,12 @@ abstract class BaseServiceProvider implements ServiceProvider
 {
     abstract public function getId();
 
+
+    public function boot(Kernel $kernel)
+    {
+
+    }
+
     /**
      * Register this service provider.
      *

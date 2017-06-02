@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "125f7d8eccebf1db46a11fccf8eb9505",
+    "content-hash": "fea45b0173a6ade163e3292369de7e80",
     "packages": [
         {
             "name": "composer/installers",
@@ -1203,12 +1203,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/maghead/maghead.git",
-                "reference": "6831c46142d2aa0a155d23ff3b51776024952bcb"
+                "reference": "ffbc069a39788ec077e2d3e39faefc73acd9b225"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maghead/maghead/zipball/6831c46142d2aa0a155d23ff3b51776024952bcb",
-                "reference": "6831c46142d2aa0a155d23ff3b51776024952bcb",
+                "url": "https://api.github.com/repos/maghead/maghead/zipball/ffbc069a39788ec077e2d3e39faefc73acd9b225",
+                "reference": "ffbc069a39788ec077e2d3e39faefc73acd9b225",
                 "shasum": ""
             },
             "require": {
@@ -1227,7 +1227,8 @@
                 "pimple/pimple": "^3.0",
                 "psr/log": "^1.0",
                 "ramsey/uuid": "^3.5",
-                "symfony/yaml": "^2.8|^3.0|^3.2"
+                "symfony/yaml": "^2.8|^3.0|^3.2",
+                "universal/universal": "@dev"
             },
             "require-dev": {
                 "ext-apcu": "*",
@@ -1272,7 +1273,7 @@
                 "orm",
                 "sql"
             ],
-            "time": "2017-05-30 07:01:21"
+            "time": "2017-06-02 12:13:55"
         },
         {
             "name": "maghead/magsql",
@@ -2483,12 +2484,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/c9s/universal.git",
-                "reference": "88e7cc0c708f45c24fc1d0c8f326a58875c16a94"
+                "reference": "ac5b94af0833487190e666dfba2eed630bf7e75f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c9s/universal/zipball/88e7cc0c708f45c24fc1d0c8f326a58875c16a94",
-                "reference": "88e7cc0c708f45c24fc1d0c8f326a58875c16a94",
+                "url": "https://api.github.com/repos/c9s/universal/zipball/ac5b94af0833487190e666dfba2eed630bf7e75f",
+                "reference": "ac5b94af0833487190e666dfba2eed630bf7e75f",
                 "shasum": ""
             },
             "require": {
@@ -2517,7 +2518,7 @@
             ],
             "description": "Universal library for PHP",
             "homepage": "http://github.com/c9s/universal",
-            "time": "2017-06-02 09:43:27"
+            "time": "2017-06-02 10:29:23"
         },
         {
             "name": "vlucas/phpdotenv",
@@ -2571,52 +2572,6 @@
         }
     ],
     "packages-dev": [
-        {
-            "name": "corneltek/universal",
-            "version": "1.8.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/corneltek/Universal.git",
-                "reference": "7b69d656be18d6b1d01a5a672141c80b43b5c2f3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/corneltek/Universal/zipball/7b69d656be18d6b1d01a5a672141c80b43b5c2f3",
-                "reference": "7b69d656be18d6b1d01a5a672141c80b43b5c2f3",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "require-dev": {
-                "corneltek/phpunit-testmore": "dev-master",
-                "satooshi/php-coveralls": "^1"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.8.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Universal\\": "src/Universal/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Yo-An Lin",
-                    "email": "yoanlin93@gmail.com"
-                }
-            ],
-            "description": "Universal library for PHP",
-            "homepage": "http://github.com/corneltek/Universal",
-            "time": "2016-06-11T11:51:45+00:00"
-        },
         {
             "name": "phifty/adminui",
             "version": "dev-master",
@@ -2765,6 +2720,62 @@
             "time": "2017-05-27 14:27:31"
         },
         {
+            "name": "phifty/crud",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phifty-framework/CRUD.git",
+                "reference": "cd545fc9ef71b017eaabefb7fc5a30735582657d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phifty-framework/CRUD/zipball/cd545fc9ef71b017eaabefb7fc5a30735582657d",
+                "reference": "cd545fc9ef71b017eaabefb7fc5a30735582657d",
+                "shasum": ""
+            },
+            "require": {
+                "composer/installers": "^1",
+                "phifty/phifty": "4.0.x-dev"
+            },
+            "require-dev": {
+                "corneltek/actionkit": "@dev",
+                "corneltek/assetkit": "@dev",
+                "corneltek/cliframework": "@dev",
+                "corneltek/codegen": "@dev",
+                "corneltek/kendo": "@dev",
+                "corneltek/pux": "@dev",
+                "maghead/maghead": "@dev",
+                "maghead/magsql": "@dev",
+                "phifty/adminui": "4.0.x-dev",
+                "phifty/userbundle": "4.0.x-dev",
+                "phpsgi/funk": "@dev",
+                "phpsgi/phpsgi": "@dev"
+            },
+            "type": "phifty-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "CRUD\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "c9s",
+                    "email": "yoanlin93@gmail.com"
+                }
+            ],
+            "description": "CRUD bundle for phifty framework application",
+            "time": "2017-05-30T05:22:37+00:00"
+        },
+        {
             "name": "phifty/userbundle",
             "version": "dev-master",
             "source": {
@@ -2836,12 +2847,13 @@
         "phifty/corebundle": 20,
         "phifty/commonbundle": 20,
         "phifty/adminui": 20,
+        "phifty/crud": 20,
         "phifty/userbundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.4.0"
+        "php": ">=7.0"
     },
     "platform-dev": []
 }

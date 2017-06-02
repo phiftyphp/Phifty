@@ -26,6 +26,11 @@ class BundleServiceProvider extends BaseServiceProvider
         return $options;
     }
 
+    public function boot(Kernel $kernel)
+    {
+        $kernel->bundles->boot();
+    }
+
     /**
      * @param Phifty\Kernel $kernel  Kernel object.
      * @param array         $options Plugin service options.

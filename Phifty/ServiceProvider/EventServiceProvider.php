@@ -3,6 +3,7 @@
 namespace Phifty\ServiceProvider;
 
 use Phifty\Kernel;
+use Universal\Event\EventDispatcher;
 
 class EventServiceProvider extends BaseServiceProvider
 {
@@ -15,7 +16,7 @@ class EventServiceProvider extends BaseServiceProvider
     {
         // php event pool
         $kernel->event = function () {
-            return new \Universal\Event\PhpEvent();
+            return new EventDispatcher;
         };
     }
 }

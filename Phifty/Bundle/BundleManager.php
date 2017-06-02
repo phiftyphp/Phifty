@@ -17,7 +17,6 @@ class BundleManager implements ArrayAccess, IteratorAggregate
      */
     public $bundles = array();
 
-
     /**
      * @var string[]
      */
@@ -30,9 +29,9 @@ class BundleManager implements ArrayAccess, IteratorAggregate
         $this->kernel = $kernel;
     }
 
-    public function isLoaded( $name )
+    public function isLoaded($name)
     {
-        return isset( $this->bundles[ $name ] );
+        return isset($this->bundles[$name]);
     }
 
     public function registerBundleDir($dir)
@@ -125,12 +124,13 @@ class BundleManager implements ArrayAccess, IteratorAggregate
     /**
      * Initialize all loaded bundles.
      */
-    public function init()
+    public function boot()
     {
         // initialize bundle object.
         foreach ($this->bundles as $b) {
-            $b->init();
+            $b->boot();
         }
+
         // build routes
         foreach ($this->bundles as $b) {
             $b->routes();

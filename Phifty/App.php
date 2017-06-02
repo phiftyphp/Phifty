@@ -8,15 +8,15 @@ use Phifty\Environment\CommandLine;
 class App extends Bundle implements \PHPSGI\App
 {
     /**
-     * @override Bundle::init
+     * @override Bundle::boot
      */
-    public function init()
+    public function boot()
     {
-        parent::init();
-        if (CLI) {
+        parent::boot();
+        if ($this->kernel->isCli) {
             CommandLine::init($this->kernel);
         }
-        $kernel->bundles->init(); // initialize all bundles
+        $this->kernel->boot();
     }
 
     /**
