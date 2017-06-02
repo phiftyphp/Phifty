@@ -164,42 +164,7 @@ class BootstrapCommand extends Command
 
         // Kernel initialization after bootstrap script
         if ($configLoader->isLoaded('framework')) {
-            if ($configServices = $configLoader->get('framework', 'ServiceProviders')) {
-
-                $services = [];
-                foreach ($configServices as $name => $options) {
-                    $serviceClass = \Maghead\Utils::resolveClass($name, ["App\\ServiceProvider","Phifty\\ServiceProvider"]);
-                    if (!$serviceClass) {
-                        throw new LogicException("service class '$serviceClass' does not exist.");
-                    }
-                    $options = $serviceClass::canonicalizeConfig($runtimeKernel, $options ?: []);
-                    if ($options === null) {
-                        throw new LogicException("$serviceClass::canonicalizeConfig should return an array for service config.");
-                    }
-                    $services[$serviceClass] = $options ?: [];
-                }
-
-                // Generate service provider statements
-                foreach ($services as $serviceClass => $options) {
-                    $this->logger->info("Generating registration for $serviceClass ...");
-                    $block[] = new RequireClassStatement($serviceClass);
-                    if (is_subclass_of($serviceClass, BaseServiceProvider::class)
-                        && $serviceClass::Generatable($runtimeKernel, $options)) {
-                        if ($stm = $serviceClass::generatePrepare($runtimeKernel, $options)) {
-                            $block[] = $stm;
-                        }
-                        $block[] = new Statement(new MethodCall('$kernel', 'registerServiceProvider', [
-                            $serviceClass::generateNew($runtimeKernel, $options),
-                            $options,
-                        ]));
-                    } else {
-                        $block[] = new Statement(new MethodCall('$kernel', 'registerServiceProvider', [
-                            new NewObject($serviceClass, []),
-                            $options,
-                        ]));
-                    }
-                }
-            }
+            $bGenerator->generateBootstrapServiceProviderBlock($block, $runtimeKernel);
         }
 
         // Generate environment setup

@@ -190,6 +190,47 @@ class BootstrapGenerator
         ]));
     }
 
+    public function generateBootstrapServiceProviderBlock(Block $block, Kernel $kernel)
+    {
+        if ($configServices = $this->configLoader->get('framework', 'ServiceProviders')) {
+            // required objects: $kernel, $block
+            $services = [];
+            foreach ($configServices as $name => $options) {
+                $serviceClass = \Maghead\Utils::resolveClass($name, ["App\\ServiceProvider","Phifty\\ServiceProvider"]);
+                if (!$serviceClass) {
+                    throw new LogicException("service class '$serviceClass' does not exist.");
+                }
+                $options = $serviceClass::canonicalizeConfig($kernel, $options ?: []);
+                if ($options === null) {
+                    throw new LogicException("$serviceClass::canonicalizeConfig should return an array for service config.");
+                }
+                $services[$serviceClass] = $options ?: [];
+            }
+
+            // Generate service provider statements
+            foreach ($services as $serviceClass => $options) {
+                $block[] = new RequireClassStatement($serviceClass);
+                if (is_subclass_of($serviceClass, BaseServiceProvider::class)
+                    && $serviceClass::Generatable($kernel, $options)) {
+                    if ($stm = $serviceClass::generatePrepare($kernel, $options)) {
+                        $block[] = $stm;
+                    }
+                    $block[] = new Statement(new MethodCall('$kernel', 'registerServiceProvider', [
+                        $serviceClass::generateNew($kernel, $options),
+                        $options,
+                    ]));
+                } else {
+                    $block[] = new Statement(new MethodCall('$kernel', 'registerServiceProvider', [
+                        new NewObject($serviceClass, []),
+                        $options,
+                    ]));
+                }
+            }
+        }
+    }
+
+
+
     public function generateBootstrapFooter(Block $block)
     {
         // Everything is ready
