@@ -41,13 +41,6 @@ class View extends ArrayObject
 
     }
 
-    public function __get($name)
-    {
-        if (isset($this[$name])) {
-            return $this[ $name ];
-        }
-    }
-
     /*
      * Assign template variable
      *
