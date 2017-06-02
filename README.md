@@ -38,11 +38,11 @@ Bootstrap Flow
 --------------
 1. Create the generated App\ConfigLoader object.
 2. Create the generated App\Kernel object
-  1. Load the service providers into `$kernel`
-  2. Load the bundles into `$kernel`
+    1. Load the service providers into `$kernel`
+    2. Load the bundles into `$kernel`
 3. Create `App\App` instance with `App($kernel)`
 4. Call App::boot() method to boot the app.
-  1. Call Kernel::boot to boot the service providers and the bundles.
-    1. Run ::boot on all the service providers
-    2. Run ::boot on all the bundles
-  2. Run the App boot code.
+    1. Call Kernel::boot to boot the service providers and the bundles.
+        1. Run ::boot on all the service providers
+        2. Run ::boot on all the bundles
+    2. Run the App boot code.
