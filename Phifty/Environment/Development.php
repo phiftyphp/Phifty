@@ -16,19 +16,19 @@ use Phifty\Kernel;
 
 class Development extends Environment
 {
-    public static function exception_error_handler($errno, $errstr, $errfile, $errline )
+    public static function exceptionErrorHandler($errno, $errstr, $errfile, $errline)
     {
         throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
     }
 
-    public static function exception_handler($e)
+    public static function exceptionHandler(Exception $e)
     {
         // var_dump( $e );
     }
 
     // XXX: does not work with E_PARSE error
-    // register_shutdown_function(array(__CLASS__,'shutdown_handler'));
-    public static function shutdown_handler()
+    // register_shutdown_function(array(__CLASS__,'shutdownHandler'));
+    public static function shutdownHandler()
     {
         if (is_null($e = error_get_last()) === false) {
             print_r($e);
@@ -40,8 +40,8 @@ class Development extends Environment
         error_reporting(E_ALL);
 
         // @link http://www.php.net/manual/en/function.set-error-handler.php
-        set_error_handler(array(__CLASS__,'exception_error_handler'), E_ALL & ~E_NOTICE );
-        // set_exception_handler(array(__CLASS__,'exception_handler') );
+        set_error_handler([__CLASS__,'exceptionErrorHandler'], E_ALL & ~E_NOTICE );
+        // set_exception_handler([__CLASS__,'exceptionHandler']);
 
         // if firebug supports
         if ($kernel->isCli && getenv('PHIFTY_PROFILE') ) {
@@ -51,6 +51,5 @@ class Development extends Environment
                 echo 'Duration: ', ceil((microtime(true) - $_SERVER['REQUEST_TIME_FLOAT']) * 1000000 ) , ' microseconds' ;
             });
         }
-        // when exception found, forward output to exception render controller.
     }
 }
