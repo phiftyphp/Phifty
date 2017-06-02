@@ -232,6 +232,16 @@ class Bundle
         return $this->locate() . DIRECTORY_SEPARATOR . 'Templates';
     }
 
+
+    /**
+     * return the model dir
+     */
+    public function getModelDir()
+    {
+        return $this->locate() . DIRECTORY_SEPARATOR . 'Model';
+    }
+
+
     /**
      *
      * @group path

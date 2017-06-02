@@ -14,11 +14,15 @@ class AppSchemaLoader extends FileSchemaLoader
             $kernel = kernel();
         }
         if ($app = $kernel->getApp()) {
-            $this->addPath($app->locate() . DIRECTORY_SEPARATOR . 'Model');
+            if (file_exists($app->getModelDir())) {
+                $this->addPath($app->getModelDir());
+            }
         }
         if ($bundles = $kernel->bundles) {
             foreach ($bundles as $bundle) {
-                $this->addPath($bundle->locate() . DIRECTORY_SEPARATOR . 'Model');
+                if (file_exists($bundle->getModelDir())) {
+                    $this->addPath($bundle->getModelDir());
+                }
             }
         }
     }
