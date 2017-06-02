@@ -5,15 +5,19 @@ use Phifty\Console\Application;
 
 if (file_exists('bootstrap.php')) {
     require 'bootstrap.php';
-    $console = Application::getInstance();
-    $kernel->event->trigger( 'phifty.console.init_commands', $console);
-    $console->run($argv);
-    $kernel->event->trigger( 'phifty.console.finish', $console);
 } else {
     global $composerClassLoader;
     $composerClassLoader = require 'vendor/autoload.php';
-    $console = Application::getInstance();
-    $console->run( $argv );
 }
 
-/* vim:filetype=php: */
+$console = Application::getInstance();
+if (isset($kernel)) {
+    $kernel->event->trigger('phifty.console.run.before', $console);
+}
+
+$console->run($argv);
+
+if (isset($kernel)) {
+    $kernel->event->trigger('phifty.console.finish', $console);
+}
+// vim:filetype=php:

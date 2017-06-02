@@ -44,8 +44,8 @@ class Development extends Environment
         // set_exception_handler(array(__CLASS__,'exception_handler') );
 
         // if firebug supports
-        if (CLI && getenv('PHIFTY_PROFILE') ) {
-            $kernel->event->register('phifty.console.finish', function() use ($kernel) {
+        if ($kernel->isCli && getenv('PHIFTY_PROFILE') ) {
+            $kernel->event->register('phifty.console.run.after', function() use ($kernel) {
                 // echo 'memory usage: ', (int) (memory_get_usage() / 1024  ) , ' KB', PHP_EOL;
                 echo 'Memory peak usage: ', (int) (memory_get_peak_usage() / 1024 ) , ' KB' . PHP_EOL;
                 echo 'Duration: ', ceil((microtime(true) - $_SERVER['REQUEST_TIME_FLOAT']) * 1000000 ) , ' microseconds' ;
