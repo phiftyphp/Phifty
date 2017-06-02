@@ -63,7 +63,7 @@ class Kernel extends ObjectContainer
 
     public $rootDir;  // application root dir
 
-    public $rootAppDir;   // application dir (./applications)
+    public $rootAppDir;   // application dir (./app)
 
     public $rootBundleDir;
 
@@ -86,15 +86,6 @@ class Kernel extends ObjectContainer
      */
     protected $services = [];
 
-    /**
-     * application object pool
-     *
-     * app class name => app object
-     *
-     * @deprecated
-     */
-    protected $applications = [];
-
     protected $app;
 
     /**
@@ -109,6 +100,11 @@ class Kernel extends ObjectContainer
         $this->environment  = $environment;
         $this->isDev = $this->environment === 'development';
         $this->isCli = PHP_SAPI === 'cli';
+    }
+
+    public function getApp()
+    {
+        return \App\App::getInstance($this, []);
     }
 
     /**

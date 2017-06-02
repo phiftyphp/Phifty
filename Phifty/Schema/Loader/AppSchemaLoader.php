@@ -11,7 +11,7 @@ class AppSchemaLoader extends FileSchemaLoader
         parent::__construct($paths);
 
         $kernel = kernel();
-        if ($app = $kernel->getApp()) {
+        if ($app = \App\App::getInstance($kernel)) {
             $this->addPath($app->locate() . DIRECTORY_SEPARATOR . 'Model');
         }
         if ($bundles = $kernel->bundles) {
