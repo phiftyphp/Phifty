@@ -31,6 +31,7 @@ script:
 - ./travis/bootstrap
 - time php bootstrap.php
 - wc -l bootstrap.php
+- php bin/phifty asset --link
 - phpunit -c phpunit.xml.dist
 
 after_success:
