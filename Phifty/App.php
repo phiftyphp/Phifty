@@ -14,7 +14,7 @@ class App extends Bundle implements \PHPSGI\App
     {
         parent::boot();
         if ($this->kernel->isCli) {
-            CommandLine::init($this->kernel);
+            CommandLine::boot($this->kernel);
         }
         $this->kernel->boot();
     }

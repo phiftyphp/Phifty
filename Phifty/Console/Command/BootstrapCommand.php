@@ -169,11 +169,11 @@ class BootstrapCommand extends Command
         // Generate environment setup
         switch ($environment) {
         case "production":
-            $block[] = new Statement(new StaticMethodCall(Production::class, 'init', [new Variable('$kernel')]));
+            $block[] = new Statement(new StaticMethodCall(Production::class, 'boot', [new Variable('$kernel')]));
             break;
         case "development":
         default:
-            $block[] = new Statement(new StaticMethodCall(Development::class, 'init', [new Variable('$kernel')]));
+            $block[] = new Statement(new StaticMethodCall(Development::class, 'boot', [new Variable('$kernel')]));
             break;
         }
 

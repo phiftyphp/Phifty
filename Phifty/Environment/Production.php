@@ -14,7 +14,7 @@ use Phifty\Kernel;
 
 class Production extends Environment
 {
-    public static function init(Kernel $kernel)
+    public static function boot(Kernel $kernel)
     {
         // if we are in command-line mode,
         /* for production mode */

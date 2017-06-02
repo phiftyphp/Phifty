@@ -35,7 +35,7 @@ class Development extends Environment
         }
     }
 
-    public static function init(Kernel $kernel)
+    public static function boot(Kernel $kernel)
     {
         error_reporting(E_ALL);
 
