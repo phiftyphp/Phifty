@@ -10,7 +10,7 @@ if (file_exists('bootstrap.php')) {
     $composerClassLoader = require 'vendor/autoload.php';
 }
 
-$console = Application::getInstance();
+$console = new Application;
 if (isset($kernel)) {
     $kernel->event->trigger('phifty.console.run.before', $console);
 }
