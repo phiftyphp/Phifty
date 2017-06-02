@@ -18,6 +18,6 @@ if (isset($kernel)) {
 $console->run($argv);
 
 if (isset($kernel)) {
-    $kernel->event->trigger('phifty.console.finish', $console);
+    $kernel->event->trigger('phifty.console.run.after', $console);
 }
 // vim:filetype=php:
