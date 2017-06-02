@@ -29,6 +29,7 @@ use Maghead\Runtime\Config\FileConfigLoader;
 use Phifty\Bootstrap;
 use Phifty\Generator\BootstrapGenerator;
 use Phifty\Bundle\BundleLoader;
+use Phifty\ServiceProvider\BaseServiceProvider;
 use Phifty\ServiceProvider\BundleServiceProvider;
 use Phifty\ServiceProvider\DatabaseServiceProvider;
 use Phifty\ServiceProvider\ConfigServiceProvider;
@@ -163,28 +164,26 @@ class BootstrapCommand extends Command
 
         // Kernel initialization after bootstrap script
         if ($configLoader->isLoaded('framework')) {
+            if ($configServices = $configLoader->get('framework', 'ServiceProviders')) {
 
-
-            if ($services = $configLoader->get('framework', 'ServiceProviders')) {
-                foreach ($services as $name => $options) {
-                    if (!$options) {
-                        $options = [];
-                    }
-
+                $services = [];
+                foreach ($configServices as $name => $options) {
                     $serviceClass = \Maghead\Utils::resolveClass($name, ["App\\ServiceProvider","Phifty\\ServiceProvider"]);
                     if (!$serviceClass) {
                         throw new LogicException("service class '$serviceClass' does not exist.");
                     }
-                    $block[] = new RequireClassStatement($serviceClass);
-
-                    $this->logger->info("Generating registration for $serviceClass ...");
-
-                    $options = $serviceClass::canonicalizeConfig($runtimeKernel, $options);
+                    $options = $serviceClass::canonicalizeConfig($runtimeKernel, $options ?: []);
                     if ($options === null) {
                         throw new LogicException("$serviceClass::canonicalizeConfig should return an array for service config.");
                     }
+                    $services[$serviceClass] = $options ?: [];
+                }
 
-                    if (is_subclass_of($serviceClass, 'Phifty\\ServiceProvider\\BaseServiceProvider')
+                // Generate service provider statements
+                foreach ($services as $serviceClass => $options) {
+                    $this->logger->info("Generating registration for $serviceClass ...");
+                    $block[] = new RequireClassStatement($serviceClass);
+                    if (is_subclass_of($serviceClass, BaseServiceProvider::class)
                         && $serviceClass::Generatable($runtimeKernel, $options)) {
                         if ($stm = $serviceClass::generatePrepare($runtimeKernel, $options)) {
                             $block[] = $stm;
