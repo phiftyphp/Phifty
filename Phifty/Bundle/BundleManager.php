@@ -6,12 +6,12 @@ use Exception;
 use ArrayAccess;
 use IteratorAggregate;
 use ArrayIterator;
+use ArrayObject;
 use Phifty\Bundle;
 use Phifty\Kernel;
 
 class BundleManager implements ArrayAccess, IteratorAggregate
 {
-
     /**
      * Bundle object stack
      */

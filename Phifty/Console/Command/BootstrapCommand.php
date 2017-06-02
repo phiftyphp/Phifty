@@ -216,17 +216,21 @@ class BootstrapCommand extends Command
 
         // Generate script for initializing the bundle objects in the
         // bootstrap.php script
-        $bundleLoaderConfig = $configLoader->get('framework', 'BundleLoader') ?: new \ConfigKit\Accessor([ 'Paths' => ['app_bundles','bundles'] ]);
-        $bundleLoader = new BundleLoader($runtimeKernel, $bundleLoaderConfig['Paths']->toArray());
+        $bundleLoaderConfig = $configLoader->get('framework', 'BundleLoader');
+        if (!$bundleLoaderConfig) {
+            $bundleLoaderConfig = new \ConfigKit\Accessor([ 'Paths' => ['app_bundles','bundles'] ]);
+        }
+        $bundleLoaderConfig = BundleServiceProvider::canonicalizeConfig($runtimeKernel, $bundleLoaderConfig->toArray());
+        $bundleLoader = new BundleLoader($runtimeKernel, $bundleLoaderConfig['Paths']);
 
+        $block[] = new AssignStatement('$bundleServiceProvider', new NewObject(BundleServiceProvider::class));
         $block[] = new Statement(new MethodCall('$kernel', 'registerServiceProvider', [
-            new NewObject(BundleServiceProvider::class, []),
-            $bundleLoaderConfig->toArray(),
+            new Variable('$bundleServiceProvider'),
+            $bundleLoaderConfig,
         ]));
 
         $bundleList = $configLoader->get('framework', 'Bundles');
         if ($bundleList) {
-
             $bundlePrefixes = $bundleLoader->getBundlePrefixes($bundleList);
             foreach ($bundlePrefixes as $prefix => $path) {
                 $block[] = new Statement(new MethodCall('$psr4ClassLoader', 'addPrefix', [$prefix, $path]));
