@@ -4,14 +4,21 @@ namespace Phifty\ServiceProvider;
 
 use CodeGen\Expr\NewObject;
 use Phifty\Kernel;
+use Closure;
 
 abstract class BaseServiceProvider implements ServiceProvider
 {
     protected $config;
 
+    /**
+     * @var Closure This is used for overriding the default service builder.
+     */
     protected $builder;
 
-    public function __construct(array $config = array(), $builder = null)
+    /**
+     * @param Closure $builder is used for overriding the default service builder.
+     */
+    public function __construct(array $config = array(), Closure $builder = null)
     {
         $this->config = $config;
         $this->builder = $builder;
@@ -25,7 +32,7 @@ abstract class BaseServiceProvider implements ServiceProvider
     }
 
     /**
-     * register service.
+     * Register this service provider.
      *
      * XXX: we should set options in constructor
      */

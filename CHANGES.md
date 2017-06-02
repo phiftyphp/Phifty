@@ -18,6 +18,8 @@ Version 4.0.x
 
 - Removed Bundle::getModel
 
+- rootMux is renamed to just "mux".  `$kernel->mux`
+
 Version 3.0.x
 -------------
 
