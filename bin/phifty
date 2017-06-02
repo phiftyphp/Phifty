@@ -3,16 +3,6 @@
 
 use Phifty\Console\Application;
 
-if (isset($argv[1]) && $argv[1] == 'build-conf') {
-    // remove old php config files
-    $phpfiles = glob('config/*.php');
-    foreach ($phpfiles as $file) {
-        unlink($file);
-    }
-}
-
-
-# vim:filetype=php:
 if (file_exists('bootstrap.php')) {
     require 'bootstrap.php';
     $console = Application::getInstance();
@@ -25,3 +15,5 @@ if (file_exists('bootstrap.php')) {
     $console = Application::getInstance();
     $console->run( $argv );
 }
+
+/* vim:filetype=php: */
