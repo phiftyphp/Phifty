@@ -30,6 +30,7 @@ before_script:
 script:
 - ./travis/bootstrap
 - time php bootstrap.php
+- wc -l bootstrap.php
 - phpunit -c phpunit.xml.dist
 
 after_success:
