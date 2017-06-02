@@ -35,9 +35,4 @@ class ConfigServiceProvider extends BaseServiceProvider
             return $self->loader;
         };
     }
-
-    public function load($section, $file)
-    {
-        return $this->loader->load($section, $file);
-    }
 }
