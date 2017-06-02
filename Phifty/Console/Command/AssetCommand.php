@@ -3,7 +3,6 @@
 namespace Phifty\Console\Command;
 
 use CLIFramework\Command;
-use Phifty\Console\Application;
 
 /**
  * When running asset:init command, we should simply register app/plugin assets
@@ -38,7 +37,7 @@ class AssetCommand extends Command
 
     public function execute()
     {
-        $app = Application::getInstance();
+        $app = $this->getApplication();
 
         $init = $this->createCommand(AssetCommand\InitCommand::class);
         $init->options = $this->getOptions();
