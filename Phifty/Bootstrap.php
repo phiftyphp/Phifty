@@ -33,7 +33,6 @@ use Phifty\ServiceProvider\BundleServiceProvider;
 use Phifty\ServiceProvider\DatabaseServiceProvider;
 use Phifty\ServiceProvider\ConfigServiceProvider;
 use Phifty\ServiceProvider\EventServiceProvider;
-use Phifty\ServiceProvider\ClassLoaderServiceProvider;
 use Phifty\ServiceProvider\SessionServiceProvider;
 use Phifty\Kernel;
 use Phifty\Utils;
@@ -64,7 +63,7 @@ class Bootstrap
     public static function createKernel(ConfigLoader $configLoader, Psr4ClassLoader $psr4ClassLoader, $environment)
     {
         $kernel = Kernel::dynamic($configLoader, $environment);
-        static::loadServices($kernel, $configLoader, $psr4ClassLoader);
+        static::loadServices($kernel, $configLoader);
         static::loadBundleService($kernel, $configLoader, $psr4ClassLoader);
         return $kernel;
     }
@@ -78,9 +77,8 @@ class Bootstrap
      * 4. [ ] class loader service provider
      *
      */
-    private static function loadServices(Kernel $kernel, ConfigLoader $configLoader, Psr4ClassLoader $psr4ClassLoader)
+    private static function loadServices(Kernel $kernel, ConfigLoader $configLoader)
     {
-        // $kernel->registerServiceProvider(new \Phifty\ServiceProvider\ClassLoaderServiceProvider($splClassLoader));
         $kernel->registerServiceProvider(new ConfigServiceProvider($configLoader));
         $kernel->registerServiceProvider(new EventServiceProvider);
 
@@ -128,26 +126,24 @@ class Bootstrap
 
         // Load bundle objects into the runtimeKernel
         $bundleLoader = new BundleLoader($kernel, $bundleLoaderConfig['Paths']->toArray());
-        $bundleList = $configLoader->get('framework', 'Bundles');
+        $bundles = $configLoader->get('framework', 'Bundles') ?: [];
 
         // Generating registering code for bundle classes
-        if ($bundleList) {
-            foreach ($bundleList as $bundleName => $bundleConfig) {
-                $autoload = $bundleLoader->registerAutoload($bundleName, $psr4ClassLoader);
-                if (!$autoload) {
-                    continue;
-                }
-
-                // Load the bundle class files into the Kernel
-                $bundleClass = $bundleLoader->loadBundleClass($bundleName);
-                if (false === $bundleClass) {
-                    throw new Exception("Bundle $bundleName class file '$bundleClassFile' doesn't exist.");
-                }
-
-                // TODO: This line seems could be removed.
-                $bundleConfigArray = ($bundleConfig instanceof \ConfigKit\Accessor) ? $bundleConfig->toArray() : $bundleConfig;
-                $kernel->bundles[$bundleName] = $bundleClass::getInstance($kernel, $bundleConfigArray);
+        foreach ($bundles as $bundleName => $bundleConfig) {
+            $autoload = $bundleLoader->registerAutoload($bundleName, $psr4ClassLoader);
+            if (!$autoload) {
+                continue;
             }
+
+            // Load the bundle class files into the Kernel
+            $bundleClass = $bundleLoader->loadBundleClass($bundleName);
+            if (false === $bundleClass) {
+                throw new Exception("Bundle $bundleName class file '$bundleClassFile' doesn't exist.");
+            }
+
+            // TODO: This line seems could be removed.
+            $bundleConfigArray = ($bundleConfig instanceof \ConfigKit\Accessor) ? $bundleConfig->toArray() : $bundleConfig;
+            $kernel->bundles[$bundleName] = $bundleClass::getInstance($kernel, $bundleConfigArray);
         }
     }
 

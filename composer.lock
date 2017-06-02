@@ -948,52 +948,6 @@
             "time": "2016-10-10T10:04:05+00:00"
         },
         {
-            "name": "corneltek/universal",
-            "version": "1.8.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/corneltek/Universal.git",
-                "reference": "7b69d656be18d6b1d01a5a672141c80b43b5c2f3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/corneltek/Universal/zipball/7b69d656be18d6b1d01a5a672141c80b43b5c2f3",
-                "reference": "7b69d656be18d6b1d01a5a672141c80b43b5c2f3",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "require-dev": {
-                "corneltek/phpunit-testmore": "dev-master",
-                "satooshi/php-coveralls": "^1"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.8.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Universal\\": "src/Universal/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Yo-An Lin",
-                    "email": "yoanlin93@gmail.com"
-                }
-            ],
-            "description": "Universal library for PHP",
-            "homepage": "http://github.com/corneltek/Universal",
-            "time": "2016-06-11T11:51:45+00:00"
-        },
-        {
             "name": "corneltek/universal-cache",
             "version": "3.3.0",
             "source": {
@@ -1768,17 +1722,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpsgi/Funk.git",
-                "reference": "06bf94356cfadf40e68d06aaa1f3ab57ad4719d9"
+                "reference": "d96b9e6ed4e118d47484c0dfec5436df338d4345"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpsgi/Funk/zipball/06bf94356cfadf40e68d06aaa1f3ab57ad4719d9",
-                "reference": "06bf94356cfadf40e68d06aaa1f3ab57ad4719d9",
+                "url": "https://api.github.com/repos/phpsgi/Funk/zipball/d96b9e6ed4e118d47484c0dfec5436df338d4345",
+                "reference": "d96b9e6ed4e118d47484c0dfec5436df338d4345",
                 "shasum": ""
             },
             "require": {
-                "corneltek/universal": "^1.7",
-                "phpsgi/phpsgi": "@dev"
+                "phpsgi/phpsgi": "@dev",
+                "universal/universal": "2.0.x-dev"
             },
             "require-dev": {
                 "corneltek/pux": "2.0.x-dev",
@@ -1818,7 +1772,7 @@
                 "phpsgi",
                 "server"
             ],
-            "time": "2017-06-01 12:16:05"
+            "time": "2017-06-02 09:00:20"
         },
         {
             "name": "phpsgi/phpsgi",
@@ -2529,12 +2483,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/c9s/universal.git",
-                "reference": "0cb992f67688e272d940d5cd14f448a8a5dfe311"
+                "reference": "88e7cc0c708f45c24fc1d0c8f326a58875c16a94"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c9s/universal/zipball/0cb992f67688e272d940d5cd14f448a8a5dfe311",
-                "reference": "0cb992f67688e272d940d5cd14f448a8a5dfe311",
+                "url": "https://api.github.com/repos/c9s/universal/zipball/88e7cc0c708f45c24fc1d0c8f326a58875c16a94",
+                "reference": "88e7cc0c708f45c24fc1d0c8f326a58875c16a94",
                 "shasum": ""
             },
             "require": {
@@ -2563,7 +2517,7 @@
             ],
             "description": "Universal library for PHP",
             "homepage": "http://github.com/c9s/universal",
-            "time": "2017-06-02 06:26:17"
+            "time": "2017-06-02 09:43:27"
         },
         {
             "name": "vlucas/phpdotenv",
@@ -2617,6 +2571,52 @@
         }
     ],
     "packages-dev": [
+        {
+            "name": "corneltek/universal",
+            "version": "1.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/corneltek/Universal.git",
+                "reference": "7b69d656be18d6b1d01a5a672141c80b43b5c2f3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/corneltek/Universal/zipball/7b69d656be18d6b1d01a5a672141c80b43b5c2f3",
+                "reference": "7b69d656be18d6b1d01a5a672141c80b43b5c2f3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "corneltek/phpunit-testmore": "dev-master",
+                "satooshi/php-coveralls": "^1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.8.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Universal\\": "src/Universal/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Yo-An Lin",
+                    "email": "yoanlin93@gmail.com"
+                }
+            ],
+            "description": "Universal library for PHP",
+            "homepage": "http://github.com/corneltek/Universal",
+            "time": "2016-06-11T11:51:45+00:00"
+        },
         {
             "name": "phifty/adminui",
             "version": "dev-master",

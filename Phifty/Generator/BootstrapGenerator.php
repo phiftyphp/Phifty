@@ -34,7 +34,6 @@ use Phifty\Bootstrap;
 use Phifty\Generator\BootstrapGenerator;
 use Phifty\Bundle\BundleLoader;
 use Phifty\ServiceProvider\ServiceProvider;
-use Phifty\ServiceProvider\ClassLoaderServiceProvider;
 use Phifty\ServiceProvider\BundleServiceProvider;
 use Phifty\ServiceProvider\DatabaseServiceProvider;
 use Phifty\ServiceProvider\ConfigServiceProvider;
@@ -122,7 +121,7 @@ class BootstrapGenerator
 
 
         // Generate the require statements
-        $block[] = 'global $kernel, $composerClassLoader, $psr4ClassLoader, $splClassLoader;';
+        $block[] = 'global $kernel, $composerClassLoader, $psr4ClassLoader;';
         $block[] = new RequireClassStatement(ClassLoader::class);
         $block[] = new RequireClassStatement(Psr4ClassLoader::class);
 
@@ -139,7 +138,6 @@ class BootstrapGenerator
         $block[] = new RequireClassStatement(Bootstrap::class);
         $block[] = new RequireClassStatement(ServiceProvider::class);
         $block[] = new RequireClassStatement(BaseServiceProvider::class);
-        $block[] = new RequireClassStatement(ClassLoaderServiceProvider::class);
         $block[] = new RequireClassStatement(\Phifty\Environment\Environment::class);
         $block[] = new RequireClassStatement(\Phifty\Bundle\BundleActionCreators::class);
         $block[] = new RequireClassStatement(\Phifty\Bundle::class);
@@ -171,13 +169,6 @@ class BootstrapGenerator
             new Variable('$configLoader'),
             new Variable('$env'),
         ]));
-
-        // Generates: $kernel->registerServiceProvider(new \Phifty\ServiceProvider\ClassLoaderServiceProvider($splClassLoader));
-        $block[] = new Statement(new MethodCall('$kernel', 'registerServiceProvider', [
-            new NewObject(ClassLoaderServiceProvider::class, [ new Variable('$splClassLoader') ]),
-        ]));
-
-
 
         // Generate Core Serivces
         //
