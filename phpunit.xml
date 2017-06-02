@@ -15,18 +15,6 @@
     </testsuite>
   </testsuites>
 
-  <filter>
-    <whitelist>
-      <directory suffix=".php">Phifty</directory>
-      <exclude>
-        <directory suffix="Test.php">Phifty</directory>
-        <directory>bundles</directory>
-        <directory>vendor</directory>
-        <directory>frameworks</directory>
-      </exclude>
-    </whitelist>
-  </filter>
-
   <listeners>
     <listeners>
       <listener class="PHPUnit_Extensions_Selenium2TestCase_ScreenshotListener" file="PHPUnit/Extensions/Selenium2TestCase/ScreenshotListener.php">

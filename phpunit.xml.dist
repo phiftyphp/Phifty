@@ -11,6 +11,7 @@
   <testsuites>
     <testsuite name="Phifty">
       <directory suffix="Test.php">Phifty</directory>
+      <directory suffix="Test.php">bundles/crud</directory>
     </testsuite>
   </testsuites>
 
@@ -19,7 +20,6 @@
       <directory suffix=".php">Phifty</directory>
       <exclude>
         <directory suffix="Test.php">Phifty</directory>
-        <directory>bundles</directory>
         <directory>vendor</directory>
         <directory>frameworks</directory>
       </exclude>
