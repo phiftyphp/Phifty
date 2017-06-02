@@ -11,9 +11,23 @@ use CodeGen\Expr\MethodCall;
 use Phifty\Kernel;
 
 use UniversalCache\FileSystemCache;
+use Closure;
 
 class CacheServiceProvider extends BaseServiceProvider
 {
+    /**
+     * @var Closure This is used for overriding the default service builder.
+     */
+    protected $builder;
+
+    /**
+     * @param Closure $builder is used for overriding the default service builder.
+     */
+    public function __construct(Closure $builder = null)
+    {
+        $this->builder = $builder;
+    }
+
     public function getId()
     {
         return 'cache';
@@ -78,7 +92,7 @@ class CacheServiceProvider extends BaseServiceProvider
 
         $builder[] = 'return $cache;';
         $className = get_called_class();
-        return new NewObject($className, [$options, $builder]);
+        return new NewObject($className, [$builder]);
     }
 
     public function register(Kernel $kernel, $options = array())

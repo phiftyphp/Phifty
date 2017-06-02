@@ -8,22 +8,6 @@ use Closure;
 
 abstract class BaseServiceProvider implements ServiceProvider
 {
-    protected $config;
-
-    /**
-     * @var Closure This is used for overriding the default service builder.
-     */
-    protected $builder;
-
-    /**
-     * @param Closure $builder is used for overriding the default service builder.
-     */
-    public function __construct(array $config = array(), Closure $builder = null)
-    {
-        $this->config = $config;
-        $this->builder = $builder;
-    }
-
     abstract public function getId();
 
     /**

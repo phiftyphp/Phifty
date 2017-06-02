@@ -103,7 +103,7 @@ class Bootstrap
                     throw new LogicException("$class::canonicalizeConfig should return an array for service config.");
                 }
 
-                $provider = new $class($config);
+                $provider = new $class;
                 $kernel->registerServiceProvider($provider, $config);
             }
         }
