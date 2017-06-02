@@ -48,5 +48,6 @@ Bundles:
   CoreBundle:
   CommonBundle:
   AdminUI:
+  CRUD:
   UserBundle:
     UseAccount: true

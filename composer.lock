@@ -2683,12 +2683,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phifty-framework/CoreBundle.git",
-                "reference": "7295bd8cb3a15d8bcd15aae6bfc553bba5a4664f"
+                "reference": "67fcf2b8aafb3ced53a7c494b9049aab52c2fc3f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phifty-framework/CoreBundle/zipball/7295bd8cb3a15d8bcd15aae6bfc553bba5a4664f",
-                "reference": "7295bd8cb3a15d8bcd15aae6bfc553bba5a4664f",
+                "url": "https://api.github.com/repos/phifty-framework/CoreBundle/zipball/67fcf2b8aafb3ced53a7c494b9049aab52c2fc3f",
+                "reference": "67fcf2b8aafb3ced53a7c494b9049aab52c2fc3f",
                 "shasum": ""
             },
             "require": {
@@ -2717,7 +2717,7 @@
                 }
             ],
             "description": "core bundle that includes commonly used assets",
-            "time": "2017-05-27 14:27:31"
+            "time": "2017-06-02T15:55:04+00:00"
         },
         {
             "name": "phifty/crud",
@@ -2725,12 +2725,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phifty-framework/CRUD.git",
-                "reference": "cd545fc9ef71b017eaabefb7fc5a30735582657d"
+                "reference": "9eb5996a38afa2274a14c9fc8c8445554f30b1cc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phifty-framework/CRUD/zipball/cd545fc9ef71b017eaabefb7fc5a30735582657d",
-                "reference": "cd545fc9ef71b017eaabefb7fc5a30735582657d",
+                "url": "https://api.github.com/repos/phifty-framework/CRUD/zipball/9eb5996a38afa2274a14c9fc8c8445554f30b1cc",
+                "reference": "9eb5996a38afa2274a14c9fc8c8445554f30b1cc",
                 "shasum": ""
             },
             "require": {
@@ -2773,7 +2773,7 @@
                 }
             ],
             "description": "CRUD bundle for phifty framework application",
-            "time": "2017-05-30T05:22:37+00:00"
+            "time": "2017-06-02T15:55:36+00:00"
         },
         {
             "name": "phifty/userbundle",

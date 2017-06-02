@@ -9,8 +9,9 @@
   stopOnFailure="true"
   verbose="true">
   <testsuites>
-    <testsuite name="Phifty">
+    <testsuite name="All">
       <directory suffix="Test.php">Phifty</directory>
+      <directory suffix="Test.php">bundles/crud</directory>
     </testsuite>
   </testsuites>
 

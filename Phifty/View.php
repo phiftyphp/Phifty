@@ -98,7 +98,7 @@ class View extends ArrayObject
      */
     public function render($template)
     {
-        return $this->engine->render($template, $this);
+        return $this->engine->render($template, $this->getArrayCopy());
     }
 
     public function __toString()
