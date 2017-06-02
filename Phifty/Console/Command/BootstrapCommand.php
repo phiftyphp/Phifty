@@ -110,8 +110,8 @@ class BootstrapCommand extends Command
 
         $outputFile = $this->options->output;
 
-
-        $env = $this->options->env ?: getenv('PHIFTY_ENV') ?: 'development';
+        // application environment (type string)
+        $environment = $this->options->env ?: getenv('PHIFTY_ENV') ?: 'development';
         $frameworkRoot = dirname(dirname(dirname(__DIR__)));
         $appRoot = getcwd();
         $appDirectory = $appRoot . DIRECTORY_SEPARATOR . 'app';
@@ -120,7 +120,6 @@ class BootstrapCommand extends Command
         defined('PH_ROOT') || define('PH_ROOT', $frameworkRoot);
 
         $this->logger->info('Application root directory:' . $appRoot);
-
 
         $this->logger->info("Removing genereated files");
         Utils::unlink_files([
@@ -132,9 +131,9 @@ class BootstrapCommand extends Command
             $appDirectory . DIRECTORY_SEPARATOR . 'AppConfigLoader.php',
         ]);
 
-        $configLoader = Bootstrap::createConfigLoader($appRoot, $env);
+        $configLoader = Bootstrap::createConfigLoader($appRoot, $environment);
 
-        $bGenerator = new BootstrapGenerator($appRoot, $frameworkRoot, $env, $configLoader);
+        $bGenerator = new BootstrapGenerator($appRoot, $frameworkRoot, $environment, $configLoader);
         if ($this->options->xhprof) {
             $bGenerator->enableXhprof();
         }
@@ -144,7 +143,7 @@ class BootstrapCommand extends Command
 
         // The runtime kernel will only contains "configLoader" and "classLoader" services
         $psr4ClassLoader = new Psr4ClassLoader;
-        $runtimeKernel = Bootstrap::createKernel($configLoader, $psr4ClassLoader, $env);
+        $runtimeKernel = Bootstrap::createKernel($configLoader, $psr4ClassLoader, $environment);
 
         $appBaseKernelClassPath = $bGenerator->generateAppBaseKernelClass($runtimeKernel);
         $appKernelClassPath = $bGenerator->generateAppKernelClass($runtimeKernel);
@@ -168,7 +167,7 @@ class BootstrapCommand extends Command
         }
 
         // Generate environment setup
-        switch ($env) {
+        switch ($environment) {
         case "production":
             $block[] = new Statement(new StaticMethodCall(Production::class, 'init', [new Variable('$kernel')]));
             break;

@@ -137,10 +137,13 @@ class BundleLoader
     public function loadBundleClass($name)
     {
         $class = "$name\\$name";
+
+        // Try spl autoload
         if (class_exists($class,true)) {
             return $class;
         }
 
+        // Find the class file manually.
         if ($classPath = $this->findBundleClassFile($name)) {
             require $classPath;
             return $class;

@@ -107,43 +107,51 @@ class Bootstrap
                 $kernel->registerServiceProvider($provider, $config);
             }
         }
-
     }
 
+
+    /**
+     * Load the bundle list config
+     *
+     * The config structure:
+     *
+     *     BundleLoader:
+     *       Paths:
+     *       - app_bundles
+     *       - bundles
+     *
+     */
     private static function loadBundleService(Kernel $kernel, ConfigLoader $configLoader, Psr4ClassLoader $psr4ClassLoader)
     {
         // load bundle service provider
-        $bundleService = new BundleServiceProvider();
+        $serviceProvider = new BundleServiceProvider();
 
-        // Load the bundle list config
-        // The config structure:
-        //     BundleLoader:
-        //       Paths:
-        //       - app_bundles
-        //       - bundles
-        $bundleLoaderConfig = $configLoader->get('framework', 'BundleLoader') ?: new \ConfigKit\Accessor([ 'Paths' => ['app_bundles','bundles'] ]);
-        $kernel->registerServiceProvider($bundleService, $bundleLoaderConfig);
+        $loaderConfig = $configLoader->get('framework', 'BundleLoader') ?: new \ConfigKit\Accessor([ 'Paths' => ['app_bundles','bundles'] ]);
+        $kernel->registerServiceProvider($serviceProvider, $loaderConfig);
 
         // Load bundle objects into the runtimeKernel
-        $bundleLoader = new BundleLoader($kernel, $bundleLoaderConfig['Paths']->toArray());
-        $bundles = $configLoader->get('framework', 'Bundles') ?: [];
+        $loader = new BundleLoader($kernel, $loaderConfig['Paths']->toArray());
+        $configBundles = $configLoader->get('framework', 'Bundles') ?: [];
+
+        self::setupBundleAutoload($loader, $configBundles, $psr4ClassLoader);
 
         // Generating registering code for bundle classes
-        foreach ($bundles as $bundleName => $bundleConfig) {
-            $autoload = $bundleLoader->registerAutoload($bundleName, $psr4ClassLoader);
-            if (!$autoload) {
-                continue;
-            }
-
+        foreach ($configBundles as $bundleName => $bundleConfig) {
             // Load the bundle class files into the Kernel
-            $bundleClass = $bundleLoader->loadBundleClass($bundleName);
+            $bundleClass = $loader->loadBundleClass($bundleName);
             if (false === $bundleClass) {
-                throw new Exception("Bundle $bundleName class file '$bundleClassFile' doesn't exist.");
+                throw new Exception("Can't find bundle $bundleName class file. '$bundleClassFile' doesn't exist.");
             }
 
-            // TODO: This line seems could be removed.
             $bundleConfigArray = ($bundleConfig instanceof \ConfigKit\Accessor) ? $bundleConfig->toArray() : $bundleConfig;
             $kernel->bundles[$bundleName] = $bundleClass::getInstance($kernel, $bundleConfigArray);
+        }
+    }
+
+    private static function setupBundleAutoload(BundleLoader $loader, $bundles, Psr4ClassLoader $psr4ClassLoader)
+    {
+        foreach ($bundles as $name => $config) {
+            $loader->registerAutoload($name, $psr4ClassLoader);
         }
     }
 
