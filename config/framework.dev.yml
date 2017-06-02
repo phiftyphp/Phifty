@@ -16,6 +16,7 @@ ServiceProviders:
   CurrentUserServiceProvider:
     Class: Phifty\Security\CurrentUser
     Model: UserBundle\Model\User
+  SessionServiceProvider:
   ActionServiceProvider:
   PuxRouterServiceProvider:
   LibraryServiceProvider:
@@ -34,7 +35,6 @@ ServiceProviders:
     APC: true
     FileSystem: true
     Memcached: true
-  SessionServiceProvider:
   TwigServiceProvider:
     TemplateDirs: []
   AssetServiceProvider:

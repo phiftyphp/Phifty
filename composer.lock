@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "f4b803d377cfb43cdc87c75fd9c667fc",
+    "content-hash": "125f7d8eccebf1db46a11fccf8eb9505",
     "packages": [
         {
             "name": "composer/installers",
@@ -126,12 +126,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/corneltek/ActionKit.git",
-                "reference": "874eb1b794866d017bd3cb85374322c0311db521"
+                "reference": "f95980f2d04c19cbe440e0f554b7b0a677475037"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/corneltek/ActionKit/zipball/874eb1b794866d017bd3cb85374322c0311db521",
-                "reference": "874eb1b794866d017bd3cb85374322c0311db521",
+                "url": "https://api.github.com/repos/corneltek/ActionKit/zipball/f95980f2d04c19cbe440e0f554b7b0a677475037",
+                "reference": "f95980f2d04c19cbe440e0f554b7b0a677475037",
                 "shasum": ""
             },
             "require": {
@@ -141,14 +141,14 @@
                 "corneltek/fileutil": "^1.7",
                 "corneltek/formkit": "^1",
                 "corneltek/imagekit": "^1",
-                "corneltek/universal": "^1.8",
                 "maghead/maghead": "4.0.x-dev",
                 "maghead/magsql": "@dev",
                 "pekkis/mime-types": "^1",
                 "phifty/locale": "^3",
                 "php": ">=5.6",
                 "pimple/pimple": "^3.0",
-                "twig/twig": "^2"
+                "twig/twig": "^2",
+                "universal/universal": "2.0.x-dev"
             },
             "require-dev": {
                 "corneltek/kendo": "4.0.x-dev",
@@ -175,7 +175,7 @@
                     "email": "yoanlin93+composer@gmail.com"
                 }
             ],
-            "time": "2017-05-29 14:10:20"
+            "time": "2017-06-02 04:46:37"
         },
         {
             "name": "corneltek/assetkit",
@@ -280,22 +280,22 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/c9s/CLIFramework.git",
-                "reference": "f69a19febc57f3d7fba7262be7d3bc3d4f8ad092"
+                "reference": "6d9926e635abd23340d3d3a41d1d71dc4d115ec4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c9s/CLIFramework/zipball/f69a19febc57f3d7fba7262be7d3bc3d4f8ad092",
-                "reference": "f69a19febc57f3d7fba7262be7d3bc3d4f8ad092",
+                "url": "https://api.github.com/repos/c9s/CLIFramework/zipball/6d9926e635abd23340d3d3a41d1d71dc4d115ec4",
+                "reference": "6d9926e635abd23340d3d3a41d1d71dc4d115ec4",
                 "shasum": ""
             },
             "require": {
                 "corneltek/codegen": "4.0.x-dev",
                 "corneltek/getoptionkit": "~2.5.4",
-                "corneltek/universal": "^1.7",
                 "php": ">=5.3.0",
                 "pimple/pimple": "*",
                 "symfony/class-loader": "~2.8|~3.0|~3.2",
-                "symfony/finder": "~2.8|~3.0|~3.2"
+                "symfony/finder": "~2.8|~3.0|~3.2",
+                "universal/universal": "2.0.x-dev"
             },
             "require-dev": {
                 "corneltek/phpunit-testmore": "dev-master",
@@ -332,7 +332,7 @@
                 "getopt",
                 "zsh"
             ],
-            "time": "2017-05-27 10:02:27"
+            "time": "2017-06-02 07:04:59"
         },
         {
             "name": "corneltek/codegen",
@@ -623,12 +623,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/c9s/Kendo.git",
-                "reference": "ea4787727293de01d3760c4d1db3255c62b1fe73"
+                "reference": "2513c2934198b4a5ef6b201eb876bfb65069cc31"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c9s/Kendo/zipball/ea4787727293de01d3760c4d1db3255c62b1fe73",
-                "reference": "ea4787727293de01d3760c4d1db3255c62b1fe73",
+                "url": "https://api.github.com/repos/c9s/Kendo/zipball/2513c2934198b4a5ef6b201eb876bfb65069cc31",
+                "reference": "2513c2934198b4a5ef6b201eb876bfb65069cc31",
                 "shasum": ""
             },
             "require": {
@@ -640,7 +640,6 @@
                 "corneltek/phpunit-testmore": "dev-master",
                 "corneltek/sessionkit": "dev-master",
                 "corneltek/sqlbuilder": "4.0.x-dev",
-                "corneltek/universal": "*",
                 "maghead/maghead": "4.0.x-dev"
             },
             "type": "library",
@@ -677,7 +676,7 @@
                 "rbac",
                 "role-based"
             ],
-            "time": "2017-05-18 16:02:40"
+            "time": "2017-06-02 04:53:00"
         },
         {
             "name": "corneltek/lightlogger",
@@ -805,22 +804,20 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/c9s/Pux.git",
-                "reference": "d0e1beee1dbe6ff8e2b1832b34a2fd6bf42f89da"
+                "reference": "785ed938fa5fd9c3a8c5c0e90859a86d14f995d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c9s/Pux/zipball/d0e1beee1dbe6ff8e2b1832b34a2fd6bf42f89da",
-                "reference": "d0e1beee1dbe6ff8e2b1832b34a2fd6bf42f89da",
+                "url": "https://api.github.com/repos/c9s/Pux/zipball/785ed938fa5fd9c3a8c5c0e90859a86d14f995d1",
+                "reference": "785ed938fa5fd9c3a8c5c0e90859a86d14f995d1",
                 "shasum": ""
             },
             "require": {
-                "corneltek/universal": "^1.8",
-                "phpsgi/phpsgi": "dev-master"
+                "phpsgi/phpsgi": "1.0.x-dev",
+                "universal/universal": "2.0.x-dev"
             },
             "require-dev": {
-                "corneltek/phpunit-testmore": "dev-master",
-                "willdurand/geocoder": "^3.1",
-                "willdurand/negotiation": "^1.4"
+                "corneltek/phpunit-testmore": "dev-master"
             },
             "type": "library",
             "extra": {
@@ -830,7 +827,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Pux\\": "src/Pux/"
+                    "Pux\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -839,8 +836,8 @@
             ],
             "authors": [
                 {
-                    "name": "c9s",
-                    "email": "cornelius.howl@gmail.com"
+                    "name": "Yo-An Lin",
+                    "email": "yoanlin93@gmail.com"
                 }
             ],
             "description": "The fast PHP router",
@@ -849,11 +846,11 @@
                 "fast",
                 "http",
                 "middleware",
-                "pux",
+                "phpsgi",
                 "router",
                 "server"
             ],
-            "time": "2016-06-11 12:03:37"
+            "time": "2017-06-02 06:51:10"
         },
         {
             "name": "corneltek/serializerkit",
@@ -887,16 +884,16 @@
         },
         {
             "name": "corneltek/sessionkit",
-            "version": "1.0.3",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/c9s/SessionKit.git",
-                "reference": "8754dcc479810d968f1aba20af84cd8b8a4694ec"
+                "reference": "fee02de789a81beaaae88647b7b8e8d78dcfe842"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c9s/SessionKit/zipball/8754dcc479810d968f1aba20af84cd8b8a4694ec",
-                "reference": "8754dcc479810d968f1aba20af84cd8b8a4694ec",
+                "url": "https://api.github.com/repos/c9s/SessionKit/zipball/fee02de789a81beaaae88647b7b8e8d78dcfe842",
+                "reference": "fee02de789a81beaaae88647b7b8e8d78dcfe842",
                 "shasum": ""
             },
             "require-dev": {
@@ -904,12 +901,12 @@
             },
             "type": "library",
             "autoload": {
-                "psr-0": {
-                    "SessionKit": "src"
+                "psr-4": {
+                    "SessionKit\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
-            "time": "2014-11-16T15:32:04+00:00"
+            "time": "2017-06-01T16:31:43+00:00"
         },
         {
             "name": "corneltek/twig-react-directive",
@@ -1771,12 +1768,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpsgi/Funk.git",
-                "reference": "30e56d0843df9f994b105ff338fa27795af761b0"
+                "reference": "06bf94356cfadf40e68d06aaa1f3ab57ad4719d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpsgi/Funk/zipball/30e56d0843df9f994b105ff338fa27795af761b0",
-                "reference": "30e56d0843df9f994b105ff338fa27795af761b0",
+                "url": "https://api.github.com/repos/phpsgi/Funk/zipball/06bf94356cfadf40e68d06aaa1f3ab57ad4719d9",
+                "reference": "06bf94356cfadf40e68d06aaa1f3ab57ad4719d9",
                 "shasum": ""
             },
             "require": {
@@ -1821,7 +1818,7 @@
                 "phpsgi",
                 "server"
             ],
-            "time": "2017-05-28 15:45:15"
+            "time": "2017-06-01 12:16:05"
         },
         {
             "name": "phpsgi/phpsgi",
@@ -2527,6 +2524,48 @@
             "time": "2017-04-21T00:13:02+00:00"
         },
         {
+            "name": "universal/universal",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/c9s/universal.git",
+                "reference": "0cb992f67688e272d940d5cd14f448a8a5dfe311"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/c9s/universal/zipball/0cb992f67688e272d940d5cd14f448a8a5dfe311",
+                "reference": "0cb992f67688e272d940d5cd14f448a8a5dfe311",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Universal\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Yo-An Lin",
+                    "email": "yoanlin93@gmail.com"
+                }
+            ],
+            "description": "Universal library for PHP",
+            "homepage": "http://github.com/c9s/universal",
+            "time": "2017-06-02 06:26:17"
+        },
+        {
             "name": "vlucas/phpdotenv",
             "version": "v2.4.0",
             "source": {
@@ -2783,6 +2822,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "universal/universal": 20,
         "corneltek/cliframework": 20,
         "maghead/maghead": 20,
         "maghead/magsql": 20,

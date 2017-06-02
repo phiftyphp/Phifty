@@ -17,12 +17,13 @@ class SessionServiceProvider extends BaseServiceProvider
 
     public function register(Kernel $kernel, $options = array())
     {
-        // XXX: customize this for $options
-        $kernel->session = function () {
-            return new Session([
-                'state' => new NativeState(),
-                'storage' => new NativeStorage(),
-            ]);
-        };
+        // if we have session service provider, call the setup
+        // $s = $kernel->session; // build session object and write to the buffer before we write data to the browser.
+
+        // TODO: customize this for $options
+        $kernel->session = new Session([
+            'state' => new NativeState(),
+            'storage' => new NativeStorage(),
+        ]);
     }
 }

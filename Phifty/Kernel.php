@@ -285,12 +285,6 @@ class Kernel extends ObjectContainer
     {
         if (CLI) {
             CommandLine::init($this);
-        } else {
-            // if we have session service provider, call the setup
-            // $s = $kernel->session; // build session object and write to the buffer before we write data to the browser.
-            if (isset($this->session)) {
-                $this->session;
-            }
         }
         if (isset($this->locale)) {
             $this->locale;

@@ -37,13 +37,10 @@ class LocaleServiceProvider extends BaseServiceProvider
 
     public function register(Kernel $kernel, $options = array())
     {
-        $kernel->locale = function () use ($options) {
-            $locale = new Locale($options['Domain'], $options['LocaleDir'], $options['Langs']);
-            $locale->setDefaultLanguage($options['Default']);
-            $locale->init();
-
-            return $locale;
-        };
+        $locale = new Locale($options['Domain'], $options['LocaleDir'], $options['Langs']);
+        $locale->setDefaultLanguage($options['Default']);
+        $locale->init();
+        $kernel->locale = $locale;
         // we need service dependency for this.
         // kernel()->twig->env->addGlobal('currentLang', kernel()->locale->current() );
     }
