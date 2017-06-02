@@ -3,11 +3,14 @@
 namespace Phifty\ServiceProvider;
 
 use UniversalCache\UniversalCache;
+use UniversalCache\ApcuCache;
 use CodeGen\Expr\NewObject;
 use CodeGen\UserClosure;
 use CodeGen\Statement\Statement;
 use CodeGen\Expr\MethodCall;
 use Phifty\Kernel;
+
+use UniversalCache\FileSystemCache;
 
 class CacheServiceProvider extends BaseServiceProvider
 {
@@ -49,7 +52,7 @@ class CacheServiceProvider extends BaseServiceProvider
 
         if (extension_loaded('apcu') && isset($options['APC'])) {
             $builder[] = new Statement(new MethodCall('$cache', 'addBackend', [
-                new NewObject('UniversalCache\ApcuCache', [$kernel->getApplicationID()]),
+                new NewObject(ApcuCache::class, [$kernel->getApplicationID()]),
             ]));
         }
 
@@ -69,7 +72,7 @@ class CacheServiceProvider extends BaseServiceProvider
 
         if (isset($options['FileSystem'])) {
             $builder[] = new Statement(new MethodCall('$cache', 'addBackend', [
-                new NewObject('UniversalCache\FileSystemCache', [$kernel->getCacheDir()]),
+                new NewObject(FileSystemCache::class, [$kernel->getCacheDir()]),
             ]));
         }
 
@@ -80,8 +83,31 @@ class CacheServiceProvider extends BaseServiceProvider
 
     public function register(Kernel $kernel, $options = array())
     {
-        $kernel->cache = $this->builder || function () {
-            return new UniversalCache(array());
+        $kernel->cache = $this->builder ?: function() use ($kernel, $options) {
+            $cache = new UniversalCache([]);
+            if (extension_loaded('apcu') && isset($options['APC'])) {
+                $cache->addBackend(new ApcuCache($kernel->getApplicationID()));
+            }
+
+            if (extension_loaded('memcached') && isset($options['Memcached'])) {
+                if (isset($options['Memcached']['PersistentId'])) {
+                    $memcached = new \Memcached($options['Memcached']['PersistentId']);
+                } else {
+                    $memcached = new \Memcached();
+                }
+                if (isset($options['Memcached']['Servers'])) {
+                    foreach ($options['Memcached']['Servers'] as $server) {
+                        $memcached->addServer($server);
+                    }
+                }
+                $cache->addBackend($memcached);
+            }
+
+            if (isset($options['FileSystem'])) {
+                $cache->addBackend(new FileSystemCache($kernel->getCacheDir()));
+            }
+
+            return $cache;
         };
     }
 }
