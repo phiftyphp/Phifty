@@ -42,7 +42,7 @@ class BundleLoader
                 if (isset($composerConfig['autoload']['psr-4'])) {
                     $prefixes = [];
                     foreach ($composerConfig['autoload']['psr-4'] as $prefix => $subpath) {
-                        $prefixes[$prefix] = $bundleDir . DIRECTORY_SEPARATOR . trim($subpath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+                        $prefixes[$prefix] = rtrim($bundleDir . DIRECTORY_SEPARATOR . $subpath , DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
                     }
                     return $prefixes;
                 }
