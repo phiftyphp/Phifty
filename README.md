@@ -19,9 +19,19 @@ Structure Overview
 
 ```
 Phifty\App (is a Bundle)
-  Phifty\Kernel
-    Array Phifty\ServiceProvider[string]
-    Array Phifty\Bundle[string]
+  Phifty\Kernel(
+
+    /* Core service providers */
+    "event" => EventServiceProvider,
+    "config" => ConfigServiceProvider,
+
+    /* Extra service providers */
+    [services] => Array Phifty\ServiceProvider[string]
+
+    "bundles" => BundleServiceProvider(
+      Array Phifty\Bundle[string]
+    )
+  )
 ```
 
 Bootstrap Flow
