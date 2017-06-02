@@ -35,7 +35,7 @@ trait BundleRouteCreators
      */
     public function route($path, $args, array $options = array())
     {
-        $router = $this->kernel->rootMux;
+        $router = $this->kernel->mux;
         if (!$router) {
             return false;
         }
@@ -94,6 +94,25 @@ trait BundleRouteCreators
         }
     }
 
+
+    /**
+     * Route a path to template.
+     *
+     *    $this->page('/about.html', 'about.html' ,array( 'name' => 'foo' ));
+     *
+     * @param string $path
+     * @param string $template file
+     */
+    public function page($path, $template, $args = array())
+    {
+        $router = $this->kernel->mux;
+        $router->add($path, [
+            'template' => $template,
+            'args' => $args,  // template args
+        ]);
+    }
+
+
     /**
      *
      * @param string $path path name
@@ -109,7 +128,7 @@ trait BundleRouteCreators
             $class = $this->getNamespace() . '\\Controller\\' . $className;
         }
         $controller = new $class;
-        $this->kernel->rootMux->mount($path, $controller);
+        $this->kernel->mux->mount($path, $controller);
     }
 
     public function expandRoute($path, $class)
@@ -123,5 +142,6 @@ trait BundleRouteCreators
         @trigger_error('expandRoutes() is deprecated, please use mount() instead', E_USER_DEPRECATED);
         $this->mount($path, $class);
     }
+
 
 }

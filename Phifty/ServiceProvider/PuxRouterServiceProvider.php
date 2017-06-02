@@ -15,11 +15,11 @@ class PuxRouterServiceProvider extends BaseServiceProvider
 
     public function register(Kernel $kernel, $options = array())
     {
-        $kernel->rootMux = function () {
+        $kernel->mux = function () {
             return new Mux();
         };
         $kernel->restful = function () use ($kernel) {
-            return new RESTfulMuxBuilder($kernel->rootMux, ['prefix' => '/=']);
+            return new RESTfulMuxBuilder($kernel->mux, ['prefix' => '/=']);
         };
     }
 }

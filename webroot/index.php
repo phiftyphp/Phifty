@@ -17,7 +17,7 @@ require '../bootstrap.php';
 $kernel = kernel();
 
 $kernel->event->trigger('phifty.before_path_dispatch');
-if ($route = $kernel->rootMux->dispatch($pathinfo)) {
+if ($route = $kernel->mux->dispatch($pathinfo)) {
     $kernel->event->trigger('phifty.before_page');
 
     $environment = Environment::createFromGlobals();

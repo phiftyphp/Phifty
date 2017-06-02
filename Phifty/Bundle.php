@@ -123,22 +123,6 @@ class Bundle
         return $this->_namespace = $object->getNamespaceName();
     }
 
-    /**
-     * Helper method, route path to template.
-     *
-     *    $this->page('/about.html', 'about.html' ,array( 'name' => 'foo' ));
-     *
-     * @param string $path
-     * @param string $template file
-     */
-    public function page($path, $template, $args = array())
-    {
-        $router = $this->kernel->router;
-        $router->add($path, array(
-            'template' => $template,
-            'args' => $args,  // template args
-        ));
-    }
 
     /**
      * Locate bundle dir path.
