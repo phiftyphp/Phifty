@@ -12,19 +12,11 @@ use Phifty\Kernel;
 
 class DatabaseServiceProvider extends BaseServiceProvider
 {
+    protected $config;
+
     public function getId()
     {
         return 'database';
-    }
-
-    public function register(Kernel $kernel, array $config = array())
-    {
-        $config = FileConfigLoader::load($config['config']);
-        Bootstrap::setup($config);
-
-        $kernel->db = function () {
-            return DatabaseManager::getInstance()->getMasterConnection();
-        };
     }
 
     public static function canonicalizeConfig(Kernel $kernel, array $config)
@@ -33,5 +25,20 @@ class DatabaseServiceProvider extends BaseServiceProvider
             $config['config'] = \Phifty\Utils::find_db_config($kernel->rootDir);
         }
         return $config;
+    }
+
+    public function register(Kernel $kernel, array $options = array())
+    {
+        $this->config = FileConfigLoader::load($options['config']);
+        Bootstrap::setup($this->config);
+
+        $kernel->db = function () {
+            return DatabaseManager::getInstance()->getMasterConnection();
+        };
+    }
+
+    public function boot(Kernel $kernel)
+    {
+
     }
 }
