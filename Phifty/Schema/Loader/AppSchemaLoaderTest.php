@@ -8,10 +8,8 @@ class AppSchemaLoaderTest extends TestCase
 {
     public function test()
     {
-        $kernel = $this->kernel;
-        $loader = new AppSchemaLoader([], $kernel);
+        $loader = new AppSchemaLoader([], $this->kernel);
         $files = $loader->load();
         $this->assertNotEmpty($files);
     }
 }
-
