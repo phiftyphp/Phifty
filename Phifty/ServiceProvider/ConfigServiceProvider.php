@@ -2,8 +2,8 @@
 
 namespace Phifty\ServiceProvider;
 
-use Phifty\Config\ConfigLoader;
 use Phifty\Kernel;
+use ConfigKit\ConfigLoader;
 
 /**
  * Config service usage.
@@ -16,11 +16,11 @@ use Phifty\Kernel;
  */
 class ConfigServiceProvider extends BaseServiceProvider
 {
-    public $loader;
+    protected $loader;
 
-    public function __construct($loader = null)
+    public function __construct(ConfigLoader $loader)
     {
-        $this->loader = $loader ?: new ConfigLoader();
+        $this->loader = $loader;
     }
 
     public function getId()
