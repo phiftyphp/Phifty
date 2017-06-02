@@ -163,6 +163,8 @@ class BootstrapCommand extends Command
 
         // Kernel initialization after bootstrap script
         if ($configLoader->isLoaded('framework')) {
+
+
             if ($services = $configLoader->get('framework', 'ServiceProviders')) {
                 foreach ($services as $name => $options) {
                     if (!$options) {
@@ -187,12 +189,12 @@ class BootstrapCommand extends Command
                         if ($stm = $serviceClass::generatePrepare($runtimeKernel, $options)) {
                             $block[] = $stm;
                         }
-                        $block[] = new Statement(new MethodCall('$kernel', 'registerService', [
+                        $block[] = new Statement(new MethodCall('$kernel', 'registerServiceProvider', [
                             $serviceClass::generateNew($runtimeKernel, $options),
                             $options,
                         ]));
                     } else {
-                        $block[] = new Statement(new MethodCall('$kernel', 'registerService', [
+                        $block[] = new Statement(new MethodCall('$kernel', 'registerServiceProvider', [
                             new NewObject($serviceClass, []),
                             $options,
                         ]));
@@ -216,6 +218,12 @@ class BootstrapCommand extends Command
         // bootstrap.php script
         $bundleLoaderConfig = $configLoader->get('framework', 'BundleLoader') ?: new \ConfigKit\Accessor([ 'Paths' => ['app_bundles','bundles'] ]);
         $bundleLoader = new BundleLoader($runtimeKernel, $bundleLoaderConfig['Paths']->toArray());
+
+        $block[] = new Statement(new MethodCall('$kernel', 'registerServiceProvider', [
+            new NewObject(BundleServiceProvider::class, []),
+            $bundleLoaderConfig->toArray(),
+        ]));
+
         $bundleList = $configLoader->get('framework', 'Bundles');
         if ($bundleList) {
 

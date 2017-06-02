@@ -69,8 +69,15 @@ class Kernel extends ObjectContainer
 
     public $webroot;
 
-    /* boolean: is in development mode ? */
+    /**
+     * @var boolean is in development mode ? 
+     */
     public $isDev = true;
+
+    /**
+     * @var boolean is in commandl line mode ? 
+     */
+    public $isCli = false;
 
     public $environment;
 
@@ -101,6 +108,7 @@ class Kernel extends ObjectContainer
         $this->configLoader = $configLoader;
         $this->environment  = $environment;
         $this->isDev = $this->environment === 'development';
+        $this->isCli = PHP_SAPI === 'cli';
     }
 
     /**
@@ -264,7 +272,7 @@ class Kernel extends ObjectContainer
      *
      * @param ServiceProvider $service
      */
-    public function registerService(ServiceProvider $service, $options = array() )
+    public function registerServiceProvider(ServiceProvider $service, $options = array() )
     {
         $service->register($this , $options);
         $this->services[$service->getId()] = $service;

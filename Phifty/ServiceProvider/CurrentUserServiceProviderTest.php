@@ -10,7 +10,7 @@ class CurrentUserProviderServiceTest extends TestCase
     public function testCurrentUserService()
     {
         $kernel = Kernel::dynamic($this->configLoader);
-        $kernel->registerService(new EventServiceProvider, []);
+        $kernel->registerServiceProvider(new EventServiceProvider, []);
 
         $config = [
             'Class' => \Phifty\Security\CurrentUser::class,

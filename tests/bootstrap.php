@@ -8,7 +8,10 @@
  * file that was distributed with this source code.
  *
  */
+/*
+define('PH_APP_ROOT', dirname(__DIR__));
+define('PH_ROOT', dirname(__DIR__));
+define('CLI', true);
+require 'vendor/autoload.php';
+*/
 require 'bootstrap.php';
-
-kernel()->classloader->addFallback('tests');
-kernel()->classloader->addFallback( dirname(__DIR__) . '/src' );

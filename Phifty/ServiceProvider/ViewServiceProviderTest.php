@@ -11,7 +11,7 @@ class ViewServiceTest extends TestCase
     {
         $kernel = Kernel::dynamic($this->configLoader);
         $service = new ViewServiceProvider;
-        $kernel->registerService($service, array(
+        $kernel->registerServiceProvider($service, array(
             'Class' => 'Phifty\\View',
         ));
 
@@ -24,7 +24,7 @@ class ViewServiceTest extends TestCase
     {
         $kernel = Kernel::dynamic($this->configLoader);
         $service = new ViewServiceProvider;
-        $kernel->registerService($service, array(
+        $kernel->registerServiceProvider($service, array(
             'Class' => 'Phifty\\View\\Page',
         ));
 

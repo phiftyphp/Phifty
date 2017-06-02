@@ -7,23 +7,16 @@ Mail:
   System: "\"System\" <noreply@localhost>"
   Admin: "\"Admin\" <admin@localhost>"
 Applications:
+BundleLoader:
+  Paths:
+  - bundles
 ServiceProviders:
-  BundleServiceProvider:
-    Paths:
-      - bundles
   DatabaseServiceProvider:
     config: config/database.yml
   CurrentUserServiceProvider:
     Class: Phifty\Security\CurrentUser
     Model: UserBundle\Model\User
   SessionServiceProvider:
-  ActionServiceProvider:
-  PuxRouterServiceProvider:
-  LibraryServiceProvider:
-  ViewServiceProvider:
-  MailerServiceProvider:
-    Transport: MailTransport
-  CacheServiceProvider: ~
   LocaleServiceProvider:
     Directory: locale
     Default: zh_TW
@@ -31,6 +24,13 @@ ServiceProviders:
     Langs:
       - en
       - zh_TW
+  ActionServiceProvider:
+  PuxRouterServiceProvider:
+  LibraryServiceProvider:
+  ViewServiceProvider:
+  MailerServiceProvider:
+    Transport: MailTransport
+  CacheServiceProvider: ~
   CacheServiceProvider:
     APC: true
     FileSystem: true

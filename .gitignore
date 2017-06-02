@@ -33,3 +33,4 @@ manifest.php
 /config/database.yml
 *.actual
 bootstrap.php
+/bundles

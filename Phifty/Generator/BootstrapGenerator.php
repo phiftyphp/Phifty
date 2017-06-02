@@ -25,7 +25,6 @@ use ReflectionClass;
 use Exception;
 use LogicException;
 use Universal\ClassLoader\Psr4ClassLoader;
-use Universal\ClassLoader\SplClassLoader;
 use Universal\ClassLoader\ClassLoader;
 use Universal\Container\ObjectContainer;
 
@@ -125,7 +124,6 @@ class BootstrapGenerator
         // Generate the require statements
         $block[] = 'global $kernel, $composerClassLoader, $psr4ClassLoader, $splClassLoader;';
         $block[] = new RequireClassStatement(ClassLoader::class);
-        $block[] = new RequireClassStatement(SplClassLoader::class);
         $block[] = new RequireClassStatement(Psr4ClassLoader::class);
 
         $block[] = new AssignStatement('$composerClassLoader', new RequireComposerAutoloadStatement([$this->rootDir]));
@@ -151,18 +149,12 @@ class BootstrapGenerator
         $block[] = new ConstStatement('PH_APP_ROOT', $this->rootDir);
         $block[] = new ConstStatement('DS', DIRECTORY_SEPARATOR);
         $block[] = new ConstStatement('PHIFTY_ENV', $this->env);
-        $block[] = new DefineStatement('CLI', new Raw("isset(\$_SERVER['argc']) && !isset(\$_SERVER['HTTP_HOST'])"));
-        $block[] = new DefineStatement('CLI_MODE', new Raw("CLI"));
+        $block[] = new DefineStatement('CLI', new Raw("PHP_SAPI === 'cli'"));
 
         // Generate Psr4 class loader section
         $block[] = new AssignStatement('$psr4ClassLoader', new NewObject(Psr4ClassLoader::class));
         $block[] = new Statement(new MethodCall('$psr4ClassLoader', 'register', [false]));
         $block[] = new Statement(new MethodCall('$psr4ClassLoader', 'addPrefix', [ 'App\\', $this->appDir . DIRECTORY_SEPARATOR ]));
-
-        // Generate Spl Class loader section
-        $block[] = new AssignStatement('$splClassLoader', new NewObject(SplClassLoader::class));
-        $block[] = new Statement(new MethodCall('$splClassLoader', 'useIncludePath', [false]));
-        $block[] = new Statement(new MethodCall('$splClassLoader', 'register', [false]));
     }
 
     public function generateBootstrapInitSection(Block $block)
@@ -180,8 +172,8 @@ class BootstrapGenerator
             new Variable('$env'),
         ]));
 
-        // Generates: $kernel->registerService(new \Phifty\ServiceProvider\ClassLoaderServiceProvider($splClassLoader));
-        $block[] = new Statement(new MethodCall('$kernel', 'registerService', [
+        // Generates: $kernel->registerServiceProvider(new \Phifty\ServiceProvider\ClassLoaderServiceProvider($splClassLoader));
+        $block[] = new Statement(new MethodCall('$kernel', 'registerServiceProvider', [
             new NewObject(ClassLoaderServiceProvider::class, [ new Variable('$splClassLoader') ]),
         ]));
 
@@ -192,17 +184,17 @@ class BootstrapGenerator
         // 1. ConfigServiceProvider
         // 2. EventServiceProvider
 
-        // Generates: $kernel->registerService(new \Phifty\ServiceProvider\ConfigServiceProvider($configLoader));
+        // Generates: $kernel->registerServiceProvider(new \Phifty\ServiceProvider\ConfigServiceProvider($configLoader));
         $block[] = new RequireClassStatement(ConfigServiceProvider::class);
-        $block[] = new Statement(new MethodCall('$kernel', 'registerService', [
+        $block[] = new Statement(new MethodCall('$kernel', 'registerServiceProvider', [
             new NewObject(ConfigServiceProvider::class, [ new Variable('$configLoader') ]),
         ]));
 
         // Load event service, so that we can bind events in Phifty
-        // Generates: $kernel->registerService(new \Phifty\ServiceProvider\EventServiceProvider());
+        // Generates: $kernel->registerServiceProvider(new \Phifty\ServiceProvider\EventServiceProvider());
         $block[] = new Comment("The event service is required for every component.");
         $block[] = new RequireClassStatement(EventServiceProvider::class);
-        $block[] = new Statement(new MethodCall('$kernel', 'registerService', [
+        $block[] = new Statement(new MethodCall('$kernel', 'registerServiceProvider', [
             new NewObject(EventServiceProvider::class),
         ]));
     }

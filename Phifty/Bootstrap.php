@@ -34,6 +34,7 @@ use Phifty\ServiceProvider\DatabaseServiceProvider;
 use Phifty\ServiceProvider\ConfigServiceProvider;
 use Phifty\ServiceProvider\EventServiceProvider;
 use Phifty\ServiceProvider\ClassLoaderServiceProvider;
+use Phifty\ServiceProvider\SessionServiceProvider;
 use Phifty\Kernel;
 use Phifty\Utils;
 
@@ -79,9 +80,9 @@ class Bootstrap
      */
     private static function loadServices(Kernel $kernel, ConfigLoader $configLoader, Psr4ClassLoader $psr4ClassLoader)
     {
-        // $kernel->registerService(new \Phifty\ServiceProvider\ClassLoaderServiceProvider($splClassLoader));
-        $kernel->registerService(new ConfigServiceProvider($configLoader));
-        $kernel->registerService(new EventServiceProvider);
+        // $kernel->registerServiceProvider(new \Phifty\ServiceProvider\ClassLoaderServiceProvider($splClassLoader));
+        $kernel->registerServiceProvider(new ConfigServiceProvider($configLoader));
+        $kernel->registerServiceProvider(new EventServiceProvider);
 
         // Load extra service providers
         if ($services = $configLoader->get('framework', 'ServiceProviders')) {
@@ -90,20 +91,22 @@ class Bootstrap
                     $config = [];
                 }
 
-                $serviceClass = \Maghead\Utils::resolveClass($name, [
+                $class = \Maghead\Utils::resolveClass($name, [
                     "App\\ServiceProvider",
                     "Phifty\\ServiceProvider"
                 ]);
 
-                if (!$serviceClass) {
-                    throw new LogicException("service class '$serviceClass' does not exist.");
+                if (!$class) {
+                    throw new LogicException("service class '$class' does not exist.");
                 }
 
-                $config = $serviceClass::canonicalizeConfig($kernel, $config);
+                $config = $class::canonicalizeConfig($kernel, $config);
                 if ($config === null) {
-                    throw new LogicException("$serviceClass::canonicalizeConfig should return an array for service config.");
+                    throw new LogicException("$class::canonicalizeConfig should return an array for service config.");
                 }
-                $kernel->registerService(new $serviceClass($config), $config);
+
+                $provider = new $class($config);
+                $kernel->registerServiceProvider($provider, $config);
             }
         }
 
@@ -121,7 +124,7 @@ class Bootstrap
         //       - app_bundles
         //       - bundles
         $bundleLoaderConfig = $configLoader->get('framework', 'BundleLoader') ?: new \ConfigKit\Accessor([ 'Paths' => ['app_bundles','bundles'] ]);
-        $kernel->registerService($bundleService, $bundleLoaderConfig);
+        $kernel->registerServiceProvider($bundleService, $bundleLoaderConfig);
 
         // Load bundle objects into the runtimeKernel
         $bundleLoader = new BundleLoader($kernel, $bundleLoaderConfig['Paths']->toArray());

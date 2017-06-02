@@ -1,5 +1,7 @@
 <?php
+
 namespace Phifty;
+
 use Exception;
 use InvalidArgumentException;
 use ReflectionObject;
@@ -78,6 +80,7 @@ class Controller extends ExpandableController
             }
             return $this->_view;
         }
+
         // call the view object factory from service
         return $this->_view = kernel()->getObject('view',array($this->defaultViewClass));
     }

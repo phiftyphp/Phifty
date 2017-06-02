@@ -14,7 +14,7 @@ class AppBaseKernelGenerator
             "namespace" => $appNamespace,
             "prefix" => "Base",
             "property_filter" => function ($property) {
-                return !preg_match('/^(applications|services|environment|isDev|_.*)$/i', $property->getName());
+                return !preg_match('/^(applications|services|environment|is\w+|_.*)$/i', $property->getName());
             }
         ]);
         $class = $generator->generate($kernel);

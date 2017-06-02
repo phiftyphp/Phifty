@@ -16,10 +16,10 @@ class ActionServiceProviderTest extends TestCase
     {
         $kernel = Kernel::dynamic($this->configLoader);
         $event = new EventServiceProvider;
-        $kernel->registerService($event);
+        $kernel->registerServiceProvider($event);
 
         $service = new ActionServiceProvider;
-        $kernel->registerService($service);
+        $kernel->registerServiceProvider($service);
         $this->assertNotNull($kernel->action instanceof ActionRunner);
         $this->assertNotNull($kernel->actionRunner instanceof ActionRunner);
         $this->assertNotNull($kernel->actionService instanceof Container);
