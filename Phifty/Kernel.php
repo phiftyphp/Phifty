@@ -284,29 +284,6 @@ class Kernel extends ObjectContainer
         return $this->services;
     }
 
-
-
-    /**
-     * Run initialize after services were registered.
-     */
-    public function init()
-    {
-        if (CLI) {
-            CommandLine::init($this);
-        }
-        if (isset($this->locale)) {
-            $this->locale;
-        }
-        $this->app = \App\App::getInstance($this);
-        $this->app->init();
-        $this->bundles->init();
-    }
-
-    public function getApp()
-    {
-        return $this->app;
-    }
-
     /**
      * Get service object by its identifier
      *

@@ -3,10 +3,25 @@
 namespace Phifty;
 
 use Funk\Compositor;
+use Phifty\Environment\CommandLine;
 
 class App extends Bundle implements \PHPSGI\App
 {
+    /**
+     * @override Bundle::init
+     */
+    public function init()
+    {
+        parent::init();
+        if (CLI) {
+            CommandLine::init($this->kernel);
+        }
+        $kernel->bundles->init(); // initialize all bundles
+    }
 
+    /**
+     * @override \PHPSGI\App::call
+     */
     public function call(array & $environment, array $response)
     {
         return $response;

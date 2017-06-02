@@ -233,9 +233,8 @@ class BootstrapGenerator
 
     public function generateBootstrapFooter(Block $block)
     {
-        // Everything is ready
-        // $block[] = new Statement(new MethodCall('$kernel->bundles', 'init'));
-        $block[] = new Statement(new MethodCall('$kernel', 'init'));
+        // Everything is ready, build app and run
+        // $block[] = new Statement(new MethodCall('$kernel', 'init'));
 
         if ($this->xhprofEnabled) {
             $block[] = "\$xhprofNamespace = \"{$this->xhprofConfig['namespace']}\";";
