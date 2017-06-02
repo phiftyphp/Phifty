@@ -10,7 +10,6 @@ abstract class BaseServiceProvider implements ServiceProvider
 {
     abstract public function getId();
 
-
     public function boot(Kernel $kernel)
     {
 
@@ -21,7 +20,7 @@ abstract class BaseServiceProvider implements ServiceProvider
      *
      * XXX: we should set options in constructor
      */
-    abstract public function register(Kernel $kernel, $options = array());
+    abstract public function register(Kernel $kernel, array $options = array());
 
     /**
      * See if this service supports code generator.

@@ -13,7 +13,7 @@ class MemcacheServiceProvider extends BaseServiceProvider
         return 'Memcache';
     }
 
-    public function register(Kernel $kernel, $options = array())
+    public function register(Kernel $kernel, array $options = array())
     {
         if (!extension_loaded('memcache')) {
             throw new Exception('memcache extension is required');

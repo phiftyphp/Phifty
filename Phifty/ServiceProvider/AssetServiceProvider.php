@@ -35,7 +35,7 @@ class AssetServiceProvider extends BaseServiceProvider
      * $kernel->asset->loader
      * $kernel->asset->writer.
      */
-    public function register(Kernel $kernel, $options = array())
+    public function register(Kernel $kernel, array $options = array())
     {
         $kernel->asset = function () use ($kernel, $options) {
             $config = new AssetConfig($options);

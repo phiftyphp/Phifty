@@ -19,7 +19,7 @@ class MongodbServiceProvider extends BaseServiceProvider
      *      $m = new MongoClient("mongodb:///tmp/mongo-27017.sock");
      *      $m = new MongoClient("mongodb://${username}:${password}@localhost/blog");.
      */
-    public function register(Kernel $kernel, $options = array())
+    public function register(Kernel $kernel, array $options = array())
     {
         if (!extension_loaded('mongo')) {
             throw new Exception('mongo extension is required.');

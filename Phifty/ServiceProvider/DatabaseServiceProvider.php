@@ -17,7 +17,7 @@ class DatabaseServiceProvider extends BaseServiceProvider
         return 'database';
     }
 
-    public function register(Kernel $kernel, $config = array())
+    public function register(Kernel $kernel, array $config = array())
     {
         $config = FileConfigLoader::load($config['config']);
         Bootstrap::setup($config);

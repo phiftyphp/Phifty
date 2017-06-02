@@ -28,11 +28,9 @@ class ConfigServiceProvider extends BaseServiceProvider
         return 'config';
     }
 
-    public function register(Kernel $kernel, $options = array())
+    public function register(Kernel $kernel, array $options = array())
     {
         $self = $this;
-        $kernel->config = function () use ($self) {
-            return $self->loader;
-        };
+        $kernel->config = $this->loader;
     }
 }

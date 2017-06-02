@@ -13,7 +13,7 @@ class SoapClientServiceProvider extends BaseServiceProvider
         return 'SoapClient';
     }
 
-    public function register(Kernel $kernel, $options = array())
+    public function register(Kernel $kernel, array $options = array())
     {
         if (!isset($options['WSDL'])) {
             throw new Exception('WSDL is not defined.');

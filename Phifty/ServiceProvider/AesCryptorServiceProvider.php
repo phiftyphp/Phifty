@@ -135,7 +135,7 @@ class AesCryptorServiceProvider extends BaseServiceProvider
         return $options;
     }
 
-    public function register(Kernel $kernel, $options = array())
+    public function register(Kernel $kernel, array $options = array())
     {
         $options = new Accessor($options);
         $kernel->aes = function () use ($options) {

@@ -23,7 +23,7 @@ class RedisServiceProvider extends BaseServiceProvider implements ComposerConfig
         return $options;
     }
 
-    public function register(Kernel $kernel, $options = array())
+    public function register(Kernel $kernel, array $options = array())
     {
         $kernel->redis = function () use ($options) {
             $redis = new Redis();

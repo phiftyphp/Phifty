@@ -13,7 +13,7 @@ class PuxRouterServiceProvider extends BaseServiceProvider
         return 'router';
     }
 
-    public function register(Kernel $kernel, $options = array())
+    public function register(Kernel $kernel, array $options = array())
     {
         $kernel->mux = function () {
             return new Mux();

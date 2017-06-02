@@ -23,7 +23,7 @@ class Facebook4ServiceProvider extends BaseServiceProvider implements ComposerCo
         return 'facebook4';
     }
 
-    public function register(Kernel $kernel, $options = array())
+    public function register(Kernel $kernel, array $options = array())
     {
         $kernel->facebook = function () use ($options, $kernel) {
             return new Facebook4Service($kernel, $options);

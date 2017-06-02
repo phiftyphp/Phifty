@@ -17,7 +17,7 @@ class MonologServiceProvider extends BaseServiceProvider
         return 'monolog';
     }
 
-    public function register(Kernel $kernel, $options = array())
+    public function register(Kernel $kernel, array $options = array())
     {
         $kernel->monolog = function () use ($kernel, $options) {
             // create sub container for monolog

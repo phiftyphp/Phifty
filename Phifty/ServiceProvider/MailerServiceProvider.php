@@ -83,7 +83,7 @@ class MailerServiceProvider extends BaseServiceProvider implements ComposerConfi
         return Swift_MailTransport::newInstance();
     }
 
-    public function register(Kernel $kernel, $options = array())
+    public function register(Kernel $kernel, array $options = array())
     {
         $self = $this;
         $kernel->mailer = function () use ($kernel, $options, $self) {

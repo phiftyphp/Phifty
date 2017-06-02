@@ -12,7 +12,7 @@ class RollerRouterServiceProvider extends BaseServiceProvider
         return 'Router';
     }
 
-    public function register(Kernel $kernel, $options = array())
+    public function register(Kernel $kernel, array $options = array())
     {
         $kernel->restful = function () use ($kernel) {
             $restful = new \Roller\Plugin\RESTful(array(

@@ -275,7 +275,7 @@ class Kernel extends ObjectContainer
      *
      * @param ServiceProvider $service
      */
-    public function registerServiceProvider(ServiceProvider $service, $options = array() )
+    public function registerServiceProvider(ServiceProvider $service, array $options = array())
     {
         $service->register($this , $options);
         $this->services[$service->getId()] = $service;

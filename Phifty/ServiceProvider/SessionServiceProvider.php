@@ -15,7 +15,7 @@ class SessionServiceProvider extends BaseServiceProvider
         return 'Session';
     }
 
-    public function register(Kernel $kernel, $options = array())
+    public function register(Kernel $kernel, array $options = array())
     {
         // if we have session service provider, call the setup
         // $s = $kernel->session; // build session object and write to the buffer before we write data to the browser.

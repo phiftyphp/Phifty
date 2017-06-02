@@ -11,5 +11,5 @@ interface ServiceProvider
     /**
      * register service.
      */
-    public function register(Kernel $kernel, $options = array());
+    public function register(Kernel $kernel, array $options = array());
 }

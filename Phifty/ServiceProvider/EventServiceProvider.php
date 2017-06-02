@@ -12,7 +12,7 @@ class EventServiceProvider extends BaseServiceProvider
         return 'event';
     }
 
-    public function register(Kernel $kernel, $options = array())
+    public function register(Kernel $kernel, array $options = array())
     {
         // php event pool
         $kernel->event = function () {

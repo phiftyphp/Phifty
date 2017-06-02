@@ -9,10 +9,10 @@ class FirePHPServiceProvider extends BaseServiceProvider implements ComposerConf
 {
     public function getId()
     {
-        return 'FirePHP';
+        return 'firephp';
     }
 
-    public function register(Kernel $kernel, $options = array())
+    public function register(Kernel $kernel, array $options = array())
     {
         // skip this plugin if we are not in development mode
         // or if we are in command-line mode.

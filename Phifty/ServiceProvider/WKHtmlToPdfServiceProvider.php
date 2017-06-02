@@ -48,7 +48,7 @@ class WKHtmlToPdfServiceProvider extends BaseServiceProvider
         return 'wkhtmltopdf';
     }
 
-    public function register(Kernel $kernel, $options = array())
+    public function register(Kernel $kernel, array $options = array())
     {
         $kernel->wkHtmlToPdf = function () use ($kernel, $options) {
             return new WKHtmlToPdf($options['Bin'], @$options['PageSize']);

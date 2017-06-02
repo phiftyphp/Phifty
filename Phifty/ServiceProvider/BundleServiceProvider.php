@@ -35,7 +35,7 @@ class BundleServiceProvider extends BaseServiceProvider
      * @param Phifty\Kernel $kernel  Kernel object.
      * @param array         $options Plugin service options.
      */
-    public function register(Kernel $kernel, $options = array())
+    public function register(Kernel $kernel, array $options = array())
     {
         // plugin manager depends on classloader,
         // register plugin namespace to classloader.

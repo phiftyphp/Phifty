@@ -24,7 +24,7 @@ class ActionServiceProvider extends BaseServiceProvider
         return ['locale'];
     }
 
-    public function register(Kernel $kernel, $options = array())
+    public function register(Kernel $kernel, array $options = array())
     {
         $kernel->actionService = function () use ($kernel, $options) {
             $container = new ServiceContainer();

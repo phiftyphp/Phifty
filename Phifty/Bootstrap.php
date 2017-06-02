@@ -127,7 +127,7 @@ class Bootstrap
         $serviceProvider = new BundleServiceProvider();
 
         $loaderConfig = $configLoader->get('framework', 'BundleLoader') ?: new \ConfigKit\Accessor([ 'Paths' => ['app_bundles','bundles'] ]);
-        $kernel->registerServiceProvider($serviceProvider, $loaderConfig);
+        $kernel->registerServiceProvider($serviceProvider, $loaderConfig->toArray());
 
         // Load bundle objects into the runtimeKernel
         $loader = new BundleLoader($kernel, $loaderConfig['Paths']->toArray());

@@ -13,10 +13,10 @@ class GearmanServiceProvider extends BaseServiceProvider
 {
     public function getId()
     {
-        return 'Gearman';
+        return 'gearman';
     }
 
-    public function register(Kernel $kernel, $options = array())
+    public function register(Kernel $kernel, array $options = array())
     {
         $options = new Accessor($options);
         $kernel->gearman = function () use ($options) {

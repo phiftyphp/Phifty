@@ -35,7 +35,7 @@ class LocaleServiceProvider extends BaseServiceProvider
         return $options;
     }
 
-    public function register(Kernel $kernel, $options = array())
+    public function register(Kernel $kernel, array $options = array())
     {
         if (!$kernel->isCli) {
             $locale = new Locale($options['Domain'], $options['LocaleDir'], $options['Langs']);

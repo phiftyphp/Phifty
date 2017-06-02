@@ -82,7 +82,7 @@ class TwigServiceProvider extends BaseServiceProvider
         return new NewObject($className, []);
     }
 
-    public function register(Kernel $kernel, $options = array())
+    public function register(Kernel $kernel, array $options = array())
     {
         $self = $this;
         $kernel->twig = function () use ($kernel, $options, $self) {

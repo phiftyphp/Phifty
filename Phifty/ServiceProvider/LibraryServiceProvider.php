@@ -76,10 +76,10 @@ class LibraryServiceProvider extends BaseServiceProvider
 
     public function getId()
     {
-        return 'LibraryLoader';
+        return 'library';
     }
 
-    public function register(Kernel $kernel, $options = array())
+    public function register(Kernel $kernel, array $options = array())
     {
         $self = $this;
         $kernel->library = function () use ($self, $kernel) {

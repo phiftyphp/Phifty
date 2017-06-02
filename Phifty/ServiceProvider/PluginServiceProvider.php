@@ -16,7 +16,7 @@ class PluginServiceProvider extends BaseServiceProvider
      * @param Phifty\Kernel $kernel  Kernel object.
      * @param array         $options Plugin service options.
      */
-    public function register(Kernel $kernel, $options = array())
+    public function register(Kernel $kernel, array $options = array())
     {
         // here we check plugins stash to decide what to load.
         $config = $kernel->config->get('framework', 'Plugins');
