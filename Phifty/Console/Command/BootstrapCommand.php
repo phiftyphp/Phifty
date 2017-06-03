@@ -223,9 +223,6 @@ class BootstrapCommand extends Command
 
         $bGenerator->generateBootstrapFooter($block);
 
-        // $app = App::build($kernel, []);
-        $block[] = new AssignStatement('$app', new StaticMethodCall('App\\App', 'getInstance', [new Variable('$kernel')]));
-        $block[] = new Statement(new MethodCall('$app', 'boot'));
 
         $this->logger->info("===> Compiling code to $outputFile");
         $code = $block->render();

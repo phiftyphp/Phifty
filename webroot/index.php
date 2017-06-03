@@ -8,9 +8,7 @@ header('Pragma:No-cache');
 header('Cache-Control: no-cache');
 header('Expires: 0');
 
-require '../bootstrap.php';
-
-global $app;
+$app = require '../bootstrap.php';
 $environment = Environment::createFromGlobals();
 $resp = $app->call($environment, []);
 (new SAPIResponder)->respond($resp);

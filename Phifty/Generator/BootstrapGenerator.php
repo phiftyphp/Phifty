@@ -11,6 +11,7 @@ use CodeGen\Raw;
 use CodeGen\Statement\RequireStatement;
 use CodeGen\Statement\RequireComposerAutoloadStatement;
 use CodeGen\Statement\RequireClassStatement;
+use CodeGen\Statement\ReturnStatement;
 use CodeGen\Statement\ConstStatement;
 use CodeGen\Statement\DefineStatement;
 use CodeGen\Statement\AssignStatement;
@@ -249,5 +250,8 @@ class BootstrapGenerator
             $block[] = 'header("X-XHPROF-RUN: $runId");';
             $block[] = 'header("X-XHPROF-NS: $xhprofNamespace");';
         }
+        $block[] = new AssignStatement('$app', new StaticMethodCall('App\\App', 'getInstance', [new Variable('$kernel')]));
+        $block[] = new Statement(new MethodCall('$app', 'boot'));
+        $block[] = new ReturnStatement(new Variable('$app'));
     }
 }
