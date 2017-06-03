@@ -25,24 +25,28 @@ class Page extends View
 
     public function __construct(Kernel $kernel, array $options = array())
     {
-        if (isset( $options['i18n']))
+        parent::__construct($kernel);
+
+        if (isset($options['i18n'])) {
             $this->i18n = $options['i18n'];
+        }
 
-        if (isset($options['layout']))
+        if (isset($options['layout'])) {
             $this->layout = $options['layout'];
+        }
 
-        if ( isset( $options['content'] ) )
+        if (isset( $options['content'] )) {
             $this->content = $options['content'];
+        }
 
-        if ( isset( $options['cache'] ) )
+        if (isset($options['cache'])) {
             $this->cache = true;
-        parent::__construct($kernel, $options);
+        }
     }
 
     public function getLocal()
     {
-        // XXX: replace with locale from AppKernel
-        return @$_SESSION[ 'locale' ];
+        return $this->kernel->locale->current();
     }
 
     /* split template name, join with locale name, like:

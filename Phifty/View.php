@@ -2,13 +2,9 @@
 
 namespace Phifty;
 
-use ArrayObject;
-
 use Universal\Http\HttpRequest;
-
+use ArrayObject;
 use InvalidArgumentException;
-
-use Phifty\Web;
 use Phifty\Kernel;
 
 class View extends ArrayObject
