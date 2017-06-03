@@ -3,6 +3,7 @@
 namespace Phifty\ServiceProvider;
 
 use Twig_Environment;
+use Twig_LoaderInterface;
 use Twig_Loader_Filesystem;
 use Twig_SimpleFunction;
 use Twig_SimpleFilter;
@@ -108,7 +109,7 @@ class TwigServiceProvider extends BaseServiceProvider
             return $loader;
         });
 
-        $k->factory('twigEnvironment', function($k, $loader) use ($options) {
+        $k->factory('twigEnvironment', function($k, Twig_LoaderInterface $loader) use ($options) {
             // http://www.twig-project.org/doc/api.html#environment-options
             $env = new Twig_Environment($loader, $options['Environment']);
 
@@ -178,13 +179,14 @@ class TwigServiceProvider extends BaseServiceProvider
             return $env;
         });
 
-        $k->twig = function ($k) use ($options) {
+        /* the persistent twig object */
+        $k->singleton('twig', function ($k) use ($options) {
             $loader = $k->getObject('twigLoaderFilesystem', [$k]);
             $env = $k->getObject('twigEnvironment', [$k, $loader]);
             return (object) array(
                 'loader' => $loader,
                 'env' => $env,
             );
-        };
+        });
     }
 }
