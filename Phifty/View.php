@@ -26,7 +26,6 @@ class View extends ArrayObject
     {
         $this->kernel = $kernel;
         $this->engine = new \Phifty\View\Twig($kernel);
-        $this->init();
 
         parent::__construct([], ArrayObject::ARRAY_AS_PROPS);
 
@@ -34,6 +33,8 @@ class View extends ArrayObject
         $this['Kernel']      = $kernel;
         $this['Request']     = new HttpRequest;
         kernel()->event->trigger('view.init', $this);
+
+        $this->init();
     }
 
     public function init()
