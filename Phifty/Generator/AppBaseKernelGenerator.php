@@ -8,7 +8,7 @@ use CodeGen\Generator\AppClassGenerator;
 
 class AppBaseKernelGenerator
 {
-    public static function generate(Kernel $kernel, $appNamespace , $appDir)
+    public static function generate(Kernel $kernel, $appNamespace, $appDir)
     {
         $generator = new AppClassGenerator([
             "namespace" => $appNamespace,

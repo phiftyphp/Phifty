@@ -28,7 +28,7 @@ class Production extends Environment
         #     trigger_error( "$errno: $errmsg" );
         # });
 
-        set_exception_handler( function($e) use ($kernel) {
+        set_exception_handler(function ($e) use ($kernel) {
             die('ERROR');
             # $subject = 'ERROR: ' . $kernel->config->get('application','ApplicationName') . ' - ' . $e->getMessage();
             // $to = 'cornelius.howl@gmail.com';

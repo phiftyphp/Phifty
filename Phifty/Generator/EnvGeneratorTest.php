@@ -30,7 +30,3 @@ class EnvGeneratorTest extends TestCase
         $this->assertNotFalse($ret);
     }
 }
-
-
-
-

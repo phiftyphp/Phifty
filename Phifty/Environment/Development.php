@@ -40,15 +40,15 @@ class Development extends Environment
         error_reporting(E_ALL);
 
         // @link http://www.php.net/manual/en/function.set-error-handler.php
-        set_error_handler([__CLASS__,'exceptionErrorHandler'], E_ALL & ~E_NOTICE );
+        set_error_handler([__CLASS__,'exceptionErrorHandler'], E_ALL & ~E_NOTICE);
         // set_exception_handler([__CLASS__,'exceptionHandler']);
 
         // if firebug supports
-        if ($kernel->isCli && getenv('PHIFTY_PROFILE') ) {
-            $kernel->event->register('phifty.console.run.after', function() use ($kernel) {
+        if ($kernel->isCli && getenv('PHIFTY_PROFILE')) {
+            $kernel->event->register('phifty.console.run.after', function () use ($kernel) {
                 // echo 'memory usage: ', (int) (memory_get_usage() / 1024  ) , ' KB', PHP_EOL;
-                echo 'Memory peak usage: ', (int) (memory_get_peak_usage() / 1024 ) , ' KB' . PHP_EOL;
-                echo 'Duration: ', ceil((microtime(true) - $_SERVER['REQUEST_TIME_FLOAT']) * 1000000 ) , ' microseconds' ;
+                echo 'Memory peak usage: ', (int) (memory_get_peak_usage() / 1024), ' KB' . PHP_EOL;
+                echo 'Duration: ', ceil((microtime(true) - $_SERVER['REQUEST_TIME_FLOAT']) * 1000000), ' microseconds' ;
             });
         }
     }

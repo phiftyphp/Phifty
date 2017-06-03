@@ -164,8 +164,8 @@ class BootstrapGenerator
         // TODO: generate the environment name here.
         //
         // $this->environment  = $environment ?: getenv('PHIFTY_ENV') ?: self::DEV;
-        $block[] = new AssignStatement('$env',  getenv('PHIFTY_ENV') ?: 'development' );
-        $block[] = new AssignStatement('$kernel', new NewObject('App\\Kernel',[
+        $block[] = new AssignStatement('$env', getenv('PHIFTY_ENV') ?: 'development');
+        $block[] = new AssignStatement('$kernel', new NewObject('App\\Kernel', [
             new Variable('$configLoader'),
             new Variable('$env'),
         ]));

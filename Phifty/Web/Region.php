@@ -1,6 +1,5 @@
 <?php
 namespace Phifty\Web;
-use Phifty\View\TemplateView;
 use FormKit\Element;
 use Twig_Loader_Array;
 use Twig_Environment;

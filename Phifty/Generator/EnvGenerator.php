@@ -54,7 +54,7 @@ class EnvGenerator
 
     protected $setters;
 
-    function __construct(array $setters = null)
+    public function __construct(array $setters = null)
     {
         if (!$setters) {
             // The default behavior is like phpdotenv

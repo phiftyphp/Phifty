@@ -9,7 +9,7 @@ use CodeGen\UserClass;
 
 class AppKernelGenerator
 {
-    public static function generate(Kernel $kernel, $appNamespace , $appDir)
+    public static function generate(Kernel $kernel, $appNamespace, $appDir)
     {
         $class = new UserClass("\\{$appNamespace}\\Kernel");
         $class->extendClass("\\{$appNamespace}\\BaseKernel");
