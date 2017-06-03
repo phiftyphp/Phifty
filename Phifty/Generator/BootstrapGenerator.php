@@ -235,8 +235,11 @@ class BootstrapGenerator
     {
         // Everything is ready, build app and run
         // $block[] = new Statement(new MethodCall('$kernel', 'boot'));
-
         if ($this->xhprofEnabled) {
+            $xhprofRoot = getenv('XHPROF_ROOT');
+            $block[] = new RequireStatement("$xhprofRoot/xhprof_lib/utils/xhprof_lib.php");
+            $block[] = new RequireStatement("$xhprofRoot/xhprof_lib/utils/xhprof_runs.php");
+
             $block[] = "\$xhprofNamespace = \"{$this->xhprofConfig['namespace']}\";";
             $block[] = "\$xhprofData = xhprof_disable();";
 
