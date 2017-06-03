@@ -121,7 +121,7 @@ class BootstrapGenerator
 
 
         // Generate the require statements
-        $block[] = 'global $kernel, $composerClassLoader, $psr4ClassLoader;';
+        $block[] = 'global $kernel, $app, $composerClassLoader, $psr4ClassLoader;';
         $block[] = new RequireClassStatement(ClassLoader::class);
         $block[] = new RequireClassStatement(Psr4ClassLoader::class);
 

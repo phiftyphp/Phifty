@@ -12,28 +12,33 @@ class FirePHPServiceProvider extends BaseServiceProvider implements ComposerConf
         return 'firephp';
     }
 
-    public function register(Kernel $kernel, array $options = array())
+    public function register(Kernel $k, array $options = array())
     {
         // skip this plugin if we are not in development mode
         // or if we are in command-line mode.
-        if ($kernel->environment !== 'development' || $kernel->isCLI) {
+        if ($k->environment !== 'development' || $k->isCLI) {
             return;
         }
 
-        /*
-         * http://www.firephp.org/HQ/Use.htm
-         **/
-        // if firebug supports
-        $kernel->event->register('phifty.after_page', function () use ($kernel) {
-            if (function_exists('fb')) {
+    }
+
+    public function boot(Kernel $k)
+    {
+        // @see http://www.firephp.org/HQ/Use.htm
+        if (function_exists('fb')) {
+            $k->event->register('request.end', function () use ($k) {
                 fb((memory_get_usage() / 1024 / 1024).' MB', 'Memory Usage');
                 fb((memory_get_peak_usage() / 1024 / 1024).' MB', 'Memory Peak Usage');
+
+                // FIXME: use environment
                 if (isset($_SERVER['REQUEST_TIME_FLOAT'])) {
                     fb((microtime(true) - $_SERVER['REQUEST_TIME_FLOAT']) * 1000 .' ms', 'Request time');
                 }
-            }
-        });
+            });
+        }
     }
+
+
 
     public function getComposerRequire()
     {

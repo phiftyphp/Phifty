@@ -3,6 +3,7 @@
 namespace Phifty;
 
 use Funk\Compositor;
+use Phifty\Routing\RouteExecutor;
 use Phifty\Environment\CommandLine;
 
 class App extends Bundle implements \PHPSGI\App
@@ -24,6 +25,21 @@ class App extends Bundle implements \PHPSGI\App
      */
     public function call(array & $environment, array $response)
     {
+        $this->kernel->event->trigger('request.before');
+
+        // handle route
+        $pathInfo = isset($environment['PATH_INFO']) ? $environment['PATH_INFO'] : '/';
+        if ($route = $this->kernel->mux->dispatch($pathInfo)) {
+            $response = RouteExecutor::execute($route, $environment, $response, $route);
+        } else {
+            $response = [
+                404,
+                ['Content-Type: text/html;'],
+                ['<h3>Page not found.</h3>'],
+            ];
+        }
+
+        $this->kernel->event->trigger('request.end');
         return $response;
     }
 
