@@ -2,6 +2,8 @@
 
 namespace Phifty\Bundle;
 
+use LogicException;
+
 trait BundleRouteCreators
 {
 
@@ -35,9 +37,9 @@ trait BundleRouteCreators
      */
     public function route($path, $args, array $options = array())
     {
-        $router = $this->kernel->mux;
-        if (!$router) {
-            return false;
+        $mux = $this->kernel->mux;
+        if (!$mux) {
+            throw new \LogicException('mux service is not enabled.');
         }
 
         // if args is string, it's a controller:action spec
@@ -70,7 +72,7 @@ trait BundleRouteCreators
                 // throw new Exception("Controller action <$class:$action>' does not exist.");
             }
 
-            $router->add($path, array($class,$action), $options);
+            $mux->any($path, [$class, $action] , $options);
 
         } else if (is_array($args)) {
 
@@ -80,13 +82,13 @@ trait BundleRouteCreators
                     'template' => $args['template'],
                     'template_args' => (isset($args['args']) ? $args['args'] : null),
                 );
-                $router->add($path, '\Phifty\Routing\TemplateController', $options);
+                $mux->add($path, '\Phifty\Routing\TemplateController', $options);
             } elseif (isset($args['controller'])) { // route to normal controller ?
 
-                $router->add($path, $args['controller'], $options);
+                $mux->add($path, $args['controller'], $options);
             } elseif (isset($args[0]) && count($args) == 2) { // simply treat it as a callback
 
-                $router->add($path, $args, $options);
+                $mux->add($path, $args, $options);
             } else {
                 throw new LogicException('Unsupport route argument.');
             }
@@ -105,8 +107,8 @@ trait BundleRouteCreators
      */
     public function page($path, $template, $args = array())
     {
-        $router = $this->kernel->mux;
-        $router->add($path, [
+        $mux = $this->kernel->mux;
+        $mux->add($path, [
             'template' => $template,
             'args' => $args,  // template args
         ]);

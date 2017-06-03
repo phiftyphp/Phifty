@@ -59,7 +59,7 @@ class ActionServiceProvider extends BaseServiceProvider
             $view['Action'] = $k->actionRunner;
         });
 
-        $k->event->register('request.before', function () use ($k) {
+        $k->event->register('request.start', function () use ($k) {
             if (!ActionRequest::hasAction($_REQUEST)) {
                 return;
             }

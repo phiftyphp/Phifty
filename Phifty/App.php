@@ -5,6 +5,7 @@ namespace Phifty;
 use Funk\Compositor;
 use Phifty\Routing\RouteExecutor;
 use Phifty\Environment\CommandLine;
+use Pux\RouteRequest;
 
 class App extends Bundle implements \PHPSGI\App
 {
@@ -30,11 +31,9 @@ class App extends Bundle implements \PHPSGI\App
      */
     public function call(array & $environment, array $response)
     {
-        $this->kernel->event->trigger('request.before');
-
-        // handle route
-        $pathInfo = isset($environment['PATH_INFO']) ? $environment['PATH_INFO'] : '/';
-        if ($route = $this->kernel->mux->dispatch($pathInfo)) {
+        $this->kernel->event->trigger('request.start');
+        $request = RouteRequest::createFromEnv($environment);
+        if ($route = $this->kernel->mux->dispatchRequest($request)) {
             $response = RouteExecutor::execute($route, $environment, $response, $route);
         } else {
             $response = [

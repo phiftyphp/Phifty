@@ -368,7 +368,7 @@ class Kernel extends ObjectContainer
         try {
             // allow origin: https://developer.mozilla.org/en-US/docs/HTTP/Access_control_CORS
             header( 'Access-Control-Allow-Origin: http://' . $_SERVER['HTTP_HOST'] );
-            $this->event->trigger('request.before');
+            $this->event->trigger('request.start');
             if( $r = $this->router->dispatch( $pathinfo ) ) {
                 $this->event->trigger('phifty.before_page');
                 echo $r->run();
