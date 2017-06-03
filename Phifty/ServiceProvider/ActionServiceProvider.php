@@ -19,13 +19,13 @@ class ActionServiceProvider extends BaseServiceProvider
         return 'action';
     }
 
-    public function register(Kernel $kernel, array $options = array())
+    public function register(Kernel $k, array $options = array())
     {
-        $kernel->actionService = function () use ($kernel, $options) {
+        $k->actionService = function () use ($k, $options) {
             $container = new ServiceContainer();
-            $container['cache_dir'] = $kernel->cacheDir;
-            if ($kernel->locale) {
-                $container['locale'] = $kernel->locale->current;
+            $container['cache_dir'] = $k->cacheDir;
+            if ($k->locale) {
+                $container['locale'] = $k->locale->current;
             }
 
             if (isset($options['DefaultFieldView'])) {
@@ -41,33 +41,33 @@ class ActionServiceProvider extends BaseServiceProvider
             return $container;
         };
 
-        $kernel->actionRunner = function () use ($kernel) {
-            $actionRunner = new ActionRunner($kernel->actionService);
+        $k->actionRunner = function () use ($k) {
+            $actionRunner = new ActionRunner($k->actionService);
             $actionRunner->registerAutoloader();
             // $actionRunner->setDebug();
             return $actionRunner;
         };
 
-        $kernel->action = function () use ($kernel) {
-            return $kernel->actionRunner;
+        $k->action = function () use ($k) {
+            return $k->actionRunner;
         };
     }
 
     public function boot(Kernel $k)
     {
-        $kernel->event->register('view.init', function ($view) use ($kernel) {
-            $view['Action'] = $kernel->actionRunner;
+        $k->event->register('view.init', function ($view) use ($k) {
+            $view['Action'] = $k->actionRunner;
         });
 
-        $kernel->event->register('request.before', function () use ($kernel) {
+        $k->event->register('request.before', function () use ($k) {
             if (!ActionRequest::hasAction($_REQUEST)) {
                 return;
             }
 
-            $runner = $kernel->actionRunner;
+            $runner = $k->actionRunner;
             // the new trigger for actions defined in Bundle::actions method
-            $kernel->event->trigger('phifty.prepare_actions');
-            $kernel->event->trigger('phifty.before_action');
+            $k->event->trigger('phifty.prepare_actions');
+            $k->event->trigger('phifty.before_action');
             $strout = fopen('php://output', 'w');
 
             // If we found any ajax action, exit the application
