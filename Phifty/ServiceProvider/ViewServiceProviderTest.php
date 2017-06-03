@@ -9,11 +9,13 @@ class ViewServiceTest extends TestCase
 {
     public function testBaseView()
     {
-        $kernel = Kernel::dynamic($this->configLoader);
+        $kernel = Kernel::minimal($this->configLoader);
+
         $service = new ViewServiceProvider;
         $kernel->registerServiceProvider($service, [
             'Class' => 'Phifty\\View',
         ]);
+        $kernel->boot();
 
         $view = $kernel->view;
         $this->assertNotNull($view);
@@ -22,11 +24,12 @@ class ViewServiceTest extends TestCase
 
     public function testPageView()
     {
-        $kernel = Kernel::dynamic($this->configLoader);
+        $kernel = Kernel::minimal($this->configLoader);
         $service = new ViewServiceProvider;
-        $kernel->registerServiceProvider($service, array(
+        $kernel->registerServiceProvider($service, [
             'Class' => 'Phifty\\View\\Page',
-        ));
+        ]);
+        $kernel->boot();
 
         $view = $kernel->view;
         $this->assertNotNull($view);

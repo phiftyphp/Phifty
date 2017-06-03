@@ -14,9 +14,7 @@ class ActionServiceProviderTest extends TestCase
 {
     public function testActionService()
     {
-        $kernel = Kernel::dynamic($this->configLoader);
-        $event = new EventServiceProvider;
-        $kernel->registerServiceProvider($event);
+        $kernel = Kernel::minimal($this->configLoader);
 
         $service = new ActionServiceProvider;
         $kernel->registerServiceProvider($service);

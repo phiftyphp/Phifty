@@ -12,7 +12,7 @@ class SessionServiceProviderTest extends TestCase
     {
         $this->markTestSkipped('require session service to support pure PHP array backend.');
 
-        $kernel = Kernel::dynamic($this->configLoader);
+        $kernel = Kernel::minimal($this->configLoader);
         $config = [];
         $provider = new SessionServiceProvider($config);
         $kernel->registerServiceProvider($provider, []);

@@ -11,7 +11,7 @@ class DatabaseServiceProviderTest extends TestCase
 {
     public function testLoadDatabaseServiceConfig()
     {
-        $kernel = Kernel::dynamic($this->configLoader);
+        $kernel = Kernel::minimal($this->configLoader);
 
         $serviceProvider = new DatabaseServiceProvider();
         $serviceProvider->register($kernel, [

@@ -22,12 +22,15 @@ namespace {
 namespace Phifty {
 
 use Universal\Container\ObjectContainer;
-use Phifty\ServiceProvider\ServiceProvider;
 use Exception;
 use ConfigKit\ConfigLoader;
 use Phifty\Environment\CommandLine;
 use Phifty\Environment\Production;
 use Phifty\Environment\Development;
+
+use Phifty\ServiceProvider\ServiceProvider;
+use Phifty\ServiceProvider\ConfigServiceProvider;
+use Phifty\ServiceProvider\EventServiceProvider;
 
 /*
 Types for environment
@@ -113,7 +116,7 @@ class Kernel extends ObjectContainer
     }
 
     /**
-     * Create the dynamic kernel.
+     * Create the core kernel instance dynamically.
      *
      * TODO: extract path parameters to config.
      */
@@ -141,6 +144,19 @@ class Kernel extends ObjectContainer
         $kernel->configLoader    = $configLoader;
         return $kernel;
     }
+
+    /**
+     * Create a core kernel instance with the minimal service providers.
+     */
+    public static function minimal(ConfigLoader $configLoader, $environment = null, $appRoot = PH_APP_ROOT)
+    {
+        $k = self::dynamic($configLoader, $environment, $appRoot);
+        $k->registerServiceProvider(new ConfigServiceProvider($configLoader));
+        $k->registerServiceProvider(new EventServiceProvider);
+        return $k;
+    }
+
+
 
     /**
      * Dynamically get the framework root dir.

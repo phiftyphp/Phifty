@@ -9,7 +9,7 @@ class TwigServiceProviderTest extends TestCase
 {
     public function testRegisterTwigService()
     {
-        $kernel = Kernel::dynamic($this->configLoader);
+        $kernel = Kernel::minimal($this->configLoader);
 
         $config = [
             'Environment' => [
