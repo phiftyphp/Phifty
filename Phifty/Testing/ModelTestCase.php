@@ -6,7 +6,8 @@ use Phifty\Bootstrap;
 use ConfigKit\ConfigLoader;
 use Universal\ClassLoader\Psr4ClassLoader;
 
-abstract class TestCase extends \PHPUnit\Framework\TestCase
+
+abstract class ModelTestCase extends \Maghead\Testing\ModelTestCase
 {
     protected $configLoader;
 
@@ -17,6 +18,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         $env = getenv("PHIFTY_ENV") ?: 'development';
         $this->configLoader = Bootstrap::createConfigLoader(PH_APP_ROOT, $env);
         $this->kernel = Bootstrap::createKernel($this->configLoader, new Psr4ClassLoader, $env);
+        parent::setup();
     }
 
     protected function createPostRequest($path, $parameters)
