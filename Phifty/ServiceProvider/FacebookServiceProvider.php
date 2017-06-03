@@ -15,7 +15,7 @@ class FacebookServiceProvider extends BaseServiceProvider
 {
     public function getId()
     {
-        return 'Facebook';
+        return 'facebook';
     }
 
     public function register(Kernel $kernel, array $options = array())

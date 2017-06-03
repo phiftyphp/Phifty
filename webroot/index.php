@@ -16,7 +16,7 @@ require '../bootstrap.php';
 
 $kernel = kernel();
 
-$kernel->event->trigger('phifty.before_path_dispatch');
+$kernel->event->trigger('request.before');
 if ($route = $kernel->mux->dispatch($pathinfo)) {
     $kernel->event->trigger('phifty.before_page');
 

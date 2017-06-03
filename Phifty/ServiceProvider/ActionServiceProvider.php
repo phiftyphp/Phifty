@@ -19,11 +19,6 @@ class ActionServiceProvider extends BaseServiceProvider
         return 'action';
     }
 
-    public function depends()
-    {
-        return ['locale'];
-    }
-
     public function register(Kernel $kernel, array $options = array())
     {
         $kernel->actionService = function () use ($kernel, $options) {
@@ -56,16 +51,20 @@ class ActionServiceProvider extends BaseServiceProvider
         $kernel->action = function () use ($kernel) {
             return $kernel->actionRunner;
         };
+    }
 
+    public function boot(Kernel $k)
+    {
         $kernel->event->register('view.init', function ($view) use ($kernel) {
             $view['Action'] = $kernel->actionRunner;
         });
 
-        $kernel->event->register('phifty.before_path_dispatch', function () use ($kernel) {
+        $kernel->event->register('request.before', function () use ($kernel) {
             if (!ActionRequest::hasAction($_REQUEST)) {
                 return;
             }
-            $runner = $kernel->action;
+
+            $runner = $kernel->actionRunner;
             // the new trigger for actions defined in Bundle::actions method
             $kernel->event->trigger('phifty.prepare_actions');
             $kernel->event->trigger('phifty.before_action');
