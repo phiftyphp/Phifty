@@ -28,8 +28,7 @@ class View extends ArrayObject
         // register args
         $this['Kernel']      = $kernel;
         $this['Request']     = new HttpRequest;
-        kernel()->event->trigger('view.init', $this);
-
+        $kernel->event->trigger('view.init', $this);
         $this->init();
     }
 
