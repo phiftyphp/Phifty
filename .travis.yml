@@ -24,6 +24,10 @@ install:
 - ./travis/install
 
 before_script:
+- sudo apt-get install apache2
+- sudo a2enmod actions
+- sudo a2enmod rewrite
+
 - phpenv rehash
 - ./travis/before_script
 - cp -v config/framework.dev.yml config/framework.yml
