@@ -13,11 +13,6 @@ use Phifty\Kernel;
 
 class View extends ArrayObject
 {
-    /**
-     * @var array template args
-     */
-    protected $args = array();
-
     protected $kernel;
 
     public function __construct(Kernel $kernel)
