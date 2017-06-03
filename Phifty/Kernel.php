@@ -147,6 +147,10 @@ class Kernel extends ObjectContainer
 
     /**
      * Create a core kernel instance with the minimal service providers.
+     *
+     * The core services are:
+     * - ConfigLoaderServiceProvider
+     * - EventServiceProvider
      */
     public static function minimal(ConfigLoader $configLoader, $environment = null, $appRoot = PH_APP_ROOT)
     {
