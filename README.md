@@ -2,11 +2,16 @@ Phifty Web Framework
 ====================
 
 [![Build Status](https://travis-ci.org/phifty-framework/Phifty.svg?branch=master)](https://travis-ci.org/phifty-framework/Phifty)
-[![Coverage Status](https://coveralls.io/repos/github/corneltek/Phifty/badge.svg?branch=master)](https://coveralls.io/github/phifty-framework/Phifty?branch=master)
-[![Latest Stable Version](https://poser.pugx.org/corneltek/phifty/v/stable)](https://packagist.org/packages/phifty/phifty)
-[![Total Downloads](https://poser.pugx.org/corneltek/phifty/downloads)](https://packagist.org/packages/phifty/phifty)
-[![Latest Unstable Version](https://poser.pugx.org/corneltek/phifty/v/unstable)](https://packagist.org/packages/phifty/phifty)
-[![License](https://poser.pugx.org/corneltek/phifty/license)](https://packagist.org/packages/phifty/phifty)
+[![Coverage Status](https://coveralls.io/repos/github/phifty-framework/Phifty/badge.svg?branch=master)](https://coveralls.io/github/phifty-framework/Phifty?branch=master)
+
+[![Latest Stable Version](https://poser.pugx.org/phifty/phifty/v/stable)](https://packagist.org/packages/phifty/phifty)
+[![Total Downloads](https://poser.pugx.org/phifty/phifty/downloads)](https://packagist.org/packages/phifty/phifty)
+[![Latest Unstable Version](https://poser.pugx.org/phifty/phifty/v/unstable)](https://packagist.org/packages/phifty/phifty)
+[![License](https://poser.pugx.org/phifty/phifty/license)](https://packagist.org/packages/phifty/phifty)
+
+[![Monthly Downloads](https://poser.pugx.org/phifty/phifty/d/monthly)](https://packagist.org/packages/phifty/phifty)
+[![Daily Downloads](https://poser.pugx.org/phifty/phifty/d/daily)](https://packagist.org/packages/phifty/phifty)
+
 
 Documentation
 --------------------
