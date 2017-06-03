@@ -4,6 +4,8 @@ namespace Phifty\ServiceProvider;
 
 use Phifty\Testing\TestCase;
 use Phifty\Kernel;
+use Twig_Environment;
+use Twig_LoaderInterface;
 
 class TwigServiceProviderTest extends TestCase
 {
@@ -31,7 +33,7 @@ class TwigServiceProviderTest extends TestCase
             'TemplateDirs' => array('app','bundles'),
         ));
         $this->assertNotNull($kernel->twig);
-        $this->assertNotNull($kernel->twig->env, 'get environment');
-        $this->assertNotNull($kernel->twig->loader, 'get loader');
+        $this->assertInstanceOf(Twig_Environment::class, $kernel->twig->env, 'get twig environment');
+        $this->assertInstanceOf(Twig_LoaderInterface::class, $kernel->twig->loader, 'get twig loader');
     }
 }
