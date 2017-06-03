@@ -146,7 +146,6 @@ class TwigServiceProvider extends BaseServiceProvider
                 'gettext' => 'gettext',
                 '_' => '_',
                 'count' => 'count',
-                'new' => 'Phifty\View\newObject',
             ];
             foreach ($exports as $export => $func) {
                 $env->addFunction(new \Twig_SimpleFunction($export, $func));
