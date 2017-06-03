@@ -31,7 +31,6 @@ class DatabaseServiceProvider extends BaseServiceProvider
     public function register(Kernel $kernel, array $options = array())
     {
         $this->config = FileConfigLoader::load($options['config']);
-        Bootstrap::setup($this->config);
 
         $kernel->db = function () {
             return DatabaseManager::getInstance()->getMasterConnection();
@@ -40,6 +39,6 @@ class DatabaseServiceProvider extends BaseServiceProvider
 
     public function boot(Kernel $kernel)
     {
-
+        Bootstrap::setup($this->config);
     }
 }
