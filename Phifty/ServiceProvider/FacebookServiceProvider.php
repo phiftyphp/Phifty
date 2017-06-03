@@ -18,7 +18,7 @@ class FacebookServiceProvider extends BaseServiceProvider
         return 'Facebook';
     }
 
-    public function register(Kernel $kernel, $options = array())
+    public function register(Kernel $kernel, array $options = array())
     {
         $kernel->facebook = function () use ($options) {
             return new Facebook($options);

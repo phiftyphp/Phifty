@@ -21,8 +21,6 @@ namespace {
 
 namespace Phifty {
 
-use Phifty\Locale;
-use Phifty\Web;
 use Universal\Container\ObjectContainer;
 use Phifty\ServiceProvider\ServiceProvider;
 use Exception;

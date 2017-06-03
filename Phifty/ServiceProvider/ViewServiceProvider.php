@@ -8,7 +8,7 @@ class ViewServiceProvider extends BaseServiceProvider
 {
     public function getId()
     {
-        return 'View';
+        return 'view';
     }
 
     public static function canonicalizeConfig(Kernel $k, array $options)
@@ -21,7 +21,7 @@ class ViewServiceProvider extends BaseServiceProvider
 
     public function register(Kernel $k, array $options = array())
     {
-        $k->factory('view', function(Kernel $k, $viewClass = null) use ($options) {
+        $k->factory('view', function (Kernel $k, $viewClass = null) use ($options) {
             $viewClass = $viewClass ?: $options['Class'];
             return new $viewClass($k);
         });

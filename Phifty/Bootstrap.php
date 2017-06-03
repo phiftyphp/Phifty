@@ -22,9 +22,6 @@ use CodeGen\Comment;
 use CodeGen\CommentBlock;
 use Universal\ClassLoader\Psr4ClassLoader;
 use Universal\ClassLoader\SplClassLoader;
-use Universal\Container\ObjectContainer;
-
-use Maghead\Runtime\Config\FileConfigLoader;
 
 use Phifty\Bootstrap;
 use Phifty\Generator\BootstrapGenerator;
@@ -62,10 +59,10 @@ class Bootstrap
      */
     public static function createKernel(ConfigLoader $configLoader, Psr4ClassLoader $psr4ClassLoader, $environment)
     {
-        $kernel = Kernel::dynamic($configLoader, $environment);
-        static::loadServices($kernel, $configLoader);
-        static::loadBundleService($kernel, $configLoader, $psr4ClassLoader);
-        return $kernel;
+        $k = Kernel::dynamic($configLoader, $environment);
+        static::loadServices($k, $configLoader);
+        static::loadBundleService($k, $configLoader, $psr4ClassLoader);
+        return $k;
     }
 
     /**
@@ -77,10 +74,10 @@ class Bootstrap
      * 4. [ ] class loader service provider
      *
      */
-    private static function loadServices(Kernel $kernel, ConfigLoader $configLoader)
+    private static function loadServices(Kernel $k, ConfigLoader $configLoader)
     {
-        $kernel->registerServiceProvider(new ConfigServiceProvider($configLoader));
-        $kernel->registerServiceProvider(new EventServiceProvider);
+        $k->registerServiceProvider(new ConfigServiceProvider($configLoader));
+        $k->registerServiceProvider(new EventServiceProvider);
 
         // Load extra service providers
         if ($services = $configLoader->get('framework', 'ServiceProviders')) {
@@ -98,13 +95,13 @@ class Bootstrap
                     throw new LogicException("service class '$class' does not exist.");
                 }
 
-                $config = $class::canonicalizeConfig($kernel, $config);
+                $config = $class::canonicalizeConfig($k, $config);
                 if ($config === null) {
                     throw new LogicException("$class::canonicalizeConfig should return an array for service config.");
                 }
 
                 $provider = new $class;
-                $kernel->registerServiceProvider($provider, $config);
+                $k->registerServiceProvider($provider, $config);
             }
         }
     }
@@ -121,16 +118,16 @@ class Bootstrap
      *       - bundles
      *
      */
-    private static function loadBundleService(Kernel $kernel, ConfigLoader $configLoader, Psr4ClassLoader $psr4ClassLoader)
+    private static function loadBundleService(Kernel $k, ConfigLoader $configLoader, Psr4ClassLoader $psr4ClassLoader)
     {
         // load bundle service provider
         $serviceProvider = new BundleServiceProvider();
 
         $loaderConfig = $configLoader->get('framework', 'BundleLoader') ?: new \ConfigKit\Accessor([ 'Paths' => ['app_bundles','bundles'] ]);
-        $kernel->registerServiceProvider($serviceProvider, $loaderConfig->toArray());
+        $k->registerServiceProvider($serviceProvider, $loaderConfig->toArray());
 
         // Load bundle objects into the runtimeKernel
-        $loader = new BundleLoader($kernel, $loaderConfig['Paths']->toArray());
+        $loader = new BundleLoader($k, $loaderConfig['Paths']->toArray());
         $configBundles = $configLoader->get('framework', 'Bundles') ?: [];
 
         self::setupBundleAutoload($loader, $configBundles, $psr4ClassLoader);
@@ -144,7 +141,7 @@ class Bootstrap
             }
 
             $bundleConfigArray = ($bundleConfig instanceof \ConfigKit\Accessor) ? $bundleConfig->toArray() : $bundleConfig;
-            $kernel->bundles[$bundleName] = $bundleClass::getInstance($kernel, $bundleConfigArray);
+            $k->bundles[$bundleName] = $bundleClass::getInstance($k, $bundleConfigArray);
         }
     }
 
