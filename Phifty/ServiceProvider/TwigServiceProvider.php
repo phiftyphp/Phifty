@@ -82,6 +82,20 @@ class TwigServiceProvider extends BaseServiceProvider
         return new NewObject($className, []);
     }
 
+    public function boot(Kernel $kernel)
+    {
+        foreach ($kernel->bundles as $bundle) {
+            if ($bundle->exportTemplates) {
+                // register the loader to events
+                $dir = $bundle->getTemplateDir();
+                if (file_exists($dir)) {
+                    $kernel->twig->loader->addPath($dir, $bundle->getNamespace());
+                }
+            }
+        }
+    }
+
+
     public function register(Kernel $kernel, array $options = array())
     {
         $self = $this;

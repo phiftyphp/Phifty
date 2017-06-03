@@ -171,6 +171,10 @@ class Bootstrap
             $loader->load('application', "$baseDir/config/application.yml");
         }
 
+        if (file_exists("$baseDir/config/database.yml")) {
+            $loader->load('database', "$baseDir/config/database.yml");
+        }
+
         // Only load testing configuration when environment
         // is 'testing'
         if ($env === 'testing') {

@@ -67,17 +67,6 @@ class Bundle
 
         // TODO: currently we are triggering the loadAssets from Phifty\Web
         // $this->kernel->event->register('asset.load', array($this,'loadAssets'));
-        //
-        // Move the template registration to the TwigServiceProvider
-
-        // we should have twig service
-        if ($this->exportTemplates && isset($this->kernel->twig)) {
-            // register the loader to events
-            $dir = $this->getTemplateDir();
-            if (file_exists($dir)) {
-                $this->kernel->twig->loader->addPath($dir, $this->getNamespace());
-            }
-        }
     }
 
     public function getConfig()
