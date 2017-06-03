@@ -26,8 +26,7 @@ install:
 before_script:
 # install and setup apache2
 - sudo apt-get install apache2
-- sudo a2enmod actions
-- sudo a2enmod rewrite
+- sudo a2enmod rewrite actions fastcgi alias
 - echo "export PATH=/home/vagrant/.phpenv/bin:$PATH" | sudo tee -a /etc/apache2/envvars > /dev/null
 - cat travis/apache2/php.conf | sudo tee /etc/apache2/conf.d/phpconfig > /dev/null
 - cat travis/apache2/site.conf | sed -e "s,%TRAVIS_BUILD_DIR%,`pwd`/webroot,g" | sudo tee /etc/apache2/sites-available/default > /dev/null
