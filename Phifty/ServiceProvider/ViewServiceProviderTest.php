@@ -11,9 +11,9 @@ class ViewServiceTest extends TestCase
     {
         $kernel = Kernel::dynamic($this->configLoader);
         $service = new ViewServiceProvider;
-        $kernel->registerServiceProvider($service, array(
+        $kernel->registerServiceProvider($service, [
             'Class' => 'Phifty\\View',
-        ));
+        ]);
 
         $view = $kernel->view;
         $this->assertNotNull($view);

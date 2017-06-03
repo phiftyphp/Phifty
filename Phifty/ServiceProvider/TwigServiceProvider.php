@@ -99,8 +99,8 @@ class TwigServiceProvider extends BaseServiceProvider
     public function register(Kernel $kernel, array $options = array())
     {
         $self = $this;
-        $kernel->twig = function () use ($kernel, $options, $self) {
 
+        $kernel->twig = function ($kernel) use ($options, $self) {
             // create the filesystem loader
             $loader = new Twig_Loader_Filesystem($options['TemplateDirs']);
 

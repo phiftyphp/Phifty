@@ -81,8 +81,10 @@ class Controller extends ExpandableController
             return $this->_view;
         }
 
+        $kernel = kernel();
+
         // call the view object factory from service
-        return $this->_view = kernel()->getObject('view',array($this->defaultViewClass));
+        return $this->_view = kernel()->getObject('view', [$kernel, $this->defaultViewClass]);
     }
 
     /**
@@ -93,7 +95,8 @@ class Controller extends ExpandableController
      */
     public function createView($viewClass = null)
     {
-        return kernel()->getObject('view',array($viewClass));
+        $kernel = kernel();
+        return kernel()->getObject('view',array($kernel, $viewClass));
     }
 
     /**
