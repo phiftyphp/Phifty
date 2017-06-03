@@ -30,6 +30,12 @@ before_script:
 - echo "export PATH=/home/vagrant/.phpenv/bin:$PATH" | sudo tee -a /etc/apache2/envvars > /dev/null
 - cat travis/apache2/php.conf | sudo tee /etc/apache2/conf.d/phpconfig > /dev/null
 - cat travis/apache2/site.conf | sed -e "s,%TRAVIS_BUILD_DIR%,`pwd`/webroot,g" | sudo tee /etc/apache2/sites-available/default > /dev/null
+
+# enable php-fpm
+- sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
+
+
+# restart to reload apache2
 - sudo service apache2 restart
 
 - phpenv rehash
