@@ -4,5 +4,5 @@ use Funk\Responder\SAPIResponder;
 
 $app = require '../bootstrap.php';
 $environment = Environment::createFromGlobals();
-$resp = $app->call($environment, []);
+$resp = $app->toSgi()->call($environment, []);
 (new SAPIResponder)->respond($resp);

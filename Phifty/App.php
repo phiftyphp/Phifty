@@ -20,6 +20,11 @@ class App extends Bundle implements \PHPSGI\App
         $this->kernel->boot();
     }
 
+    public function __invoke(array & $environment, array $response)
+    {
+        return $this->call($environment, $response);
+    }
+
     /**
      * @override \PHPSGI\App::call
      */
@@ -44,18 +49,15 @@ class App extends Bundle implements \PHPSGI\App
     }
 
     /**
-     * The default PHPSGI application builder (logics for wrapping application with middlewares)
+     * Return default PHPSGI application (logics for wrapping application with middlewares)
      *
      * @return callable
      */
-    static public function build(Kernel $kernel, array $config)
+    public function toSgi()
     {
         // Here is where you can wrap your app with the middlewares
         // Please note that currently the returned app needs to be called with ::boot method .
-        return new static($kernel, $config);
-        
-        /*
-        $compositor = new Compositor($app);
+        $compositor = new Compositor($this);
         return $compositor->enable(function ($app) {
             return function (array & $environment, array $response) use ($app) {
                 $response[1][] = 'P3P:CP="IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT"';
@@ -66,8 +68,7 @@ class App extends Bundle implements \PHPSGI\App
                 return $app($environment, $response);
             };
         });
-        */
-
+        
         /*
         $compositor->enable(TryCatchMiddleware::class, [ 'throw' => true ]);
         $compositor->enable(function($app) {
@@ -91,7 +92,7 @@ class App extends Bundle implements \PHPSGI\App
     {
         static $singleton;
         if (!$singleton) {
-            $singleton = static::build($kernel, $config);
+            $singleton = new static($kernel, $config);
         }
         return $singleton;
     }

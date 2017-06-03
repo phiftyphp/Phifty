@@ -13,9 +13,8 @@ class AppTest extends TestCase
         $configLoader = Bootstrap::createConfigLoader(PH_APP_ROOT);
         $classLoader = new Psr4ClassLoader;
         $kernel = Bootstrap::createKernel($configLoader, $classLoader, 'development');
-        $app = App::build($kernel, []);
+        $app = new App($kernel, []);
         $this->assertNotNull($app);
-
         $app->boot();
         return $app;
     }
@@ -33,7 +32,8 @@ class AppTest extends TestCase
             '_COOKIE' => [],
         ];
         $response = [];
-        $response = $app->call($environment, $response);
+        $sgi = $app->toSgi();
+        $response = $sgi($environment, $response);
         $this->assertNotNull($response);
     }
 }
