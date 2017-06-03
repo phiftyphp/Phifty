@@ -25,7 +25,7 @@ install:
 
 before_script:
 # install and setup apache2
-- sudo apt-get install apache2
+- sudo apt-get install apache2 libapache2-mod-fastcgi
 - sudo a2enmod rewrite actions fastcgi alias
 - echo "export PATH=/home/vagrant/.phpenv/bin:$PATH" | sudo tee -a /etc/apache2/envvars > /dev/null
 - cat travis/apache2/php.conf | sudo tee /etc/apache2/conf.d/phpconfig > /dev/null
