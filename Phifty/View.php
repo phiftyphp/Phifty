@@ -20,14 +20,10 @@ class View extends ArrayObject
 
     protected $kernel;
 
-    protected $engine;
-
     public function __construct(Kernel $kernel)
     {
-        $this->kernel = $kernel;
-        $this->engine = new \Phifty\View\Twig($kernel);
-
         parent::__construct([], ArrayObject::ARRAY_AS_PROPS);
+        $this->kernel = $kernel;
 
         // register args
         $this['Kernel']      = $kernel;
@@ -92,7 +88,9 @@ class View extends ArrayObject
      */
     public function render($template)
     {
-        return $this->engine->render($template, $this->getArrayCopy());
+        $env = $this->kernel->twig->env;
+        $args = $this->getArrayCopy();
+        return $env->loadTemplate($template)->render($args);
     }
 
     public function __toString()

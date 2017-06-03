@@ -152,6 +152,12 @@ class TwigServiceProvider extends BaseServiceProvider
                 $env->addFunction(new \Twig_SimpleFunction($export, $func));
             }
 
+            $env->addFunction(new \Twig_SimpleFunction('new', function($class) {
+                $args = func_get_args();
+                array_shift($args);
+                return ClassUtils::newClass($class, $args);
+            }));
+
             // TODO: make this static
             $zhDate = new Twig_SimpleFilter('zh_date', function ($str) {
                 return str_replace(['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun',
