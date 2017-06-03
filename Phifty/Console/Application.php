@@ -18,7 +18,6 @@ class Application extends \CLIFramework\Application
         parent::init();
         $this->command('init');
         $this->command('bootstrap');
-        $this->command('export');
         $this->command('locale');
         $this->command('console');
         $this->command('server');
