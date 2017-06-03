@@ -49,6 +49,7 @@ script:
 - wc -l bootstrap.php
 - php bin/phifty asset --link
 - phpunit -c phpunit.xml.dist
+- curl http://localhost/
 
 after_success:
 - php vendor/bin/coveralls -v
