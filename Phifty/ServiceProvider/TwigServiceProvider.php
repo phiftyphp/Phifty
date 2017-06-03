@@ -28,7 +28,7 @@ class TwigServiceProvider extends BaseServiceProvider
         return 'Twig';
     }
 
-    public static function canonicalizeConfig(Kernel $kernel, array $options)
+    public static function canonicalizeConfig(Kernel $k, array $options)
     {
         // Rewrite template directories
         $templateDirs = array();
@@ -42,14 +42,14 @@ class TwigServiceProvider extends BaseServiceProvider
         $options['TemplateDirs'] = $templateDirs;
 
         // Rewrite environment config
-        if ($kernel->isDev) {
+        if ($k->isDev) {
             $options['Environment']['debug'] = true;
             $options['Environment']['auto_reload'] = true;
-            $options['Environment']['cache'] = $kernel->cacheDir.DIRECTORY_SEPARATOR.'twig';
+            $options['Environment']['cache'] = $k->cacheDir.DIRECTORY_SEPARATOR.'twig';
         } else {
             // for production
             $options['Environment']['optimizations'] = true;
-            $options['Environment']['cache'] = $kernel->cacheDir.DIRECTORY_SEPARATOR.'twig';
+            $options['Environment']['cache'] = $k->cacheDir.DIRECTORY_SEPARATOR.'twig';
         }
 
         if (isset($options['Namespaces'])) {
@@ -63,14 +63,8 @@ class TwigServiceProvider extends BaseServiceProvider
         return $options;
     }
 
-    public static function generateNew(Kernel $kernel, array &$options = array())
+    public static function generateNew(Kernel $k, array &$options = array())
     {
-        /*
-        // Generate Namespaces from bundles
-        foreach ($kernel->bundles as $bundle) {
-            echo get_class($bundle), PHP_EOL;
-        }
-        */
         $className = get_called_class();
         if (isset($options['Environment']['cache'])) {
             $cacheDir = $options['Environment']['cache'];
@@ -82,26 +76,24 @@ class TwigServiceProvider extends BaseServiceProvider
         return new NewObject($className, []);
     }
 
-    public function boot(Kernel $kernel)
+    public function boot(Kernel $k)
     {
-        foreach ($kernel->bundles as $bundle) {
+        foreach ($k->bundles as $bundle) {
             if ($bundle->exportTemplates) {
                 // register the loader to events
                 $dir = $bundle->getTemplateDir();
                 if (file_exists($dir)) {
-                    $kernel->twig->loader->addPath($dir, $bundle->getNamespace());
+                    $k->twig->loader->addPath($dir, $bundle->getNamespace());
                 }
             }
         }
     }
 
 
-    public function register(Kernel $kernel, array $options = array())
+    public function register(Kernel $k, array $options = array())
     {
-        $self = $this;
-
-        $kernel->twig = function ($kernel) use ($options, $self) {
-            // create the filesystem loader
+        $k->factory('twigLoaderFilesystem', function($k) use ($options) {
+            // Create The Filesystem Loader
             $loader = new Twig_Loader_Filesystem($options['TemplateDirs']);
 
             /*
@@ -113,10 +105,14 @@ class TwigServiceProvider extends BaseServiceProvider
                 }
             }
 
+            return $loader;
+        });
+
+        $k->factory('twigEnvironment', function($k, $loader) use ($options) {
             // http://www.twig-project.org/doc/api.html#environment-options
             $env = new Twig_Environment($loader, $options['Environment']);
 
-            if ($kernel->isDev) {
+            if ($k->isDev) {
                 $env->addExtension(new Twig_Extension_Debug());
             } else {
                 $env->addExtension(new Twig_Extension_Optimizer());
@@ -131,7 +127,7 @@ class TwigServiceProvider extends BaseServiceProvider
             }
 
             // include assettoolkit extension
-            if ($asset = $kernel->asset) {
+            if ($asset = $k->asset) {
                 $env->addExtension(new AssetExtension($asset->config, $asset->loader));
             }
 
@@ -139,8 +135,9 @@ class TwigServiceProvider extends BaseServiceProvider
             $reactDirExt->setJsonEncoder(new PJSONEncoder());
             $env->addExtension($reactDirExt);
 
+
             // TODO: we should refactor this
-            $exports = array(
+            $exports = [
                 'uniqid' => 'uniqid',
                 'md5' => 'md5',
                 'time' => 'time',
@@ -149,9 +146,9 @@ class TwigServiceProvider extends BaseServiceProvider
                 '_' => '_',
                 'count' => 'count',
                 'new' => 'Phifty\View\newObject',
-            );
+            ];
             foreach ($exports as $export => $func) {
-                $env->addFunction(new Twig_SimpleFunction($export, $func));
+                $env->addFunction(new \Twig_SimpleFunction($export, $func));
             }
 
             // TODO: make this static
@@ -163,10 +160,11 @@ class TwigServiceProvider extends BaseServiceProvider
             });
             $env->addFilter($zhDate);
 
-            if ($locale = $kernel->locale) {
+            if ($locale = $k->locale) {
                 $env->addGlobal('currentLang', $locale->current());
             }
-            $env->addGlobal('Kernel', $kernel);
+            $env->addGlobal('Kernel', $k);
+
 
             // auto-register all native PHP functions as Twig functions
             $env->registerUndefinedFunctionCallback(function ($name) {
@@ -177,7 +175,12 @@ class TwigServiceProvider extends BaseServiceProvider
 
                 return false;
             });
+            return $env;
+        });
 
+        $k->twig = function ($k) use ($options) {
+            $loader = $k->getObject('twigLoaderFilesystem', [$k]);
+            $env = $k->getObject('twigEnvironment', [$k, $loader]);
             return (object) array(
                 'loader' => $loader,
                 'env' => $env,
