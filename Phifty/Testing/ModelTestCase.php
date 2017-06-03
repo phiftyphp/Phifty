@@ -24,6 +24,8 @@ abstract class ModelTestCase extends \Maghead\Testing\ModelTestCase
     /**
      * use the config/database.yml instead of the default config from maghead
      * model test case to avoid side effect.
+     *
+     * @override
      */
     public function config()
     {
