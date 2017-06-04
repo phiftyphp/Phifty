@@ -3,6 +3,7 @@
 namespace Phifty\Bundle;
 
 use LogicException;
+use Phifty\Routing\TemplateController;
 
 trait BundleRouteCreators
 {
@@ -82,7 +83,7 @@ trait BundleRouteCreators
                     'template' => $args['template'],
                     'template_args' => (isset($args['args']) ? $args['args'] : null),
                 );
-                $mux->add($path, '\Phifty\Routing\TemplateController', $options);
+                $mux->add($path, [TemplateController::class,'run'], $options);
             } elseif (isset($args['controller'])) { // route to normal controller ?
 
                 $mux->add($path, $args['controller'], $options);

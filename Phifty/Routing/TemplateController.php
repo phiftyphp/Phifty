@@ -22,9 +22,7 @@ class TemplateController extends Controller
     {
         $template   = $this->template;
         $args       = $this->args;
-        $engine = new \Phifty\View\Twig(kernel());
-        $viewClass = kernel()->config->get('framework','View.Class') ?: 'Phifty\View';
-        $view = new $viewClass($engine);
+        $view = kernel()->getObject('view', [kernel(), kernel()->config->get('framework','View.Class') ?: \Phifty\View::class]);
         if ($args) {
             $view->assign($args);
         }

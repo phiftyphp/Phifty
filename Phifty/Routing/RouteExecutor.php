@@ -49,7 +49,6 @@ class RouteExecutor
             return $callback($environment, $response, $route);
         }
 
-
         // Start handing controller dispatch from here
 
         // create the reflection class
