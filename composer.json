@@ -2,6 +2,7 @@
     "name": "phifty/phifty",
     "type": "phifty-framework",
     "license": "MIT",
+    "bin": ["bin/phifty"],
     "require": {
         "php": ">=7.0",
         "composer/installers": "^1",
@@ -46,12 +47,13 @@
         "predis/predis": "^1.1",
         "corneltek/twig-markdown": "^1"
     },
-    "bin": ["bin/phifty"],
     "autoload-dev":{
         "psr-4": { "App\\": "app/" }
     },
     "autoload": {
         "psr-4": { "Phifty\\": "Phifty/" }
     },
-    "extra": { "branch-alias": { "dev-master": "4.0.x-dev" } }
+    "extra": { "branch-alias": { "dev-master": "4.0.x-dev" } },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
