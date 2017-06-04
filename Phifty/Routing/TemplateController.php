@@ -2,7 +2,7 @@
 
 namespace Phifty\Routing;
 
-use Phifty\Controller;
+use Phifty\Routing\Controller;
 
 class TemplateController extends Controller
 {

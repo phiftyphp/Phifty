@@ -7,7 +7,7 @@ use Exception;
 use ConfigKit\Accessor;
 use LogicException;
 use Phifty\Kernel;
-use Phifty\Controller;
+use Phifty\Routing\Controller;
 use ConfigKit\ConfigCompiler;
 
 use Phifty\Generator\AppActionGenerator;
