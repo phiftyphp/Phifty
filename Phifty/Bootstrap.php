@@ -137,7 +137,7 @@ class Bootstrap
             // Load the bundle class files into the Kernel
             $bundleClass = $loader->loadBundleClass($bundleName);
             if (false === $bundleClass) {
-                throw new Exception("Can't find bundle $bundleName class file. '$bundleClassFile' doesn't exist.");
+                throw new Exception("Can't find bundle $bundleName class file. '$bundleClass' doesn't exist.");
             }
 
             $bundleConfigArray = ($bundleConfig instanceof \ConfigKit\Accessor) ? $bundleConfig->toArray() : $bundleConfig;
