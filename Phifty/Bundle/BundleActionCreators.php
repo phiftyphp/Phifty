@@ -2,6 +2,8 @@
 
 namespace Phifty\Bundle;
 
+use Phifty\Generator\AppActionGenerator;
+
 trait BundleActionCreators
 {
     /**
