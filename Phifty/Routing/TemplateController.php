@@ -2,7 +2,7 @@
 
 namespace Phifty\Routing;
 
-use Pux\Controller\Controller;
+use Phifty\Controller;
 
 class TemplateController extends Controller
 {
@@ -10,15 +10,13 @@ class TemplateController extends Controller
 
     protected $args;
 
-    public function __construct(array $environment = array(), array $response = array(), array $matchedRoute = array())
+    public function context(array & $environment, array $response)
     {
-        parent::__construct($environment, $response, $matchedRoute);
-
-        list($pcre, $path, $callback, $options) = $matchedRoute; // the structure is from Pux
-
+        parent::context($environment, $response);
+        list($pcre, $path, $callback, $options) = $this->matchedRoute; // the structure is from Pux
         $args = $options['args'];
         $this->template = $args['template'];
-        $this->args = isset($args['template_args']) ? $args['template_args'] : array();
+        $this->args = isset($args['template_args']) ? $args['template_args'] : [];
     }
 
     public function templateAction()
