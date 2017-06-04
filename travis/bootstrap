@@ -7,3 +7,5 @@ rm -f bootstrap.php && php bin/phifty bootstrap && php bootstrap.php
 php vendor/bin/maghead db create
 php vendor/bin/maghead schema build -f
 php vendor/bin/maghead sql --rebuild
+
+- php bin/phifty asset --link
