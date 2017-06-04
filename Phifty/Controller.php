@@ -16,7 +16,20 @@ class Controller extends ExpandableController
      */
     protected $_view;
 
+    protected $kernel;
+
     public $defaultViewClass;
+
+    /**
+     * 
+     * @param array $environment the default empty array was kept for backward compatibility.
+     */
+    public function __construct(array $environment = array(), array $response = array(), array $matchedRoute = null)
+    {
+        parent::__construct($environment, $response, $matchedRoute);
+        $this->kernel = $environment['phifty.kernel'];
+    }
+    
 
     public function __get($name)
     {
@@ -29,7 +42,7 @@ class Controller extends ExpandableController
 
     public function getCurrentUser()
     {
-        return kernel()->currentUser;
+        return $this->kernel->currentUser;
     }
 
     /**
@@ -81,10 +94,9 @@ class Controller extends ExpandableController
             return $this->_view;
         }
 
-        $kernel = kernel();
 
         // call the view object factory from service
-        return $this->_view = kernel()->getObject('view', [$kernel, $this->defaultViewClass]);
+        return $this->_view = $this->kernel->getObject('view', [$this->kernel, $this->defaultViewClass]);
     }
 
     /**
@@ -95,8 +107,7 @@ class Controller extends ExpandableController
      */
     public function createView($viewClass = null)
     {
-        $kernel = kernel();
-        return kernel()->getObject('view',array($kernel, $viewClass));
+        return $this->kernel->getObject('view', [$this->kernel, $viewClass]);
     }
 
     /**

@@ -8,6 +8,8 @@ use Universal\ClassLoader\Psr4ClassLoader;
 
 abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
+    use EnvironmentFactory;
+
     protected $configLoader;
 
     protected $kernel;
@@ -19,15 +21,4 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         $this->kernel = Bootstrap::createKernel($this->configLoader, new Psr4ClassLoader, $env);
     }
 
-    protected function createPostRequest($path, $parameters)
-    {
-        return [
-            'PATH_INFO' => $path,
-            'parameters' => $parameters,
-            'body_parameters' => $parameters,
-            'query_parameters' => $parameters,
-            '_SESSION' => [],
-            '_COOKIE' => [],
-        ];
-    }
 }

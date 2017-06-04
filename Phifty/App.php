@@ -31,6 +31,9 @@ class App extends Bundle implements \PHPSGI\App
      */
     public function call(array & $environment, array $response)
     {
+        // Extend phifty kernel to the environment
+        $environment['phifty.kernel'] = $this->kernel;
+
         $this->kernel->event->trigger('request.start');
         $request = RouteRequest::createFromEnv($environment);
         if ($route = $this->kernel->mux->dispatchRequest($request)) {

@@ -9,6 +9,8 @@ use Maghead\Runtime\Config\FileConfigLoader;
 
 abstract class ModelTestCase extends \Maghead\Testing\ModelTestCase
 {
+    use EnvironmentFactory;
+
     protected $configLoader;
 
     protected $kernel;
@@ -30,17 +32,5 @@ abstract class ModelTestCase extends \Maghead\Testing\ModelTestCase
     public function config()
     {
         return FileConfigLoader::load('config/database.yml');
-    }
-
-    protected function createPostRequest($path, $parameters)
-    {
-        return [
-            'PATH_INFO' => $path,
-            'parameters' => $parameters,
-            'body_parameters' => $parameters,
-            'query_parameters' => $parameters,
-            '_SESSION' => [],
-            '_COOKIE' => [],
-        ];
     }
 }

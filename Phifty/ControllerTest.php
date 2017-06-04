@@ -2,11 +2,15 @@
 
 namespace Phifty;
 
-class ControllerTest extends \PHPUnit\Framework\TestCase
+use Phifty\Testing\TestCase;
+use Funk\Testing\TestUtils;
+
+class ControllerTest extends TestCase
 {
     public function testRenderYaml()
     {
-        $controller = new Controller;
+        $environment = $this->createEnvironment('GET', '/', [  ]);
+        $controller = new Controller($environment, []);
         $yaml = $controller->toYaml([
             'foo' => 1,
             'bar' => [ 'zoo' => 123 ],
@@ -16,7 +20,8 @@ class ControllerTest extends \PHPUnit\Framework\TestCase
 
     public function testViewFactory()
     {
-        $controller = new Controller;
+        $environment = $this->createEnvironment('GET', '/', [  ]);
+        $controller = new Controller($environment, []);
         $view = $controller->view();
         $this->assertInstanceOf(View::class, $view);
 

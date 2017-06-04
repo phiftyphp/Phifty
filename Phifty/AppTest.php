@@ -2,18 +2,15 @@
 
 namespace Phifty;
 
-use PHPUnit\Framework\TestCase;
 use Universal\ClassLoader\Psr4ClassLoader;
 use Funk\Environment;
+use Phifty\Testing\TestCase;
 
 class AppTest extends TestCase
 {
     public function testBuild()
     {
-        $configLoader = Bootstrap::createConfigLoader(PH_APP_ROOT);
-        $classLoader = new Psr4ClassLoader;
-        $kernel = Bootstrap::createKernel($configLoader, $classLoader, 'development');
-        $app = new App($kernel, []);
+        $app = new App($this->kernel, []);
         $this->assertNotNull($app);
         $app->boot();
         return $app;
@@ -24,13 +21,7 @@ class AppTest extends TestCase
      */
     public function testCall($app)
     {
-        $environment = [
-            'PATH_INFO' => '/',
-            'parameters' => [],
-            'queryParameter' => [],
-            '_SESSION' => [],
-            '_COOKIE' => [],
-        ];
+        $environment = $this->createEnvironment('GET', '/', []);
         $response = [];
         $sgi = $app->toSgi();
         $response = $sgi($environment, $response);
