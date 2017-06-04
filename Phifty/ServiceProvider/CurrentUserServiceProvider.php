@@ -3,6 +3,7 @@
 namespace Phifty\ServiceProvider;
 
 use Phifty\Kernel;
+use Phifty\Security\CurrentUser;
 
 class CurrentUserServiceProvider extends ServiceProvider
 {
@@ -28,7 +29,7 @@ class CurrentUserServiceProvider extends ServiceProvider
 
         $currentUserClass = isset($options['Class'])
             ? $options['Class']
-            : $kernel->config->get('framework', 'CurrentUser.Class') ?: 'Phifty\Security\CurrentUser';
+            : $kernel->config->get('framework', 'CurrentUser.Class') ?: CurrentUser::class;
 
         $options['CurrentUserConstructorArgs'] = $args;
         $options['CurrentUserClass'] = $currentUserClass;
