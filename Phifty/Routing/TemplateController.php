@@ -21,7 +21,7 @@ class TemplateController extends Controller
         $this->args = isset($args['template_args']) ? $args['template_args'] : array();
     }
 
-    public function run()
+    public function templateAction()
     {
         $view       = $this->kernel->view;
         if ($this->args) {

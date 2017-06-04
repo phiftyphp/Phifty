@@ -77,25 +77,36 @@ trait BundleRouteCreators
 
         } else if (is_array($args)) {
 
-            // route to template controller ?
-            if (isset($args['template'])) {
-                $options['args'] = array(
-                    'template' => $args['template'],
-                    'template_args' => (isset($args['args']) ? $args['args'] : null),
-                );
-                $mux->add($path, [TemplateController::class,'run'], $options);
-            } elseif (isset($args['controller'])) { // route to normal controller ?
-
-                $mux->add($path, $args['controller'], $options);
-            } elseif (isset($args[0]) && count($args) == 2) { // simply treat it as a callback
-
-                $mux->add($path, $args, $options);
-            } else {
-                throw new LogicException('Unsupport route argument.');
+            $controller = [TemplateController::class, 'templateAction'];
+            if (isset($args['controller'])) {
+                $controller = [$args['controller'], 'templateAction'];
+            } else if (isset($args[0]) && count($args) == 2) {
+                $controller = $args;
             }
-            // throw new LogicException("Unsupported route argument.");
+
+            $options = self::buildTemplateRouteOptions($args, $options);
+            $mux->add($path, $controller, $options);
+        } else {
+
+            throw new \LogicException("invalid route handler: " . var_export($args, true));
+
         }
     }
+
+    protected static function buildTemplateRouteOptions(array $args, array $options)
+    {
+        if (!isset($args['template'])) {
+            throw new \Exception("'template' is not configured.");
+        }
+
+        $options['args'] = [
+            'template' => $args['template'],
+            'template_args' => (isset($args['args']) ? $args['args'] : null),
+        ];
+
+        return $options;
+    }
+
 
 
     /**
@@ -106,10 +117,9 @@ trait BundleRouteCreators
      * @param string $path
      * @param string $template file
      */
-    public function page($path, $template, $args = array())
+    public function page($path, $template, array $args = array())
     {
-        $mux = $this->kernel->mux;
-        $mux->add($path, [
+        $this->route($path, [
             'template' => $template,
             'args' => $args,  // template args
         ]);
@@ -130,6 +140,7 @@ trait BundleRouteCreators
         if (!class_exists($class, true)) {
             $class = $this->getNamespace() . '\\Controller\\' . $className;
         }
+        // FIXME: Constructing controller requires environment and response varaibles
         $controller = new $class;
         $this->kernel->mux->mount($path, $controller);
     }

@@ -13,6 +13,7 @@
         "corneltek/twig-react-directive": "^1.0",
         "corneltek/sessionkit": "~1",
         "corneltek/cliframework": "4.0.x-dev",
+        "corneltek/webui": "@dev",
         "maghead/maghead": "4.0.x-dev",
         "maghead/magsql": "@dev",
         "corneltek/actionkit": "4.0.x-dev",
