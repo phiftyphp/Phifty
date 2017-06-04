@@ -20,16 +20,12 @@ class Controller extends ExpandableController
 
     public $defaultViewClass;
 
-    /**
-     * 
-     * @param array $environment the default empty array was kept for backward compatibility.
-     */
-    public function __construct(array $environment = array(), array $response = array(), array $matchedRoute = null)
+    public function call(array & $environment, array $response)
     {
-        parent::__construct($environment, $response, $matchedRoute);
+        $response = parent::call($environment, $response);
         $this->kernel = $environment['phifty.kernel'];
+        return $response;
     }
-    
 
     public function __get($name)
     {
@@ -44,17 +40,6 @@ class Controller extends ExpandableController
     {
         return $this->kernel->currentUser;
     }
-
-    /**
-     * xxx: is not used yet.
-     *
-     * You may customize the permission check
-     */
-    public function currentUserCan($user)
-    {
-        return true;
-    }
-
 
     /**
      * some response header util methods
@@ -75,8 +60,6 @@ class Controller extends ExpandableController
     {
         $this->response[1][] = [$field => $value];
     }
-
-
 
     /**
      * Create/Get view object with rendering engine options
@@ -151,25 +134,14 @@ class Controller extends ExpandableController
         header("Expires: $datestr");
     }
 
-    public function toJson($data, $encodeFlags = null)
-    {
-        if (! CLI) {
-            header('Content-type: application/json; charset=UTF-8');
-        }
-        return parent::toJson($data, $encodeFlags);
-    }
-
     public function toYaml($data, $encodeFlags = null)
     {
-        if (! CLI) {
-            header('Content-type: application/yaml; charset=UTF-8;');
-        }
-
-        // If we've loaded the yaml extension, we should use it directly.
         if (extension_loaded('yaml') ){
-            return yaml_emit($data, $encodeFlags);
+            $body = yaml_emit($data, $encodeFlags);
+        } else {
+            $body = Yaml::dump($data, $encodeFlags);
         }
-        return Yaml::dump($data, $encodeFlags);
+        return [200, [ 'Content-type: application/yaml; charset=UTF-8;' ], $body ];
     }
 
     /**
@@ -183,7 +155,7 @@ class Controller extends ExpandableController
     {
         $view = $this->view($engineOpts);
         $view->assign($args);
-        return $view->render($template);
+        return [200, ['Content-Type: text/html;'], $view->render($template)];
     }
 
     /**
