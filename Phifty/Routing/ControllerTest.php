@@ -5,6 +5,7 @@ namespace Phifty\Routing;
 use Phifty\Testing\TestCase;
 use Funk\Testing\TestUtils;
 use Pux\Mux;
+use Phifty\View;
 
 class TestController extends Controller
 {
