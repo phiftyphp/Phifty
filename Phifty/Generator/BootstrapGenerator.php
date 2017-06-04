@@ -122,10 +122,10 @@ class BootstrapGenerator
 
         // Generate the require statements
         $block[] = 'global $kernel, $app, $composerClassLoader, $psr4ClassLoader;';
+        $block[] = new AssignStatement('$composerClassLoader', new RequireComposerAutoloadStatement([$this->rootDir]));
+
         $block[] = new RequireClassStatement(ClassLoader::class);
         $block[] = new RequireClassStatement(Psr4ClassLoader::class);
-
-        $block[] = new AssignStatement('$composerClassLoader', new RequireComposerAutoloadStatement([$this->rootDir]));
 
         // maghead loads these classes before everything
         // $block[] = new RequireClassStatement(\Universal\Event\EventDispatcher::class);
