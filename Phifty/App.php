@@ -3,8 +3,8 @@
 namespace Phifty;
 
 use Funk\Compositor;
-use Phifty\Routing\RouteExecutor;
 use Phifty\Environment\CommandLine;
+use Pux\RouteExecutor;
 use Pux\RouteRequest;
 
 class App extends Bundle implements \PHPSGI\App
@@ -38,7 +38,7 @@ class App extends Bundle implements \PHPSGI\App
         $this->kernel->event->trigger('request.start');
         $request = RouteRequest::createFromEnv($environment);
         if ($route = $this->kernel->mux->dispatchRequest($request)) {
-            $response = RouteExecutor::execute($route, $environment, $response, $route);
+            $response = RouteExecutor::execute($route, $environment, $response);
         } else {
             $response = [
                 404,
