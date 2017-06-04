@@ -25,6 +25,7 @@ use Universal\ClassLoader\SplClassLoader;
 use Universal\Container\ObjectContainer;
 
 use Maghead\Runtime\Config\FileConfigLoader;
+use Maghead\Runtime\Config\SymbolicLinkConfigLoader;
 
 use Phifty\Bootstrap;
 use Phifty\Generator\BootstrapGenerator;
@@ -103,10 +104,19 @@ class BootstrapCommand extends Command
     public function execute()
     {
         // TODO: connect to differnt config by using environment variable (PHIFTY_ENV)
-        $this->logger->info("===> Building config files...");
+
+        $this->logger->info("===> Building database config and anchor file...");
+        if ($dbConfig = Utils::find_db_config(getcwd())) {
+            if (file_exists(SymbolicLinkConfigLoader::ANCHOR_FILENAME)) {
+                unlink(SymbolicLinkConfigLoader::ANCHOR_FILENAME);
+            }
+            symlink($dbConfig, SymbolicLinkConfigLoader::ANCHOR_FILENAME);
+            FileConfigLoader::compile($dbConfig, true);
+        }
+
+        $this->logger->info("===> Building framework config files...");
         $configPaths = Utils::find_framework_config(getcwd());
         Utils::compile_framework_configs($configPaths);
-
 
         $outputFile = $this->options->output;
 

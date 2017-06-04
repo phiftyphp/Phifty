@@ -79,7 +79,7 @@ class Utils
         ];
         foreach ($paths as $path) {
             if (file_exists($path)) {
-                return FileConfigLoader::compile(realpath($path), true);
+                return realpath($path); // resolve symlink
             }
         }
         return false;

@@ -24,7 +24,7 @@ class DatabaseServiceProvider extends BaseServiceProvider
         if (empty($config) || !isset($config['config'])) {
             $config['config'] = \Phifty\Utils::find_db_config($kernel->rootDir);
         }
-        $config['config'] = realpath($config['config']);
+        $config['config'] = FileConfigLoader::compile(realpath($config['config']), true);
         return $config;
     }
 
