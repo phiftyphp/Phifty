@@ -6,6 +6,10 @@ trait EnvironmentFactory
 {
     public function createEnvironment($method, $path, array $parameters = [])
     {
+        if (!$this->kernel) {
+            throw new \LogicException('this->kernel is undefined.');
+        }
+
         $env = [
             // framework variables
             'phifty.kernel'  => $this->kernel,
