@@ -14,14 +14,4 @@
       <directory suffix="Test.php">bundles/crud</directory>
     </testsuite>
   </testsuites>
-
-  <listeners>
-    <listeners>
-      <listener class="PHPUnit_Extensions_Selenium2TestCase_ScreenshotListener" file="PHPUnit/Extensions/Selenium2TestCase/ScreenshotListener.php">
-        <arguments>
-          <string>build/screenshots</string>
-        </arguments>
-      </listener>
-    </listeners>
-  </listeners>
 </phpunit>
