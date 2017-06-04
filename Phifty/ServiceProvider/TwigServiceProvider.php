@@ -79,6 +79,14 @@ class TwigServiceProvider extends ServiceProvider
 
     public function boot(Kernel $k)
     {
+        if ($app = $k->getApp()) {
+            if ($app->exportTemplates) {
+                $dir = $app->getTemplateDir();
+                if (file_exists($dir)) {
+                    $k->twig->loader->addPath($dir, $app->getNamespace());
+                }
+            }
+        }
         foreach ($k->bundles as $bundle) {
             if ($bundle->exportTemplates) {
                 // register the loader to events
