@@ -59,6 +59,7 @@ cache:
   apt: true
   directories:
   - vendor
+  - ~/.composer/cache
 
 notifications:
   email:
