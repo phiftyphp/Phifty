@@ -10,8 +10,6 @@ use Phifty\Kernel;
 use Phifty\Routing\Controller;
 use ConfigKit\ConfigCompiler;
 
-use Phifty\Generator\AppActionGenerator;
-
 use Phifty\Bundle\BundleActionCreators;
 use Phifty\Bundle\BundleRouteCreators;
 
@@ -91,7 +89,6 @@ class Bundle
 
     public function boot()
     {
-
     }
 
     public function getId()
