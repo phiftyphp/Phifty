@@ -37,7 +37,7 @@ use Phifty\Security\CurrentUserRole;
 class CurrentUser implements RoleIdentifierProvider, ActorIdentifierProvider, RecordIdentifierProvider
 {
     /**
-     * @var BaseModel User model class
+     * @var Model User model class
      */
     protected $userModelClass;
 
@@ -155,7 +155,7 @@ class CurrentUser implements RoleIdentifierProvider, ActorIdentifierProvider, Re
     }
 
 
-    public function loginAs(BaseModel $anotherUser)
+    public function loginAs(Model $anotherUser)
     {
         if ($this->record) {
             // Save the current user record into the context
@@ -170,7 +170,7 @@ class CurrentUser implements RoleIdentifierProvider, ActorIdentifierProvider, Re
      *
      * @param mixed User record object
      */
-    protected function updateSessionFromRecord(BaseModel $record)
+    protected function updateSessionFromRecord(Model $record)
     {
         // get column maes to register 
         foreach ($record->getColumnNames() as $name) {
@@ -182,7 +182,7 @@ class CurrentUser implements RoleIdentifierProvider, ActorIdentifierProvider, Re
         } else if ( method_exists($record,'getRoles') ) {
             $this->session->set('roles', $record->getRoles() );
         } else if (isset($record->role)) {
-            if ($record->role instanceof BaseModel) {
+            if ($record->role instanceof Model) {
                 $this->session->set('roles', array($record->role->identity) );
             } else {
                 $this->session->set('roles', array($record->role) );
@@ -201,7 +201,7 @@ class CurrentUser implements RoleIdentifierProvider, ActorIdentifierProvider, Re
      *
      * @return bool
      */
-    public function setRecord(BaseModel $record)
+    public function setRecord(Model $record)
     {
         if ($record && $record->id) {
             $this->record = $record;
