@@ -12,7 +12,7 @@ use Swift_SmtpTransport;
 use Swift_Plugins_AntiFloodPlugin;
 use Exception;
 
-class MailerServiceProvider extends BaseServiceProvider implements ComposerConfigBridge
+class MailerServiceProvider extends ServiceProvider implements ComposerConfigBridge
 {
     public function getId()
     {

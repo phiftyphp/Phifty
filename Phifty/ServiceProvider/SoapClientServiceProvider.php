@@ -6,7 +6,7 @@ use Exception;
 use SoapClient;
 use Phifty\Kernel;
 
-class SoapClientServiceProvider extends BaseServiceProvider
+class SoapClientServiceProvider extends ServiceProvider
 {
     public function getId()
     {

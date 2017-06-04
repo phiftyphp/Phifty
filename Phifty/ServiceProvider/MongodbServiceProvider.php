@@ -6,7 +6,7 @@ use MongoClient;
 use Exception;
 use Phifty\Kernel;
 
-class MongodbServiceProvider extends BaseServiceProvider
+class MongodbServiceProvider extends ServiceProvider
 {
     public function getId()
     {

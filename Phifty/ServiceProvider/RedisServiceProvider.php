@@ -5,7 +5,7 @@ namespace Phifty\ServiceProvider;
 use Phifty\ComposerConfigBridge;
 use Phifty\Kernel;
 
-class RedisServiceProvider extends BaseServiceProvider implements ComposerConfigBridge
+class RedisServiceProvider extends ServiceProvider implements ComposerConfigBridge
 {
     public function getId()
     {

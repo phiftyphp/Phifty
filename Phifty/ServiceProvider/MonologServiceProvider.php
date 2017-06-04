@@ -10,7 +10,7 @@ use Monolog\Handler\StreamHandler;
 use Pimple\Container;
 use Phifty\Kernel;
 
-class MonologServiceProvider extends BaseServiceProvider
+class MonologServiceProvider extends ServiceProvider
 {
     public function getId()
     {

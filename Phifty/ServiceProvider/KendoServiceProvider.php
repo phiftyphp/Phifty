@@ -86,7 +86,7 @@ class KendoService
     }
 }
 
-class KendoServiceProvider extends BaseServiceProvider
+class KendoServiceProvider extends ServiceProvider
 {
     public function getId()
     {

@@ -5,7 +5,7 @@ namespace Phifty\ServiceProvider;
 use Phifty\Kernel;
 use Roller\Router;
 
-class RollerRouterServiceProvider extends BaseServiceProvider
+class RollerRouterServiceProvider extends ServiceProvider
 {
     public function getId()
     {

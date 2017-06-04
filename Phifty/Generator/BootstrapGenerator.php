@@ -38,7 +38,6 @@ use Phifty\ServiceProvider\ServiceProvider;
 use Phifty\ServiceProvider\BundleServiceProvider;
 use Phifty\ServiceProvider\DatabaseServiceProvider;
 use Phifty\ServiceProvider\ConfigServiceProvider;
-use Phifty\ServiceProvider\BaseServiceProvider;
 use Phifty\ServiceProvider\EventServiceProvider;
 use Phifty\ComposerConfigBridge;
 use Phifty\Kernel;
@@ -138,7 +137,6 @@ class BootstrapGenerator
         $block[] = new RequireClassStatement(Kernel::class);
         $block[] = new RequireClassStatement(Bootstrap::class);
         $block[] = new RequireClassStatement(ServiceProvider::class);
-        $block[] = new RequireClassStatement(BaseServiceProvider::class);
         $block[] = new RequireClassStatement(\Phifty\Environment\Environment::class);
         $block[] = new RequireClassStatement(\Phifty\Bundle\BundleActionCreators::class);
         $block[] = new RequireClassStatement(\Phifty\Bundle::class);
@@ -211,7 +209,7 @@ class BootstrapGenerator
             // Generate service provider statements
             foreach ($services as $serviceClass => $options) {
                 $block[] = new RequireClassStatement($serviceClass);
-                if (is_subclass_of($serviceClass, BaseServiceProvider::class)
+                if (is_subclass_of($serviceClass, ServiceProvider::class)
                     && $serviceClass::Generatable($kernel, $options)) {
                     if ($stm = $serviceClass::generatePrepare($kernel, $options)) {
                         $block[] = $stm;

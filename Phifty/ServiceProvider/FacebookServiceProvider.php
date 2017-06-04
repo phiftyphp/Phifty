@@ -11,7 +11,7 @@ use Phifty\Kernel;
   This class is @deprecated
 */
 
-class FacebookServiceProvider extends BaseServiceProvider
+class FacebookServiceProvider extends ServiceProvider
 {
     public function getId()
     {

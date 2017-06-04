@@ -13,7 +13,7 @@ use Phifty\Kernel;
 use UniversalCache\FileSystemCache;
 use Closure;
 
-class CacheServiceProvider extends BaseServiceProvider
+class CacheServiceProvider extends ServiceProvider
 {
     /**
      * @var Closure This is used for overriding the default service builder.

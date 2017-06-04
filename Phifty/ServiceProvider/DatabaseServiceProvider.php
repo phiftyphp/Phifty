@@ -10,7 +10,7 @@ use Maghead\Manager\DatabaseManager;
 use Maghead\Runtime\Bootstrap;
 use Phifty\Kernel;
 
-class DatabaseServiceProvider extends BaseServiceProvider
+class DatabaseServiceProvider extends ServiceProvider
 {
     protected $config;
 

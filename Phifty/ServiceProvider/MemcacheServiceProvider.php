@@ -6,7 +6,7 @@ use Memcache;
 use Exception;
 use Phifty\Kernel;
 
-class MemcacheServiceProvider extends BaseServiceProvider
+class MemcacheServiceProvider extends ServiceProvider
 {
     public function getId()
     {

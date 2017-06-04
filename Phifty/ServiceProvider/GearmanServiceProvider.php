@@ -9,7 +9,7 @@ use Universal\Container\ObjectContainer;
 use Exception;
 use Phifty\Kernel;
 
-class GearmanServiceProvider extends BaseServiceProvider
+class GearmanServiceProvider extends ServiceProvider
 {
     public function getId()
     {

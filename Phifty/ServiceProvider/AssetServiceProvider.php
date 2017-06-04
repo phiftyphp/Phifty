@@ -12,7 +12,7 @@ use UniversalCache\FileSystemCache;
 use UniversalCache\UniversalCache;
 use Phifty\Kernel;
 
-class AssetServiceProvider extends BaseServiceProvider
+class AssetServiceProvider extends ServiceProvider
 {
     public function getId()
     {

@@ -30,7 +30,7 @@ use Maghead\Runtime\Config\SymbolicLinkConfigLoader;
 use Phifty\Bootstrap;
 use Phifty\Generator\BootstrapGenerator;
 use Phifty\Bundle\BundleLoader;
-use Phifty\ServiceProvider\BaseServiceProvider;
+use Phifty\ServiceProvider\ServiceProvider;
 use Phifty\ServiceProvider\BundleServiceProvider;
 use Phifty\ServiceProvider\DatabaseServiceProvider;
 use Phifty\ServiceProvider\ConfigServiceProvider;

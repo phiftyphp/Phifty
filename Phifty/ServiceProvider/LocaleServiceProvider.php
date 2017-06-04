@@ -9,7 +9,7 @@ use Phifty\Kernel;
 // _('es');
 // _('zh_TW');
 // _('zh_CN');
-class LocaleServiceProvider extends BaseServiceProvider
+class LocaleServiceProvider extends ServiceProvider
 {
     public function getId()
     {

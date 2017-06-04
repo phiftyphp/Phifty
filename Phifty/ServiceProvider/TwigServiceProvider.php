@@ -22,7 +22,7 @@ use Phifty\Kernel;
 /**
  * Depends on AssetServiceProvider.
  */
-class TwigServiceProvider extends BaseServiceProvider
+class TwigServiceProvider extends ServiceProvider
 {
     public function getId()
     {

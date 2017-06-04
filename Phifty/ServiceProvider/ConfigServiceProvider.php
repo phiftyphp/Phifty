@@ -14,7 +14,7 @@ use ConfigKit\ConfigLoader;
  *
  * $config = $kernel->config->get('framework','Locale');
  */
-class ConfigServiceProvider extends BaseServiceProvider
+class ConfigServiceProvider extends ServiceProvider
 {
     protected $loader;
 

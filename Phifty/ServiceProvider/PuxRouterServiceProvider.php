@@ -6,7 +6,7 @@ use Phifty\Kernel;
 use Pux\Mux;
 use Pux\MuxBuilder\RESTfulMuxBuilder;
 
-class PuxRouterServiceProvider extends BaseServiceProvider
+class PuxRouterServiceProvider extends ServiceProvider
 {
     public function getId()
     {

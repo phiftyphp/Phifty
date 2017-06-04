@@ -5,7 +5,7 @@ namespace Phifty\ServiceProvider;
 use Phifty\Plugin\PluginManager;
 use Phifty\Kernel;
 
-class PluginServiceProvider extends BaseServiceProvider
+class PluginServiceProvider extends ServiceProvider
 {
     public function getId()
     {

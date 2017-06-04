@@ -16,7 +16,7 @@ use Phifty\ComposerConfigBridge;
  *   DefaultPermissions: ['email']
  *   DefaultLoginCallbackUrl: '/oauth/facebook/callback'
  */
-class Facebook4ServiceProvider extends BaseServiceProvider implements ComposerConfigBridge
+class Facebook4ServiceProvider extends ServiceProvider implements ComposerConfigBridge
 {
     public function getId()
     {

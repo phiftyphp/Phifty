@@ -70,7 +70,7 @@ class LibraryLoader
  *
  * }
  */
-class LibraryServiceProvider extends BaseServiceProvider
+class LibraryServiceProvider extends ServiceProvider
 {
     public $classloader;
 

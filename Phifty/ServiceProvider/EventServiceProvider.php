@@ -5,7 +5,7 @@ namespace Phifty\ServiceProvider;
 use Phifty\Kernel;
 use Universal\Event\EventDispatcher;
 
-class EventServiceProvider extends BaseServiceProvider
+class EventServiceProvider extends ServiceProvider
 {
     public function getId()
     {

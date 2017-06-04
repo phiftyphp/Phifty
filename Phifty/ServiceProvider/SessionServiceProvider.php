@@ -8,7 +8,7 @@ use SessionKit\Session;
 use SessionKit\State\NativeState;
 use SessionKit\Storage\NativeStorage;
 
-class SessionServiceProvider extends BaseServiceProvider
+class SessionServiceProvider extends ServiceProvider
 {
     public function getId()
     {

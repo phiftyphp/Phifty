@@ -120,7 +120,7 @@ class AesCryptor
 /**
  * http://www.itnewb.com/tutorial/PHP-Encryption-Decryption-Using-the-MCrypt-Library-libmcrypt.
  */
-class AesCryptorServiceProvider extends BaseServiceProvider
+class AesCryptorServiceProvider extends ServiceProvider
 {
     public function getId()
     {

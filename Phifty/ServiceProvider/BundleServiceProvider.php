@@ -5,7 +5,7 @@ namespace Phifty\ServiceProvider;
 use Phifty\Bundle\BundleManager;
 use Phifty\Kernel;
 
-class BundleServiceProvider extends BaseServiceProvider
+class BundleServiceProvider extends ServiceProvider
 {
     public function getId()
     {

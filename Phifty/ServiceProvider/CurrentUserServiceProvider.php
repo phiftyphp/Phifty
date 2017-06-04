@@ -4,7 +4,7 @@ namespace Phifty\ServiceProvider;
 
 use Phifty\Kernel;
 
-class CurrentUserServiceProvider extends BaseServiceProvider
+class CurrentUserServiceProvider extends ServiceProvider
 {
     public function getId()
     {

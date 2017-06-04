@@ -12,7 +12,7 @@ use ActionKit\ActionRequest;
 use ActionKit\Action;
 use Phifty\Kernel;
 
-class ActionServiceProvider extends BaseServiceProvider
+class ActionServiceProvider extends ServiceProvider
 {
     public function getId()
     {

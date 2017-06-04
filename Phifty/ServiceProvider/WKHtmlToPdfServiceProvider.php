@@ -41,7 +41,7 @@ class WKHtmlToPdf
  *  kernel()->wkHtmlToPdf->convert('http://google.com','test.pdf');
  *  system('open test.pdf');
  */
-class WKHtmlToPdfServiceProvider extends BaseServiceProvider
+class WKHtmlToPdfServiceProvider extends ServiceProvider
 {
     public function getId()
     {

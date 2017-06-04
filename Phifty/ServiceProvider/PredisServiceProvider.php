@@ -6,7 +6,7 @@ use Phifty\ComposerConfigBridge;
 use Phifty\Kernel;
 use Predis\Client as PredisClient;
 
-class PredisServiceProvider extends BaseServiceProvider implements ComposerConfigBridge
+class PredisServiceProvider extends ServiceProvider implements ComposerConfigBridge
 {
     public function getId()
     {
