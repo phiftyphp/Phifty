@@ -1,6 +1,6 @@
 <?php
 
-namespace Phifty;
+namespace Phifty\Routing;
 
 use Phifty\Testing\TestCase;
 use Funk\Testing\TestUtils;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Phifty;
+namespace Phifty\Routing;
 
 use Exception;
 use InvalidArgumentException;
@@ -8,6 +8,7 @@ use ReflectionObject;
 use Symfony\Component\Yaml\Yaml;
 use Pux\Controller\ExpandableController;
 use Pux\Expandable;
+use Phifty\Kernel;
 
 class Controller extends ExpandableController
 {
