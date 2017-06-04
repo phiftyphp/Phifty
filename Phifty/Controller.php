@@ -22,8 +22,8 @@ class Controller extends ExpandableController
 
     public function call(array & $environment, array $response)
     {
-        $response = parent::call($environment, $response);
         $this->kernel = $environment['phifty.kernel'];
+        $response = parent::call($environment, $response);
         return $response;
     }
 

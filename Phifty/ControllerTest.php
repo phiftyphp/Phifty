@@ -18,6 +18,7 @@ class TestController extends Controller
 
     public function viewAction()
     {
+        $view = $this->view();
     }
 }
 
