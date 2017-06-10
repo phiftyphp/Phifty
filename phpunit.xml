@@ -11,7 +11,11 @@
   <testsuites>
     <testsuite name="All">
       <directory suffix="Test.php">Phifty</directory>
-      <directory suffix="Test.php">bundles/crud</directory>
     </testsuite>
+
+    <testsuite name="CRUD">
+      <directory>bundles/crud/*Test.php</directory>
+    </testsuite>
+
   </testsuites>
 </phpunit>
