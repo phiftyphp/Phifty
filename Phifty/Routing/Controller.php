@@ -31,9 +31,8 @@ class Controller extends ExpandableController
     {
         if ('request' === $name) {
             return $this->getRequest();
-        } else {
-            throw new InvalidArgumentException( $name );
         }
+        throw new InvalidArgumentException("property '{$name}' is undefined.");
     }
 
     public function getCurrentUser()
