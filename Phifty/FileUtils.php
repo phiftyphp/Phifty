@@ -118,9 +118,16 @@ class FileUtils
         return $content;
     }
 
-    public static function filename_append_md5( $filename , $filePath = null )
+    public static function filename_md5($filename, $tmpFile = null)
     {
-        $suffix = $filePath ? md5( $filePath ) : md5( time() );
+        $md5 = $tmpFile ? md5($tmpFile) : md5($filename . time());
+        $info = pathinfo($filename);
+        return "{$info['dirname']}/{$md5}.{$info['extension']}";
+    }
+
+    public static function filename_append_md5($filename, $tmpFile = null)
+    {
+        $suffix = $tmpFile ? md5($tmpFile) : md5($filename . time());
         $pos = strrpos( $filename , '.' );
         if ($pos) {
             return
