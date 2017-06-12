@@ -46,36 +46,6 @@ TemplateController
 
 - Deprecated Phifty\Routing\ExpandableController
 
-CRUD
-
-- Updated expand method with Pux\Controller\ExpandableController
-
-RESTful:
-
-update:
-
-    kernel()->restful->registerResource('product','ProductBundle\\RESTful\\ProductHandler');
-    kernel()->restful->registerResource('product_type','ProductBundle\\RESTful\\ProductTypeHandler');
-
-to
-
-    kernel()->restful->addResource('product','ProductBundle\\RESTful\\ProductHandler');
-    kernel()->restful->addResource('product_type','ProductBundle\\RESTful\\ProductTypeHandler');
-
-Update RESTful controller
-
-     <?php
-     namespace ProductBundle\RESTful;
-    -use CRUD\RESTful\ResourceHandler;
-    +use CRUD\Controller\RESTfulResourceController;
-
-    -class ProductHandler extends ResourceHandler
-    +class ProductHandler extends RESTfulResourceController
-     {
-         public $recordClass = 'ProductBundle\\Model\\Product';
-     }
-
-
 Phifty\Controller
 
 - Phifty\Controller now extends from Pux\Controller\Controller;
