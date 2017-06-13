@@ -1,6 +1,6 @@
 <?php
 
-namespace Phifty\Schema\Loader;
+namespace Phifty\Schema\Finder;
 
 use Phifty\Testing\TestCase;
 
@@ -8,8 +8,8 @@ class AppSchemaLoaderTest extends TestCase
 {
     public function test()
     {
-        $loader = new AppSchemaLoader([], $this->kernel);
-        $files = $loader->load();
+        $finder = new AppSchemaFinder([], $this->kernel);
+        $files = $finder->find();
         $this->assertNotEmpty($files);
     }
 }

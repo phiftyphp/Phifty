@@ -1,11 +1,11 @@
 <?php
 
-namespace Phifty\Schema\Loader;
+namespace Phifty\Schema\Finder;
 
-use Maghead\Schema\Loader\FileSchemaLoader;
+use Maghead\Schema\Finder\FileSchemaFinder;
 use Phifty\Kernel;
 
-class AppSchemaLoader extends FileSchemaLoader
+class AppSchemaFinder extends FileSchemaFinder
 {
     public function __construct(array $paths = [], Kernel $kernel = null)
     {
