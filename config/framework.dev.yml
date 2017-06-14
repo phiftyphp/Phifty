@@ -51,3 +51,4 @@ Bundles:
   CRUD:
   UserBundle:
     UseAccount: true
+  ProductBundle:
