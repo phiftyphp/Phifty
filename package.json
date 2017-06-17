@@ -2,7 +2,7 @@
   "name": "phifty",
   "version": "4.0.0",
   "description": "node-js package for phifty web framework",
-  "license" : "MIT",
+  "license": "MIT",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -13,21 +13,22 @@
     "start": "node lib/server-production"
   },
   "author": {
-    "name" : "Yo-An Lin",
-    "email" : "yoanlin93@gmail.com",
-    "url" : "http://corneltek.com"
+    "name": "Yo-An Lin",
+    "email": "yoanlin93@gmail.com",
+    "url": "http://corneltek.com"
   },
   "bugs": {
     "url": "https://github.com/phiftyphp/phifty/issues"
   },
-  "repository" : {
-      "type": "git",
-      "url": "https://github.com/phiftyphp/phifty.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/phiftyphp/phifty.git"
   },
   "dependencies": {
     "async": "^1.2.0",
     "babel-core": "^6.9.0",
     "babel-loader": "^6.2.4",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.8.0",
     "babel-plugin-transform-object-assign": "^6.8.0",
     "babel-plugin-transform-runtime": "^6.9.0",
@@ -37,30 +38,31 @@
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "^6.5.0",
     "babel-runtime": "^6.9.0",
-
+    "classnames": "^2.2",
+    "css-loader": "^0.14.0",
+    "cwd": "^0.9.1",
+    "eslint": "^0.22.0",
+    "eslint-plugin-react": "^2.2.0",
+    "extract-text-webpack-plugin": "^0.8.0",
     "file-loader": "^0.8.1",
-    "object-assign": "^4.1.0",
+    "flux": "^2.1.1",
+    "fs": "0.0.2",
+    "jsx-loader": "^0.13.2",
+    "keymirror": "^0.1.1",
+    "object-assign": "^4.0.1",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-hot-loader": "^1.3.0",
+    "react-proxy-loader": "^0.3.1",
+    "ts-loader": "^0.8.2",
     "typedoc": "^0.3.12",
     "uglify-loader": "^1.3.0",
     "webpack": "^1.13.1",
     "webpack-closure-compiler": "^2.0.2",
     "webpack-dev-server": "^1.14.1",
     "webpack-stream": "^3.2.0",
-    "jsx-loader": "^0.13.2",
-    "ts-loader": "^0.8.2",
-    "css-loader": "^0.14.0",
-
-    "cwd": "^0.9.1",
-    "eslint": "^0.22.0",
-    "eslint-plugin-react": "^2.2.0",
-    "extract-text-webpack-plugin": "^0.8.0",
-    "flux": "^2.1.1",
-    "fs": "0.0.2",
-    "keymirror": "^0.1.1",
-    "object-assign": "^4.0.1",
-    "classnames": "^2.2",
-    "react": "^15",
-    "react-hot-loader": "^1.3.0",
-    "react-proxy-loader": "^0.3.1"
-  }
+    "babel-plugin-transform-decorators": "^6.24.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4"
+  },
+  "devDependencies": { }
 }
