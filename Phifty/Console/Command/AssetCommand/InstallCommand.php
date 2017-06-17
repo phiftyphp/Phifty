@@ -25,9 +25,9 @@ class InstallCommand extends AssetBaseCommand
         $loader = $this->getAssetLoader();
         $this->logger->debug("Installing " . get_class($bundle) . " assets...");
 
+        $rootAssetEntryFile = PH_APP_ROOT . DIRECTORY_SEPARATOR . '.asset-entries.json';
+        $rootNodeModules = PH_APP_ROOT . DIRECTORY_SEPARATOR . 'node_modules';
 
-        $rootAssetEntryFile = PH_ROOT . DIRECTORY_SEPARATOR . '.asset-entries.json';
-        $rootNodeModules = PH_ROOT . DIRECTORY_SEPARATOR . 'node_modules';
         $hasRootAssetEntryFile = file_exists($rootAssetEntryFile);
         $hasRootNodeModule = file_exists($rootNodeModules);
 
@@ -55,7 +55,7 @@ class InstallCommand extends AssetBaseCommand
                     if (file_exists($target)) {
                         unlink($target);
                     }
-                    $this->logger->debug("Linking $rootNodeModules to $target");
+                    $this->logger->debug("Linking {$rootNodeModules} to {$target}");
                     symlink($rootNodeModules, $target);
                 }
             }
