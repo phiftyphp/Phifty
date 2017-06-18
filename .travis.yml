@@ -1,5 +1,9 @@
 dist: trusty
 
+services:
+- postgresql
+- mysql
+
 language: php
 
 php:
