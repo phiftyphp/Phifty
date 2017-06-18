@@ -1,7 +1,7 @@
-var cwd = require('cwd');
-var path = require('path');
-var fs = require('fs');
-var webpack = require('webpack');
+const cwd = require('cwd');
+const path = require('path');
+const fs = require('fs');
+const webpack = require('webpack');
 var __root = cwd();
 
 var phifty = {};
@@ -44,4 +44,53 @@ phifty.assetAliases = function() {
   return {};
 };
 phifty.webpack = webpack;
+
+phifty.buildWebpackConfig = function() {
+
+    const excludePaths = phifty.webpackExcludePaths();
+    const aliases = phifty.assetAliases(); // load asset packages
+
+    return {
+        entry: __dirname + '/entry',
+
+        output: { path: __dirname, filename: './bundle.js' },
+
+        module: {
+            loaders: [
+                {
+                    "test": /\.tsx?$/,
+                    "loader": "ts-loader",
+                    "exclude": [/node_modules/,excludePaths]
+                },
+                {
+                    "test": /\.jsx?$/,
+                    "loader": "babel-loader",
+                    "query": {
+                        "presets": ["react", "es2015"],
+                        "plugins": ["transform-class-properties", "transform-decorators-legacy"]
+                    },
+                    "exclude": [/node_modules/,excludePaths]
+                }
+            ]
+        },
+
+        externals: {
+            // don't bundle the 'react' npm package with our bundle.js
+            // but get it from a global 'React' variable
+            'react': 'React',
+            'react-dom': 'ReactDOM',
+        },
+
+        resolve: {
+            extensions: ['', '.ts', '.tsx', '.js', '.jsx'],
+            fallback: [ path.join(__dirname, "node_modules"), phifty.moduleDirectory],
+            alias: aliases
+        },
+
+        resolveLoader: {
+            fallback: [ path.join(__dirname, "node_modules"), phifty.moduleDirectory]
+        }
+    };
+};
+
 module.exports = phifty;
