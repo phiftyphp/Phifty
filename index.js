@@ -45,15 +45,15 @@ phifty.assetAliases = function() {
 };
 phifty.webpack = webpack;
 
-phifty.buildWebpackConfig = function() {
+phifty.buildWebpackConfig = function(configRoot) {
 
     const excludePaths = phifty.webpackExcludePaths();
     const aliases = phifty.assetAliases(); // load asset packages
 
     return {
-        entry: __dirname + '/entry',
+        entry: configRoot + '/entry',
 
-        output: { path: __dirname, filename: './bundle.js' },
+        output: { path: configRoot, filename: './bundle.js' },
 
         module: {
             loaders: [
@@ -83,12 +83,12 @@ phifty.buildWebpackConfig = function() {
 
         resolve: {
             extensions: ['', '.ts', '.tsx', '.js', '.jsx'],
-            fallback: [ path.join(__dirname, "node_modules"), phifty.moduleDirectory],
+            fallback: [ path.join(configRoot, "node_modules"), phifty.moduleDirectory],
             alias: aliases
         },
 
         resolveLoader: {
-            fallback: [ path.join(__dirname, "node_modules"), phifty.moduleDirectory]
+            fallback: [ path.join(configRoot, "node_modules"), phifty.moduleDirectory]
         }
     };
 };
