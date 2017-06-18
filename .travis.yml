@@ -24,6 +24,7 @@ install:
 - composer require "satooshi/php-coveralls" "^1" --no-update --dev
 - composer install
 - ./travis/install
+- npm install
 
 before_script:
 # install and setup apache2
