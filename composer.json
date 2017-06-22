@@ -17,7 +17,7 @@
         "corneltek/webui": "@dev",
         "maghead/maghead": "4.0.x-dev",
         "maghead/magsql": "@dev",
-        "corneltek/actionkit": "4.0.x-dev",
+        "c9s/webaction": "4.0.x-dev",
         "corneltek/assetkit": "4.0.x-dev",
         "corneltek/kendo": "4.0.x-dev",
         "corneltek/pux": "2.0.x-dev",
