@@ -2,8 +2,8 @@
 
 namespace Phifty\ServiceProvider;
 
-use ActionKit\ActionRunner;
-use ActionKit\ActionGenerator;
+use WebAction\ActionRunner;
+use WebAction\ActionGenerator;
 use Pimple\Container;
 use Phifty\ServiceProvider\EventServiceProvider;
 use Phifty\ServiceProvider\ActionServiceProvider;

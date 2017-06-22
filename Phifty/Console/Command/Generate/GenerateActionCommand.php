@@ -2,7 +2,7 @@
 namespace Phifty\Console\Command\Generate;
 
 use CLIFramework\Command;
-use ActionKit\ActionGenerator;
+use WebAction\ActionGenerator;
 
 class GenerateActionCommand extends Command
 {

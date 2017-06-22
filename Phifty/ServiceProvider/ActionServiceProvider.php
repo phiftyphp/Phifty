@@ -2,14 +2,14 @@
 
 namespace Phifty\ServiceProvider;
 
-use ActionKit\ActionRunner;
-use ActionKit\ServiceContainer;
-use ActionKit\ActionTemplate\TwigActionTemplate;
-use ActionKit\ActionTemplate\CodeGenActionTemplate;
-use ActionKit\ActionTemplate\RecordActionTemplate;
-use ActionKit\ActionTemplate\UpdateOrderingRecordActionTemplate;
-use ActionKit\ActionRequest;
-use ActionKit\Action;
+use WebAction\ActionRunner;
+use WebAction\ServiceContainer;
+use WebAction\ActionTemplate\TwigActionTemplate;
+use WebAction\ActionTemplate\CodeGenActionTemplate;
+use WebAction\ActionTemplate\RecordActionTemplate;
+use WebAction\ActionTemplate\UpdateOrderingRecordActionTemplate;
+use WebAction\ActionRequest;
+use WebAction\Action;
 use Phifty\Kernel;
 
 class ActionServiceProvider extends ServiceProvider
