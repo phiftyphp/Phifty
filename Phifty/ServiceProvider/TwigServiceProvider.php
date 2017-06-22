@@ -131,7 +131,7 @@ class TwigServiceProvider extends ServiceProvider
             $env->addExtension(new Twig_Extensions_Extension_I18n());
 
             // load markdown twig extension
-            if (class_exists('Twig_Extension_Markdown', true)) {
+            if (class_exists(Twig_Extension_Markdown::class, true)) {
                 $env->addExtension(new Twig_Extension_Markdown());
             }
 
