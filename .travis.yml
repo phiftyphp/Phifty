@@ -66,6 +66,7 @@ cache:
   directories:
   - vendor
   - ~/.composer/cache
+  - ~/.npm
 
 notifications:
   email:
