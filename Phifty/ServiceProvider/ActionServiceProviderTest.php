@@ -5,6 +5,8 @@ namespace Phifty\ServiceProvider;
 use WebAction\ActionRunner;
 use WebAction\ActionGenerator;
 use WebAction\ActionRequest;
+use WebAction\Result;
+
 use Pimple\Container;
 use Phifty\ServiceProvider\EventServiceProvider;
 use Phifty\ServiceProvider\ActionServiceProvider;
@@ -36,12 +38,13 @@ class ActionServiceProviderTest extends ModelTestCase
         $this->assertNotNull($kernel->actionService instanceof Container);
         $this->assertNotNull($kernel->actionService['generator'] instanceof ActionGenerator);
 
-        $ret = $kernel->actionRunner->run("UserBundle::Action::CreateUser", new ActionRequest([
+        $result = $kernel->actionRunner->run("UserBundle::Action::CreateUser", new ActionRequest([
             'account' => 'timcook',
             'password' => 'cooktim',
             'email' => 'timcook@apple.com',
         ]));
-        var_dump( $ret ); 
-        
+
+        $this->assertInstanceOf(Result::class, $result);
+        $this->assertEquals('success', $result->type);
     }
 }
