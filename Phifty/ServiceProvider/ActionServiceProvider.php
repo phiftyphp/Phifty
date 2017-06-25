@@ -3,7 +3,7 @@
 namespace Phifty\ServiceProvider;
 
 use WebAction\ActionRunner;
-use WebAction\ServiceContainer;
+use WebAction\DefaultConfigurations;
 use WebAction\ActionTemplate\TwigActionTemplate;
 use WebAction\ActionTemplate\CodeGenActionTemplate;
 use WebAction\ActionTemplate\RecordActionTemplate;
@@ -22,28 +22,30 @@ class ActionServiceProvider extends ServiceProvider
     public function register(Kernel $k, array $options = array())
     {
         $k->actionService = function () use ($k, $options) {
-            $container = new ServiceContainer();
-            $container['cache_dir'] = $k->cacheDir;
+            $conf = new DefaultConfigurations();
+            $conf['cache_dir'] = $k->cacheDir;
             if ($k->locale) {
-                $container['locale'] = $k->locale->current;
+                $conf['locale'] = $k->locale->current;
             }
 
             if (isset($options['DefaultFieldView'])) {
                 Action::$defaultFieldView = $options['DefaultFieldView'];
             }
 
-            $generator = $container['generator'];
+            $generator = $conf['generator'];
             $generator->registerTemplate('TwigActionTemplate', new TwigActionTemplate());
             $generator->registerTemplate('CodeGenActionTemplate', new CodeGenActionTemplate());
             $generator->registerTemplate('RecordActionTemplate', new RecordActionTemplate());
             $generator->registerTemplate('UpdateOrderingRecordActionTemplate', new UpdateOrderingRecordActionTemplate());
 
-            return $container;
+            return $conf;
         };
 
         $k->actionRunner = function () use ($k) {
-            $actionRunner = new ActionRunner($k->actionService);
-            $actionRunner->registerAutoloader();
+            $loader = $k->actionService['loader'];
+            $loader->autoload();
+
+            $actionRunner = new ActionRunner($loader);
             // $actionRunner->setDebug();
             return $actionRunner;
         };

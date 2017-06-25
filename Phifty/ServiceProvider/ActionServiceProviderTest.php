@@ -4,14 +4,27 @@ namespace Phifty\ServiceProvider;
 
 use WebAction\ActionRunner;
 use WebAction\ActionGenerator;
+use WebAction\ActionRequest;
 use Pimple\Container;
 use Phifty\ServiceProvider\EventServiceProvider;
 use Phifty\ServiceProvider\ActionServiceProvider;
 use Phifty\Kernel;
 use Phifty\Testing\TestCase;
+use Phifty\Testing\ModelTestCase;
 
-class ActionServiceProviderTest extends TestCase
+use UserBundle\Model\UserSchema;
+use UserBundle\Model\User;
+use UserBundle\Action\CreateUser;
+
+class ActionServiceProviderTest extends ModelTestCase
 {
+
+
+    public function models()
+    {
+        return [new UserSchema];
+    }
+
     public function testActionService()
     {
         $kernel = Kernel::minimal($this->configLoader);
@@ -22,5 +35,13 @@ class ActionServiceProviderTest extends TestCase
         $this->assertNotNull($kernel->actionRunner instanceof ActionRunner);
         $this->assertNotNull($kernel->actionService instanceof Container);
         $this->assertNotNull($kernel->actionService['generator'] instanceof ActionGenerator);
+
+        $ret = $kernel->actionRunner->run("UserBundle::Action::CreateUser", new ActionRequest([
+            'account' => 'timcook',
+            'password' => 'cooktim',
+            'email' => 'timcook@apple.com',
+        ]));
+        var_dump( $ret ); 
+        
     }
 }
