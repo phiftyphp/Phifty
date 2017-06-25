@@ -5,7 +5,7 @@ schema:
   auto_id: true
   finders:
   - Phifty::Schema::Finder::AppSchemaFinder
-  - { name: ComposerSchemaLoader, args: ["composer.json"] }
+  - { name: ComposerSchemaFinder, args: ["composer.json"] }
 seeds:
 databases:
   master:
