@@ -18,6 +18,8 @@ class DatabaseServiceProviderTest extends TestCase
             'config' => 'config/database.yml',
         ]);
 
+        $serviceProvider->boot($kernel);
+
         $dsManager = DataSourceManager::getInstance();
         $this->assertNotNull($dsManager->getConnection('master'));
         $this->assertNotNull($dsManager->getMasterConnection());

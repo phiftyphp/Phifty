@@ -11,6 +11,6 @@ databases:
   master:
     driver: mysql
     host: localhost
-    database: phifty
+    database: testing
     user: root
     pass:
