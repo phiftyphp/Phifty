@@ -3,8 +3,8 @@ cli:
   bootstrap: "bootstrap.php"
 schema:
   auto_id: true
-  loaders:
-  - Phifty::Schema::Loader::AppSchemaLoader
+  finders:
+  - Phifty::Schema::Finder::AppSchemaFinder
   - { name: ComposerSchemaLoader, args: ["composer.json"] }
 seeds:
 databases:
