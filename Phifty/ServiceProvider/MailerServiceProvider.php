@@ -6,7 +6,6 @@ use Phifty\ComposerConfigBridge;
 use Phifty\Kernel;
 use ConfigKit\Accessor;
 use Swift_Mailer;
-use Swift_MailTransport;
 use Swift_SendmailTransport;
 use Swift_SmtpTransport;
 use Swift_Plugins_AntiFloodPlugin;
@@ -74,13 +73,14 @@ class MailerServiceProvider extends ServiceProvider implements ComposerConfigBri
                 $transport->setAuthMode($transportOptions['AuthMode']);
             }
             return $transport;
-        } elseif (isset($options['MailTransport'])) {
-            return Swift_MailTransport::newInstance();
-        } elseif (isset($options['SendmailTransport'])) {
+        } else if (isset($options['SendmailTransport'])) {
             $transportOptions = $options['SendmailTransport'];
             return Swift_SendmailTransport::newInstance($transportOptions['Command']);
+        } else {
+
+            throw new Exception("Either SmtpTransport or SendmailTransport must be setup.");
+
         }
-        return Swift_MailTransport::newInstance();
     }
 
     public function register(Kernel $kernel, array $options = array())
