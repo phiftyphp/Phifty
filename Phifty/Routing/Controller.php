@@ -25,7 +25,15 @@ class Controller extends ExpandableController
     {
         parent::context($environment, $response);
         $this->kernel = $environment['phifty.kernel'];
+        $this->init();
     }
+
+    protected function init()
+    {
+
+    }
+
+
 
     public function __get($name)
     {
