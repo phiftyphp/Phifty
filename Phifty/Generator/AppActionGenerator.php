@@ -34,7 +34,7 @@ class AppActionGenerator
      */
     public function addUpdateOrderingAction($modelName)
     {
-        $this->kernel->actionService['loader']->register('UpdateOrderingRecordActionTemplate', array(
+        $this->kernel->actionLoader->registerTemplateAction('UpdateOrderingRecordActionTemplate', array(
             'namespace' => $this->bundle->getNamespace(),
             'model' => $modelName,
         ));
@@ -58,7 +58,7 @@ class AppActionGenerator
         if (!$types || empty($types)) {
             $types = $this->defaultActionTypes;
         }
-        $this->kernel->actionService['loader']->register('RecordActionTemplate', array(
+        $this->kernel->actionLoader->registerTemplateAction('RecordActionTemplate', array(
             'namespace' => $this->bundle->getNamespace(),
             'model' => $modelName,
             'types' => (array) $types,
@@ -75,7 +75,7 @@ class AppActionGenerator
     {
         $className = $this->bundle->getNamespace() . '\\Action\\Import' . $modelName . 'Simple';
         $recordClass = $this->bundle->getNamespace() . '\\Model\\' . $modelName;
-        $this->kernel->actionService['loader']->register('CodeGenActionTemplate', [
+        $this->kernel->actionLoader->registerTemplateAction('CodeGenActionTemplate', [
             "action_class" => $className,
             "extends"      => "\\CRUD\\Action\\ImportSimple",
             "properties"   => [ "recordClass" => $recordClass, ],

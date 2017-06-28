@@ -41,11 +41,14 @@ class ActionServiceProvider extends ServiceProvider
             return $conf;
         };
 
-        $k->actionRunner = function () use ($k) {
+        $k->actionLoader = function () use ($k) {
             $loader = $k->actionService['loader'];
             $loader->autoload();
+            return $loader;
+        };
 
-            $actionRunner = new ActionRunner($loader);
+        $k->actionRunner = function () use ($k) {
+            $actionRunner = new ActionRunner($k->actionLoader);
             // $actionRunner->setDebug();
             return $actionRunner;
         };
