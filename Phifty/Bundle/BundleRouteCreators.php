@@ -3,6 +3,7 @@
 namespace Phifty\Bundle;
 
 use LogicException;
+use Exception;
 use Phifty\Routing\TemplateController;
 
 trait BundleRouteCreators
@@ -62,10 +63,11 @@ trait BundleRouteCreators
 
             // Convert controlelr class name to full-qualified name
             // If it's not full-qualified classname, we should prepend our base namespace.
-            if ($class[0] === '+' || $class[0] === '\\') {
-                $class = substr($class, 1);
-            } else {
+            if (!class_exists($class)) {
                 $class = $this->getNamespace() . "\\Controller\\$class";
+            }
+            if (!class_exists($class)) {
+                throw new Exception("Controller '{$class}' not found.");
             }
 
             if (! method_exists($class, $action)) {
