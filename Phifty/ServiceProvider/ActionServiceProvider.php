@@ -7,7 +7,7 @@ use WebAction\DefaultConfigurations;
 use WebAction\ActionTemplate\TwigActionTemplate;
 use WebAction\ActionTemplate\CodeGenActionTemplate;
 use WebAction\ActionTemplate\RecordActionTemplate;
-use WebAction\ActionTemplate\UpdateOrderingRecordActionTemplate;
+use WebAction\ActionTemplate\SortRecordActionTemplate;
 use WebAction\ActionRequest;
 use WebAction\Action;
 use Phifty\Kernel;
@@ -36,7 +36,7 @@ class ActionServiceProvider extends ServiceProvider
             $generator->registerTemplate('TwigActionTemplate', new TwigActionTemplate());
             $generator->registerTemplate('CodeGenActionTemplate', new CodeGenActionTemplate());
             $generator->registerTemplate('RecordActionTemplate', new RecordActionTemplate());
-            $generator->registerTemplate('UpdateOrderingRecordActionTemplate', new UpdateOrderingRecordActionTemplate());
+            $generator->registerTemplate('SortRecordActionTemplate', new SortRecordActionTemplate());
 
             return $conf;
         };

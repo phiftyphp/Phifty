@@ -34,7 +34,7 @@ class AppActionGenerator
      */
     public function addUpdateOrderingAction($modelName)
     {
-        $this->kernel->actionLoader->registerTemplateAction('UpdateOrderingRecordActionTemplate', array(
+        $this->kernel->actionLoader->registerTemplateAction('SortRecordActionTemplate', array(
             'namespace' => $this->bundle->getNamespace(),
             'model' => $modelName,
         ));
