@@ -151,6 +151,11 @@ class Controller extends ExpandableController
         return [200, [ 'Content-type: application/yaml; charset=UTF-8;' ], $body ];
     }
 
+    public function error($code, $message)
+    {
+        return [ $code, ['Content-Type: text/html;'], $message];
+    }
+
     /**
      * Render template directly.
      *
