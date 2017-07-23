@@ -35,12 +35,19 @@
         "vlucas/phpdotenv": "^2.4"
     },
     "require-dev": {
+        "jonnyw/php-phantomjs": "dev-master",
         "phifty/corebundle": "4.0.x-dev",
         "phifty/commonbundle": "4.0.x-dev",
         "phifty/adminui": "4.0.x-dev",
         "phifty/crud": "4.0.x-dev",
         "phifty/userbundle": "4.0.x-dev"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/c9s/php-phantomjs"
+        }
+    ],
     "suggest": {
         "browscap/browscap-php": "^3.1",
         "symfony/css-selector": "^2.8|^3.0|^3.2",
