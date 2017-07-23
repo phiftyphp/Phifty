@@ -3,6 +3,9 @@
 namespace Phifty\Console\Command;
 
 use CLIFramework\Command;
+use Phifty\Console\Command\AssetCommand\InitCommand;
+use Phifty\Console\Command\AssetCommand\InstallCommand;
+
 
 /**
  * When running asset:init command, we should simply register app/plugin assets
@@ -24,7 +27,7 @@ class AssetCommand extends Command
     public function options($opts)
     {
         // Create options from install command
-        $init = $this->createCommand(AssetCommand\InstallCommand::class);
+        $init = $this->createCommand(InstallCommand::class);
         $init->options($opts);
     }
 
@@ -33,17 +36,18 @@ class AssetCommand extends Command
         $this->command('init');
         $this->command('list');
         $this->command('install');
+        $this->command('compile');
     }
 
     public function execute()
     {
         $app = $this->getApplication();
 
-        $init = $this->createCommand(AssetCommand\InitCommand::class);
+        $init = $this->createCommand(InitCommand::class);
         $init->options = $this->getOptions();
         $init->executeWrapper(array());
 
-        $install = $this->createCommand(AssetCommand\InstallCommand::class);
+        $install = $this->createCommand(InstallCommand::class);
         $install->options = $this->getOptions();
         $install->executeWrapper(array());
     }

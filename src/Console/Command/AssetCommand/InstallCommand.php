@@ -1,4 +1,5 @@
 <?php
+
 namespace Phifty\Console\Command\AssetCommand;
 
 use CLIFramework\Command;
