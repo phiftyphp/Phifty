@@ -44,6 +44,7 @@ ServiceProviders:
   RedisServiceProvider:
   AesCryptorServiceProvider:
   FirePHPServiceProvider:
+  PhantomJsServiceProvider:
 Bundles:
   CoreBundle:
   CommonBundle:
