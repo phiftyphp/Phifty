@@ -75,12 +75,9 @@ class Controller extends ExpandableController
      *
      * @return Phifty\View
      */
-    public function view(array $options = array())
+    public function view()
     {
         if ($this->_view) {
-            if (!empty($options)) {
-                throw new Exception("The View object is already initialized.");
-            }
             return $this->_view;
         }
 
@@ -163,9 +160,9 @@ class Controller extends ExpandableController
      * @param array  $args     template arguments
      * @return string rendered result
      */
-    public function render($template, array $args = array(), array $engineOpts = array())
+    public function render($template, array $args = array())
     {
-        $view = $this->view($engineOpts);
+        $view = $this->view();
         $view->assign($args);
         return [200, ['Content-Type: text/html;'], $view->render($template)];
     }
