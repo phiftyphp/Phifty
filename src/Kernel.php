@@ -173,14 +173,8 @@ class Kernel extends ObjectContainer
     }
 
 
-    /**
-     * TODO: A better place to put this method
-     */
     public function getHost()
     {
-        if ($domain = $this->config->get('framework','Domain')) {
-            return $domain;
-        }
         if (isset($_SERVER['HTTP_HOST'])) {
             return $_SERVER['HTTP_HOST'];
         }
@@ -199,6 +193,9 @@ class Kernel extends ObjectContainer
         }
         return $url;
     }
+
+
+
 
     public function getBaseUrl()
     {

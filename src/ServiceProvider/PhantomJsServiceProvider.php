@@ -15,8 +15,14 @@ class PhantomJsServiceProvider extends ServiceProvider
 
     public function register(Kernel $kernel, array $options = array())
     {
-        $kernel->phantom = function($c) {
-            return Client::getInstance();
+        $kernel->phantom = function($c) use ($options) {
+            $client = Client::getInstance();
+
+            if (isset($options['Path'])) {
+                $client->getEngine()->setPath($options['Path']);
+            }
+
+            return $client;
         };
     }
 }
