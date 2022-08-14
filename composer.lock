@@ -1388,12 +1388,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/maghead/maghead.git",
-                "reference": "609ab99b9bec259a2e97b2221f69967fca0c02f8"
+                "reference": "4ce4cd6407b63f3c2b5e0309e287b8813c1c4b9f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maghead/maghead/zipball/609ab99b9bec259a2e97b2221f69967fca0c02f8",
-                "reference": "609ab99b9bec259a2e97b2221f69967fca0c02f8",
+                "url": "https://api.github.com/repos/maghead/maghead/zipball/4ce4cd6407b63f3c2b5e0309e287b8813c1c4b9f",
+                "reference": "4ce4cd6407b63f3c2b5e0309e287b8813c1c4b9f",
                 "shasum": ""
             },
             "require": {
@@ -1465,7 +1465,7 @@
                 "issues": "https://github.com/maghead/maghead/issues",
                 "source": "https://github.com/maghead/maghead/tree/master"
             },
-            "time": "2022-08-14T10:38:29+00:00"
+            "time": "2022-08-14T10:50:36+00:00"
         },
         {
             "name": "maghead/magsql",
