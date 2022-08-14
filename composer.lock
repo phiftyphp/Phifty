@@ -1,0 +1,3622 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "6be85d1fbb14850a476c6808293db63d",
+    "packages": [
+        {
+            "name": "c9s/webaction",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/c9s/WebAction.git",
+                "reference": "c4205039bc82b6a771e0dfdaca31dd284b98e6b0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/c9s/WebAction/zipball/c4205039bc82b6a771e0dfdaca31dd284b98e6b0",
+                "reference": "c4205039bc82b6a771e0dfdaca31dd284b98e6b0",
+                "shasum": ""
+            },
+            "require": {
+                "corneltek/cascading-attribute": "^1",
+                "corneltek/cliframework": "@dev",
+                "corneltek/codegen": "@dev",
+                "corneltek/fileutil": "^1.7",
+                "corneltek/formkit": "^1.4",
+                "corneltek/imagekit": "^1",
+                "pekkis/mime-types": "^1",
+                "phifty/locale": "^3",
+                "php": ">=7",
+                "pimple/pimple": "^3.0",
+                "twig/twig": "^2",
+                "universal/universal": "2.0.x-dev"
+            },
+            "conflict": {
+                "corneltek/actionkit": "*"
+            },
+            "require-dev": {
+                "corneltek/kendo": "4.0.x-dev",
+                "corneltek/webserver-runner": "dev-master",
+                "maghead/maghead": "4.0.x-dev",
+                "maghead/magsql": "@dev"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "WebAction\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Yo-An Lin",
+                    "email": "yoanlin93+composer@gmail.com"
+                }
+            ],
+            "support": {
+                "issues": "https://github.com/c9s/WebAction/issues",
+                "source": "https://github.com/c9s/WebAction/tree/master"
+            },
+            "time": "2022-05-27T05:53:21+00:00"
+        },
+        {
+            "name": "composer/installers",
+            "version": "v1.12.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/composer/installers.git",
+                "reference": "d20a64ed3c94748397ff5973488761b22f6d3f19"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/composer/installers/zipball/d20a64ed3c94748397ff5973488761b22f6d3f19",
+                "reference": "d20a64ed3c94748397ff5973488761b22f6d3f19",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0 || ^2.0"
+            },
+            "replace": {
+                "roundcube/plugin-installer": "*",
+                "shama/baton": "*"
+            },
+            "require-dev": {
+                "composer/composer": "1.6.* || ^2.0",
+                "composer/semver": "^1 || ^3",
+                "phpstan/phpstan": "^0.12.55",
+                "phpstan/phpstan-phpunit": "^0.12.16",
+                "symfony/phpunit-bridge": "^4.2 || ^5",
+                "symfony/process": "^2.3"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "Composer\\Installers\\Plugin",
+                "branch-alias": {
+                    "dev-main": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Composer\\Installers\\": "src/Composer/Installers"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kyle Robinson Young",
+                    "email": "kyle@dontkry.com",
+                    "homepage": "https://github.com/shama"
+                }
+            ],
+            "description": "A multi-framework Composer library installer",
+            "homepage": "https://composer.github.io/installers/",
+            "keywords": [
+                "Craft",
+                "Dolibarr",
+                "Eliasis",
+                "Hurad",
+                "ImageCMS",
+                "Kanboard",
+                "Lan Management System",
+                "MODX Evo",
+                "MantisBT",
+                "Mautic",
+                "Maya",
+                "OXID",
+                "Plentymarkets",
+                "Porto",
+                "RadPHP",
+                "SMF",
+                "Starbug",
+                "Thelia",
+                "Whmcs",
+                "WolfCMS",
+                "agl",
+                "aimeos",
+                "annotatecms",
+                "attogram",
+                "bitrix",
+                "cakephp",
+                "chef",
+                "cockpit",
+                "codeigniter",
+                "concrete5",
+                "croogo",
+                "dokuwiki",
+                "drupal",
+                "eZ Platform",
+                "elgg",
+                "expressionengine",
+                "fuelphp",
+                "grav",
+                "installer",
+                "itop",
+                "joomla",
+                "known",
+                "kohana",
+                "laravel",
+                "lavalite",
+                "lithium",
+                "magento",
+                "majima",
+                "mako",
+                "mediawiki",
+                "miaoxing",
+                "modulework",
+                "modx",
+                "moodle",
+                "osclass",
+                "pantheon",
+                "phpbb",
+                "piwik",
+                "ppi",
+                "processwire",
+                "puppet",
+                "pxcms",
+                "reindex",
+                "roundcube",
+                "shopware",
+                "silverstripe",
+                "sydes",
+                "sylius",
+                "symfony",
+                "tastyigniter",
+                "typo3",
+                "wordpress",
+                "yawik",
+                "zend",
+                "zikula"
+            ],
+            "support": {
+                "issues": "https://github.com/composer/installers/issues",
+                "source": "https://github.com/composer/installers/tree/v1.12.0"
+            },
+            "funding": [
+                {
+                    "url": "https://packagist.com",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/composer",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/composer/composer",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2021-09-13T08:19:44+00:00"
+        },
+        {
+            "name": "corneltek/assetkit",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/c9s/AssetKit.git",
+                "reference": "b3752bba1c990b1543aebe5dc9f8f3afddc8fef1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/c9s/AssetKit/zipball/b3752bba1c990b1543aebe5dc9f8f3afddc8fef1",
+                "reference": "b3752bba1c990b1543aebe5dc9f8f3afddc8fef1",
+                "shasum": ""
+            },
+            "require": {
+                "corneltek/cliframework": "4.1.x-dev",
+                "corneltek/codegen": "@dev",
+                "corneltek/configkit": "^1.6",
+                "corneltek/fileutil": "^1.7",
+                "corneltek/universal-cache": "^3.0",
+                "natxet/cssmin": "*",
+                "php": ">=5.4.0",
+                "symfony/process": "~2",
+                "twig/twig": "~1.32.0|~2.3.2"
+            },
+            "require-dev": {
+                "corneltek/phpunit-testmore": "dev-master",
+                "satooshi/php-coveralls": "^1"
+            },
+            "default-branch": true,
+            "bin": [
+                "bin/assetkit"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "AssetKit\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "c9s",
+                    "email": "yoanlin93+composer@gmail.com"
+                }
+            ],
+            "description": "High performance asset manager.",
+            "keywords": [
+                "asset",
+                "compress",
+                "cssmin",
+                "javascript",
+                "manager",
+                "squash"
+            ],
+            "support": {
+                "issues": "https://github.com/c9s/AssetKit/issues",
+                "source": "https://github.com/c9s/AssetKit/tree/master"
+            },
+            "time": "2022-08-14T10:42:43+00:00"
+        },
+        {
+            "name": "corneltek/cascading-attribute",
+            "version": "1.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/c9s/CascadingAttribute.git",
+                "reference": "6ffd238021be3eba1285b28001390a5135833e70"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/c9s/CascadingAttribute/zipball/6ffd238021be3eba1285b28001390a5135833e70",
+                "reference": "6ffd238021be3eba1285b28001390a5135833e70",
+                "shasum": ""
+            },
+            "require-dev": {
+                "corneltek/phpunit-testmore": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/CascadingAttribute.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Yo-An Lin",
+                    "email": "cornelius.howl@gmail.com",
+                    "homepage": "http://c9s.me"
+                }
+            ],
+            "support": {
+                "issues": "https://github.com/c9s/CascadingAttribute/issues",
+                "source": "https://github.com/c9s/CascadingAttribute/tree/1.2.1"
+            },
+            "time": "2013-03-23T07:26:05+00:00"
+        },
+        {
+            "name": "corneltek/cliframework",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/c9s/CLIFramework.git",
+                "reference": "981442583f23475e7befbe9af87c330240fadae1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/c9s/CLIFramework/zipball/981442583f23475e7befbe9af87c330240fadae1",
+                "reference": "981442583f23475e7befbe9af87c330240fadae1",
+                "shasum": ""
+            },
+            "require": {
+                "corneltek/codegen": "4.0.x-dev",
+                "corneltek/getoptionkit": "~2.6.1",
+                "php": ">=5.5.0",
+                "pimple/pimple": "*",
+                "symfony/class-loader": "~2.8|~3.0|~3.2",
+                "symfony/finder": "~2.8|~3.0|^5.3.4",
+                "universal/universal": "2.0.x-dev"
+            },
+            "require-dev": {
+                "corneltek/phpunit-testmore": "dev-master",
+                "satooshi/php-coveralls": "^1"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "CLIFramework\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Yo-An Lin",
+                    "email": "yoanlin93@gmail.com"
+                }
+            ],
+            "description": "Command-line framework for PHP",
+            "homepage": "http://github.com/c9s/CLIFramework",
+            "keywords": [
+                "command",
+                "command-line",
+                "completion",
+                "framework",
+                "getopt",
+                "zsh"
+            ],
+            "support": {
+                "issues": "https://github.com/c9s/CLIFramework/issues",
+                "source": "https://github.com/c9s/CLIFramework/tree/4.1.2"
+            },
+            "time": "2022-05-27T05:33:32+00:00"
+        },
+        {
+            "name": "corneltek/codegen",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/c9s/CodeGen.git",
+                "reference": "4fd58c53d65efd42d4612a8e627a59a51986ccb1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/c9s/CodeGen/zipball/4fd58c53d65efd42d4612a8e627a59a51986ccb1",
+                "reference": "4fd58c53d65efd42d4612a8e627a59a51986ccb1",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/inflector": "*",
+                "php": ">=5.3.0",
+                "twig/twig": "^1|^2"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "CodeGen\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Yo-An Lin",
+                    "email": "yoanlin93@gmail.com"
+                }
+            ],
+            "description": "PHP Code Generation Library",
+            "homepage": "http://github.com/c9s/CodeGen",
+            "support": {
+                "issues": "https://github.com/c9s/CodeGen/issues",
+                "source": "https://github.com/c9s/CodeGen/tree/master"
+            },
+            "time": "2017-06-03T13:18:55+00:00"
+        },
+        {
+            "name": "corneltek/configkit",
+            "version": "1.6.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/c9s/ConfigKit.git",
+                "reference": "8ecd955df6d2e45b041cce46ca27b86d45153770"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/c9s/ConfigKit/zipball/8ecd955df6d2e45b041cce46ca27b86d45153770",
+                "reference": "8ecd955df6d2e45b041cce46ca27b86d45153770",
+                "shasum": ""
+            },
+            "require": {
+                "corneltek/codegen": ">=3.0",
+                "corneltek/fileutil": "^1",
+                "php": ">=5.3.0",
+                "symfony/yaml": "^2.8|^3.0|^3.2"
+            },
+            "require-dev": {
+                "corneltek/phpunit-testmore": "dev-master"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.6.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "ConfigKit\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Fast config toolkit, which provides super lightweight config accessor and loader.",
+            "keywords": [
+                "accessor",
+                "cache",
+                "config",
+                "yaml"
+            ],
+            "support": {
+                "issues": "https://github.com/c9s/ConfigKit/issues",
+                "source": "https://github.com/c9s/ConfigKit/tree/master"
+            },
+            "time": "2017-05-29T04:25:01+00:00"
+        },
+        {
+            "name": "corneltek/fileutil",
+            "version": "1.7.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/c9s/php-fileutil.git",
+                "reference": "2a23c578674d5dd2f73352f5b8574ff67ebf1a50"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/c9s/php-fileutil/zipball/2a23c578674d5dd2f73352f5b8574ff67ebf1a50",
+                "reference": "2a23c578674d5dd2f73352f5b8574ff67ebf1a50",
+                "shasum": ""
+            },
+            "require-dev": {
+                "corneltek/phpunit-testmore": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/FileUtil.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Yo-An Lin",
+                    "email": "cornelius.howl@gmail.com",
+                    "homepage": "http://c9s.me"
+                }
+            ],
+            "description": "Fast File Utility Extension",
+            "support": {
+                "issues": "https://github.com/c9s/php-fileutil/issues",
+                "source": "https://github.com/c9s/php-fileutil/tree/master"
+            },
+            "time": "2013-09-18T15:00:14+00:00"
+        },
+        {
+            "name": "corneltek/formkit",
+            "version": "1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/corneltek/FormKit.git",
+                "reference": "c8e89028f1b85993667e519b9218c5745f51dbad"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/corneltek/FormKit/zipball/c8e89028f1b85993667e519b9218c5745f51dbad",
+                "reference": "c8e89028f1b85993667e519b9218c5745f51dbad",
+                "shasum": ""
+            },
+            "require-dev": {
+                "corneltek/phpunit-testmore": "dev-master"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "FormKit\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "c9s",
+                    "email": "cornelius.howl@gmail.com"
+                }
+            ],
+            "support": {
+                "issues": "https://github.com/corneltek/FormKit/issues",
+                "source": "https://github.com/corneltek/FormKit/tree/1.4.0"
+            },
+            "time": "2017-06-26T02:40:37+00:00"
+        },
+        {
+            "name": "corneltek/genphp",
+            "version": "1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/c9s/GenPHP.git",
+                "reference": "3816d81967676fbfdbc194143452219f57e091b9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/c9s/GenPHP/zipball/3816d81967676fbfdbc194143452219f57e091b9",
+                "reference": "3816d81967676fbfdbc194143452219f57e091b9",
+                "shasum": ""
+            },
+            "require": {
+                "corneltek/fileutil": "^1",
+                "corneltek/phptask": "~1",
+                "php": ">=5.3.0",
+                "twig/twig": "~1.32.0|^2"
+            },
+            "require-dev": {
+                "corneltek/cliframework": "4.0.x-dev",
+                "corneltek/codegen": "@dev",
+                "corneltek/phpunit-testmore": "dev-master",
+                "corneltek/universal": "^1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "GenPHP\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "support": {
+                "issues": "https://github.com/c9s/GenPHP/issues",
+                "source": "https://github.com/c9s/GenPHP/tree/master"
+            },
+            "time": "2017-05-19T16:32:30+00:00"
+        },
+        {
+            "name": "corneltek/getoptionkit",
+            "version": "2.6.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/c9s/GetOptionKit.git",
+                "reference": "1121ee17f304cd7e2d8d2b818df86b6af5f07485"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/c9s/GetOptionKit/zipball/1121ee17f304cd7e2d8d2b818df86b6af5f07485",
+                "reference": "1121ee17f304cd7e2d8d2b818df86b6af5f07485",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.6.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GetOptionKit\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Yo-An Lin",
+                    "email": "yoanlin93@gmail.com"
+                }
+            ],
+            "description": "Powerful command-line option toolkit",
+            "homepage": "http://github.com/c9s/GetOptionKit",
+            "support": {
+                "issues": "https://github.com/c9s/GetOptionKit/issues",
+                "source": "https://github.com/c9s/GetOptionKit/tree/2.6.1"
+            },
+            "time": "2021-11-22T09:15:28+00:00"
+        },
+        {
+            "name": "corneltek/imagekit",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/c9s/ImageKit.git",
+                "reference": "dda1294b83ccbed3536f97069cd412c62a46d24c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/c9s/ImageKit/zipball/dda1294b83ccbed3536f97069cd412c62a46d24c",
+                "reference": "dda1294b83ccbed3536f97069cd412c62a46d24c",
+                "shasum": ""
+            },
+            "require": {
+                "corneltek/fileutil": "~1"
+            },
+            "require-dev": {
+                "corneltek/phpunit-testmore": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ImageKit\\": "src/ImageKit/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "c9s",
+                    "email": "yoanlin93+composer@gmail.com"
+                }
+            ],
+            "support": {
+                "issues": "https://github.com/c9s/ImageKit/issues",
+                "source": "https://github.com/c9s/ImageKit/tree/master"
+            },
+            "time": "2015-07-08T04:45:13+00:00"
+        },
+        {
+            "name": "corneltek/kendo",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/c9s/Kendo.git",
+                "reference": "2513c2934198b4a5ef6b201eb876bfb65069cc31"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/c9s/Kendo/zipball/2513c2934198b4a5ef6b201eb876bfb65069cc31",
+                "reference": "2513c2934198b4a5ef6b201eb876bfb65069cc31",
+                "shasum": ""
+            },
+            "require": {
+                "twig/twig": "^1.22|~1.32.0|^2"
+            },
+            "require-dev": {
+                "corneltek/cliframework": "4.0.x-dev",
+                "corneltek/locale": "@dev",
+                "corneltek/phpunit-testmore": "dev-master",
+                "corneltek/sessionkit": "dev-master",
+                "corneltek/sqlbuilder": "4.0.x-dev",
+                "maghead/maghead": "4.0.x-dev"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Kendo\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Yo-An Lin",
+                    "email": "cornelius.howl@gmail.com"
+                }
+            ],
+            "description": "The powerful general access control framework",
+            "homepage": "https://github.com/c9s/Kendo",
+            "keywords": [
+                "RSBAC",
+                "abac",
+                "access",
+                "acl",
+                "control",
+                "maghead",
+                "orm",
+                "rbac",
+                "role-based"
+            ],
+            "support": {
+                "issues": "https://github.com/c9s/Kendo/issues",
+                "source": "https://github.com/c9s/Kendo/tree/master"
+            },
+            "time": "2017-06-02T04:53:00+00:00"
+        },
+        {
+            "name": "corneltek/lightlogger",
+            "version": "1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/c9s/LightLogger.git",
+                "reference": "1b414f8777917ae3302e15114a1ad4447a20ef7e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/c9s/LightLogger/zipball/1b414f8777917ae3302e15114a1ad4447a20ef7e",
+                "reference": "1b414f8777917ae3302e15114a1ad4447a20ef7e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "corneltek/phpunit-testmore": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "LightLogger": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Yo-An Lin",
+                    "email": "cornelius.howl@gmail.com",
+                    "homepage": "http://c9s.me"
+                }
+            ],
+            "description": "lightweight logger for PHP",
+            "homepage": "http://github.com/c9s/LightLogger",
+            "support": {
+                "issues": "https://github.com/c9s/LightLogger/issues",
+                "source": "https://github.com/c9s/LightLogger/tree/1.0.3"
+            },
+            "time": "2013-11-24T08:41:19+00:00"
+        },
+        {
+            "name": "corneltek/phptask",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/c9s/PHPTask.git",
+                "reference": "a4657c473eb809e4cae191813608bece007f0141"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/c9s/PHPTask/zipball/a4657c473eb809e4cae191813608bece007f0141",
+                "reference": "a4657c473eb809e4cae191813608bece007f0141",
+                "shasum": ""
+            },
+            "require": {
+                "corneltek/lightlogger": "~1",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "corneltek/phpunit-testmore": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "PHPTask": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Yo-An Lin",
+                    "email": "cornelius.howl@gmail.com",
+                    "homepage": "http://c9s.me"
+                }
+            ],
+            "description": "Task management for PHP",
+            "homepage": "http://github.com/c9s/PHPTask",
+            "support": {
+                "issues": "https://github.com/c9s/PHPTask/issues",
+                "source": "https://github.com/c9s/PHPTask/tree/master"
+            },
+            "time": "2013-11-23T13:51:44+00:00"
+        },
+        {
+            "name": "corneltek/pjson",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/c9s/PJSON.git",
+                "reference": "eb7038db9147ef9377a01b0bbcdab4cd1e3a988d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/c9s/PJSON/zipball/eb7038db9147ef9377a01b0bbcdab4cd1e3a988d",
+                "reference": "eb7038db9147ef9377a01b0bbcdab4cd1e3a988d",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PJSON\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "c9s",
+                    "email": "yoanlin93+composer@gmail.com"
+                }
+            ],
+            "support": {
+                "issues": "https://github.com/c9s/PJSON/issues",
+                "source": "https://github.com/c9s/PJSON/tree/1.1.0"
+            },
+            "time": "2016-04-24T06:49:18+00:00"
+        },
+        {
+            "name": "corneltek/pux",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/c9s/Pux.git",
+                "reference": "a59bf0c72738859159900990c80e10f533f18109"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/c9s/Pux/zipball/a59bf0c72738859159900990c80e10f533f18109",
+                "reference": "a59bf0c72738859159900990c80e10f533f18109",
+                "shasum": ""
+            },
+            "require": {
+                "phpsgi/phpsgi": "1.0.x-dev",
+                "universal/universal": "2.0.x-dev"
+            },
+            "require-dev": {
+                "corneltek/phpunit-testmore": "dev-master"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Pux\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Yo-An Lin",
+                    "email": "yoanlin93@gmail.com"
+                }
+            ],
+            "description": "The fast PHP router",
+            "homepage": "https://github.com/c9s/Pux",
+            "keywords": [
+                "fast",
+                "http",
+                "middleware",
+                "phpsgi",
+                "router",
+                "server"
+            ],
+            "support": {
+                "issues": "https://github.com/c9s/Pux/issues",
+                "source": "https://github.com/c9s/Pux/tree/master"
+            },
+            "time": "2017-06-04T09:36:38+00:00"
+        },
+        {
+            "name": "corneltek/serializerkit",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/c9s/php-SerializerKit.git",
+                "reference": "d6f222c252fcf5f7dde788173ceb4a41a92136dd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/c9s/php-SerializerKit/zipball/d6f222c252fcf5f7dde788173ceb4a41a92136dd",
+                "reference": "d6f222c252fcf5f7dde788173ceb4a41a92136dd",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "symfony/yaml": "~2"
+            },
+            "require-dev": {
+                "corneltek/phpunit-testmore": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "SerializerKit": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "support": {
+                "issues": "https://github.com/c9s/php-SerializerKit/issues",
+                "source": "https://github.com/c9s/php-SerializerKit/tree/1.1.0"
+            },
+            "time": "2013-12-01T14:32:14+00:00"
+        },
+        {
+            "name": "corneltek/sessionkit",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/c9s/SessionKit.git",
+                "reference": "fee02de789a81beaaae88647b7b8e8d78dcfe842"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/c9s/SessionKit/zipball/fee02de789a81beaaae88647b7b8e8d78dcfe842",
+                "reference": "fee02de789a81beaaae88647b7b8e8d78dcfe842",
+                "shasum": ""
+            },
+            "require-dev": {
+                "corneltek/phpunit-testmore": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SessionKit\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "support": {
+                "issues": "https://github.com/c9s/SessionKit/issues",
+                "source": "https://github.com/c9s/SessionKit/tree/master"
+            },
+            "time": "2017-06-01T16:31:43+00:00"
+        },
+        {
+            "name": "corneltek/twig-react-directive",
+            "version": "1.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/corneltek/TwigReactDirective.git",
+                "reference": "9106e3f2d6b0e74966ebe5c812be7344e7c30a6e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/corneltek/TwigReactDirective/zipball/9106e3f2d6b0e74966ebe5c812be7344e7c30a6e",
+                "reference": "9106e3f2d6b0e74966ebe5c812be7344e7c30a6e",
+                "shasum": ""
+            },
+            "require": {
+                "corneltek/pjson": "^1",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "satooshi/php-coveralls": "^1",
+                "twig/twig": "^1.26"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "TwigReactDirective\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "support": {
+                "issues": "https://github.com/corneltek/TwigReactDirective/issues",
+                "source": "https://github.com/corneltek/TwigReactDirective/tree/master"
+            },
+            "time": "2016-10-10T10:04:05+00:00"
+        },
+        {
+            "name": "corneltek/universal-cache",
+            "version": "3.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/corneltek/UniversalCache.git",
+                "reference": "38861168a6d0d604eeab86022a0514545ee2f608"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/corneltek/UniversalCache/zipball/38861168a6d0d604eeab86022a0514545ee2f608",
+                "reference": "38861168a6d0d604eeab86022a0514545ee2f608",
+                "shasum": ""
+            },
+            "require": {
+                "corneltek/fileutil": "^1.7",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "corneltek/phpunit-testmore": "dev-master",
+                "corneltek/serializerkit": "dev-master"
+            },
+            "suggest": {
+                "ext-apcu": "for apcu extension based backend",
+                "ext-redis": "for redis backend"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "UniversalCache\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Yo-An Lin",
+                    "email": "yoanlin93@gmail.com"
+                }
+            ],
+            "description": "A Generic PHP Cache Interface with Cascade Caching",
+            "homepage": "http://github.com/corneltek/UniversalCache",
+            "support": {
+                "issues": "https://github.com/corneltek/UniversalCache/issues",
+                "source": "https://github.com/corneltek/UniversalCache/tree/master"
+            },
+            "time": "2016-06-11T07:29:34+00:00"
+        },
+        {
+            "name": "corneltek/validationkit",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/c9s/ValidationKit.git",
+                "reference": "b3e856b556f92607bf3dfaddf2e901f5b3ce665d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/c9s/ValidationKit/zipball/b3e856b556f92607bf3dfaddf2e901f5b3ce665d",
+                "reference": "b3e856b556f92607bf3dfaddf2e901f5b3ce665d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "corneltek/phpunit-testmore": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "ValidationKit": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "support": {
+                "issues": "https://github.com/c9s/ValidationKit/issues",
+                "source": "https://github.com/c9s/ValidationKit/tree/1.1.1"
+            },
+            "time": "2013-03-28T13:35:21+00:00"
+        },
+        {
+            "name": "corneltek/webui",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/c9s/WebUI.git",
+                "reference": "2153d3a8bea3e8f3c65c839858af90e9992b617a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/c9s/WebUI/zipball/2153d3a8bea3e8f3c65c839858af90e9992b617a",
+                "reference": "2153d3a8bea3e8f3c65c839858af90e9992b617a",
+                "shasum": ""
+            },
+            "require-dev": {
+                "corneltek/formkit": "*",
+                "corneltek/phpunit-testmore": "dev-master"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "WebUI\\": "src/WebUI/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "c9s",
+                    "email": "cornelius.howl@gmail.com"
+                }
+            ],
+            "description": "Web UI Components Library",
+            "support": {
+                "issues": "https://github.com/c9s/WebUI/issues",
+                "source": "https://github.com/c9s/WebUI/tree/2.0.0"
+            },
+            "time": "2016-05-04T03:56:11+00:00"
+        },
+        {
+            "name": "cypresslab/gitelephant",
+            "version": "1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/matteosister/GitElephant.git",
+                "reference": "aa4bac748447a89fb72008a795e0ed67566fca73"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/matteosister/GitElephant/zipball/aa4bac748447a89fb72008a795e0ed67566fca73",
+                "reference": "aa4bac748447a89fb72008a795e0ed67566fca73",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "phpcollection/phpcollection": "~0.4",
+                "symfony/filesystem": "~2.0|~3.0",
+                "symfony/finder": "~2.0|~3.0",
+                "symfony/process": "~2.0|~3.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "~0.9",
+                "phpunit/phpunit": "~4.8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "GitElephant": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Matteo Giachino",
+                    "email": "matteog@gmail.com"
+                }
+            ],
+            "description": "An abstraction layer for git written in PHP 5.3",
+            "homepage": "http://gitelephant.cypresslab.net/",
+            "keywords": [
+                "git"
+            ],
+            "support": {
+                "issues": "https://github.com/matteosister/GitElephant/issues",
+                "source": "https://github.com/matteosister/GitElephant/tree/1.1.2"
+            },
+            "time": "2017-06-12T11:48:39+00:00"
+        },
+        {
+            "name": "dflydev/apache-mime-types",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dflydev/dflydev-apache-mime-types.git",
+                "reference": "f30a57e59b7476e4c5270b6a0727d79c9c0eb861"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dflydev/dflydev-apache-mime-types/zipball/f30a57e59b7476e4c5270b6a0727d79c9c0eb861",
+                "reference": "f30a57e59b7476e4c5270b6a0727d79c9c0eb861",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "twig/twig": "1.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Dflydev\\ApacheMimeTypes": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dragonfly Development Inc.",
+                    "email": "info@dflydev.com",
+                    "homepage": "http://dflydev.com"
+                },
+                {
+                    "name": "Beau Simensen",
+                    "email": "beau@dflydev.com",
+                    "homepage": "http://beausimensen.com"
+                }
+            ],
+            "description": "Apache MIME Types",
+            "keywords": [
+                "apache",
+                "mime",
+                "mimetypes"
+            ],
+            "support": {
+                "issues": "https://github.com/dflydev/dflydev-apache-mime-types/issues",
+                "source": "https://github.com/dflydev/dflydev-apache-mime-types/tree/v1.0.1"
+            },
+            "time": "2013-05-14T02:02:01+00:00"
+        },
+        {
+            "name": "doctrine/inflector",
+            "version": "v1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/inflector.git",
+                "reference": "e11d84c6e018beedd929cff5220969a3c6d1d462"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/inflector/zipball/e11d84c6e018beedd929cff5220969a3c6d1d462",
+                "reference": "e11d84c6e018beedd929cff5220969a3c6d1d462",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Doctrine\\Common\\Inflector\\": "lib/Doctrine/Common/Inflector"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Roman Borschel",
+                    "email": "roman@code-factory.org"
+                },
+                {
+                    "name": "Benjamin Eberlei",
+                    "email": "kontakt@beberlei.de"
+                },
+                {
+                    "name": "Guilherme Blanco",
+                    "email": "guilhermeblanco@gmail.com"
+                },
+                {
+                    "name": "Jonathan Wage",
+                    "email": "jonwage@gmail.com"
+                },
+                {
+                    "name": "Johannes Schmitt",
+                    "email": "schmittjoh@gmail.com"
+                }
+            ],
+            "description": "Common String Manipulations with regard to casing and singular/plural rules.",
+            "homepage": "http://www.doctrine-project.org",
+            "keywords": [
+                "inflection",
+                "pluralize",
+                "singularize",
+                "string"
+            ],
+            "support": {
+                "source": "https://github.com/doctrine/inflector/tree/master"
+            },
+            "time": "2017-07-22T12:18:28+00:00"
+        },
+        {
+            "name": "maghead/maghead",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/maghead/maghead.git",
+                "reference": "609ab99b9bec259a2e97b2221f69967fca0c02f8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/maghead/maghead/zipball/609ab99b9bec259a2e97b2221f69967fca0c02f8",
+                "reference": "609ab99b9bec259a2e97b2221f69967fca0c02f8",
+                "shasum": ""
+            },
+            "require": {
+                "corneltek/cascading-attribute": "^1.2",
+                "corneltek/cliframework": "4.1.x-dev",
+                "corneltek/codegen": "4.0.x-dev",
+                "corneltek/configkit": "^1.6",
+                "corneltek/serializerkit": "^1.1",
+                "corneltek/validationkit": "^1",
+                "cypresslab/gitelephant": "^1.0",
+                "doctrine/inflector": "^1.0",
+                "maghead/magsql": "4.0.x-dev",
+                "maghead/sqlite-parser": "^4.0",
+                "monolog/monolog": "^1.22",
+                "php": ">=5.6",
+                "pimple/pimple": "^3.0",
+                "psr/log": "^1.0",
+                "ramsey/uuid": "^3.5",
+                "symfony/yaml": "^2.8|^3.0|^3.2",
+                "universal/universal": "@dev"
+            },
+            "require-dev": {
+                "c9s/webaction": "4.0.x-dev",
+                "ext-apcu": "*",
+                "maghead/sqlite-parser": "4.0.x-dev",
+                "mongodb/mongodb": "^1.1"
+            },
+            "suggest": {
+                "ext-xarray": "*",
+                "mongodb/mongodb": "^1.1"
+            },
+            "default-branch": true,
+            "bin": [
+                "bin/maghead"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Maghead\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Yo-An Lin",
+                    "email": "cornelius.howl@gmail.com"
+                }
+            ],
+            "description": "The Fast PHP ORM",
+            "homepage": "https://github.com/maghead/maghead",
+            "keywords": [
+                "collection",
+                "database",
+                "fast",
+                "generator",
+                "model",
+                "orm",
+                "sql"
+            ],
+            "support": {
+                "issues": "https://github.com/maghead/maghead/issues",
+                "source": "https://github.com/maghead/maghead/tree/master"
+            },
+            "time": "2022-08-14T10:38:29+00:00"
+        },
+        {
+            "name": "maghead/magsql",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/maghead/magsql.git",
+                "reference": "4b410ccc4afc9d185ef1543630f8a30ea1765006"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/maghead/magsql/zipball/4b410ccc4afc9d185ef1543630f8a30ea1765006",
+                "reference": "4b410ccc4afc9d185ef1543630f8a30ea1765006",
+                "shasum": ""
+            },
+            "replace": {
+                "corneltek/sqlbuilder": "*"
+            },
+            "require-dev": {
+                "corneltek/phpunit-testmore": "dev-master"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Magsql\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Yo-An Lin",
+                    "email": "yoanlin93@gmail.com"
+                }
+            ],
+            "description": "Fast and Powerful SQL for PHP",
+            "support": {
+                "email": "yoanlin93+github@gmail.com",
+                "issues": "https://github.com/maghead/magsql/issues",
+                "source": "https://github.com/maghead/magsql/tree/master"
+            },
+            "time": "2018-01-11T14:15:39+00:00"
+        },
+        {
+            "name": "maghead/sqlite-parser",
+            "version": "4.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/maghead/sqlite-parser.git",
+                "reference": "2863a427df035ca67d5303c4b38019d35ba53486"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/maghead/sqlite-parser/zipball/2863a427df035ca67d5303c4b38019d35ba53486",
+                "reference": "2863a427df035ca67d5303c4b38019d35ba53486",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Maghead\\SqliteParser\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Yo-An Lin",
+                    "email": "cornelius.howl@gmail.com"
+                }
+            ],
+            "description": "sqlite table schema parser",
+            "homepage": "https://github.com/maghead/sqlite-parser",
+            "keywords": [
+                "database",
+                "parser",
+                "sql",
+                "sqlite"
+            ],
+            "support": {
+                "issues": "https://github.com/maghead/sqlite-parser/issues",
+                "source": "https://github.com/maghead/sqlite-parser/tree/master"
+            },
+            "time": "2017-06-10T05:37:11+00:00"
+        },
+        {
+            "name": "monolog/monolog",
+            "version": "1.27.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Seldaek/monolog.git",
+                "reference": "904713c5929655dc9b97288b69cfeedad610c9a1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/904713c5929655dc9b97288b69cfeedad610c9a1",
+                "reference": "904713c5929655dc9b97288b69cfeedad610c9a1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "psr/log": "~1.0"
+            },
+            "provide": {
+                "psr/log-implementation": "1.0.0"
+            },
+            "require-dev": {
+                "aws/aws-sdk-php": "^2.4.9 || ^3.0",
+                "doctrine/couchdb": "~1.0@dev",
+                "graylog2/gelf-php": "~1.0",
+                "php-amqplib/php-amqplib": "~2.4",
+                "php-console/php-console": "^3.1.3",
+                "phpstan/phpstan": "^0.12.59",
+                "phpunit/phpunit": "~4.5",
+                "ruflin/elastica": ">=0.90 <3.0",
+                "sentry/sentry": "^0.13",
+                "swiftmailer/swiftmailer": "^5.3|^6.0"
+            },
+            "suggest": {
+                "aws/aws-sdk-php": "Allow sending log messages to AWS services like DynamoDB",
+                "doctrine/couchdb": "Allow sending log messages to a CouchDB server",
+                "ext-amqp": "Allow sending log messages to an AMQP server (1.0+ required)",
+                "ext-mongo": "Allow sending log messages to a MongoDB server",
+                "graylog2/gelf-php": "Allow sending log messages to a GrayLog2 server",
+                "mongodb/mongodb": "Allow sending log messages to a MongoDB server via PHP Driver",
+                "php-amqplib/php-amqplib": "Allow sending log messages to an AMQP server using php-amqplib",
+                "php-console/php-console": "Allow sending log messages to Google Chrome",
+                "rollbar/rollbar": "Allow sending log messages to Rollbar",
+                "ruflin/elastica": "Allow sending log messages to an Elastic Search server",
+                "sentry/sentry": "Allow sending log messages to a Sentry server"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Monolog\\": "src/Monolog"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jordi Boggiano",
+                    "email": "j.boggiano@seld.be",
+                    "homepage": "http://seld.be"
+                }
+            ],
+            "description": "Sends your logs to files, sockets, inboxes, databases and various web services",
+            "homepage": "http://github.com/Seldaek/monolog",
+            "keywords": [
+                "log",
+                "logging",
+                "psr-3"
+            ],
+            "support": {
+                "issues": "https://github.com/Seldaek/monolog/issues",
+                "source": "https://github.com/Seldaek/monolog/tree/1.27.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/Seldaek",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/monolog/monolog",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2022-06-09T08:53:42+00:00"
+        },
+        {
+            "name": "natxet/cssmin",
+            "version": "v3.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/natxet/CssMin.git",
+                "reference": "d5d9f4c3e5cedb1ae96a95a21731f8790e38f1dd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/natxet/CssMin/zipball/d5d9f4c3e5cedb1ae96a95a21731f8790e38f1dd",
+                "reference": "d5d9f4c3e5cedb1ae96a95a21731f8790e38f1dd",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Joe Scylla",
+                    "email": "joe.scylla@gmail.com",
+                    "homepage": "https://profiles.google.com/joe.scylla"
+                }
+            ],
+            "description": "Minifying CSS",
+            "homepage": "http://code.google.com/p/cssmin/",
+            "keywords": [
+                "css",
+                "minify"
+            ],
+            "support": {
+                "issues": "https://github.com/natxet/CssMin/issues",
+                "source": "https://github.com/natxet/CssMin/tree/master"
+            },
+            "time": "2018-01-09T11:15:01+00:00"
+        },
+        {
+            "name": "paragonie/random_compat",
+            "version": "v9.99.100",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/paragonie/random_compat.git",
+                "reference": "996434e5492cb4c3edcb9168db6fbb1359ef965a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/996434e5492cb4c3edcb9168db6fbb1359ef965a",
+                "reference": "996434e5492cb4c3edcb9168db6fbb1359ef965a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">= 7"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.*|5.*",
+                "vimeo/psalm": "^1"
+            },
+            "suggest": {
+                "ext-libsodium": "Provides a modern crypto API that can be used to generate random bytes."
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Paragon Initiative Enterprises",
+                    "email": "security@paragonie.com",
+                    "homepage": "https://paragonie.com"
+                }
+            ],
+            "description": "PHP 5.x polyfill for random_bytes() and random_int() from PHP 7",
+            "keywords": [
+                "csprng",
+                "polyfill",
+                "pseudorandom",
+                "random"
+            ],
+            "support": {
+                "email": "info@paragonie.com",
+                "issues": "https://github.com/paragonie/random_compat/issues",
+                "source": "https://github.com/paragonie/random_compat"
+            },
+            "time": "2020-10-15T08:29:30+00:00"
+        },
+        {
+            "name": "pekkis/mime-types",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pekkis/mime-types.git",
+                "reference": "e0760d80c6a2e9f9e60ff3e0b247ed4f73866bba"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pekkis/mime-types/zipball/e0760d80c6a2e9f9e60ff3e0b247ed4f73866bba",
+                "reference": "e0760d80c6a2e9f9e60ff3e0b247ed4f73866bba",
+                "shasum": ""
+            },
+            "require": {
+                "dflydev/apache-mime-types": "~1.0",
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0",
+                "symfony/http-foundation": "~2.2"
+            },
+            "suggest": {
+                "symfony/http-foundation": "For symfony mime type resolver support"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Pekkis\\MimeTypes": "library/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Mikko Forsström",
+                    "email": "puhemies@diktaattoriporssi.com"
+                }
+            ],
+            "description": "Mime type library",
+            "keywords": [
+                "mime",
+                "mime type"
+            ],
+            "support": {
+                "issues": "https://github.com/pekkis/mime-types/issues",
+                "source": "https://github.com/pekkis/mime-types/tree/master"
+            },
+            "time": "2015-07-27T20:03:55+00:00"
+        },
+        {
+            "name": "phifty/locale",
+            "version": "3.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phiftyphp/Locale.git",
+                "reference": "b9c753f7606c39dcbdb1d43d752a62cec6b097ce"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phiftyphp/Locale/zipball/b9c753f7606c39dcbdb1d43d752a62cec6b097ce",
+                "reference": "b9c753f7606c39dcbdb1d43d752a62cec6b097ce",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.1.x-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "helpers.php"
+                ],
+                "psr-4": {
+                    "Phifty\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "support": {
+                "issues": "https://github.com/phiftyphp/Locale/issues",
+                "source": "https://github.com/phiftyphp/Locale/tree/3.1.0"
+            },
+            "time": "2016-06-17T07:42:15+00:00"
+        },
+        {
+            "name": "phpcollection/phpcollection",
+            "version": "0.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/schmittjoh/php-collection.git",
+                "reference": "56d18c8c2c0400f2838703246ac7de919a605763"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/schmittjoh/php-collection/zipball/56d18c8c2c0400f2838703246ac7de919a605763",
+                "reference": "56d18c8c2c0400f2838703246ac7de919a605763",
+                "shasum": ""
+            },
+            "require": {
+                "phpoption/phpoption": "1.*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "PhpCollection": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache2"
+            ],
+            "authors": [
+                {
+                    "name": "Johannes M. Schmitt",
+                    "email": "schmittjoh@gmail.com"
+                }
+            ],
+            "description": "General-Purpose Collection Library for PHP",
+            "keywords": [
+                "collection",
+                "list",
+                "map",
+                "sequence",
+                "set"
+            ],
+            "support": {
+                "issues": "https://github.com/schmittjoh/php-collection/issues",
+                "source": "https://github.com/schmittjoh/php-collection/tree/0.6.0"
+            },
+            "time": "2022-03-21T13:02:41+00:00"
+        },
+        {
+            "name": "phpoption/phpoption",
+            "version": "1.8.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/schmittjoh/php-option.git",
+                "reference": "eab7a0df01fe2344d172bff4cd6dbd3f8b84ad15"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/schmittjoh/php-option/zipball/eab7a0df01fe2344d172bff4cd6dbd3f8b84ad15",
+                "reference": "eab7a0df01fe2344d172bff4cd6dbd3f8b84ad15",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0 || ^8.0"
+            },
+            "require-dev": {
+                "bamarni/composer-bin-plugin": "^1.4.1",
+                "phpunit/phpunit": "^6.5.14 || ^7.5.20 || ^8.5.19 || ^9.5.8"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.8-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PhpOption\\": "src/PhpOption/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Johannes M. Schmitt",
+                    "email": "schmittjoh@gmail.com",
+                    "homepage": "https://github.com/schmittjoh"
+                },
+                {
+                    "name": "Graham Campbell",
+                    "email": "hello@gjcampbell.co.uk",
+                    "homepage": "https://github.com/GrahamCampbell"
+                }
+            ],
+            "description": "Option Type for PHP",
+            "keywords": [
+                "language",
+                "option",
+                "php",
+                "type"
+            ],
+            "support": {
+                "issues": "https://github.com/schmittjoh/php-option/issues",
+                "source": "https://github.com/schmittjoh/php-option/tree/1.8.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/GrahamCampbell",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/phpoption/phpoption",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2021-12-04T23:24:31+00:00"
+        },
+        {
+            "name": "phpsgi/funk",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpsgi/Funk.git",
+                "reference": "11d60c7774fa4f8c63e1b849168451c5d4684c72"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpsgi/Funk/zipball/11d60c7774fa4f8c63e1b849168451c5d4684c72",
+                "reference": "11d60c7774fa4f8c63e1b849168451c5d4684c72",
+                "shasum": ""
+            },
+            "require": {
+                "phpsgi/phpsgi": "@dev",
+                "universal/universal": "2.0.x-dev"
+            },
+            "require-dev": {
+                "corneltek/pux": "2.0.x-dev",
+                "willdurand/geocoder": "^3.1",
+                "willdurand/negotiation": "^1.4"
+            },
+            "suggest": {
+                "corneltek/cliframework": "4.0.x-dev",
+                "corneltek/pux": "2.0.x-dev"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Funk\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "c9s",
+                    "email": "cornelius.howl@gmail.com"
+                }
+            ],
+            "description": "An implementation of PHPSGI middleware specification",
+            "homepage": "https://github.com/phpsgi/Funk",
+            "keywords": [
+                "http",
+                "middleware",
+                "phpsgi",
+                "server"
+            ],
+            "support": {
+                "issues": "https://github.com/phpsgi/Funk/issues",
+                "source": "https://github.com/phpsgi/Funk/tree/master"
+            },
+            "time": "2017-06-03T14:09:19+00:00"
+        },
+        {
+            "name": "phpsgi/phpsgi",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpsgi/phpsgi.git",
+                "reference": "2c4a9dd0e2229ccd4614aaff852497cbd75b947b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpsgi/phpsgi/zipball/2c4a9dd0e2229ccd4614aaff852497cbd75b947b",
+                "reference": "2c4a9dd0e2229ccd4614aaff852497cbd75b947b",
+                "shasum": ""
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PHPSGI\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "c9s",
+                    "email": "cornelius.howl@gmail.com"
+                }
+            ],
+            "homepage": "https://github.com/phpsgi/phpsgi",
+            "keywords": [
+                "http",
+                "middleware",
+                "phpsgi",
+                "server"
+            ],
+            "support": {
+                "issues": "https://github.com/phpsgi/phpsgi/issues",
+                "source": "https://github.com/phpsgi/phpsgi/tree/master"
+            },
+            "time": "2015-12-03T06:39:11+00:00"
+        },
+        {
+            "name": "pimple/pimple",
+            "version": "v3.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/silexphp/Pimple.git",
+                "reference": "9e403941ef9d65d20cba7d54e29fe906db42cf32"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/silexphp/Pimple/zipball/9e403941ef9d65d20cba7d54e29fe906db42cf32",
+                "reference": "9e403941ef9d65d20cba7d54e29fe906db42cf32",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "psr/container": "^1.0"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "^3.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Pimple": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                }
+            ],
+            "description": "Pimple, a simple Dependency Injection Container",
+            "homepage": "http://pimple.sensiolabs.org",
+            "keywords": [
+                "container",
+                "dependency injection"
+            ],
+            "support": {
+                "issues": "https://github.com/silexphp/Pimple/issues",
+                "source": "https://github.com/silexphp/Pimple/tree/master"
+            },
+            "time": "2018-01-21T07:42:36+00:00"
+        },
+        {
+            "name": "psr/container",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/container.git",
+                "reference": "b7ce3b176482dbbc1245ebf52b181af44c2cf55f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/container/zipball/b7ce3b176482dbbc1245ebf52b181af44c2cf55f",
+                "reference": "b7ce3b176482dbbc1245ebf52b181af44c2cf55f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Container\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common Container Interface (PHP FIG PSR-11)",
+            "homepage": "https://github.com/php-fig/container",
+            "keywords": [
+                "PSR-11",
+                "container",
+                "container-interface",
+                "container-interop",
+                "psr"
+            ],
+            "support": {
+                "issues": "https://github.com/php-fig/container/issues",
+                "source": "https://github.com/php-fig/container/tree/master"
+            },
+            "time": "2017-02-14T16:28:37+00:00"
+        },
+        {
+            "name": "psr/log",
+            "version": "1.1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/log.git",
+                "reference": "d49695b909c3b7628b6289db5479a1c204601f11"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/d49695b909c3b7628b6289db5479a1c204601f11",
+                "reference": "d49695b909c3b7628b6289db5479a1c204601f11",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Log\\": "Psr/Log/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "https://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for logging libraries",
+            "homepage": "https://github.com/php-fig/log",
+            "keywords": [
+                "log",
+                "psr",
+                "psr-3"
+            ],
+            "support": {
+                "source": "https://github.com/php-fig/log/tree/1.1.4"
+            },
+            "time": "2021-05-03T11:20:27+00:00"
+        },
+        {
+            "name": "ramsey/uuid",
+            "version": "3.9.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ramsey/uuid.git",
+                "reference": "ffa80ab953edd85d5b6c004f96181a538aad35a3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ramsey/uuid/zipball/ffa80ab953edd85d5b6c004f96181a538aad35a3",
+                "reference": "ffa80ab953edd85d5b6c004f96181a538aad35a3",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "paragonie/random_compat": "^1 | ^2 | ^9.99.99",
+                "php": "^5.4 | ^7.0 | ^8.0",
+                "symfony/polyfill-ctype": "^1.8"
+            },
+            "replace": {
+                "rhumsaa/uuid": "self.version"
+            },
+            "require-dev": {
+                "codeception/aspect-mock": "^1 | ^2",
+                "doctrine/annotations": "^1.2",
+                "goaop/framework": "1.0.0-alpha.2 | ^1 | >=2.1.0 <=2.3.2",
+                "mockery/mockery": "^0.9.11 | ^1",
+                "moontoast/math": "^1.1",
+                "nikic/php-parser": "<=4.5.0",
+                "paragonie/random-lib": "^2",
+                "php-mock/php-mock-phpunit": "^0.3 | ^1.1 | ^2.6",
+                "php-parallel-lint/php-parallel-lint": "^1.3",
+                "phpunit/phpunit": ">=4.8.36 <9.0.0 | >=9.3.0",
+                "squizlabs/php_codesniffer": "^3.5",
+                "yoast/phpunit-polyfills": "^1.0"
+            },
+            "suggest": {
+                "ext-ctype": "Provides support for PHP Ctype functions",
+                "ext-libsodium": "Provides the PECL libsodium extension for use with the SodiumRandomGenerator",
+                "ext-openssl": "Provides the OpenSSL extension for use with the OpenSslGenerator",
+                "ext-uuid": "Provides the PECL UUID extension for use with the PeclUuidTimeGenerator and PeclUuidRandomGenerator",
+                "moontoast/math": "Provides support for converting UUID to 128-bit integer (in string form).",
+                "paragonie/random-lib": "Provides RandomLib for use with the RandomLibAdapter",
+                "ramsey/uuid-console": "A console application for generating UUIDs with ramsey/uuid",
+                "ramsey/uuid-doctrine": "Allows the use of Ramsey\\Uuid\\Uuid as Doctrine field type."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.x-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/functions.php"
+                ],
+                "psr-4": {
+                    "Ramsey\\Uuid\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ben Ramsey",
+                    "email": "ben@benramsey.com",
+                    "homepage": "https://benramsey.com"
+                },
+                {
+                    "name": "Marijn Huizendveld",
+                    "email": "marijn.huizendveld@gmail.com"
+                },
+                {
+                    "name": "Thibaud Fabre",
+                    "email": "thibaud@aztech.io"
+                }
+            ],
+            "description": "Formerly rhumsaa/uuid. A PHP 5.4+ library for generating RFC 4122 version 1, 3, 4, and 5 universally unique identifiers (UUID).",
+            "homepage": "https://github.com/ramsey/uuid",
+            "keywords": [
+                "guid",
+                "identifier",
+                "uuid"
+            ],
+            "support": {
+                "issues": "https://github.com/ramsey/uuid/issues",
+                "rss": "https://github.com/ramsey/uuid/releases.atom",
+                "source": "https://github.com/ramsey/uuid",
+                "wiki": "https://github.com/ramsey/uuid/wiki"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/ramsey",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/ramsey/uuid",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2021-09-25T23:07:42+00:00"
+        },
+        {
+            "name": "swiftmailer/swiftmailer",
+            "version": "v5.4.12",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/swiftmailer/swiftmailer.git",
+                "reference": "181b89f18a90f8925ef805f950d47a7190e9b950"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/181b89f18a90f8925ef805f950d47a7190e9b950",
+                "reference": "181b89f18a90f8925ef805f950d47a7190e9b950",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "mockery/mockery": "~0.9.1",
+                "symfony/phpunit-bridge": "~3.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.4-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "lib/swift_required.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Chris Corbyn"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                }
+            ],
+            "description": "Swiftmailer, free feature-rich PHP mailer",
+            "homepage": "https://swiftmailer.symfony.com",
+            "keywords": [
+                "email",
+                "mail",
+                "mailer"
+            ],
+            "support": {
+                "issues": "https://github.com/swiftmailer/swiftmailer/issues",
+                "source": "https://github.com/swiftmailer/swiftmailer/tree/v5.4.12"
+            },
+            "abandoned": "symfony/mailer",
+            "time": "2018-07-31T09:26:32+00:00"
+        },
+        {
+            "name": "symfony/class-loader",
+            "version": "v3.4.47",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/class-loader.git",
+                "reference": "a22265a9f3511c0212bf79f54910ca5a77c0e92c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/class-loader/zipball/a22265a9f3511c0212bf79f54910ca5a77c0e92c",
+                "reference": "a22265a9f3511c0212bf79f54910ca5a77c0e92c",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.5.9|>=7.0.8"
+            },
+            "require-dev": {
+                "symfony/finder": "~2.8|~3.0|~4.0",
+                "symfony/polyfill-apcu": "~1.1"
+            },
+            "suggest": {
+                "symfony/polyfill-apcu": "For using ApcClassLoader on HHVM"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\ClassLoader\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony ClassLoader Component",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/class-loader/tree/v3.4.47"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-10-24T10:57:07+00:00"
+        },
+        {
+            "name": "symfony/filesystem",
+            "version": "v3.4.47",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/filesystem.git",
+                "reference": "e58d7841cddfed6e846829040dca2cca0ebbbbb3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/e58d7841cddfed6e846829040dca2cca0ebbbbb3",
+                "reference": "e58d7841cddfed6e846829040dca2cca0ebbbbb3",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.5.9|>=7.0.8",
+                "symfony/polyfill-ctype": "~1.8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Filesystem\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Filesystem Component",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/filesystem/tree/v3.4.47"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-10-24T10:57:07+00:00"
+        },
+        {
+            "name": "symfony/finder",
+            "version": "v3.4.47",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/finder.git",
+                "reference": "b6b6ad3db3edb1b4b1c1896b1975fb684994de6e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/finder/zipball/b6b6ad3db3edb1b4b1c1896b1975fb684994de6e",
+                "reference": "b6b6ad3db3edb1b4b1c1896b1975fb684994de6e",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.5.9|>=7.0.8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Finder\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Finder Component",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/finder/tree/v3.4.47"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-11-16T17:02:08+00:00"
+        },
+        {
+            "name": "symfony/polyfill-ctype",
+            "version": "v1.19.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-ctype.git",
+                "reference": "aed596913b70fae57be53d86faa2e9ef85a2297b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/aed596913b70fae57be53d86faa2e9ef85a2297b",
+                "reference": "aed596913b70fae57be53d86faa2e9ef85a2297b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "suggest": {
+                "ext-ctype": "For best performance"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "1.19-dev"
+                },
+                "thanks": {
+                    "name": "symfony/polyfill",
+                    "url": "https://github.com/symfony/polyfill"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "bootstrap.php"
+                ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Ctype\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Gert de Pagter",
+                    "email": "BackEndTea@gmail.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony polyfill for ctype functions",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "ctype",
+                "polyfill",
+                "portable"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/polyfill-ctype/tree/v1.19.0"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-10-23T09:01:57+00:00"
+        },
+        {
+            "name": "symfony/polyfill-mbstring",
+            "version": "v1.19.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-mbstring.git",
+                "reference": "b5f7b932ee6fa802fc792eabd77c4c88084517ce"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/b5f7b932ee6fa802fc792eabd77c4c88084517ce",
+                "reference": "b5f7b932ee6fa802fc792eabd77c4c88084517ce",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "suggest": {
+                "ext-mbstring": "For best performance"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "1.19-dev"
+                },
+                "thanks": {
+                    "name": "symfony/polyfill",
+                    "url": "https://github.com/symfony/polyfill"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "bootstrap.php"
+                ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Mbstring\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony polyfill for the Mbstring extension",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "mbstring",
+                "polyfill",
+                "portable",
+                "shim"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.19.0"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-10-23T09:01:57+00:00"
+        },
+        {
+            "name": "symfony/process",
+            "version": "v2.8.52",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/process.git",
+                "reference": "c3591a09c78639822b0b290d44edb69bf9f05dc8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/process/zipball/c3591a09c78639822b0b290d44edb69bf9f05dc8",
+                "reference": "c3591a09c78639822b0b290d44edb69bf9f05dc8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.9"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.8-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Process\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Process Component",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/process/tree/v2.8.50"
+            },
+            "time": "2018-11-11T11:18:13+00:00"
+        },
+        {
+            "name": "symfony/yaml",
+            "version": "v2.8.52",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/yaml.git",
+                "reference": "02c1859112aa779d9ab394ae4f3381911d84052b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/02c1859112aa779d9ab394ae4f3381911d84052b",
+                "reference": "02c1859112aa779d9ab394ae4f3381911d84052b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.9",
+                "symfony/polyfill-ctype": "~1.8"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.8-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Yaml\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Yaml Component",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/yaml/tree/v2.8.52"
+            },
+            "time": "2018-11-11T11:18:13+00:00"
+        },
+        {
+            "name": "twig/extensions",
+            "version": "v1.5.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twigphp/Twig-extensions.git",
+                "reference": "57873c8b0c1be51caa47df2cdb824490beb16202"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twigphp/Twig-extensions/zipball/57873c8b0c1be51caa47df2cdb824490beb16202",
+                "reference": "57873c8b0c1be51caa47df2cdb824490beb16202",
+                "shasum": ""
+            },
+            "require": {
+                "twig/twig": "^1.27|^2.0"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "^3.4",
+                "symfony/translation": "^2.7|^3.4"
+            },
+            "suggest": {
+                "symfony/translation": "Allow the time_diff output to be translated"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.5-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Twig_Extensions_": "lib/"
+                },
+                "psr-4": {
+                    "Twig\\Extensions\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                }
+            ],
+            "description": "Common additional features for Twig that do not directly belong in core",
+            "keywords": [
+                "i18n",
+                "text"
+            ],
+            "support": {
+                "issues": "https://github.com/twigphp/Twig-extensions/issues",
+                "source": "https://github.com/twigphp/Twig-extensions/tree/master"
+            },
+            "abandoned": true,
+            "time": "2018-12-05T18:34:18+00:00"
+        },
+        {
+            "name": "twig/twig",
+            "version": "v2.3.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twigphp/Twig.git",
+                "reference": "85e8372c451510165c04bf781295f9d922fa524b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/85e8372c451510165c04bf781295f9d922fa524b",
+                "reference": "85e8372c451510165c04bf781295f9d922fa524b",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0",
+                "symfony/polyfill-mbstring": "~1.0"
+            },
+            "require-dev": {
+                "psr/container": "^1.0",
+                "symfony/debug": "~2.7",
+                "symfony/phpunit-bridge": "~3.3@dev"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Twig_": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Armin Ronacher",
+                    "email": "armin.ronacher@active-4.com",
+                    "role": "Project Founder"
+                },
+                {
+                    "name": "Twig Team",
+                    "homepage": "http://twig.sensiolabs.org/contributors",
+                    "role": "Contributors"
+                }
+            ],
+            "description": "Twig, the flexible, fast, and secure template language for PHP",
+            "homepage": "http://twig.sensiolabs.org",
+            "keywords": [
+                "templating"
+            ],
+            "support": {
+                "forum": "https://groups.google.com/forum/#!forum/twig-users",
+                "issues": "https://github.com/twigphp/Twig/issues",
+                "source": "https://github.com/twigphp/Twig/tree/2.x"
+            },
+            "time": "2017-04-21T00:13:02+00:00"
+        },
+        {
+            "name": "universal/universal",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/c9s/universal.git",
+                "reference": "ff116b007faf019a766be0d243261221a4e9c202"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/c9s/universal/zipball/ff116b007faf019a766be0d243261221a4e9c202",
+                "reference": "ff116b007faf019a766be0d243261221a4e9c202",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "replace": {
+                "corneltek/universal": "*"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Universal\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Yo-An Lin",
+                    "email": "yoanlin93@gmail.com"
+                }
+            ],
+            "description": "Universal library for PHP",
+            "homepage": "http://github.com/c9s/universal",
+            "support": {
+                "issues": "https://github.com/c9s/universal/issues",
+                "source": "https://github.com/c9s/universal/tree/master"
+            },
+            "time": "2017-09-10T22:35:20+00:00"
+        },
+        {
+            "name": "vlucas/phpdotenv",
+            "version": "v2.6.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/vlucas/phpdotenv.git",
+                "reference": "2e93cc98e2e8e869f8d9cfa61bb3a99ba4fc4141"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/2e93cc98e2e8e869f8d9cfa61bb3a99ba4fc4141",
+                "reference": "2e93cc98e2e8e869f8d9cfa61bb3a99ba4fc4141",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.3.9 || ^7.0 || ^8.0",
+                "symfony/polyfill-ctype": "^1.17"
+            },
+            "require-dev": {
+                "ext-filter": "*",
+                "ext-pcre": "*",
+                "phpunit/phpunit": "^4.8.36 || ^5.7.27 || ^6.5.14 || ^7.5.20 || ^8.5.21"
+            },
+            "suggest": {
+                "ext-filter": "Required to use the boolean validator.",
+                "ext-pcre": "Required to use most of the library."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.6-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Dotenv\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Graham Campbell",
+                    "email": "hello@gjcampbell.co.uk",
+                    "homepage": "https://github.com/GrahamCampbell"
+                },
+                {
+                    "name": "Vance Lucas",
+                    "email": "vance@vancelucas.com",
+                    "homepage": "https://github.com/vlucas"
+                }
+            ],
+            "description": "Loads environment variables from `.env` to `getenv()`, `$_ENV` and `$_SERVER` automagically.",
+            "keywords": [
+                "dotenv",
+                "env",
+                "environment"
+            ],
+            "support": {
+                "issues": "https://github.com/vlucas/phpdotenv/issues",
+                "source": "https://github.com/vlucas/phpdotenv/tree/v2.6.9"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/GrahamCampbell",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/vlucas/phpdotenv",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2021-12-12T22:59:22+00:00"
+        }
+    ],
+    "packages-dev": [
+        {
+            "name": "jakoch/phantomjs-installer",
+            "version": "3.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jakoch/phantomjs-installer.git",
+                "reference": "4ba2bc95dd442fd4ad9159c45882aa372bbb51cd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jakoch/phantomjs-installer/zipball/4ba2bc95dd442fd4ad9159c45882aa372bbb51cd",
+                "reference": "4ba2bc95dd442fd4ad9159c45882aa372bbb51cd",
+                "shasum": ""
+            },
+            "require": {
+                "ext-bz2": "*",
+                "ext-openssl": "*",
+                "php": ">5.3"
+            },
+            "require-dev": {
+                "composer/composer": "^1.2",
+                "phpunit/phpunit": "^8"
+            },
+            "type": "custom-installer",
+            "autoload": {
+                "psr-0": {
+                    "PhantomInstaller\\": "src/"
+                },
+                "psr-4": {
+                    "PhantomInstaller\\Test\\": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jens-André Koch",
+                    "email": "jakoch@web.de"
+                }
+            ],
+            "description": "A Composer package which installs the PhantomJS binary (Linux, Windows, Mac) into `/bin` of your project.",
+            "keywords": [
+                "binaries",
+                "headless",
+                "phantomjs"
+            ],
+            "support": {
+                "issues": "https://github.com/jakoch/phantomjs-installer/issues",
+                "source": "https://github.com/jakoch/phantomjs-installer/tree/3.0.1"
+            },
+            "time": "2021-09-03T18:54:42+00:00"
+        },
+        {
+            "name": "phifty/adminui",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phiftyphp/AdminUI.git",
+                "reference": "3e8475766abb2a6ff66e0ea33f05cac999f85f66"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phiftyphp/AdminUI/zipball/3e8475766abb2a6ff66e0ea33f05cac999f85f66",
+                "reference": "3e8475766abb2a6ff66e0ea33f05cac999f85f66",
+                "shasum": ""
+            },
+            "require": {
+                "composer/installers": "^1",
+                "corneltek/webui": "2.0.x-dev",
+                "phifty/phifty": "4.0.x-dev"
+            },
+            "require-dev": {
+                "c9s/webaction": "@dev",
+                "corneltek/assetkit": "@dev",
+                "corneltek/cliframework": "@dev",
+                "corneltek/codegen": "@dev",
+                "corneltek/kendo": "@dev",
+                "corneltek/pux": "@dev",
+                "maghead/maghead": "@dev",
+                "maghead/magsql": "@dev",
+                "phpsgi/funk": "@dev",
+                "phpsgi/phpsgi": "@dev",
+                "universal/universal": "@dev"
+            },
+            "default-branch": true,
+            "type": "phifty-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "AdminUI\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "c9s",
+                    "email": "yoanlin93@gmail.com"
+                }
+            ],
+            "description": "admin ui bundle for phifty framework application",
+            "support": {
+                "issues": "https://github.com/phiftyphp/AdminUI/issues",
+                "source": "https://github.com/phiftyphp/AdminUI/tree/master"
+            },
+            "time": "2017-06-22T10:26:55+00:00"
+        },
+        {
+            "name": "phifty/commonbundle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phiftyphp/CommonBundle.git",
+                "reference": "1c36a1f460d37cd327efd960161e8211e594a331"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phiftyphp/CommonBundle/zipball/1c36a1f460d37cd327efd960161e8211e594a331",
+                "reference": "1c36a1f460d37cd327efd960161e8211e594a331",
+                "shasum": ""
+            },
+            "require": {
+                "composer/installers": "^1",
+                "phifty/phifty": "4.0.x-dev"
+            },
+            "require-dev": {
+                "c9s/webaction": "@dev",
+                "corneltek/assetkit": "@dev",
+                "corneltek/cliframework": "@dev",
+                "corneltek/codegen": "@dev",
+                "corneltek/kendo": "@dev",
+                "corneltek/pux": "@dev",
+                "corneltek/webui": "@dev",
+                "maghead/maghead": "@dev",
+                "maghead/magsql": "@dev",
+                "phifty/userbundle": "4.0.x-dev",
+                "phpsgi/funk": "@dev",
+                "phpsgi/phpsgi": "@dev",
+                "universal/universal": "@dev"
+            },
+            "default-branch": true,
+            "type": "phifty-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "CommonBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "c9s",
+                    "email": "yoanlin93@gmail.com"
+                }
+            ],
+            "description": "The common bundle",
+            "support": {
+                "issues": "https://github.com/phiftyphp/CommonBundle/issues",
+                "source": "https://github.com/phiftyphp/CommonBundle/tree/master"
+            },
+            "time": "2017-07-08T10:38:20+00:00"
+        },
+        {
+            "name": "phifty/corebundle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phiftyphp/CoreBundle.git",
+                "reference": "8caf9f918a072b4026126ead8ecceb01a67c87e1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phiftyphp/CoreBundle/zipball/8caf9f918a072b4026126ead8ecceb01a67c87e1",
+                "reference": "8caf9f918a072b4026126ead8ecceb01a67c87e1",
+                "shasum": ""
+            },
+            "require": {
+                "composer/installers": "^1",
+                "phifty/phifty": "4.0.x-dev"
+            },
+            "require-dev": {
+                "c9s/webaction": "@dev",
+                "corneltek/assetkit": "@dev",
+                "corneltek/cliframework": "@dev",
+                "corneltek/codegen": "@dev",
+                "corneltek/kendo": "@dev",
+                "corneltek/pux": "@dev",
+                "maghead/maghead": "@dev",
+                "maghead/magsql": "@dev",
+                "phpsgi/funk": "@dev",
+                "phpsgi/phpsgi": "@dev",
+                "universal/universal": "@dev"
+            },
+            "default-branch": true,
+            "type": "phifty-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "CoreBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "c9s",
+                    "email": "yoanlin93@gmail.com"
+                }
+            ],
+            "description": "core bundle that includes commonly used assets",
+            "support": {
+                "issues": "https://github.com/phiftyphp/CoreBundle/issues",
+                "source": "https://github.com/phiftyphp/CoreBundle/tree/master"
+            },
+            "time": "2017-07-16T16:19:39+00:00"
+        },
+        {
+            "name": "phifty/crud",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phiftyphp/CRUD.git",
+                "reference": "683b506206624fcaa342891a465182bbd55d09d7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phiftyphp/CRUD/zipball/683b506206624fcaa342891a465182bbd55d09d7",
+                "reference": "683b506206624fcaa342891a465182bbd55d09d7",
+                "shasum": ""
+            },
+            "require": {
+                "composer/installers": "^1",
+                "phifty/i18n": "4.0.x-dev",
+                "phifty/phifty": "4.0.x-dev",
+                "phifty/productbundle": "4.0.x-dev"
+            },
+            "require-dev": {
+                "c9s/webaction": "@dev",
+                "corneltek/assetkit": "@dev",
+                "corneltek/cliframework": "@dev",
+                "corneltek/codegen": "@dev",
+                "corneltek/kendo": "@dev",
+                "corneltek/pux": "@dev",
+                "corneltek/webui": "@dev",
+                "maghead/maghead": "@dev",
+                "maghead/magsql": "@dev",
+                "phifty/adminui": "4.0.x-dev",
+                "phifty/commonbundle": "4.0.x-dev",
+                "phifty/corebundle": "4.0.x-dev",
+                "phifty/userbundle": "4.0.x-dev",
+                "phpsgi/funk": "@dev",
+                "phpsgi/phpsgi": "@dev",
+                "universal/universal": "@dev"
+            },
+            "default-branch": true,
+            "type": "phifty-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "CRUD\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "c9s",
+                    "email": "yoanlin93@gmail.com"
+                }
+            ],
+            "description": "CRUD bundle for phifty framework application",
+            "support": {
+                "issues": "https://github.com/phiftyphp/CRUD/issues",
+                "source": "https://github.com/phiftyphp/CRUD/tree/master"
+            },
+            "time": "2018-03-11T09:55:24+00:00"
+        },
+        {
+            "name": "phifty/i18n",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phiftyphp/I18N.git",
+                "reference": "07502ed01a0d3cdec2ba0e9bea8c8c5e33f94fee"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phiftyphp/I18N/zipball/07502ed01a0d3cdec2ba0e9bea8c8c5e33f94fee",
+                "reference": "07502ed01a0d3cdec2ba0e9bea8c8c5e33f94fee",
+                "shasum": ""
+            },
+            "require": {
+                "composer/installers": "^1",
+                "phifty/phifty": "4.0.x-dev"
+            },
+            "default-branch": true,
+            "type": "phifty-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "I18N\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "c9s",
+                    "email": "yoanlin93@gmail.com"
+                }
+            ],
+            "description": "core bundle that includes commonly used assets",
+            "support": {
+                "issues": "https://github.com/phiftyphp/I18N/issues",
+                "source": "https://github.com/phiftyphp/I18N/tree/master"
+            },
+            "time": "2017-05-29T04:35:33+00:00"
+        },
+        {
+            "name": "phifty/productbundle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phiftyphp/ProductBundle.git",
+                "reference": "8ad8eb82eb5fe23950fb107a363b216a2fbfd165"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phiftyphp/ProductBundle/zipball/8ad8eb82eb5fe23950fb107a363b216a2fbfd165",
+                "reference": "8ad8eb82eb5fe23950fb107a363b216a2fbfd165",
+                "shasum": ""
+            },
+            "require": {
+                "composer/installers": "^1",
+                "phifty/phifty": "4.0.x-dev"
+            },
+            "require-dev": {
+                "c9s/webaction": "@dev",
+                "corneltek/assetkit": "@dev",
+                "corneltek/cliframework": "@dev",
+                "corneltek/codegen": "@dev",
+                "corneltek/kendo": "@dev",
+                "corneltek/pux": "@dev",
+                "corneltek/webui": "@dev",
+                "maghead/maghead": "@dev",
+                "maghead/magsql": "@dev",
+                "phifty/adminui": "4.0.x-dev",
+                "phifty/commonbundle": "4.0.x-dev",
+                "phifty/crud": "4.0.x-dev",
+                "phifty/i18n": "4.0.x-dev",
+                "phifty/userbundle": "4.0.x-dev",
+                "phpsgi/funk": "@dev",
+                "phpsgi/phpsgi": "@dev",
+                "universal/universal": "@dev"
+            },
+            "default-branch": true,
+            "type": "phifty-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "ProductBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "c9s",
+                    "email": "yoanlin93@gmail.com"
+                }
+            ],
+            "description": "The powerful product management bundle",
+            "support": {
+                "issues": "https://github.com/phiftyphp/ProductBundle/issues",
+                "source": "https://github.com/phiftyphp/ProductBundle/tree/master"
+            },
+            "time": "2018-03-11T10:25:20+00:00"
+        },
+        {
+            "name": "phifty/userbundle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phiftyphp/UserBundle.git",
+                "reference": "984fab22e0e7b39678e0bcdfb972f86326b77bd6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phiftyphp/UserBundle/zipball/984fab22e0e7b39678e0bcdfb972f86326b77bd6",
+                "reference": "984fab22e0e7b39678e0bcdfb972f86326b77bd6",
+                "shasum": ""
+            },
+            "require": {
+                "composer/installers": "^1",
+                "phifty/phifty": "4.0.x-dev"
+            },
+            "require-dev": {
+                "c9s/webaction": "@dev",
+                "corneltek/assetkit": "@dev",
+                "corneltek/cliframework": "@dev",
+                "corneltek/codegen": "@dev",
+                "corneltek/kendo": "@dev",
+                "corneltek/pux": "@dev",
+                "maghead/maghead": "@dev",
+                "maghead/magsql": "@dev",
+                "phpsgi/funk": "@dev",
+                "phpsgi/phpsgi": "@dev",
+                "universal/universal": "@dev"
+            },
+            "default-branch": true,
+            "type": "phifty-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "UserBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "c9s",
+                    "email": "yoanlin93@gmail.com"
+                }
+            ],
+            "description": "user bundle for phifty framework application",
+            "support": {
+                "issues": "https://github.com/phiftyphp/UserBundle/issues",
+                "source": "https://github.com/phiftyphp/UserBundle/tree/master"
+            },
+            "time": "2017-06-28T12:29:06+00:00"
+        }
+    ],
+    "aliases": [],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "universal/universal": 20,
+        "corneltek/cliframework": 20,
+        "corneltek/webui": 20,
+        "maghead/maghead": 20,
+        "maghead/magsql": 20,
+        "c9s/webaction": 20,
+        "corneltek/assetkit": 20,
+        "corneltek/kendo": 20,
+        "corneltek/pux": 20,
+        "phpsgi/funk": 20,
+        "phpsgi/phpsgi": 20,
+        "corneltek/codegen": 20,
+        "phifty/corebundle": 20,
+        "phifty/commonbundle": 20,
+        "phifty/adminui": 20,
+        "phifty/crud": 20,
+        "phifty/userbundle": 20
+    },
+    "prefer-stable": true,
+    "prefer-lowest": false,
+    "platform": {
+        "php": ">=7.0"
+    },
+    "platform-dev": [],
+    "plugin-api-version": "2.2.0"
+}
