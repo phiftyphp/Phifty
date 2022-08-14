@@ -7,13 +7,13 @@
         "php": ">=7.0",
         "composer/installers": "^1",
         "phifty/locale": "^3.1.0",
-        "universal/universal": "2.0.*@dev",
+        "universal/universal": "@dev",
         "corneltek/fileutil": "^1",
         "corneltek/configkit": "^1.6",
         "corneltek/genphp": "^1",
         "corneltek/twig-react-directive": "^1.0",
         "corneltek/sessionkit": "~1",
-        "corneltek/cliframework": "4.0.x-dev",
+        "corneltek/cliframework": "4.1.x-dev",
         "corneltek/webui": "@dev",
         "maghead/maghead": "4.0.x-dev",
         "maghead/magsql": "@dev",
@@ -64,5 +64,10 @@
         "post-update-cmd": [
             "PhantomInstaller\\Installer::installPhantomJS"
         ]
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/installers": true
+        }
     }
 }
